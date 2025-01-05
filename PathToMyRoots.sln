@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToMyRootsApi", "PathToMyRootsApi\PathToMyRootsApi.csproj", "{9557A2D9-F4B6-4FF7-95A2-C7A332F433E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToMyRootsDataAccess", "PathToMyRootsDataAccess\PathToMyRootsDataAccess.csproj", "{CB082E68-3A54-4CCE-8EA3-87C783C01A20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9557A2D9-F4B6-4FF7-95A2-C7A332F433E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9557A2D9-F4B6-4FF7-95A2-C7A332F433E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9557A2D9-F4B6-4FF7-95A2-C7A332F433E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB082E68-3A54-4CCE-8EA3-87C783C01A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB082E68-3A54-4CCE-8EA3-87C783C01A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB082E68-3A54-4CCE-8EA3-87C783C01A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB082E68-3A54-4CCE-8EA3-87C783C01A20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
