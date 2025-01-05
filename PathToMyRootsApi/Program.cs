@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PathToMyRootsDataAccess.Models;
+using PathToMyRootsDataAccess.Services;
 
 namespace PathToMyRootsApi
 {
@@ -11,6 +12,7 @@ namespace PathToMyRootsApi
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddScoped<PersonService>();
             builder.Services.AddControllers();
 
             var app = builder.Build();
