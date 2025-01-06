@@ -17,7 +17,7 @@ namespace PathToMyRootsDataAccess.Services
             return await _applicationDbContext.Persons.ToListAsync();
         }
 
-        public async Task<Person?> GetPersonByIdAsync(int id)
+        public async Task<Person?> GetPersonAsync(int id)
         {
             return await _applicationDbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -28,6 +28,45 @@ namespace PathToMyRootsDataAccess.Services
             await _applicationDbContext.SaveChangesAsync();
 
             return person;
+        }
+
+        public async Task<Person?> EditPersonAsync(Person updatedPerson)
+        {
+            var existingPerson = await _applicationDbContext.Persons
+                .FirstOrDefaultAsync(p => p.Id == updatedPerson.Id);
+
+            if (existingPerson == null)
+                return null;
+
+            existingPerson.FirstName = updatedPerson.FirstName;
+            existingPerson.LastName = updatedPerson.LastName;
+            existingPerson.MaidenName = updatedPerson.MaidenName;
+            existingPerson.OtherNames = updatedPerson.OtherNames;
+            existingPerson.IsMale = updatedPerson.IsMale;
+            existingPerson.BirthDate = updatedPerson.BirthDate;
+            existingPerson.DeathDate = updatedPerson.DeathDate;
+            existingPerson.BiologicalMotherId = updatedPerson.BiologicalMotherId;
+            existingPerson.BiologicalFatherId = updatedPerson.BiologicalFatherId;
+            existingPerson.SpouseId = updatedPerson.SpouseId;
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return existingPerson;
+        }
+
+        public async Task<bool> DeletePersonAsync(int id)
+        {
+            var person = await _applicationDbContext.Persons
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (person == null)
+                return false;
+
+            _applicationDbContext.Persons.Remove(person);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

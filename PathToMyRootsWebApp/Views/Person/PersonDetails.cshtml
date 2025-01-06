@@ -1,0 +1,20 @@
+﻿@using PathToMyRootsWebApp.Utils
+@model PathToMyRootsWebApp.Models.PersonModel
+
+@{
+    ViewData["Title"] = "Person Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>First Name: @Model.FirstName</h3>
+    <h3>Last Name: @Model.LastName</h3>
+    <h3>Maiden Name: @Model.MaidenName</h3>
+    <h3>Other Names: @Model.OtherNames</h3>
+    <h3>Gender: @PersonModelFormatter.ToGender(Model)</h3>
+    <h3>Birth Date: @DateFormatter.ToHumanReadableDateFormat(Model.BirthDate)</h3>
+    <h3>Death Date: @DateFormatter.ToHumanReadableDateFormat(Model.DeathDate)</h3>
+    <h3>Mother: @PersonModelFormatter.ToShortFullName(Model.BiologicalMother)</h3>
+    <h3>Father: @PersonModelFormatter.ToShortFullName(Model.BiologicalFather)</h3>
+</div>

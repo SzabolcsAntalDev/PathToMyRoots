@@ -19,14 +19,14 @@ namespace PathToMyRootsWebApp.Controllers
             return View(persons);
         }
 
-        public IActionResult Add()
+        public IActionResult AddPerson()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(PersonModel personModel)
+        public async Task<IActionResult> AddPerson(PersonModel personModel)
         {
             if (ModelState.IsValid)
             {
@@ -35,7 +35,7 @@ namespace PathToMyRootsWebApp.Controllers
                 if (result)
                 {
                     TempData["SuccessMessage"] = "Person added successfully!";
-                    return RedirectToAction("Add");  // Redirect to the Add page to reset the form
+                    return RedirectToAction("Persons");
                 }
                 else
                 {
@@ -44,6 +44,12 @@ namespace PathToMyRootsWebApp.Controllers
             }
 
             return View(personModel);
+        }
+
+        public async Task <IActionResult> PersonDetails(int id)
+        {
+            var person = await _personApiService.GetPersonAsync(id);
+            return View(person);
         }
     }
 }

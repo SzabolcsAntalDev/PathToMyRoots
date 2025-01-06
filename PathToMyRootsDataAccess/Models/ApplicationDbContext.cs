@@ -6,10 +6,6 @@ namespace PathToMyRootsDataAccess.Models;
 
 public partial class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext()
-    {
-    }
-
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
@@ -31,6 +27,14 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.MaidenName).HasMaxLength(50);
             entity.Property(e => e.OtherNames).HasMaxLength(250);
             entity.Property(e => e.SpouseId).HasColumnName("SpouseID");
+
+            entity.Property(e => e.BirthDate)
+                .HasColumnType("datetime")
+                .HasColumnName("BirthDate");
+
+            entity.Property(e => e.DeathDate)
+                .HasColumnType("datetime")
+                .HasColumnName("DeathDate");
 
             entity.HasOne(d => d.BiologicalFather).WithMany(p => p.InverseBiologicalFather)
                 .HasForeignKey(d => d.BiologicalFatherId)

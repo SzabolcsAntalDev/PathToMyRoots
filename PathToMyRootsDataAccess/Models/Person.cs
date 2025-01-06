@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PathToMyRootsDataAccess.Models;
+﻿namespace PathToMyRootsDataAccess.Models;
 
 public partial class Person
 {
@@ -17,9 +14,9 @@ public partial class Person
 
     public bool IsMale { get; set; }
 
-    public DateOnly? BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
-    public DateOnly? DeathDate { get; set; }
+    public DateTime? DeathDate { get; set; }
 
     public int? BiologicalMotherId { get; set; }
 
