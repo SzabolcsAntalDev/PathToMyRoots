@@ -12,7 +12,7 @@ namespace PathToMyRootsDataAccess.Services
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task<List<Person>> GetAllPersonsAsync()
+        public async Task<List<Person>> GetPersonsAsync()
         {
             return await _applicationDbContext.Persons.ToListAsync();
         }
@@ -20,6 +20,14 @@ namespace PathToMyRootsDataAccess.Services
         public async Task<Person?> GetPersonByIdAsync(int id)
         {
             return await _applicationDbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Person> AddPersonAsync(Person person)
+        {
+            await _applicationDbContext.Persons.AddAsync(person);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return person;
         }
     }
 }

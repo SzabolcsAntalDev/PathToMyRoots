@@ -1,0 +1,40 @@
+﻿@model PathToMyRootsWebApp.Models.PersonModel
+
+@{
+    ViewData["Title"] = "Add Person";
+}
+
+<h1>Add Person</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="IsMale">Is Male</label>
+        <input type="checkbox" id="IsMale" name="IsMale" class="form-control" @(Model.IsMale ? "checked" : "") />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Person</button>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}

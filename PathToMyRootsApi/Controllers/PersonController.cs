@@ -15,18 +15,24 @@ namespace PathToMyRootsApi.Controllers
             _personService = personService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Person>>> GetAllPersons()
+        [HttpGet("persons")]
+        public async Task<ActionResult<List<Person>>> GetPersons()
         {
-            var persons = await _personService.GetAllPersonsAsync();
+            var persons = await _personService.GetPersonsAsync();
             return Ok(persons);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPersonById(int id)
         {
             var person = await _personService.GetPersonByIdAsync(id);
             return Ok(person);
+        }
+
+        public async Task<ActionResult<Person>> AddPerson([FromBody] Person person)
+        {
+            var addedPerson = await _personService.AddPersonAsync(person);
+            return CreatedAtAction(nameof(GetPersonById), new { id = addedPerson.Id });
         }
     }
 }
