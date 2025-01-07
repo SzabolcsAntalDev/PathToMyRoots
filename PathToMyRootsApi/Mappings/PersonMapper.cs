@@ -1,4 +1,5 @@
-﻿using PathToMyRootsDataAccess.Models;
+﻿using PathToMyRootsApi.Constants;
+using PathToMyRootsDataAccess.Models;
 using PathToMyRootsSharedModels.Dtos;
 
 namespace PathToMyRootsApi.Mappings
@@ -12,6 +13,7 @@ namespace PathToMyRootsApi.Mappings
 
             return new PersonDto()
             {
+                Id = person.Id,
                 FirstName = person.FirstName,
                 LastName = person.LastName,
                 MaidenName = person.MaidenName,
@@ -24,6 +26,7 @@ namespace PathToMyRootsApi.Mappings
                 SpouseId = person.SpouseId,
                 BiologicalMother = person.BiologicalMother == null ? null : new PersonDto
                 {
+                    Id = person.BiologicalMother.Id,
                     FirstName = person.BiologicalMother.FirstName,
                     LastName = person.BiologicalMother.LastName,
                     IsMale = person.BiologicalMother.IsMale,
@@ -32,6 +35,7 @@ namespace PathToMyRootsApi.Mappings
                 },
                 BiologicalFather = person.BiologicalFather == null ? null : new PersonDto
                 {
+                    Id = person.BiologicalFather.Id,
                     FirstName = person.BiologicalFather.FirstName,
                     LastName = person.BiologicalFather.LastName,
                     IsMale = person.BiologicalFather.IsMale,
@@ -40,6 +44,7 @@ namespace PathToMyRootsApi.Mappings
                 },
                 Spouse = person.Spouse == null ? null : new PersonDto
                 {
+                    Id = person.Spouse.Id,
                     FirstName = person.Spouse.FirstName,
                     LastName = person.Spouse.LastName,
                     IsMale = person.Spouse.IsMale,
@@ -56,6 +61,7 @@ namespace PathToMyRootsApi.Mappings
 
             return new Person
             {
+                Id = personDto.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                 FirstName = personDto.FirstName,
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,
@@ -69,6 +75,7 @@ namespace PathToMyRootsApi.Mappings
 
                 BiologicalMother = personDto.BiologicalMother == null ? null : new Person
                 {
+                    Id = personDto.BiologicalMother.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.BiologicalMother.FirstName,
                     LastName = personDto.BiologicalMother.LastName,
                     IsMale = personDto.BiologicalMother.IsMale,
@@ -77,6 +84,7 @@ namespace PathToMyRootsApi.Mappings
                 },
                 BiologicalFather = personDto.BiologicalFather == null ? null : new Person
                 {
+                    Id = personDto.BiologicalFather.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.BiologicalFather.FirstName,
                     LastName = personDto.BiologicalFather.LastName,
                     IsMale = personDto.BiologicalFather.IsMale,
@@ -85,6 +93,7 @@ namespace PathToMyRootsApi.Mappings
                 },
                 Spouse = personDto.Spouse == null ? null : new Person
                 {
+                    Id = personDto.Spouse.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
                     IsMale = personDto.Spouse.IsMale,

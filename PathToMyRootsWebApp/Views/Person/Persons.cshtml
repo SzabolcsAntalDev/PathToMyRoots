@@ -7,6 +7,20 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 @if (Model != null && Model.Any())
 {
     <table class="table">
@@ -21,6 +35,7 @@
                 <th>Deathdate</th>
                 <th>Mother Name</th>
                 <th>Father Name</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +51,12 @@
                     <td>@DateFormatter.ToHumanReadableDateFormat(person.DeathDate)</td>
                     <td>@PersonModelFormatter.ToShortFullName(person.BiologicalMother)</td>
                     <td>@PersonModelFormatter.ToShortFullName(person.BiologicalFather)</td>
+                    <td>
+                        <form asp-action="DeletePerson" asp-controller="Person" method="post">
+                            <input type="hidden" name="id" value="@person.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>

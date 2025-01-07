@@ -46,10 +46,23 @@ namespace PathToMyRootsWebApp.Controllers
             return View(personModel);
         }
 
-        public async Task <IActionResult> PersonDetails(int id)
+        public async Task<IActionResult> PersonDetails(int id)
         {
             var person = await _personApiService.GetPersonAsync(id);
             return View(person);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePerson(int id)
+        {
+            var result = await _personApiService.DeletePersonAsync(id);
+
+            if (result)
+                TempData["SuccessMessage"] = "Person deleted successfully.";
+            else
+                TempData["ErrorMessage"] = "Failed to delete the person. Please try again.";
+
+            return RedirectToAction("Persons");
         }
     }
 }

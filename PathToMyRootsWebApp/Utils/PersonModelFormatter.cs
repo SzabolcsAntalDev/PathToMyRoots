@@ -1,4 +1,5 @@
-﻿using PathToMyRootsWebApp.Models;
+﻿using PathToMyRootsWebApp.Constants;
+using PathToMyRootsWebApp.Models;
 
 namespace PathToMyRootsWebApp.Utils
 {
@@ -7,7 +8,7 @@ namespace PathToMyRootsWebApp.Utils
         public static string ToShortFullName(PersonModel? personModel)
         {
             if (personModel == null)
-                return "N/A";
+                return PathToMyRootsWebAppConstants.ValueNotAvailable;
 
             return $"{personModel.LastName} {personModel.FirstName}";
         }
@@ -15,7 +16,7 @@ namespace PathToMyRootsWebApp.Utils
         public static string ToGender(PersonModel? personModel)
         {
             if (personModel == null)
-                return "N/A";
+                return PathToMyRootsWebAppConstants.ValueNotAvailable;
 
             return personModel.IsMale
                 ? "Male"
