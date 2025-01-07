@@ -14,19 +14,39 @@ namespace PathToMyRootsDataAccess.Services
 
         public async Task<List<Person>> GetPersonsAsync()
         {
-            return await _applicationDbContext.Persons.ToListAsync();
+            var persons = await
+                _applicationDbContext.Persons
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.BiologicalFather)
+                    .Include(p => p.Spouse)
+                    .ToListAsync();
+
+            return persons;
         }
 
         public async Task<Person?> GetPersonAsync(int id)
         {
-            return await _applicationDbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
+            return await
+                _applicationDbContext.Persons
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.BiologicalFather)
+                    .Include(p => p.Spouse)
+                    .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Person> AddPersonAsync(Person person)
         {
-            await _applicationDbContext.Persons.AddAsync(person);
-            await _applicationDbContext.SaveChangesAsync();
+            try
+            {
+                // Szabi: identity should be 0 cause sql insert fails otherwise
+                person.Id = 0;
 
+                await _applicationDbContext.Persons.AddAsync(person);
+                await _applicationDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+            }
             return person;
         }
 

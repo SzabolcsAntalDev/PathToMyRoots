@@ -1,8 +1,10 @@
-﻿namespace PathToMyRootsWebApp.Models
+﻿using PathToMyRootsWebApp.Constants;
+
+namespace PathToMyRootsWebApp.Models
 {
     public class PersonModel
     {
-        public int? Id { get; set; }
+        public int? Id { get; set; } = PathToMyRootsWebAppConstants.UnsetIntValue;
 
         public string FirstName { get; set; } = null!;
 

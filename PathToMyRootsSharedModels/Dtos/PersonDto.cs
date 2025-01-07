@@ -24,10 +24,10 @@
 
         public int? SpouseId { get; set; }
 
-        public virtual PersonDto? BiologicalFather { get; set; }
+        public PersonDto? BiologicalFather { get; set; }
 
-        public virtual PersonDto? BiologicalMother { get; set; }
+        public PersonDto? BiologicalMother { get; set; }
 
-        public virtual PersonDto? Spouse { get; set; }
+        public PersonDto? Spouse { get; set; }
     }
 }

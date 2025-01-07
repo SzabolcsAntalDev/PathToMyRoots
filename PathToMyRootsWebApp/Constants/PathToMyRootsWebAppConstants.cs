@@ -5,5 +5,6 @@
         public const string HumanReadableDateFormat = "yyyy. MM. dd.";
         public const string ValueNotAvailable = "N/A";
         public const string UnknownValue = "Unknown";
+        public const int UnsetIntValue = -1;
     }
 }

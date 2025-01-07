@@ -11,6 +11,7 @@ namespace PathToMyRootsWebApp.Services
         private const string BaseUrl = "https://localhost:7241/api/person";
 
         private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions CaseInsensitiveJsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         public PersonApiService(HttpClient httpClient)
         {
@@ -24,7 +25,7 @@ namespace PathToMyRootsWebApp.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var personDtos = JsonSerializer.Deserialize<List<PersonDto>>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                var personDtos = JsonSerializer.Deserialize<List<PersonDto>>(jsonString, CaseInsensitiveJsonSerializerOptions);
                 return personDtos == null
                     ? new List<PersonModel?>()
                     : personDtos.Select(PersonModelMapper.PersonDtoToPersonModel).ToList();
@@ -42,7 +43,7 @@ namespace PathToMyRootsWebApp.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var personDto = JsonSerializer.Deserialize<PersonDto>(jsonString);
+                var personDto = JsonSerializer.Deserialize<PersonDto>(jsonString, CaseInsensitiveJsonSerializerOptions);
                 return PersonModelMapper.PersonDtoToPersonModel(personDto);
             }
             else

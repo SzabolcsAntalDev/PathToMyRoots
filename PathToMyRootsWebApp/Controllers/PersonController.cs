@@ -19,9 +19,34 @@ namespace PathToMyRootsWebApp.Controllers
             return View(persons);
         }
 
-        public IActionResult AddPerson()
+        public async Task<IActionResult> AddPerson()
         {
-            return View();
+            var allPersons = await _personApiService.GetPersonsAsync();
+
+            var mothers = allPersons.Where(p => !p.IsMale).ToList();
+            var fathers = allPersons.Where(p => p.IsMale).ToList();
+
+            ViewBag.Mothers = mothers;
+            ViewBag.Fathers = fathers;
+
+            return View("AddEditPerson", new PersonModel());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditPerson(int id)
+        {
+            var personModel = await _personApiService.GetPersonAsync(id);
+            if (personModel == null)
+            {
+                TempData["ErrorMessage"] = "Person not found.";
+                return RedirectToAction("Persons");
+            }
+
+            var allPersons = await _personApiService.GetPersonsAsync();
+            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
+            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+
+            return View("AddEditPerson", personModel);
         }
 
         [HttpPost]
@@ -43,7 +68,37 @@ namespace PathToMyRootsWebApp.Controllers
                 }
             }
 
-            return View(personModel);
+            var allPersons = await _personApiService.GetPersonsAsync();
+            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
+            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+
+            return View("AddEditPerson", personModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPerson(PersonModel personModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
+
+                if (result)
+                {
+                    TempData["SuccessMessage"] = "Person updated successfully!";
+                    return RedirectToAction("Persons");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "There was an error updating the person.";
+                }
+            }
+
+            var allPersons = await _personApiService.GetPersonsAsync();
+            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
+            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+
+            return View("AddEditPerson", personModel);
         }
 
         public async Task<IActionResult> PersonDetails(int id)

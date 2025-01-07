@@ -22,7 +22,7 @@ namespace PathToMyRootsApi.Controllers
             var persons = await _personService.GetPersonsAsync();
             var personDtos = persons.Select(PersonMapper.PersonToPersonDto).ToList();
 
-            return Ok(persons);
+            return Ok(personDtos);
         }
 
         [HttpGet("{id}")]
@@ -53,9 +53,9 @@ namespace PathToMyRootsApi.Controllers
             if (existingPerson == null)
                 return NotFound($"Person with id {id} not found.");
 
-            await _personService.EditPersonAsync(existingPerson);
+            var updatedPerson = await _personService.EditPersonAsync(personFromRequest);
 
-            var updatedPersonDto = PersonMapper.PersonToPersonDto(existingPerson);
+            var updatedPersonDto = PersonMapper.PersonToPersonDto(updatedPerson);
             return Ok(updatedPersonDto);
         }
 

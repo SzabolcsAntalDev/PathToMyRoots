@@ -75,10 +75,13 @@
                         }
                     </td>
                     <td>
-                        <form asp-action="DeletePerson" asp-controller="Person" method="post">
+                        <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
                             <input type="hidden" name="id" value="@person.Id" />
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
+                        <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="btn btn-primary btn-sm" style="margin-left: 5px;">
+                            Edit
+                        </a>
                     </td>
                 </tr>
             }
