@@ -93,14 +93,12 @@
 
                     <td>
                         <div class="icon-actions">
+                            <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
+                                <img src="~/icons/tree.svg" alt="View Tree" class="icon-action" title="View Tree">
+                            </a>
                             <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
                                 <img src="~/icons/edit.svg" alt="Edit" class="icon-action" title="Edit">
                             </a>
-        
-                            <a asp-action="ViewTree" asp-controller="Tree" asp-route-id="@person.Id">
-                                <img src="~/icons/tree.svg" alt="View Tree" class="icon-action" title="View Tree">
-                            </a>
-        
                             <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
                                 <input type="hidden" name="id" value="@person.Id" />
                                 <button type="submit" style="background: transparent; border: none; padding: 0; cursor: pointer;">

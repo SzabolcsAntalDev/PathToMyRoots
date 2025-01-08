@@ -1,0 +1,23 @@
+﻿.family-tree {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    margin-top: 50px;
+}
+
+.node {
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+}
+
+.line {
+    position: absolute;
+    background-color: black;
+    height: 2px;
+}

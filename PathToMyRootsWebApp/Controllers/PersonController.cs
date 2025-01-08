@@ -13,9 +13,23 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons()
+        public async Task<IActionResult> Persons(string searchQuery)
         {
             var persons = await _personApiService.GetPersonsAsync();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                persons =
+                    persons
+                        .Where(p =>
+                            p.FirstName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                            p.LastName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                            p.MaidenName != null && p.MaidenName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                            p.OtherNames != null && p.OtherNames.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+            }
+
+            ViewData["SearchQuery"] = searchQuery;
             return View(persons);
         }
 

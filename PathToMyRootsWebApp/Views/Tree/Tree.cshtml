@@ -1,0 +1,36 @@
+﻿@using System.Text.Json
+@model List<PersonModel>
+
+@{
+    ViewData["Title"] = "Tree";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <body>
+        <div class="tree" id="tree-container"></div>
+
+        <script type="application/json" id="familyData">
+            @Html.Raw(JsonSerializer.Serialize(Model, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }))
+        </script>
+    </body>
+}
