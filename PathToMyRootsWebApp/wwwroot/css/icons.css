@@ -1,0 +1,17 @@
+﻿.gender-icon {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+}
+
+.icon-action {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+.icon-actions {
+    display: inline-flex;
+    align-items: center;
+}

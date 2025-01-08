@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Tree\" />
+  </ItemGroup>
+
 </Project>
