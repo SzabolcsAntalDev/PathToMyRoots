@@ -37,6 +37,21 @@ namespace PathToMyRootsWebApp.Services
             }
         }
 
+        public async Task<PersonModel?> GetFamilyAsync(int personId)
+        {
+            var response = await _httpClient.GetAsync($"{BaseUrl}/getfamily/{personId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var personDto = JsonSerializer.Deserialize<PersonDto>(jsonString, CaseInsensitiveJsonSerializerOptions);
+                var familyModel = PersonModelMapper.MapFamily(personDto);
+                return familyModel;
+            }
+
+            return new PersonModel();
+        }
+
         public async Task<PersonModel?> GetPersonAsync(int id)
         {
             var response = await _httpClient.GetAsync($"{BaseUrl}/{id}");

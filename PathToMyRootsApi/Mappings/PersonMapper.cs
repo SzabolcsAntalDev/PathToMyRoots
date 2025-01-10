@@ -29,28 +29,19 @@ namespace PathToMyRootsApi.Mappings
                     Id = person.BiologicalMother.Id,
                     FirstName = person.BiologicalMother.FirstName,
                     LastName = person.BiologicalMother.LastName,
-                    IsMale = person.BiologicalMother.IsMale,
-                    BirthDate = person.BiologicalMother.BirthDate,
-                    DeathDate = person.BiologicalMother.DeathDate
                 },
                 BiologicalFather = person.BiologicalFather == null ? null : new PersonDto
                 {
                     Id = person.BiologicalFather.Id,
                     FirstName = person.BiologicalFather.FirstName,
                     LastName = person.BiologicalFather.LastName,
-                    IsMale = person.BiologicalFather.IsMale,
-                    BirthDate = person.BiologicalFather.BirthDate,
-                    DeathDate = person.BiologicalFather.DeathDate
                 },
                 Spouse = person.Spouse == null ? null : new PersonDto
                 {
                     Id = person.Spouse.Id,
                     FirstName = person.Spouse.FirstName,
                     LastName = person.Spouse.LastName,
-                    IsMale = person.Spouse.IsMale,
-                    BirthDate = person.Spouse.BirthDate,
-                    DeathDate = person.Spouse.DeathDate
-                }
+                },
             };
         }
 
@@ -72,34 +63,50 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalMotherId = personDto.BiologicalMotherId,
                 BiologicalFatherId = personDto.BiologicalFatherId,
                 SpouseId = personDto.SpouseId,
-
                 BiologicalMother = personDto.BiologicalMother == null ? null : new Person
                 {
                     Id = personDto.BiologicalMother.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.BiologicalMother.FirstName,
                     LastName = personDto.BiologicalMother.LastName,
-                    IsMale = personDto.BiologicalMother.IsMale,
-                    BirthDate = personDto.BiologicalMother.BirthDate,
-                    DeathDate = personDto.BiologicalMother.DeathDate
                 },
                 BiologicalFather = personDto.BiologicalFather == null ? null : new Person
                 {
                     Id = personDto.BiologicalFather.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.BiologicalFather.FirstName,
                     LastName = personDto.BiologicalFather.LastName,
-                    IsMale = personDto.BiologicalFather.IsMale,
-                    BirthDate = personDto.BiologicalFather.BirthDate,
-                    DeathDate = personDto.BiologicalFather.DeathDate
                 },
                 Spouse = personDto.Spouse == null ? null : new Person
                 {
                     Id = personDto.Spouse.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
-                    IsMale = personDto.Spouse.IsMale,
-                    BirthDate = personDto.Spouse.BirthDate,
-                    DeathDate = personDto.Spouse.DeathDate
-                }
+                },
+            };
+        }
+
+        public static PersonDto MapFamily(Person family)
+        {
+            if (family == null)
+            {
+                return null!;
+            }
+
+            return new PersonDto
+            {
+                Id = family.Id,
+                FirstName = family.FirstName,
+                LastName = family.LastName,
+                MaidenName = family.MaidenName,
+                OtherNames = family.OtherNames,
+                IsMale = family.IsMale,
+                BirthDate = family.BirthDate,
+                DeathDate = family.DeathDate,
+                BiologicalMotherId = family.BiologicalMotherId,
+                BiologicalFatherId = family.BiologicalFatherId,
+                SpouseId = family.SpouseId,
+                BiologicalMother = family.BiologicalMother != null ? MapFamily(family.BiologicalMother) : null,
+                BiologicalFather = family.BiologicalFather != null ? MapFamily(family.BiologicalFather) : null,
+                Spouse = family.Spouse != null ? MapFamily(family.Spouse) : null
             };
         }
     }

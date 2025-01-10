@@ -36,6 +36,7 @@
                 <th>Death Date</th>
                 <th>Mother</th>
                 <th>Father</th>
+                <th>Spouse</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -87,6 +88,18 @@
                         {
                             <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalFatherId">
                                 @PersonModelFormatter.ToShortFullName(person.BiologicalFather)
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (person.Spouse == null)
+                        {
+                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
+                        }
+                        else
+                        {
+                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SpouseId">
+                                @PersonModelFormatter.ToShortFullName(person.Spouse)
                             </a>
                         }
                     </td>

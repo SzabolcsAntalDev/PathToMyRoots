@@ -1,51 +1,61 @@
-﻿// JavaScript code for Family Tree
+﻿const familyData = JSON.parse(document.getElementById('familyData').textContent);
 
-const familyData = JSON.parse(document.getElementById('familyData').textContent);
+const nodeWidth = 100;
+const nodeHeight = 50;
 
-function createTree(data) {
-    const container = document.getElementById('tree-container');
-    const positions = {};
+function createTreeDiagram(family) {
 
-    data.forEach(member => {
-        const node = document.createElement('div');
-        node.className = 'node';
-        node.innerText = member.FirstName;
-        node.id = `node-${member.Id}`;
-        container.appendChild(node);
+    let divsOnLevels = {};
+    let level = 0;
 
-        const level = 2;
-        // getLevel(data, member.Id);
-        node.style.top = `${level * 100}px`;
-        node.style.left = `${(member.Id - 10) * 120}px`;
-        positions[member.Id] = node;
-    });
+    createNodesFrom(family, divsOnLevels, level);
 
-    data.forEach(member => {
-        if (member.BiologicalMotherId) {
-            const parent = positions[member.BiologicalMotherId];
-            const child = positions[member.Id];
-            drawLine(container, parent, child);
-        }
-    });
+    const treeDiagram = document.getElementById('tree-diagram');
+
+    let reversedDivsOnLevels = Object.keys(divsOnLevels).reverse();
+    for (let level of reversedDivsOnLevels)
+        treeDiagram.appendChild(divsOnLevels[level]);
 }
 
-function drawLine(container, parent, child) {
-    const parentRect = parent.getBoundingClientRect();
-    const childRect = child.getBoundingClientRect();
+function createNodesFrom(person, divsOnLevels, level) {
+    if (person == null)
+        return;
 
-    const line = document.createElement('div');
-    line.className = 'line';
+    const treeDiv = createTreeDiv();
 
-    const x1 = parentRect.left + parentRect.width / 2;
-    const y1 = parentRect.top + parentRect.height;
-    const x2 = childRect.left + childRect.width / 2;
-    const y2 = childRect.top;
+    treeDiv.appendChild(createTreeNode(person));
 
-    line.style.left = `${x1}px`;
-    line.style.top = `${y1}px`;
-    line.style.width = `${Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))}px`;
-    line.style.transform = `rotate(${Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI}deg)`;
-    container.appendChild(line);
+    if (person.Spouse != null)
+        treeDiv.appendChild(createTreeNode(person.Spouse));
+
+    if (divsOnLevels[level] == null)
+        divsOnLevels[level] = createTreeLevelDiv();
+
+    divsOnLevels[level].appendChild(treeDiv);
+
+    createNodesFrom(person.BiologicalFather, divsOnLevels, level + 1);
+    if (person.Spouse != null)
+        createNodesFrom(person.Spouse.BiologicalFather, divsOnLevels, level + 1);
 }
 
-createTree(familyData);
+function createTreeNode(person) {
+    const treeNode = document.createElement('div');
+    treeNode.className = 'tree-node';
+    treeNode.innerText = `${person.LastName} ${person.FirstName}`;
+    return treeNode;
+}
+
+function createTreeDiv() {
+    const treeDiv = document.createElement('div');
+    treeDiv.className = 'tree-div';
+    return treeDiv;
+}
+
+function createTreeLevelDiv() {
+    const treeLevelDiv = document.createElement('div');
+    treeLevelDiv.className = 'tree-line-div';
+    return treeLevelDiv;
+}
+
+createTreeDiagram(familyData);
+

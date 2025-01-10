@@ -36,12 +36,9 @@ namespace PathToMyRootsWebApp.Controllers
         public async Task<IActionResult> AddPerson()
         {
             var allPersons = await _personApiService.GetPersonsAsync();
-
-            var mothers = allPersons.Where(p => !p.IsMale).ToList();
-            var fathers = allPersons.Where(p => p.IsMale).ToList();
-
-            ViewBag.Mothers = mothers;
-            ViewBag.Fathers = fathers;
+            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
+            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+            ViewBag.Spouses = allPersons.ToList();
 
             return View("AddEditPerson", new PersonModel());
         }
@@ -59,6 +56,7 @@ namespace PathToMyRootsWebApp.Controllers
             var allPersons = await _personApiService.GetPersonsAsync();
             ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
             ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+            ViewBag.Spouses = allPersons.ToList();
 
             return View("AddEditPerson", personModel);
         }
@@ -85,6 +83,7 @@ namespace PathToMyRootsWebApp.Controllers
             var allPersons = await _personApiService.GetPersonsAsync();
             ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
             ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+            ViewBag.Spouses = allPersons.ToList();
 
             return View("AddEditPerson", personModel);
         }
@@ -111,6 +110,7 @@ namespace PathToMyRootsWebApp.Controllers
             var allPersons = await _personApiService.GetPersonsAsync();
             ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
             ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
+            ViewBag.Spouses = allPersons.ToList();
 
             return View("AddEditPerson", personModel);
         }

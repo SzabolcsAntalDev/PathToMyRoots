@@ -2,6 +2,7 @@
 using PathToMyRootsApi.Mappings;
 using PathToMyRootsDataAccess.Services;
 using PathToMyRootsSharedModels.Dtos;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PathToMyRootsApi.Controllers
 {
@@ -23,6 +24,15 @@ namespace PathToMyRootsApi.Controllers
             var personDtos = persons.Select(PersonMapper.PersonToPersonDto).ToList();
 
             return Ok(personDtos);
+        }
+
+        [HttpGet("getfamily/{personId}")]
+        public async Task<ActionResult<PersonDto>> GetFamily(int personId)
+        {
+            var family = await _personService.GetFamilyAsync(personId);
+            var familyDtos = PersonMapper.MapFamily(family);
+
+            return Ok(familyDtos);
         }
 
         [HttpGet("{id}")]

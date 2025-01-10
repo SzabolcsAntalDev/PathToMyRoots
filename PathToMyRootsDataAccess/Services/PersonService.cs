@@ -6,10 +6,11 @@ namespace PathToMyRootsDataAccess.Services
     public class PersonService
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
+        private readonly FamilyHelper _familyHelper;
         public PersonService(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
+            _familyHelper = new FamilyHelper(_applicationDbContext);
         }
 
         public async Task<List<Person>> GetPersonsAsync()
@@ -22,6 +23,12 @@ namespace PathToMyRootsDataAccess.Services
                     .ToListAsync();
 
             return persons;
+        }
+
+        public async Task<Person> GetFamilyAsync(int personId)
+        {
+            var family = await _familyHelper.GetFamilyAsync(personId);
+            return family;
         }
 
         public async Task<Person?> GetPersonAsync(int id)

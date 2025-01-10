@@ -91,6 +91,19 @@ else if (TempData["ErrorMessage"] != null)
         </select>
     </div>
 
+    <div class="form-group">
+        <label for="SpouseId">Spouse</label>
+        <select id="SpouseId" name="SpouseId" class="form-control">
+            <option value="">-- Select Spouse --</option>
+            @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
+            {
+                <option value="@spouse.Id" selected=@(Model?.SpouseId == spouse.Id)>
+                    @PersonModelFormatter.ToShortFullName(spouse)
+                </option>
+            }
+        </select>
+    </div>
+
     <form asp-action="EditPerson" method="post">
         @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
         {
