@@ -103,9 +103,12 @@ namespace PathToMyRootsWebApp.Mappings
                 BiologicalMotherId = personDto.BiologicalMotherId,
                 BiologicalFatherId = personDto.BiologicalFatherId,
                 SpouseId = personDto.SpouseId,
-                BiologicalMother = personDto.BiologicalMother != null ? MapFamily(personDto.BiologicalMother) : null,
-                BiologicalFather = personDto.BiologicalFather != null ? MapFamily(personDto.BiologicalFather) : null,
-                Spouse = personDto.Spouse != null ? MapFamily(personDto.Spouse) : null
+                Spouse = personDto.Spouse == null ? null : new PersonModel
+                {
+                    Id = personDto.Spouse.Id,
+                    FirstName = personDto.Spouse.FirstName,
+                    LastName = personDto.Spouse.LastName,
+                }
             };
         }
     }

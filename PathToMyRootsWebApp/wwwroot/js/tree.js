@@ -1,47 +1,66 @@
-﻿const familyData = JSON.parse(document.getElementById('familyData').textContent);
-
-const nodeWidth = 100;
+﻿const nodeWidth = 100;
 const nodeHeight = 50;
 
-function createTreeDiagram(family) {
+const apiUrl = "https://localhost:7241/api/person/getfamily/";
+
+async function createTreeDiagram(personId) {
+    const processedPersonIds = new Set();
+    processedPersonIds.add(null);
 
     let divsOnLevels = {};
     let level = 0;
 
-    createNodesFrom(family, divsOnLevels, level);
+    await createNodesFrom(personId, processedPersonIds, divsOnLevels, level);
 
     const treeDiagram = document.getElementById('tree-diagram');
 
-    let reversedDivsOnLevels = Object.keys(divsOnLevels).reverse();
-    for (let level of reversedDivsOnLevels)
+    const sortedKeys = Object.keys(divsOnLevels)
+        .map(Number)
+        .sort((a, b) => b - a);
+
+    for (let level of sortedKeys)
         treeDiagram.appendChild(divsOnLevels[level]);
 }
 
-function createNodesFrom(person, divsOnLevels, level) {
-    if (person == null)
+async function createNodesFrom(personId, processedPersonIds, divsOnLevels, level) {
+    if (personId == null || processedPersonIds.has(personId))
         return;
+
+    const response = await fetch(`${apiUrl}${personId}`);
+    const person = await response.json();
 
     const treeDiv = createTreeDiv();
 
     treeDiv.appendChild(createTreeNode(person));
 
-    if (person.Spouse != null)
-        treeDiv.appendChild(createTreeNode(person.Spouse));
+    if (person.spouse != null)
+        treeDiv.appendChild(createTreeNode(person.spouse));
 
     if (divsOnLevels[level] == null)
         divsOnLevels[level] = createTreeLevelDiv();
 
     divsOnLevels[level].appendChild(treeDiv);
 
-    createNodesFrom(person.BiologicalFather, divsOnLevels, level + 1);
-    if (person.Spouse != null)
-        createNodesFrom(person.Spouse.BiologicalFather, divsOnLevels, level + 1);
+    processedPersonIds.add(personId);
+    processedPersonIds.add(person.spouseId);
+
+    await createNodesFrom(person.biologicalFatherId, processedPersonIds, divsOnLevels, level + 1);
+    if (person.spouse != null)
+        await createNodesFrom(person.spouse.biologicalFatherId, processedPersonIds, divsOnLevels, level + 1);
+
+    if (person.inverseBiologicalMother != null)
+        for (let child of person.inverseBiologicalMother)
+            await createNodesFrom(child.id, processedPersonIds, divsOnLevels, level - 1);
+
+    if (person.inverseBiologicalFather != null)
+        for (let child of person.inverseBiologicalFather)
+            await createNodesFrom(child.id, processedPersonIds, divsOnLevels, level - 1);
 }
 
 function createTreeNode(person) {
     const treeNode = document.createElement('div');
     treeNode.className = 'tree-node';
-    treeNode.innerText = `${person.LastName} ${person.FirstName}`;
+    treeNode.innerText = `${person.lastName} ${person.firstName}`;
     return treeNode;
 }
 
@@ -57,5 +76,5 @@ function createTreeLevelDiv() {
     return treeLevelDiv;
 }
 
-createTreeDiagram(familyData);
+createTreeDiagram(15);
 

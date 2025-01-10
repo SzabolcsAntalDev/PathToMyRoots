@@ -1,6 +1,7 @@
 ﻿using PathToMyRootsApi.Constants;
 using PathToMyRootsDataAccess.Models;
 using PathToMyRootsSharedModels.Dtos;
+using System;
 
 namespace PathToMyRootsApi.Mappings
 {
@@ -40,7 +41,7 @@ namespace PathToMyRootsApi.Mappings
                 {
                     Id = person.Spouse.Id,
                     FirstName = person.Spouse.FirstName,
-                    LastName = person.Spouse.LastName,
+                    LastName = person.Spouse.LastName
                 },
             };
         }
@@ -104,9 +105,32 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalMotherId = family.BiologicalMotherId,
                 BiologicalFatherId = family.BiologicalFatherId,
                 SpouseId = family.SpouseId,
-                BiologicalMother = family.BiologicalMother != null ? MapFamily(family.BiologicalMother) : null,
-                BiologicalFather = family.BiologicalFather != null ? MapFamily(family.BiologicalFather) : null,
-                Spouse = family.Spouse != null ? MapFamily(family.Spouse) : null
+                Spouse = family.Spouse == null ? null : new PersonDto
+                {
+                    Id = family.Spouse.Id,
+                    FirstName = family.Spouse.FirstName,
+                    LastName = family.Spouse.LastName,
+                    BiologicalMotherId = family.Spouse.BiologicalMotherId,
+                    BiologicalFatherId = family.Spouse.BiologicalFatherId
+                },
+                InverseBiologicalMother = family.InverseBiologicalMother
+            .Select(child => new PersonDto
+            {
+                Id = child.Id,
+                FirstName = child.FirstName,
+                LastName = child.LastName,
+                BiologicalMotherId = child.BiologicalMotherId,
+                BiologicalFatherId = child.BiologicalFatherId
+            }).ToList(),
+                InverseBiologicalFather = family.InverseBiologicalFather
+            .Select(child => new PersonDto
+            {
+                Id = child.Id,
+                FirstName = child.FirstName,
+                LastName = child.LastName,
+                BiologicalMotherId = child.BiologicalMotherId,
+                BiologicalFatherId = child.BiologicalFatherId
+            }).ToList()
             };
         }
     }

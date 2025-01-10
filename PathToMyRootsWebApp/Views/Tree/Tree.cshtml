@@ -1,7 +1,4 @@
-﻿@using System.Text.Json
-@model PersonModel
-
-@{
+﻿@{
     ViewData["Title"] = "Tree";
 }
 
@@ -21,65 +18,52 @@
     </div>
 }
 
-@if (Model != null)
-{
-    <body>
+<body>
+    <button onclick="exportToPNG()" style="display: block">Export to PNG</button>
+    <div class="tree-diagram" id="tree-diagram" />
 
-        <button onclick="exportToPNG()" style="display: block">Export to PNG</button>
-        <div class="tree-diagram" id="tree-diagram" />
+    @* <div style="display: inline-block; text-align: center; background: blue;">
 
-        <script type="application/json" id="familyData">
-            @Html.Raw(JsonSerializer.Serialize(Model, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            }))
-        </script>
+    <input type="button" value="ok0" style="display: inline-block"/>
 
-        
+    <br />
 
-        @* <div style="display: inline-block; text-align: center; background: blue;">
-		
-			<input type="button" value="ok0" style="display: inline-block"/>
-			
-			<br />
-			
-			<div style="display: inline-block;">
-				<input type="button" value="ok1" style="display:inline-block"/>
-				
-				<br />
-				
-				<div style="display: inline-block;">
-					<input type="button" value="ok2" style="display: inline-block"/>
-					<input type="button" value="ok3" style="display: inline-block"/>
-				</div>
-			</div>
-			
-			<div style="display: inline-block;">
-				<input type="button" value="ok1" style="display:inline-block"/>
-				
-				<br />
-				
-				<div style="display: inline-block;">
-					<input type="button" value="ok2" style="display: inline-block"/>
-					<input type="button" value="ok3" style="display: inline-block"/>
-				</div>
-			</div>
-        </div> *@
+    <div style="display: inline-block;">
+    <input type="button" value="ok1" style="display:inline-block"/>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <br />
 
-        <script>
-            function exportToPNG() {
-                const container = document.getElementById('tree-diagram');
-                html2canvas(container).then(canvas => {
-                    const base64image = canvas.toDataURL("image/png");
-                    var anchor = document.createElement('a');
-                    anchor.setAttribute("href", base64image);
-                    anchor.setAttribute("download", "my-image.png");
-                    anchor.click();
-                    anchor.remove();
-                });
-            }
-        </script>
-    </body>
-}
+    <div style="display: inline-block;">
+    <input type="button" value="ok2" style="display: inline-block"/>
+    <input type="button" value="ok3" style="display: inline-block"/>
+    </div>
+    </div>
+
+    <div style="display: inline-block;">
+    <input type="button" value="ok1" style="display:inline-block"/>
+
+    <br />
+
+    <div style="display: inline-block;">
+    <input type="button" value="ok2" style="display: inline-block"/>
+    <input type="button" value="ok3" style="display: inline-block"/>
+    </div>
+    </div>
+    </div> *@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        function exportToPNG() {
+            const container = document.getElementById('tree-diagram');
+            html2canvas(container).then(canvas => {
+                const base64image = canvas.toDataURL("image/png");
+                var anchor = document.createElement('a');
+                anchor.setAttribute("href", base64image);
+                anchor.setAttribute("download", "my-image.png");
+                anchor.click();
+                anchor.remove();
+            });
+        }
+    </script>
+</body>
