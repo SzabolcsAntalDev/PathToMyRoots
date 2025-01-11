@@ -12,27 +12,23 @@ async function createTreeDiagram(personId) {
     let level = 0;
     await createNodesFrom(personId, processedPersonIds, divsOnLevels, level);
 
-    const treeDiagram1 = document.getElementById('tree-diagram1');
     const sortedKeys = Object.keys(divsOnLevels)
         .map(Number)
         .sort((a, b) => b - a);
 
-    //for (let level of sortedKeys)
-    //    treeDiagram1.appendChild(divsOnLevels[level]);
-
-    const treeDiagram2 = document.getElementById('tree-diagram2');
+    const treeDiagram = document.getElementById('tree-diagram');
     const rootParentsLevel = sortedKeys[0]
     let parentsLevelDivsCollection = [];
     let parentsLevelDiv = divsOnLevels[rootParentsLevel];
     parentsLevelDivsCollection.push(parentsLevelDiv);
-    treeDiagram2.appendChild(parentsLevelDiv);
+    treeDiagram.appendChild(parentsLevelDiv);
 
     // sort children
     for (let i = 1; i < sortedKeys.length; i++) {
         const childrenLevel = sortedKeys[i];
         const childrenLevelDiv = divsOnLevels[childrenLevel];
 
-        parentsLevelDiv = sortChildrenLevelDiv(treeDiagram2, parentsLevelDiv, childrenLevelDiv);
+        parentsLevelDiv = sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv);
         parentsLevelDivsCollection.push(parentsLevelDiv);
     }
 
@@ -45,10 +41,10 @@ async function createTreeDiagram(personId) {
     }
 }
 
-function sortChildrenLevelDiv(treeDiagram2, parentsLevelDiv, childrenLevelDiv) {
+function sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv) {
     let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-div');
     let sortedChildrenLevelDiv = createTreeLevelDiv();
-    treeDiagram2.appendChild(sortedChildrenLevelDiv);
+    treeDiagram.appendChild(sortedChildrenLevelDiv);
 
     parentsDivs.forEach(parentsDiv => {
         let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
