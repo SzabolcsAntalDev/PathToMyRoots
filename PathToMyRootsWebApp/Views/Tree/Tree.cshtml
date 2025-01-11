@@ -19,17 +19,18 @@
 }
 
 <body>
-    @* <button onclick="exportToPNG()" style="display: block">Export to PNG</button> *@
+    <button onclick="exportToPNG()" style="display: block">Export to PNG</button>
 
-    <div class="tree-diagram" id="tree-diagram1"></div>
-    <br />
-    <div class="tree-diagram" id="tree-diagram2"></div>
-
-@*     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <div class="tree-diagram-container-div ">
+        <div class="tree-diagram" id="tree-diagram1"></div>
+        <br />
+        <div class="tree-diagram" id="tree-diagram2"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         function exportToPNG() {
-            const container = document.getElementById('tree-diagram');
+            const container = document.getElementById('tree-diagram2');
             html2canvas(container).then(canvas => {
                 const base64image = canvas.toDataURL("image/png");
                 var anchor = document.createElement('a');
@@ -39,5 +40,5 @@
                 anchor.remove();
             });
         }
-    </script> *@
+    </script>
 </body>
