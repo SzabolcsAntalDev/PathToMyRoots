@@ -110,6 +110,7 @@ namespace PathToMyRootsApi.Mappings
                     Id = family.Spouse.Id,
                     FirstName = family.Spouse.FirstName,
                     LastName = family.Spouse.LastName,
+                    IsMale = family.Spouse.IsMale,
                     BiologicalMotherId = family.Spouse.BiologicalMotherId,
                     BiologicalFatherId = family.Spouse.BiologicalFatherId
                 },
