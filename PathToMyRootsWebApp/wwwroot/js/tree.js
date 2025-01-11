@@ -9,7 +9,6 @@ async function createTreeDiagram(personId) {
 
     let divsOnLevels = {};
     let level = 0;
-
     await createNodesFrom(personId, processedPersonIds, divsOnLevels, level);
 
     const treeDiagram1 = document.getElementById('tree-diagram1');
@@ -17,51 +16,52 @@ async function createTreeDiagram(personId) {
         .map(Number)
         .sort((a, b) => b - a);
 
-    for (let level of sortedKeys)
-        treeDiagram1.appendChild(divsOnLevels[level]);
+    //for (let level of sortedKeys)
+    //    treeDiagram1.appendChild(divsOnLevels[level]);
 
 
 
 
     const treeDiagram2 = document.getElementById('tree-diagram2');
-    let copyDivsOnLevels = { ...divsOnLevels };
+    let rootParentsLevel = sortedKeys[0]
+    let parentsLevelDiv = divsOnLevels[rootParentsLevel];
+    treeDiagram2.appendChild(parentsLevelDiv);
 
-    let topParentsLevel = sortedKeys[0]
-    let parentDiv = copyDivsOnLevels[topParentsLevel];
-    treeDiagram2.appendChild(parentDiv);
-
+    // sort children
     for (let i = 1; i < sortedKeys.length; i++) {
         const childrenLevel = sortedKeys[i];
-        let childrenDiv = copyDivsOnLevels[childrenLevel];
+        let childrenLevelDiv = divsOnLevels[childrenLevel];
 
-        parentDiv = sortNextRow(treeDiagram2, parentDiv, childrenDiv);
+        parentsLevelDiv = sortChildrenLevelDiv(treeDiagram2, parentsLevelDiv, childrenLevelDiv);
     }
+
+    // draw lines
 }
 
-function sortNextRow(treeDiagram2, parentDiv, childrenDiv) {
-    let parents = parentDiv.querySelectorAll('.tree-div');
-    let sortedChildrenDiv = createTreeLevelDiv();
-    treeDiagram2.appendChild(sortedChildrenDiv);
+function sortChildrenLevelDiv(treeDiagram2, parentsLevelDiv, childrenLevelDiv) {
+    let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-div');
+    let sortedChildrenLevelDiv = createTreeLevelDiv();
+    treeDiagram2.appendChild(sortedChildrenLevelDiv);
 
-    parents.forEach(parent => {
-        let maleId = parent.querySelector('.tree-node-male')?.id;
-        let femaleId = parent.querySelector('.tree-node-female')?.id;
+    parentsDivs.forEach(parentsDiv => {
+        let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
+        let motherId = parentsDiv.querySelector('.tree-node-female')?.id;
 
-        let children = childrenDiv.querySelectorAll('.tree-div');
-        children.forEach(twoChilds => {
-            let maleChildBiologicalMotherIdId = twoChilds.querySelector('.tree-node-male')?.biologicalMotherId;
-            let maleChildBiologicalFatherId = twoChilds.querySelector('.tree-node-male')?.biologicalFatherId;
-            let femaleChildBiologicalMotherIdId = twoChilds.querySelector('.tree-node-female')?.biologicalMotherId;
-            let femaleChildBiologicalFatherId = twoChilds.querySelector('.tree-node-female')?.biologicalFatherId;
+        let childDivs = childrenLevelDiv.querySelectorAll('.tree-div');
+        childDivs.forEach(childDiv => {
+            let malesChildBiologicalMotherIdId = childDiv.querySelector('.tree-node-male')?.biologicalMotherId;
+            let malesChildBiologicalFatherId = childDiv.querySelector('.tree-node-male')?.biologicalFatherId;
+            let femalesChildBiologicalMotherIdId = childDiv.querySelector('.tree-node-female')?.biologicalMotherId;
+            let femalesChildBiologicalFatherId = childDiv.querySelector('.tree-node-female')?.biologicalFatherId;
 
-            if (femaleId == maleChildBiologicalMotherIdId || femaleId == femaleChildBiologicalMotherIdId ||
-                maleId == maleChildBiologicalFatherId || maleId == femaleChildBiologicalFatherId) {
-                sortedChildrenDiv.appendChild(twoChilds);
+            if (motherId == malesChildBiologicalMotherIdId || motherId == femalesChildBiologicalMotherIdId ||
+                fatherId == malesChildBiologicalFatherId || fatherId == femalesChildBiologicalFatherId) {
+                sortedChildrenLevelDiv.appendChild(childDiv);
             }
         });
     });
 
-    return sortedChildrenDiv;
+    return sortedChildrenLevelDiv;
 }
 
 async function createNodesFrom(personId, processedPersonIds, divsOnLevels, level) {
@@ -120,6 +120,11 @@ function createTreeNode(person) {
     return treeNode;
 }
 
+function createLineBreak() {
+    const lineBreak = document.createElement('br');
+    return lineBreak;
+}
+
 function createTreeNodeMarried() {
     const treeNodeMarried = document.createElement('div');
     treeNodeMarried.className = 'tree-node-married';
@@ -137,11 +142,6 @@ function createTreeLevelDiv() {
     const treeLevelDiv = document.createElement('div');
     treeLevelDiv.className = 'tree-line-div';
     return treeLevelDiv;
-}
-
-function createLineBreak() {
-    const lineBreak = document.createElement('br');
-    return lineBreak;
 }
 
 createTreeDiagram(35);
