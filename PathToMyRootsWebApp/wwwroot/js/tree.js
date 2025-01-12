@@ -1,4 +1,6 @@
-﻿const nodeWidth = 100;
+﻿const { format, parseISO } = dateFns;
+
+const nodeWidth = 100;
 const nodeHeight = 50;
 const linesVerticalOffset = 4;
 const sleepInterval = 0;
@@ -196,8 +198,19 @@ function createTreeNode(person) {
     treeNode.biologicalMotherId = person.biologicalMotherId;
     treeNode.biologicalFatherId = person.biologicalFatherId;
     treeNode.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
-    treeNode.innerText = `${person.id} - ${person.lastName} ${person.firstName}`;
+    treeNode.innerText = `${person.id} - ${person.lastName} ${person.maidenName ? `(${person.maidenName}) ` : ''}${person.firstName}${person.otherNames ? ` ${person.otherNames}` : ''} 
+                        (${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`;
     return treeNode;
+}
+
+function dateToString(date) {
+    if (date == null)
+        return "";
+
+    if (date == UnknownDate)
+        return UnknownValue;
+
+    return formattedDate = format(parseISO(date), HumanReadableDateFormat);
 }
 
 function createLineBreak() {

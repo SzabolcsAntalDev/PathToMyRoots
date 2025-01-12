@@ -6,7 +6,13 @@ namespace PathToMyRootsWebApp.Utils
     {
         public static string ToHumanReadableDateFormat(DateTime? dateTime)
         {
-            return dateTime?.ToString(PathToMyRootsWebAppConstants.HumanReadableDateFormat) ?? PathToMyRootsWebAppConstants.ValueNotAvailable;
+            if (dateTime == null)
+                return string.Empty;
+
+            if (dateTime.Value == PathToMyRootsWebAppConstants.UnknownDate)
+                return PathToMyRootsWebAppConstants.ValueNotAvailable;
+
+            return dateTime?.ToString(PathToMyRootsWebAppConstants.HumanReadableDateFormat);
         }
     }
 }

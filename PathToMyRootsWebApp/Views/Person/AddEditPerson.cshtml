@@ -57,13 +57,77 @@ else if (TempData["ErrorMessage"] != null)
 
     <div class="form-group">
         <label for="BirthDate">Birth Date</label>
-        <input type="date" id="BirthDate" name="BirthDate" class="form-control" value="@(Model?.BirthDate?.ToString("yyyy-MM-dd"))" />
+        <fieldset>
+            <label>
+                <input type="radio" name="BirthStatus" value="unknown" id="unknownBirthDate"
+                @if (Model?.BirthDate == null || Model?.BirthDate == PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:checked
+                }
+                       onclick="toggleBirthDateInput()" /> Unknown
+            </label>
+
+            <label>
+                <input type="radio" name="BirthStatus" value="concreteDate" id="concreteBirthDate"
+                @if (Model?.BirthDate != null && Model.BirthDate != PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:checked
+                }
+                       onclick="toggleBirthDateInput()" /> Date
+            </label>
+
+            <div id="birthDateDiv" style="display:none;">
+                <input type="date" id="birthDateInput" name="birthDateInput"
+                @if (Model?.BirthDate != null && Model.BirthDate != PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:value="@Model.BirthDate?.ToString("yyyy-MM-dd")"
+                } />
+            </div>
+
+            <input type="hidden" id="hiddenBirthDate" name="BirthDate" value="@Model?.BirthDate?.ToString("yyyy-MM-dd")" />
+        </fieldset>
     </div>
 
     <div class="form-group">
         <label for="DeathDate">Death Date</label>
-        <input type="date" id="DeathDate" name="DeathDate" class="form-control" value="@(Model?.DeathDate?.ToString("yyyy-MM-dd"))" />
+        <fieldset>
+            <label>
+                <input type="radio" name="DeathStatus" value="alive" id="alive"
+                @if (Model?.DeathDate == null)
+                {
+                    @:checked
+                }
+                       onclick="toggleDeathDateInput()" /> Alive
+            </label>
+            <label>
+                <input type="radio" name="DeathStatus" value="unknown" id="unknownDeathDate"
+                @if (Model?.DeathDate == PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:checked
+                }
+                       onclick="toggleDeathDateInput()" /> Unknown
+            </label>
+            <label>
+                <input type="radio" name="DeathStatus" value="concreteDate" id="concreteDeathDate"
+                @if (Model?.DeathDate != null && Model.DeathDate != PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:checked
+                }
+                       onclick="toggleDeathDateInput()" /> Date
+            </label>
+
+            <div id="deathDateDiv" style="display:none;">
+                <input type="date" id="deathDateInput" name="deathDateInput"
+                @if (Model?.DeathDate != null && Model.DeathDate != PathToMyRootsWebAppConstants.UnknownDate)
+                {
+                    @:value="@Model.DeathDate?.ToString("yyyy-MM-dd")"
+                } />
+            </div>
+
+            <input type="hidden" id="hiddenDeathDate" name="DeathDate" value="@Model?.DeathDate?.ToString("yyyy-MM-dd")" />
+        </fieldset>
     </div>
+
 
     <div class="form-group">
         <label for="BiologicalMotherId">Mother</label>
@@ -115,3 +179,11 @@ else if (TempData["ErrorMessage"] != null)
         }
     </form>
 </form>
+
+@section Scripts {
+    <script>
+        const UnknownDate = '@PathToMyRootsWebAppConstants.UnknownDate';
+    </script>
+
+    <script src="~/js/add-edit-person.js"></script>
+}
