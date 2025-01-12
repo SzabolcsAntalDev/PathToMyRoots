@@ -43,16 +43,23 @@ namespace PathToMyRootsDataAccess.Services
 
         public async Task<Person> AddPersonAsync(Person person)
         {
-            try
-            {
-                // Szabi: identity should be 0 cause sql insert fails otherwise
-                person.Id = 0;
+            // Szabi: identity should be 0 cause sql insert fails otherwise
+            person.Id = 0;
 
-                await _applicationDbContext.Persons.AddAsync(person);
-                await _applicationDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
+            // Add the person to the database
+            await _applicationDbContext.Persons.AddAsync(person);
+            await _applicationDbContext.SaveChangesAsync();
+
+            // If the SpouseId is set, update the corresponding spouse record
+            if (person.SpouseId.HasValue)
             {
+                var spouse = await _applicationDbContext.Persons.FindAsync(person.SpouseId.Value);
+                if (spouse != null)
+                {
+                    spouse.SpouseId = person.Id; // Set the spouse's SpouseId to the current person's Id
+                    _applicationDbContext.Persons.Update(spouse);
+                    await _applicationDbContext.SaveChangesAsync();
+                }
             }
             return person;
         }
