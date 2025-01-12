@@ -9,7 +9,7 @@
         public static readonly DateTime UnknownDate = new(1753, 1, 1);
 
         public const string ValueNotAvailable = "N/A";
-        public const string UnknownValue = "Unknown";
+        public const string UnknownValue = "?";
         public const int UnsetIntValue = -1;
     }
 }

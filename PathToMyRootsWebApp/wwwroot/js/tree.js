@@ -207,10 +207,11 @@ function dateToString(date) {
     if (date == null)
         return "";
 
-    if (date == UnknownDate)
+    const serverDate = new Date(date);
+    if (serverDate.getTime() === UnknownDate.getTime())
         return UnknownValue;
 
-    return formattedDate = format(parseISO(date), HumanReadableDateFormat);
+    return formattedDate = format(serverDate, HumanReadableDateFormat);
 }
 
 function createLineBreak() {
