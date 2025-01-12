@@ -32,6 +32,17 @@ async function createTreeDiagram(personId) {
         parentsLevelDivsCollection.push(parentsLevelDiv);
     }
 
+    const treeLines = document.getElementById('tree-lines');
+
+    // Get the size of treeDiagram
+    const treeDiagramStyles = window.getComputedStyle(treeDiagram);
+    const width = treeDiagram.offsetWidth || parseFloat(treeDiagramStyles.width);
+    const height = treeDiagram.offsetHeight || parseFloat(treeDiagramStyles.height);
+
+    // Set the size of treeLines
+    treeLines.style.width = `${width}px`;
+    treeLines.style.height = `${height}px`;
+
     // draw lines
     for (let i = 1; i < parentsLevelDivsCollection.length; i++) {
         const parentsLevelDiv1 = parentsLevelDivsCollection[i - 1];
@@ -68,17 +79,6 @@ function sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv) {
 }
 
 function drawLines(parentsLevelDiv, childrenLevelDiv) {
-    svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.id = 'tree-lines-svg';
-    svg.style.position = 'absolute';
-    svg.style.top = '0';
-    svg.style.left = '0';
-    svg.style.width = '100%';
-    svg.style.height = '100%';
-    svg.style.pointerEvents = 'none';
-    svg.style.border = "2px solid red";
-    document.body.appendChild(svg);
-
     let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-div');
     let childrenDivs = childrenLevelDiv.querySelectorAll('.tree-div');
 
@@ -100,24 +100,26 @@ function drawLines(parentsLevelDiv, childrenLevelDiv) {
             let femalesBiologicalMotherId = pairFemaleNode?.biologicalMotherId;
 
             if (pairMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
-                drawLine(parentsDiv, pairMaleNode, svg, i += linesVerticalOffset);
+                drawLine(parentsDiv, pairMaleNode, i += linesVerticalOffset);
             }
 
             if (pairFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
-                drawLine(parentsDiv, pairFemaleNode, svg, i += linesVerticalOffset);
+                drawLine(parentsDiv, pairFemaleNode, i += linesVerticalOffset);
             }
         });
     });
 }
 
-function drawLine(parentElement, childElement, svg, verticalOffset) {
+function drawLine(parentElement, childElement, verticalOffset) {
     const parentRect = parentElement.getBoundingClientRect();
     const childRect = childElement.getBoundingClientRect();
 
-    const parentX = parentRect.left + parentRect.width / 2;
-    const parentY = parentRect.top + parentRect.height;
-    const childX = childRect.left + childRect.width / 2;
-    const childY = childRect.top;
+    const svg = document.getElementById("tree-lines");
+
+    const parentX = parentRect.left + parentRect.width / 2 - svg.getBoundingClientRect().left;
+    const parentY = parentRect.top + parentRect.height - svg.getBoundingClientRect().top;
+    const childX = childRect.left + childRect.width / 2 - svg.getBoundingClientRect().left;
+    const childY = childRect.top - svg.getBoundingClientRect().top;
 
     const middleY = ((parentY + childY) / 2) + verticalOffset;
 
@@ -135,6 +137,7 @@ function drawLine(parentElement, childElement, svg, verticalOffset) {
     path.setAttribute('stroke-width', '1');
     path.setAttribute('fill', 'transparent'); // No fill for the path
 
+    
     svg.appendChild(path);
 }
 

@@ -21,22 +21,44 @@
 <body>
     <button onclick="exportToPNG()" style="display: block">Export to PNG</button>
 
-    <div class="tree-diagram-container-div ">
+    <div class="tree-diagram-container-div" id="tree-diagram-container-div">
         <div class="tree-diagram" id="tree-diagram"></div>
+        <svg class="tree-lines" id="tree-lines"></svg>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         function exportToPNG() {
-            const container = document.getElementById('tree-diagram2');
-            html2canvas(container).then(canvas => {
+            const container = document.getElementById('tree-diagram-container-div');
+            const originalOverflow = container.style.overflow;
+            container.style.overflow = 'visible';
+
+            const fullWidth = container.scrollWidth;
+            const fullHeight = container.scrollHeight;
+
+            html2canvas(container, {
+                useCORS: true,
+                allowTaint: false,
+                scale: 2,
+                width: fullWidth,
+                height: fullHeight,
+                scrollX: 0,
+                scrollY: 0,
+            }).then(canvas => {
                 const base64image = canvas.toDataURL("image/png");
-                var anchor = document.createElement('a');
+
+                const anchor = document.createElement('a');
                 anchor.setAttribute("href", base64image);
-                anchor.setAttribute("download", "my-image.png");
+                anchor.setAttribute("download", "tree-diagram.png");
+                document.body.appendChild(anchor);
                 anchor.click();
-                anchor.remove();
+                document.body.removeChild(anchor);
+            }).catch(error => {
+                console.error("Error exporting to PNG:", error);
+            }).finally(() => {
+                container.style.overflow = originalOverflow;
             });
         }
+
     </script>
 </body>
