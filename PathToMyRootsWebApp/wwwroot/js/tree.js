@@ -68,8 +68,10 @@ function sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv) {
             let femalesChildBiologicalMotherId = pairDiv.querySelector('.tree-node-female')?.biologicalMotherId;
             let femalesChildBiologicalFatherId = pairDiv.querySelector('.tree-node-female')?.biologicalFatherId;
 
-            if (fatherId == malesChildBiologicalFatherId || fatherId == femalesChildBiologicalFatherId ||
-                motherId == malesChildBiologicalMotherId || motherId == femalesChildBiologicalMotherId) {
+            if ((fatherId != null && malesChildBiologicalFatherId   != null && fatherId == malesChildBiologicalFatherId) ||
+                (fatherId != null && femalesChildBiologicalFatherId != null && fatherId == femalesChildBiologicalFatherId) ||
+                (motherId != null && malesChildBiologicalMotherId   != null && motherId == malesChildBiologicalMotherId) ||
+                (motherId != null && femalesChildBiologicalMotherId != null && motherId == femalesChildBiologicalMotherId)) {
                 sortedChildrenLevelDiv.appendChild(pairDiv);
             }
         });
@@ -137,7 +139,7 @@ function drawLine(parentElement, childElement, verticalOffset) {
     path.setAttribute('stroke-width', '1');
     path.setAttribute('fill', 'transparent'); // No fill for the path
 
-    
+
     svg.appendChild(path);
 }
 
