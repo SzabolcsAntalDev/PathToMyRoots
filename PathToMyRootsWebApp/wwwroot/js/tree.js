@@ -1,98 +1,99 @@
 ﻿const nodeWidth = 100;
 const nodeHeight = 50;
 const linesVerticalOffset = 4;
+const sleepInterval = 0;
 
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
 
 async function createTreeDiagram(personId) {
+    const treeDiagram = document.getElementById('tree-diagram');
+    const treeLines = document.getElementById('tree-lines');
+
     const processedPersonIds = new Set();
     processedPersonIds.add(null);
 
-    let divsOnLevels = {};
-    let level = 0;
-    await createNodesFrom(personId, processedPersonIds, divsOnLevels, level);
+    let levelIndexesToDivsDictionary = {};
+    let baseLevelIndex = 0;
+    await createNodesFrom(personId, processedPersonIds, levelIndexesToDivsDictionary, baseLevelIndex);
 
-    const sortedKeys = Object.keys(divsOnLevels)
+    const descSortedLevelIndexes = Object.keys(levelIndexesToDivsDictionary)
         .map(Number)
         .sort((a, b) => b - a);
 
-    const treeDiagram = document.getElementById('tree-diagram');
-    const rootParentsLevel = sortedKeys[0]
-    let parentsLevelDivsCollection = [];
-    let parentsLevelDiv = divsOnLevels[rootParentsLevel];
-    parentsLevelDivsCollection.push(parentsLevelDiv);
+    const rootLevelIndex = descSortedLevelIndexes[0]
+
+    let parentsLevelDiv = levelIndexesToDivsDictionary[rootLevelIndex];
     treeDiagram.appendChild(parentsLevelDiv);
+    await sleep(sleepInterval);
 
     // sort children
-    for (let i = 1; i < sortedKeys.length; i++) {
-        const childrenLevel = sortedKeys[i];
-        const childrenLevelDiv = divsOnLevels[childrenLevel];
+    for (let i = 1; i < descSortedLevelIndexes.length; i++) {
+        const childrenLevelIndex = descSortedLevelIndexes[i];
+        const childrenLevelDiv = levelIndexesToDivsDictionary[childrenLevelIndex];
 
-        parentsLevelDiv = sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv);
-        parentsLevelDivsCollection.push(parentsLevelDiv);
+        let sortedChildrenLevelDiv = createTreeLevelDiv();
+        treeDiagram.appendChild(sortedChildrenLevelDiv);
+        parentsLevelDiv = await fillWithSortedChildren(sortedChildrenLevelDiv, parentsLevelDiv, childrenLevelDiv);
     }
 
-    const treeLines = document.getElementById('tree-lines');
-
-    // Get the size of treeDiagram
-    const treeDiagramStyles = window.getComputedStyle(treeDiagram);
-    const width = treeDiagram.offsetWidth || parseFloat(treeDiagramStyles.width);
-    const height = treeDiagram.offsetHeight || parseFloat(treeDiagramStyles.height);
-
-    // Set the size of treeLines
-    treeLines.style.width = `${width}px`;
-    treeLines.style.height = `${height}px`;
-
     // draw lines
-    for (let i = 1; i < parentsLevelDivsCollection.length; i++) {
-        const parentsLevelDiv1 = parentsLevelDivsCollection[i - 1];
-        const childrenLevelDiv = parentsLevelDivsCollection[i];
+    const treeDiagramStyle = window.getComputedStyle(treeDiagram);
+    const treeDiagramWidth = treeDiagram.offsetWidth || parseFloat(treeDiagramStyle.width);
+    const treeDiagramHeight = treeDiagram.offsetHeight || parseFloat(treeDiagramStyle.height);
 
-        drawLines(parentsLevelDiv1, childrenLevelDiv);
+    treeLines.style.width = `${treeDiagramWidth}px`;
+    treeLines.style.height = `${treeDiagramHeight}px`;
+
+    const levelDivsCollection = treeDiagram.querySelectorAll(".tree-line-div");
+    for (let i = 1; i < levelDivsCollection.length; i++) {
+        const parentsLevelDiv1 = levelDivsCollection[i - 1];
+        const childrenLevelDiv = levelDivsCollection[i];
+
+        await drawLines(parentsLevelDiv1, childrenLevelDiv);
     }
 }
 
-function sortChildrenLevelDiv(treeDiagram, parentsLevelDiv, childrenLevelDiv) {
+async function fillWithSortedChildren(sortedChildrenLevelDiv, parentsLevelDiv, childrenLevelDiv) {
     let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-div');
-    let sortedChildrenLevelDiv = createTreeLevelDiv();
-    treeDiagram.appendChild(sortedChildrenLevelDiv);
 
-    parentsDivs.forEach(parentsDiv => {
+    for (let parentsDiv of parentsDivs) {
         let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
         let motherId = parentsDiv.querySelector('.tree-node-female')?.id;
 
         let pairDivs = childrenLevelDiv.querySelectorAll('.tree-div');
-        pairDivs.forEach(pairDiv => {
+        for (let pairDiv of pairDivs) {
             let malesChildBiologicalMotherId = pairDiv.querySelector('.tree-node-male')?.biologicalMotherId;
             let malesChildBiologicalFatherId = pairDiv.querySelector('.tree-node-male')?.biologicalFatherId;
             let femalesChildBiologicalMotherId = pairDiv.querySelector('.tree-node-female')?.biologicalMotherId;
             let femalesChildBiologicalFatherId = pairDiv.querySelector('.tree-node-female')?.biologicalFatherId;
 
-            if ((fatherId != null && malesChildBiologicalFatherId   != null && fatherId == malesChildBiologicalFatherId) ||
+            if ((fatherId != null && malesChildBiologicalFatherId != null && fatherId == malesChildBiologicalFatherId) ||
                 (fatherId != null && femalesChildBiologicalFatherId != null && fatherId == femalesChildBiologicalFatherId) ||
-                (motherId != null && malesChildBiologicalMotherId   != null && motherId == malesChildBiologicalMotherId) ||
+                (motherId != null && malesChildBiologicalMotherId != null && motherId == malesChildBiologicalMotherId) ||
                 (motherId != null && femalesChildBiologicalMotherId != null && motherId == femalesChildBiologicalMotherId)) {
                 sortedChildrenLevelDiv.appendChild(pairDiv);
+                await sleep(sleepInterval);
+
             }
-        });
-    });
+        }
+    }
 
     return sortedChildrenLevelDiv;
 }
 
-function drawLines(parentsLevelDiv, childrenLevelDiv) {
+async function drawLines(parentsLevelDiv, childrenLevelDiv) {
     let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-div');
     let childrenDivs = childrenLevelDiv.querySelectorAll('.tree-div');
 
     let i = -5 * linesVerticalOffset;
 
-    parentsDivs.forEach(parentsDiv => {
+    for (let parentsDiv of parentsDivs) {
         let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
         let motherId = parentsDiv.querySelector('.tree-node-female')?.id;
 
         let pairDivs = childrenLevelDiv.querySelectorAll('.tree-div');
 
-        pairDivs.forEach(pairDiv => {
+        for (let pairDiv of pairDivs) {
             let pairMaleNode = pairDiv.querySelector('.tree-node-male');
             let pairFemaleNode = pairDiv.querySelector('.tree-node-female');
 
@@ -103,13 +104,15 @@ function drawLines(parentsLevelDiv, childrenLevelDiv) {
 
             if (pairMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
                 drawLine(parentsDiv, pairMaleNode, i += linesVerticalOffset);
+                await sleep(sleepInterval);
             }
 
             if (pairFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
                 drawLine(parentsDiv, pairFemaleNode, i += linesVerticalOffset);
+                await sleep(sleepInterval);
             }
-        });
-    });
+        }
+    }
 }
 
 function drawLine(parentElement, childElement, verticalOffset) {
@@ -125,7 +128,6 @@ function drawLine(parentElement, childElement, verticalOffset) {
 
     const middleY = ((parentY + childY) / 2) + verticalOffset;
 
-    // Draw the path
     const pathData = `
         M ${parentX},${parentY}
         L ${parentX},${middleY}
@@ -138,7 +140,6 @@ function drawLine(parentElement, childElement, verticalOffset) {
     path.setAttribute('stroke', 'black');
     path.setAttribute('stroke-width', '1');
     path.setAttribute('fill', 'transparent'); // No fill for the path
-
 
     svg.appendChild(path);
 }
@@ -223,5 +224,8 @@ function createTreeLevelDiv() {
     return treeLevelDiv;
 }
 
-createTreeDiagram(35);
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+createTreeDiagram(35);
