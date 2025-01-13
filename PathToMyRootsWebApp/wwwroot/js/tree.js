@@ -139,9 +139,7 @@ function drawLine(parentElement, childElement, verticalOffset) {
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', pathData);
-    path.setAttribute('stroke', 'black');
-    path.setAttribute('stroke-width', '1');
-    path.setAttribute('fill', 'transparent'); // No fill for the path
+    path.setAttribute('class', 'tree-line-svg');
 
     svg.appendChild(path);
 }
@@ -157,12 +155,19 @@ async function createNodesFrom(personId, processedPersonIds, divsOnLevels, level
 
     if (person.isMale) {
         treeDiv.appendChild(createTreeNode(person));
-        if (person.spouse != null)
-            treeDiv.appendChild(createTreeNode(person.spouse));
+
+        if (person.spouse != null) {
+            const spouseResponse = await fetch(`${apiUrl}${person.spouseId}`);
+            const spouse = await spouseResponse.json();
+            treeDiv.appendChild(createTreeNode(spouse));
+        }
     }
     else {
-        if (person.spouse != null)
-            treeDiv.appendChild(createTreeNode(person.spouse));
+        if (person.spouse != null) {
+            const spouseResponse = await fetch(`${apiUrl}${person.spouseId}`);
+            const spouse = await spouseResponse.json();
+            treeDiv.appendChild(createTreeNode(spouse));
+        }
         treeDiv.appendChild(createTreeNode(person));
     }
 
