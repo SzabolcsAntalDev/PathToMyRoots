@@ -24,7 +24,7 @@
 
 @if (Model != null && Model.Any())
 {
-    <table class="table">
+    <table>
         <thead>
             <tr>
                 <th>First Name</th>
@@ -49,21 +49,9 @@
                     <td>@person.MaidenName</td>
                     <td>@person.OtherNames</td>
                     <td>
-                        @if (person.IsMale)
-
-                        {
-                            <a href="#" class="gender-icon">
-                                <img src="~/icons/male.svg" alt="Male" class="gender-icon" />
-                            </a>
-                        }
-
-                        else
-
-                        {
-                            <a href="#" class="gender-icon">
-                                <img src="~/icons/female.svg" alt="Female" class="gender-icon" />
-                            </a>
-                        }
+                        <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
+                             alt="@(person.IsMale ? "Male" : "Female")"
+                             class="img-gender" />
                     </td>
                     <td>@DateFormatter.ToHumanReadableDateFormat(person.BirthDate)</td>
                     <td>@DateFormatter.ToHumanReadableDateFormat(person.DeathDate)</td>
@@ -105,17 +93,17 @@
                     </td>
 
                     <td>
-                        <div class="icon-actions">
+                        <div class="div-actions">
                             <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
-                                <img src="~/icons/tree.svg" alt="View Tree" class="icon-action" title="View Tree">
+                                <img src="~/icons/tree.svg" alt="View Tree" class="img-action" title="View Tree">
                             </a>
                             <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
-                                <img src="~/icons/edit.svg" alt="Edit" class="icon-action" title="Edit">
+                                <img src="~/icons/edit.svg" alt="Edit" class="img-action" title="Edit">
                             </a>
                             <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
                                 <input type="hidden" name="id" value="@person.Id" />
                                 <button type="submit" style="background: transparent; border: none; padding: 0; cursor: pointer;">
-                                    <img src="~/icons/delete.svg" alt="Delete" class="icon-action" title="Delete">
+                                    <img src="~/icons/delete.svg" alt="Delete" class="img-action" title="Delete">
                                 </button>
                             </form>
                         </div>
@@ -128,4 +116,8 @@
 else
 {
     <p>No persons found.</p>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/persons.css" />
 }

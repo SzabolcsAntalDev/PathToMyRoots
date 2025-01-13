@@ -7,7 +7,6 @@ html {
 body {
     height: 100%;
     margin: 0px;
-    background-color: orange;
     display: flex;
     flex-direction: column;
 }
@@ -53,7 +52,6 @@ a {
 }
 
 .span-main-logo {
-    font-size: 26px;
     white-space: nowrap;
     padding-right: 10px;
     /*background-color: blue;*/
@@ -73,7 +71,6 @@ a {
     text-decoration: none;
     white-space: nowrap;
     padding: 10px 20px;
-    font-size: 18px;
     /*background-color: lightgreen;*/
 }
 
@@ -102,6 +99,5 @@ a {
 }
 
 .span-footer-logo {
-    font-size: 18px;
     /*background-color: red;*/
 }

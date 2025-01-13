@@ -1,8 +1,44 @@
-﻿.table {
+﻿table {
     table-layout: auto;
     width: 100%;
+    border-collapse: collapse;
 }
 
-    .table td {
-        white-space: nowrap;
-    }
+th {
+    padding: 8px;
+}
+
+table tbody tr:nth-child(odd) {
+    /*background-color: #f9f9f9;*/
+}
+
+table tbody tr:nth-child(even) {
+    /*background-color: #f1f1f1;*/
+}
+
+table tbody tr:hover {
+    background-color: #4a5164;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    white-space: nowrap;
+    padding: 4px;
+}
+
+.img-gender {
+    width: 20px;
+    height: 20px;
+}
+
+.div-actions {
+    display: inline-flex;
+    align-items: center;
+}
+
+.img-action {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0 2px;
+}

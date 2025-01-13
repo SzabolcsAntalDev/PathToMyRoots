@@ -3,28 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PathToMyRootsWebApp</title>
+    <title>@ViewData["Title"] - Path To My Roots</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/persons.css" />
-    <link rel="stylesheet" href="~/css/icons.css" />
-    <link rel="stylesheet" href="~/css/tree.css" />
-    <link rel="stylesheet" href="~/PathToMyRootsWebApp.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <div class="div-container">
         <nav class="nav-menu">
-            <a class="a-main-logo" asp-area="" asp-controller="Person" asp-action="Persons">
+            <a class="a-main-logo" asp-controller="Person" asp-action="Persons">
                 <img class="img-main-logo" src="~/icons/path-to-my-roots.svg">
                 <span class="span-main-logo">Path To My Roots</span>
             </a>
 
             <ul class="ul-menu">
                 <li class="li-menu">
-                    <a class="a-menu" asp-area="" asp-controller="Person" asp-action="Persons">Persons</a>
+                    <a class="a-menu" asp-controller="Person" asp-action="Persons">Persons</a>
                 </li>
                 <li class="li-menu">
-                    <a class="a-menu" asp-area="" asp-controller="Person" asp-action="AddPerson">Add Person</a>
+                    <a class="a-menu" asp-controller="Person" asp-action="AddPerson">Add Person</a>
                 </li>
             </ul>
         </nav>
@@ -35,7 +32,7 @@
     </div>
 
     <footer class="footer-container">
-        <a class="a-footer-logo" asp-area="" asp-controller="Person" asp-action="Persons">
+        <a class="a-footer-logo" asp-controller="Person" asp-action="Persons">
             <img class="img-footer-logo" src="~/icons/path-to-my-roots.svg">
             <span class="span-footer-logo">Path To My Roots</span>
         </a>
