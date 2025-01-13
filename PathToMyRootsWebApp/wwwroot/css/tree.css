@@ -19,6 +19,13 @@
     top: 0;
     left: 0;
     pointer-events: none;
+    background-color: transparent;
+}
+
+.tree-line-svg {
+    stroke: white;
+    stroke-width: 1px;
+    fill: transparent;
 }
 
 .tree-line-div {
@@ -36,26 +43,26 @@
 
 .tree-node-male {
     display: inline-block;
-    width: 120px;
+    width: 100px;
     white-space: nowrap;
     overflow: clip;
     text-overflow: ellipsis;
     padding: 5px;
     border: 1px solid black;
     font-size: 13px;
-    background-color: lightblue;
+    background-color: #6e7381;
 }
 
 .tree-node-female {
     display: inline-block;
-    width: 120px;
+    width: 100px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: clip;
     padding: 5px;
     border: 1px solid black;
     font-size: 13px;
-    background-color: burlywood;
+    background-color: #8a8f9a;
 }
 
 .tree-node-married {
@@ -67,5 +74,5 @@
     padding: 5px;
     border: 1px solid black;
     font-size: 11px;
-    background-color: lightgreen;
+    background-color: #a1a4b0;
 }
