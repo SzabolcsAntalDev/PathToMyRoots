@@ -6,32 +6,32 @@
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Maiden Name</th>
                 <th>Other Names</th>
-                <th>Gender</th>
                 <th>Birth Date</th>
                 <th>Death Date</th>
                 <th>Mother</th>
                 <th>Father</th>
                 <th>Spouse</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var person in Model)
             {
                 <tr>
-                    <td>@person.FirstName</td>
-                    <td>@person.LastName</td>
-                    <td>@person.MaidenName</td>
-                    <td>@person.OtherNames</td>
                     <td>
                         <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
                              alt="@(person.IsMale ? "Male" : "Female")"
                              class="img-gender" />
                     </td>
+                    <td>@person.FirstName</td>
+                    <td>@person.LastName</td>
+                    <td>@person.MaidenName</td>
+                    <td>@person.OtherNames</td>
                     <td>@DateFormatter.ToHumanReadableDateFormat(person.BirthDate)</td>
                     <td>@DateFormatter.ToHumanReadableDateFormat(person.DeathDate)</td>
                     <td>
@@ -71,7 +71,7 @@
                         }
                     </td>
 
-                    <td>
+                    <td width="1%">
                         <div class="div-actions">
                             <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
                                 <img src="~/icons/tree.svg" alt="View Tree" class="img-action" title="View Tree">
