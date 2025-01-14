@@ -75,11 +75,6 @@ table td:first-child, table th:first-child {
     color: gray;
 }
 
-.pagination-link-disabled {
-    padding: 5px 10px;
-    text-decoration: none;
-}
-
     .pagination-link-disabled:hover {
         border: 1px solid gray;
         color: gray;
