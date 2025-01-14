@@ -9,7 +9,7 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <div class="div-container">
+    <div class="div-without-footer">
         <nav class="nav-menu">
             <a class="a-main-logo" asp-controller="Person" asp-action="Persons">
                 <img class="img-main-logo" src="~/icons/path-to-my-roots.svg">
@@ -26,7 +26,7 @@
             </ul>
         </nav>
 
-        <main class="main-container">
+        <main class="main-content-container">
             @RenderBody()
         </main>
     </div>

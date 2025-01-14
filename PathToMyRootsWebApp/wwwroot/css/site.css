@@ -20,7 +20,7 @@ a {
         color: #ffffff;
     }
 
-.div-container {
+.div-without-footer {
     display: flex;
     flex-grow: 1;
     background-color: #3b3e4f;
@@ -43,7 +43,6 @@ a {
     /*background-color: #4a5164;*/
 }
 
-/*Szabi: make the image occupy the available vertical space of the <a> tag*/
 .img-main-logo {
     width: 50px;
     height: 100%;
@@ -74,8 +73,9 @@ a {
     /*background-color: lightgreen;*/
 }
 
-.main-container {
-    padding: 30px 15px 15px 15px;
+.main-content-container {
+    padding: 60px;
+    width: 100%;
 }
 
 .footer-container {

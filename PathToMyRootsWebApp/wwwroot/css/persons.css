@@ -1,4 +1,10 @@
-﻿table {
+﻿.div-persons {
+    display: block;
+    width: 100%;
+    /*background-color: orange;*/
+}
+
+table {
     table-layout: auto;
     width: 100%;
     border-collapse: collapse;
@@ -41,4 +47,45 @@ th, td {
     height: 20px;
     cursor: pointer;
     margin: 0 2px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination-link {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #fff;
+    margin: 0px;
+}
+
+.pagination-link-disabled {
+    padding: 5px 10px;
+    border: 1px solid gray;
+    text-decoration: none;
+    color: gray;
+}
+
+.pagination-link-disabled {
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+    .pagination-link-disabled:hover {
+        border: 1px solid gray;
+        color: gray;
+        background-color: #3b3e4f;
+        cursor: default;
+    }
+
+.pagination-link:hover {
+    background-color: #4a5164;
+}
+
+.pages-text {
+    margin: 0px 8px;
 }

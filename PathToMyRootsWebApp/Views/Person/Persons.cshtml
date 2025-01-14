@@ -2,122 +2,35 @@
 @using PathToMyRootsWebApp.Utils
 @model List<PathToMyRootsWebApp.Models.PersonModel>
 
-@{
-    ViewData["Title"] = "Persons";
-}
+<div class="div-persons">
+    @{
+        ViewData["Title"] = "Persons";
+    }
 
-<h1>@ViewData["Title"]</h1>
+    <h1>@ViewData["Title"]</h1>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div id="persons-content">
+        @await Html.PartialAsync("_PersonsTablePartial", Model)
     </div>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
-@if (Model != null && Model.Any())
-{
-    <table>
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Maiden Name</th>
-                <th>Other Names</th>
-                <th>Gender</th>
-                <th>Birth Date</th>
-                <th>Death Date</th>
-                <th>Mother</th>
-                <th>Father</th>
-                <th>Spouse</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var person in Model)
-            {
-                <tr>
-                    <td>@person.FirstName</td>
-                    <td>@person.LastName</td>
-                    <td>@person.MaidenName</td>
-                    <td>@person.OtherNames</td>
-                    <td>
-                        <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
-                             alt="@(person.IsMale ? "Male" : "Female")"
-                             class="img-gender" />
-                    </td>
-                    <td>@DateFormatter.ToHumanReadableDateFormat(person.BirthDate)</td>
-                    <td>@DateFormatter.ToHumanReadableDateFormat(person.DeathDate)</td>
-                    <td>
-                        @if (person.BiologicalMother == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalMotherId">
-                                @PersonModelFormatter.ToShortFullName(person.BiologicalMother)
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (person.BiologicalFather == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalFatherId">
-                                @PersonModelFormatter.ToShortFullName(person.BiologicalFather)
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (person.Spouse == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SpouseId">
-                                @PersonModelFormatter.ToShortFullName(person.Spouse)
-                            </a>
-                        }
-                    </td>
-
-                    <td>
-                        <div class="div-actions">
-                            <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
-                                <img src="~/icons/tree.svg" alt="View Tree" class="img-action" title="View Tree">
-                            </a>
-                            <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
-                                <img src="~/icons/edit.svg" alt="Edit" class="img-action" title="Edit">
-                            </a>
-                            <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
-                                <input type="hidden" name="id" value="@person.Id" />
-                                <button type="submit" style="background: transparent; border: none; padding: 0; cursor: pointer;">
-                                    <img src="~/icons/delete.svg" alt="Delete" class="img-action" title="Delete">
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No persons found.</p>
-}
-
+</div>
 @section Styles {
     <link rel="stylesheet" href="~/css/persons.css" />
+}
+
+@section Scripts {
+    <script src="~/js/persons.js"></script>
 }

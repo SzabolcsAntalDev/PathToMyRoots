@@ -13,24 +13,41 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons(string searchQuery)
+        //public async Task<IActionResult> Persons(string searchQuery)
+        //{
+        //    var persons = await _personApiService.GetPersonsAsync();
+
+        //    if (!string.IsNullOrEmpty(searchQuery))
+        //    {
+        //        persons =
+        //            persons
+        //                .Where(p =>
+        //                    p.FirstName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+        //                    p.LastName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+        //                    p.MaidenName != null && p.MaidenName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+        //                    p.OtherNames != null && p.OtherNames.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+        //                .ToList();
+        //    }
+
+        //    ViewData["SearchQuery"] = searchQuery;
+        //    return View(persons);
+        //}
+
+        public async Task<IActionResult> Persons(int page = 0, int pageSize = 20)
         {
             var persons = await _personApiService.GetPersonsAsync();
+            var paginatedPersons = persons
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-            if (!string.IsNullOrEmpty(searchQuery))
-            {
-                persons =
-                    persons
-                        .Where(p =>
-                            p.FirstName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-                            p.LastName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-                            p.MaidenName != null && p.MaidenName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-                            p.OtherNames != null && p.OtherNames.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-                        .ToList();
-            }
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)persons.Count / pageSize);
 
-            ViewData["SearchQuery"] = searchQuery;
-            return View(persons);
+            if (Request.Headers.XRequestedWith == "XMLHttpRequest")
+                return PartialView("_PersonsTablePartial", paginatedPersons);
+
+            return View(paginatedPersons);
         }
 
         public async Task<IActionResult> AddPerson()
