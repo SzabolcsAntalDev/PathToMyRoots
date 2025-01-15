@@ -33,7 +33,7 @@ namespace PathToMyRootsWebApp.Controllers
         //    return View(persons);
         //}
 
-        public async Task<IActionResult> Persons(int page = 0, int pageSize = 20)
+        public async Task<IActionResult> Persons(int page = 0, int pageSize = 10)
         {
             var persons = await _personApiService.GetPersonsAsync();
             var paginatedPersons = persons

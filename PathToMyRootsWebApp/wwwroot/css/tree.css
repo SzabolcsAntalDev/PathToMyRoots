@@ -1,10 +1,15 @@
 ﻿.div-tree {
     display: block;
-    background-color: red;
-    display:block;
+    width: 100%;
+    overflow: auto;
+    /*background-color: red;*/
 }
 
 .tree-content {
-    background-color: orange;
-    margin: auto;
+    display: flex;
+    /*background-color: orange;*/
 }
+
+/*.div-my{
+    display: block;
+}*/

@@ -1,7 +1,12 @@
 ﻿.div-persons {
     display: block;
     width: 100%;
+    overflow: auto;
     /*background-color: orange;*/
+}
+
+.persons-content {
+    /*background-color: blue;*/
 }
 
 table {

@@ -31,6 +31,7 @@ a {
     display: flex;
     flex-direction: column;
     background-color: #3c4252;
+    min-width: 250px;
 }
 
 .a-main-logo {
@@ -74,8 +75,12 @@ a {
 }
 
 .main-content-container {
+    display: inline-block;
     padding: 60px;
     width: 100%;
+    min-width: 800px;
+    /*background-color: red;*/
+    white-space:nowrap;
 }
 
 .footer-container {
