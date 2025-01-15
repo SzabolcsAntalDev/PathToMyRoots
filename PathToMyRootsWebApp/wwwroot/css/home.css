@@ -1,0 +1,11 @@
+﻿.div-tree {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    /*background-color: red;*/
+}
+
+.tree-content {
+    display: flex;
+    /*background-color: orange;*/
+}

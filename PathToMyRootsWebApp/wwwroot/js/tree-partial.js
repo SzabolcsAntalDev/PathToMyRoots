@@ -247,5 +247,3 @@ function createTreeLevelDiv() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-createTreeDiagram(35);

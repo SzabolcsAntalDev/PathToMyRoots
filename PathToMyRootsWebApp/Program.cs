@@ -29,7 +29,7 @@ namespace PathToMyRootsWebApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Tree}/{action=Tree}");
+                pattern: "{controller=Home}/{action=Home}");
 
             app.Run();
         }

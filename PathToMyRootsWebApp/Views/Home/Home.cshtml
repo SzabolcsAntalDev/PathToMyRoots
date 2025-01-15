@@ -1,0 +1,22 @@
+﻿@model PathToMyRootsWebApp.Models.PersonModel
+
+Welcome
+
+<div class="div-tree">
+    <div class="tree-content">
+        <div class="div-my">
+            @await Html.PartialAsync("../Tree/_TreePartial", Model)
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" />
+}
+@section Scripts {
+    <script src="~/js/home.js"></script>
+    <script>
+        const personId = @Model.Id;
+        createTreeDiagram(personId);
+    </script>
+}
