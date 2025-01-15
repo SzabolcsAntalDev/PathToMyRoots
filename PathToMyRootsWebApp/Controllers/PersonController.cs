@@ -88,7 +88,6 @@ namespace PathToMyRootsWebApp.Controllers
 
                 if (result)
                 {
-                    TempData["SuccessMessage"] = "Person added successfully!";
                     return RedirectToAction("Persons");
                 }
                 else
@@ -115,7 +114,6 @@ namespace PathToMyRootsWebApp.Controllers
 
                 if (result)
                 {
-                    TempData["SuccessMessage"] = "Person updated successfully!";
                     return RedirectToAction("Persons");
                 }
                 else
@@ -142,11 +140,6 @@ namespace PathToMyRootsWebApp.Controllers
         public async Task<IActionResult> DeletePerson(int id)
         {
             var result = await _personApiService.DeletePersonAsync(id);
-
-            if (result)
-                TempData["SuccessMessage"] = "Person deleted successfully.";
-            else
-                TempData["ErrorMessage"] = "Failed to delete the person. Please try again.";
 
             return RedirectToAction("Persons");
         }

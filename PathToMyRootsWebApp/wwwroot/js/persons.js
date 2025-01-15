@@ -18,7 +18,7 @@
                 .then(data => {
                     const container = document.querySelector("#persons-content");
                     container.innerHTML = data;
-                    attachPaginationEventListeners(); // Reattach event listeners for the new content
+                    attachPaginationEventListeners();
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);

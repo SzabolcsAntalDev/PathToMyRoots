@@ -1,82 +1,25 @@
-﻿@using PathToMyRootsWebApp.Constants
-@{
-    ViewData["Title"] = "Tree";
-}
+﻿@model PathToMyRootsWebApp.Models.PersonModel
 
-<h1>@ViewData["Title"]</h1>
+<div class="div-tree">
+    @using PathToMyRootsWebApp.Constants
+    @{
+        ViewData["Title"] = "Tree";
+    }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
+    <h1>@ViewData["Title"]</h1>
+    <div class="tree-content">
+        @* <button onclick="exportToPNG()">Export to PNG</button> *@
+
+        <div class="div-my">
+            @await Html.PartialAsync("_TreePartial", Model)
+        </div>
     </div>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
-<body>
-    <button onclick="exportToPNG()" style="display: block">Export to PNG</button>
-
-    <div class="tree-diagram-container-div" id="tree-diagram-container-div">
-        <div class="tree-diagram" id="tree-diagram"></div>
-        <svg class="tree-lines" id="tree-lines"></svg>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <script>
-        const HumanReadableDateFormat = '@PathToMyRootsWebAppConstants.HumanReadableDateFormat';
-        const HumanReadableDateStillAlive = '@PathToMyRootsWebAppConstants.HumanReadableDateStillAlive';
-        const HumanReadableDateUnknownDate = '@PathToMyRootsWebAppConstants.HumanReadableDateUnknownDate';
-
-        function exportToPNG() {
-            const container = document.getElementById('tree-diagram-container-div');
-            const originalOverflow = container.style.overflow;
-            container.style.overflow = 'visible';
-
-            const fullWidth = container.scrollWidth;
-            const fullHeight = container.scrollHeight;
-
-            html2canvas(container, {
-                useCORS: true,
-                allowTaint: false,
-                scale: 2,
-                width: fullWidth,
-                height: fullHeight,
-                scrollX: 0,
-                scrollY: 0,
-            }).then(canvas => {
-                const base64image = canvas.toDataURL("image/png");
-
-                const anchor = document.createElement('a');
-                anchor.setAttribute("href", base64image);
-                anchor.setAttribute("download", "tree-diagram.png");
-                document.body.appendChild(anchor);
-                anchor.click();
-                document.body.removeChild(anchor);
-            }).catch(error => {
-                console.error("Error exporting to PNG:", error);
-            }).finally(() => {
-                container.style.overflow = originalOverflow;
-            });
-        }
-
-    </script>
-</body>
+</div>
 
 @section Styles {
     <link rel="stylesheet" href="~/css/tree.css" />
 }
-
 @section Scripts {
-    <script>
-        const UnknownDate = new Date('@PathToMyRootsWebAppConstants.UnknownDate.ToString("yyyy-MM-ddTHH:mm:ss")');
-        const UnknownValue = '@PathToMyRootsWebAppConstants.UnknownValue';
-    </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="~/js/tree.js"></script>
 }

@@ -1,0 +1,17 @@
+﻿@model PathToMyRootsWebApp.Models.PersonModel
+@using PathToMyRootsWebApp.Constants
+
+<div class="tree-diagram-container-div" id="tree-diagram-container-div">
+    <div class="tree-diagram" id="tree-diagram"></div>
+    <svg class="tree-lines" id="tree-lines"></svg>
+</div>
+
+<link rel="stylesheet" href="~/css/tree-partial.css" />
+
+<script>
+    const UnknownDate = new Date('@PathToMyRootsWebAppConstants.UnknownDate.ToString("yyyy-MM-ddTHH:mm:ss")');
+    const UnknownValue = '@PathToMyRootsWebAppConstants.UnknownValue';
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.29.3/date-fns.min.js"></script>
+<script src="~/js/tree-partial.js"></script>

@@ -8,19 +8,6 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
-else if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
 <form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="form-person">
     @if (Model?.Id > 0)
     {
@@ -121,8 +108,8 @@ else if (TempData["ErrorMessage"] != null)
     <div class="div-container">
         <div class="div-labels-for-inputs">
             <label for="IsMale" class="label-for-input">Gender:</label>
-            <label for="BiologicalMotherId" class="label-for-input">Mother:</label>
             <label for="BiologicalFatherId" class="label-for-input">Father:</label>
+            <label for="BiologicalMotherId" class="label-for-input">Mother:</label>
             <label for="SpouseId" class="label-for-input">Spouse:</label>
         </div>
         <div class="div-inputs">
