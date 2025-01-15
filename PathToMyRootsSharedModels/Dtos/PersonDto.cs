@@ -8,8 +8,8 @@
         public string? MaidenName { get; set; }
         public string? OtherNames { get; set; }
         public bool IsMale { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public DateTime? DeathDate { get; set; }
+        public string? BirthDate { get; set; }
+        public string? DeathDate { get; set; }
         public int? BiologicalMotherId { get; set; }
         public int? BiologicalFatherId { get; set; }
         public int? SpouseId { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace PathToMyRootsDataAccess.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PathToMyRootsDataAccess.Models;
 
 public partial class Person
 {
@@ -14,9 +16,11 @@ public partial class Person
 
     public bool IsMale { get; set; }
 
-    public DateTime? BirthDate { get; set; }
+    [RegularExpression(@"^\+\d{8}$", ErrorMessage = "Date must be in +YYYYMMDD format.")]
+    public string? BirthDate { get; set; }
 
-    public DateTime? DeathDate { get; set; }
+    [RegularExpression(@"^\+\d{8}$", ErrorMessage = "Date must be in +YYYYMMDD format.")]
+    public string? DeathDate { get; set; }
 
     public int? BiologicalMotherId { get; set; }
 

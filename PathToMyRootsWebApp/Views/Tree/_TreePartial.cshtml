@@ -9,9 +9,10 @@
 <link rel="stylesheet" href="~/css/tree-partial.css" />
 
 <script>
-    const UnknownDate = new Date('@PathToMyRootsWebAppConstants.UnknownDate.ToString("yyyy-MM-ddTHH:mm:ss")');
-    const UnknownValue = '@PathToMyRootsWebAppConstants.UnknownValue';
+    const UnknownDate = '@Html.Raw(PathToMyRootsWebAppConstants.UnknownDate)';
+    const UnknownValue = '@Html.Raw(PathToMyRootsWebAppConstants.UnknownValue)';
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.29.3/date-fns.min.js"></script>
+<script src="~/js/utils.js"></script>
 <script src="~/js/tree-partial.js"></script>

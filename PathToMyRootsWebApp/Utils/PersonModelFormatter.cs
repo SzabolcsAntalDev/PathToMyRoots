@@ -20,7 +20,7 @@ namespace PathToMyRootsWebApp.Utils
 
             return
                 $"{personModel.LastName}" + (string.IsNullOrEmpty(personModel.MaidenName) ? null : $" ({personModel.MaidenName})") + $" {personModel.FirstName} " +
-                $"({DateFormatter.ToYearDateFormat(personModel.BirthDate)}-{DateFormatter.ToYearDateFormat(personModel.DeathDate)})";
+                $"({DateFormatter.DatabaseDateTimeToYearDateFormat(personModel.BirthDate)}-{DateFormatter.DatabaseDateTimeToYearDateFormat(personModel.DeathDate)})";
         }
 
         public static string ToGender(PersonModel? personModel)

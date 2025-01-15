@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PathToMyRootsDataAccess.Models;
 
@@ -28,12 +26,13 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.OtherNames).HasMaxLength(250);
             entity.Property(e => e.SpouseId).HasColumnName("SpouseID");
 
+            // Change the column type to CHAR(9) for BirthDate and DeathDate
             entity.Property(e => e.BirthDate)
-                .HasColumnType("datetime")
+                .HasColumnType("CHAR(9)")  // Use CHAR(9) for storing date strings like "+20220520"
                 .HasColumnName("BirthDate");
 
             entity.Property(e => e.DeathDate)
-                .HasColumnType("datetime")
+                .HasColumnType("CHAR(9)")  // Use CHAR(9) for storing date strings like "+20220520"
                 .HasColumnName("DeathDate");
 
             entity.HasOne(d => d.BiologicalFather).WithMany(p => p.InverseBiologicalFather)

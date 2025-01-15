@@ -21,7 +21,7 @@ namespace PathToMyRootsWebApp.Controllers
 
             var family = await _personApiService.GetFamilyAsync(id.Value);
 
-            return View();
+            return View(family);
         }
     }
 }

@@ -2,11 +2,16 @@
 {
     public static class PathToMyRootsWebAppConstants
     {
-        public const string HumanReadableDateFormat = "yyyy. MM. dd.";
+        public const string HumanReadableDateFormat = "{0}. {1}. {2}.";
         public const string HumanReadableDateStillAlive = "still alive";
         public const string HumanReadableDateUnknownDate = "?";
 
-        public static readonly DateTime UnknownDate = new(1753, 1, 1);
+        public const string DateInputFormat = "{0}-{1}-{2}";
+        public const string DateDatabaseFormat = "+{0}{1}{2}";
+
+        public const string DateInputFlatFormat = "yyyy-mm-dd";
+
+        public static readonly string UnknownDate = "+17530101";
 
         public const string ValueNotAvailable = "N/A";
         public const string UnknownValue = "?";

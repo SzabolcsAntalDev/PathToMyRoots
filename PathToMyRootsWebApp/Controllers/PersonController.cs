@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PathToMyRootsWebApp.Models;
 using PathToMyRootsWebApp.Services;
+using PathToMyRootsWebApp.Utils;
 
 namespace PathToMyRootsWebApp.Controllers
 {
@@ -84,6 +85,9 @@ namespace PathToMyRootsWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                personModel.BirthDate = DateFormatter.DateInputToDataBaseFormat(personModel.BirthDate);
+                personModel.DeathDate = DateFormatter.DateInputToDataBaseFormat(personModel.DeathDate);
+
                 var result = await _personApiService.AddPersonAsync(personModel);
 
                 if (result)
@@ -110,6 +114,9 @@ namespace PathToMyRootsWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                personModel.BirthDate = DateFormatter.DateInputToDataBaseFormat(personModel.BirthDate);
+                personModel.DeathDate = DateFormatter.DateInputToDataBaseFormat(personModel.DeathDate);
+
                 var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
 
                 if (result)

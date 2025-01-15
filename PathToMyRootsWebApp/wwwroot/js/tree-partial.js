@@ -1,6 +1,4 @@
-﻿//const { format, parseISO } = dateFns;
-
-const nodeWidth = 100;
+﻿const nodeWidth = 100;
 const nodeHeight = 50;
 const linesVerticalOffset = 4;
 const sleepInterval = 0;
@@ -212,12 +210,10 @@ function dateToString(date) {
     if (date == null)
         return "";
 
-    const serverDate = new Date(date);
-    if (serverDate.getTime() === UnknownDate.getTime())
+    if (date === UnknownDate)
         return UnknownValue;
 
-    return "aaa";
-    //return formattedDate = format(serverDate, HumanReadableDateFormat);
+    return formatDateString(date);
 }
 
 function createLineBreak() {
