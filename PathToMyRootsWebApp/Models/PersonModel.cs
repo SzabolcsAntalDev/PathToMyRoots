@@ -7,7 +7,7 @@ namespace PathToMyRootsWebApp.Models
         public int? Id { get; set; } = PathToMyRootsWebAppConstants.UnsetIntValue;
         public string? NobleTitle { get; set; }
         public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
         public string? MaidenName { get; set; }
         public string? OtherNames { get; set; }
         public bool IsMale { get; set; }
