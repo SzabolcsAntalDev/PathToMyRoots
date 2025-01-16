@@ -17,12 +17,14 @@
 
     <div class="div-container">
         <div class="div-labels-for-inputs">
+            <label for="NobleTitle" class="label-for-input">Noble Title:</label>
             <label for="FirstName" class="label-for-input">First Name:</label>
             <label for="LastName" class="label-for-input">Last Name:</label>
             <label for="MaidenName" class="label-for-input">Maiden Name:</label>
             <label for="OtherNames" class="label-for-input">Other Names:</label>
         </div>
         <div class="div-inputs">
+            <input type="text" id="NobleTitle" name="NobleTitle" class="input" value="@Model?.NobleTitle" />
             <input type="text" id="FirstName" name="FirstName" class="input" value="@Model?.FirstName" />
             <input type="text" id="LastName" name="LastName" class="input" value="@Model?.LastName" />
             <input type="text" id="MaidenName" name="MaidenName" class="input" value="@Model?.MaidenName" />

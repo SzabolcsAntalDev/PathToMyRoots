@@ -16,6 +16,7 @@ namespace PathToMyRootsApi.Mappings
             return new PersonDto()
             {
                 Id = person.Id,
+                NobleTitle = person.NobleTitle,
                 FirstName = person.FirstName,
                 LastName = person.LastName,
                 MaidenName = person.MaidenName,
@@ -55,6 +56,7 @@ namespace PathToMyRootsApi.Mappings
             return new Person
             {
                 Id = personDto.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
+                NobleTitle = personDto.NobleTitle,
                 FirstName = personDto.FirstName,
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,
@@ -96,6 +98,7 @@ namespace PathToMyRootsApi.Mappings
             return new PersonDto
             {
                 Id = family.Id,
+                NobleTitle = family.NobleTitle,
                 FirstName = family.FirstName,
                 LastName = family.LastName,
                 MaidenName = family.MaidenName,

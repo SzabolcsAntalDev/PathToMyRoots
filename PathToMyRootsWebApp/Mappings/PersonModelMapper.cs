@@ -13,6 +13,7 @@ namespace PathToMyRootsWebApp.Mappings
             return new PersonModel()
             {
                 Id = personDto.Id,
+                NobleTitle = personDto.NobleTitle,
                 FirstName = personDto.FirstName,
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,
@@ -52,6 +53,7 @@ namespace PathToMyRootsWebApp.Mappings
             return new PersonDto
             {
                 Id = personModel.Id,
+                NobleTitle = personModel.NobleTitle,
                 FirstName = personModel.FirstName,
                 LastName = personModel.LastName,
                 MaidenName = personModel.MaidenName,
@@ -93,6 +95,7 @@ namespace PathToMyRootsWebApp.Mappings
             return new PersonModel
             {
                 Id = personDto.Id,
+                NobleTitle = personDto.NobleTitle,
                 FirstName = personDto.FirstName,
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,

@@ -72,6 +72,7 @@ namespace PathToMyRootsDataAccess.Services
             if (existingPerson == null)
                 return null;
 
+            existingPerson.NobleTitle = updatedPerson.NobleTitle;
             existingPerson.FirstName = updatedPerson.FirstName;
             existingPerson.LastName = updatedPerson.LastName;
             existingPerson.MaidenName = updatedPerson.MaidenName;
