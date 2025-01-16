@@ -83,20 +83,24 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPerson(PersonModel personModel)
         {
+            personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
+            personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
+
             if (ModelState.IsValid)
             {
-                personModel.BirthDate = DateFormatter.DateInputToDataBaseFormat(personModel.BirthDate);
-                personModel.DeathDate = DateFormatter.DateInputToDataBaseFormat(personModel.DeathDate);
-
-                var result = await _personApiService.AddPersonAsync(personModel);
-
-                if (result)
+                if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
+                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2))
                 {
-                    return RedirectToAction("Persons");
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "There was an error adding the person.";
+                    var result = await _personApiService.AddPersonAsync(personModel);
+
+                    if (result)
+                    {
+                        return RedirectToAction("Persons");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "There was an error adding the person.";
+                    }
                 }
             }
 
@@ -112,20 +116,25 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPerson(PersonModel personModel)
         {
+            personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
+            personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
+
             if (ModelState.IsValid)
             {
-                personModel.BirthDate = DateFormatter.DateInputToDataBaseFormat(personModel.BirthDate);
-                personModel.DeathDate = DateFormatter.DateInputToDataBaseFormat(personModel.DeathDate);
-
-                var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
-
-                if (result)
+                if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
+                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2))
                 {
-                    return RedirectToAction("Persons");
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "There was an error updating the person.";
+
+                    var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
+
+                    if (result)
+                    {
+                        return RedirectToAction("Persons");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "There was an error updating the person.";
+                    }
                 }
             }
 

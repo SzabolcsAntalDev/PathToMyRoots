@@ -8,7 +8,7 @@ namespace PathToMyRootsWebApp.Utils
         public static string ToShortFullName(PersonModel? personModel)
         {
             if (personModel == null)
-                return PathToMyRootsWebAppConstants.ValueNotAvailable;
+                return PathToMyRootsWebAppConstants.UnknownValue;
 
             return $"{personModel.LastName} {personModel.FirstName}";
         }
@@ -16,17 +16,17 @@ namespace PathToMyRootsWebApp.Utils
         public static string ToShortFullInfo(PersonModel? personModel)
         {
             if (personModel == null)
-                return PathToMyRootsWebAppConstants.ValueNotAvailable;
+                return PathToMyRootsWebAppConstants.UnknownValue;
 
             return
                 $"{personModel.LastName}" + (string.IsNullOrEmpty(personModel.MaidenName) ? null : $" ({personModel.MaidenName})") + $" {personModel.FirstName} " +
-                $"({DateFormatter.DatabaseDateTimeToYearDateFormat(personModel.BirthDate)}-{DateFormatter.DatabaseDateTimeToYearDateFormat(personModel.DeathDate)})";
+                $"({DateHelper.ServerDateToYearFormat(personModel.BirthDate)}-{DateHelper.ServerDateToYearFormat(personModel.DeathDate)})";
         }
 
         public static string ToGender(PersonModel? personModel)
         {
             if (personModel == null)
-                return PathToMyRootsWebAppConstants.ValueNotAvailable;
+                return PathToMyRootsWebAppConstants.UnknownValue;
 
             return personModel.IsMale
                 ? "Male"

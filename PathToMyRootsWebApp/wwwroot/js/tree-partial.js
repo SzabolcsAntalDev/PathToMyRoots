@@ -210,8 +210,8 @@ function dateToString(date) {
     if (date == null)
         return "";
 
-    if (date === UnknownDate)
-        return UnknownValue;
+    if (date === UnknownServerDate)
+        return HumanReadableDateUnknownDate;
 
     return formatDateString(date);
 }

@@ -1,58 +1,57 @@
-﻿function toggleBirthDateInput() {
-    var birthDateDiv = document.getElementById("birthDateDiv");
-    var hiddenBirthDateInput = document.getElementById("hiddenBirthDate");
-    var unknownRadio = document.getElementById("unknownBirthDate");
-    var concreteDateRadio = document.getElementById("concreteBirthDate");
-    var birthDateInput = document.getElementById("birthDateInput");
+﻿function toggleDate(name) {
+    var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-alive");
+    var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
+    var inputRadioConcrete = document.getElementById("input-radio-" + name + "-date-concrete");
 
-    if (concreteDateRadio.checked) {
-        birthDateDiv.style.display = "block";
-        hiddenBirthDateInput.value = birthDateInput.value || "";
-    } else {
-        birthDateDiv.style.display = "none";
-        if (unknownRadio.checked) {
-            hiddenBirthDateInput.value = UnknownDate;
-        }
+    var dateInput = document.getElementById("input-" + name + "-date");
+    var hiddenDateInput = document.getElementById("input-hidden-" + name + "-date");
+
+    if (inputRadioAlive != null && inputRadioAlive.checked) {
+        dateInput.style.display = "none";
+        dateInput.removeAttribute("pattern");
+        dateInput.removeAttribute("title");
+
+        hiddenDateInput.value = null;
+    }
+
+    if (inputRadioUnknown.checked) {
+        dateInput.style.display = "none";
+        dateInput.removeAttribute("pattern");
+        dateInput.removeAttribute("title");
+        dateInput.removeAttribute("required");
+
+        hiddenDateInput.value = UnknownInputDate;
+    }
+
+    if (inputRadioConcrete.checked) {
+        dateInput.style.display = "block";
+        dateInput.setAttribute("pattern", DateInputPattern);
+        dateInput.setAttribute("title", "Date format should be " + DateInputFlatFormat);
+        dateInput.setAttribute("required", "");
+
+        hiddenDateInput.value = dateInput.value;
     }
 }
 
-function toggleDeathDateInput() {
-    var deathDateDiv = document.getElementById("deathDateDiv");
-    var hiddenDeathDateInput = document.getElementById("hiddenDeathDate");
-    var aliveRadio = document.getElementById("alive");
-    var unknownRadio = document.getElementById("unknownDeathDate");
-    var concreteDateRadio = document.getElementById("concreteDeathDate");
-    var deathDateInput = document.getElementById("deathDateInput");
-
-    if (concreteDateRadio.checked) {
-        deathDateDiv.style.display = "block";
-        hiddenDeathDateInput.value = deathDateInput.value;
-    } else {
-        deathDateDiv.style.display = "none";
-        if (aliveRadio.checked) {
-            hiddenDeathDateInput.value = null;
-        } else if (unknownRadio.checked) {
-            hiddenDeathDateInput.value = UnknownDate;
-        }
-    }
+function addDateInputChangedListener(name) {
+    document.getElementById("input-" + name + "-date").addEventListener('change', function () {
+        document.getElementById("input-hidden-" + name + "-date").value = this.value;
+    });
 }
 
-function capitalizeFirstLetter(text) {
-    if (text.length === 0) return text;
-    return text.charAt(0).toUpperCase() + text.slice(1);
+function toggleBirthDate() {
+    toggleDate("birth");
 }
 
-document.getElementById('deathDateInput').addEventListener('change', function () {
-    var deathDate = this.value;
-    document.getElementById('hiddenDeathDate').value = deathDate;
-});
-
-document.getElementById('birthDateInput').addEventListener('change', function () {
-    var birthDate = this.value;
-    document.getElementById('hiddenBirthDate').value = birthDate;
-});
+function toggleDeathDate() {
+    toggleDate("death");
+}
 
 document.addEventListener("DOMContentLoaded", function () {
-    toggleBirthDateInput();
-    toggleDeathDateInput();
+
+    addDateInputChangedListener("birth");
+    addDateInputChangedListener("death");
+
+    toggleBirthDate();
+    toggleDeathDate();
 });

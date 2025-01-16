@@ -32,87 +32,76 @@
 
     <div class="div-borders">
         <div class="div-border">
-            <label for="BirthDate" class="label-border-title">Birth Date:</label>
-            <fieldset class="fieldset-radio">
+            <label class="label-border-title">Birth Date:</label>
+            <fieldset class="fieldset-radios">
                 <label class="label-for-input">
-                    <input type="radio" name="BirthStatus" value="unknown" id="unknownBirthDate" class="input-radio"
-                    @if (Model?.BirthDate == null || Model?.BirthDate == PathToMyRootsWebAppConstants.UnknownDate)
+                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-unknown" class="input-radio"
+                    @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
                     {
                         @:checked
                     }
-                           onclick="toggleBirthDateInput()" /> Unknown
+                           onclick="toggleBirthDate()" /> Unknown
                 </label>
-
                 <label class="label-for-input">
-                    <input type="radio" name="BirthStatus" value="concreteDate" id="concreteBirthDate" class="input-radio"
-                    @if (Model?.BirthDate != null && Model.BirthDate != PathToMyRootsWebAppConstants.UnknownDate)
+                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete" class="input-radio"
+                    @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                     {
                         @:checked
                     }
-                           onclick="toggleBirthDateInput()" /> Date
+                           onclick="toggleBirthDate()" /> Date
                 </label>
 
-                <div id="birthDateDiv" style="display:none;">
-                    <input type="text"
-                           id="birthDateInput"
-                           name="birthDateInput"
-                           class="input-date"
-                           pattern="\d{4}-\d{2}-\d{2}"
-                           title="Date format should be @PathToMyRootsWebAppConstants.DateInputFlatFormat"
-                           placeholder="@PathToMyRootsWebAppConstants.DateInputFlatFormat"
-                    @if (Model?.BirthDate != null && Model.BirthDate != PathToMyRootsWebAppConstants.UnknownDate)
-                    {
-                        @:value="@DateFormatter.DatabaseDateTimeToDateInputText(@Model.BirthDate)"
-                    } />
-                </div>
+                <input type="text"
+                       id="input-birth-date"
+                       class="input"
+                       placeholder="@DateHelper.InputDateFlatFormat"
+                @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
+                {
+                    @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
+                } />
 
-                <input type="hidden" id="hiddenBirthDate" name="BirthDate" value="@DateFormatter.DatabaseDateTimeToDateInputText(@Model.BirthDate)" />
+                <input type="hidden" id="input-hidden-birth-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
             </fieldset>
         </div>
 
         <div class="div-border">
-            <label for="DeathDate" class="label-border-title">Death Date:</label>
-            <fieldset class="fieldset-radio">
+            <label class="label-border-title">Death Date:</label>
+            <fieldset class="fieldset-radios">
                 <label class="label-for-input">
-                    <input type="radio" name="DeathStatus" value="alive" id="alive" class="input-radio"
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-alive" class="input-radio"
                     @if (Model?.DeathDate == null)
                     {
                         @:checked
                     }
-                           onclick="toggleDeathDateInput()" /> Alive
+                           onclick="toggleDeathDate()" /> Alive
                 </label>
                 <label class="label-for-input">
-                    <input type="radio" name="DeathStatus" value="unknown" id="unknownDeathDate" class="input-radio"
-                    @if (Model?.DeathDate == PathToMyRootsWebAppConstants.UnknownDate)
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-unknown" class="input-radio"
+                    @if (Model?.DeathDate == DateHelper.UnknownServerDate)
                     {
                         @:checked
                     }
-                           onclick="toggleDeathDateInput()" /> Unknown
+                           onclick="toggleDeathDate()" /> Unknown
                 </label>
                 <label class="label-for-input">
-                    <input type="radio" name="DeathStatus" value="concreteDate" id="concreteDeathDate" class="input-radio"
-                    @if (Model?.DeathDate != null && Model.DeathDate != PathToMyRootsWebAppConstants.UnknownDate)
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete" class="input-radio"
+                    @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
                     {
                         @:checked
                     }
-                           onclick="toggleDeathDateInput()" /> Date
+                           onclick="toggleDeathDate()" /> Date
                 </label>
 
-                <div id="deathDateDiv" style="display:none;">
-                    <input type="text"
-                           id="deathDateInput"
-                           name="deathDateInput"
-                           class="input-date"
-                           pattern="\d{4}-\d{2}-\d{2}"
-                           title="Date format should be @PathToMyRootsWebAppConstants.DateInputFlatFormat"
-                           placeholder="@PathToMyRootsWebAppConstants.DateInputFlatFormat"
-                    @if (Model?.DeathDate != null && Model.DeathDate != PathToMyRootsWebAppConstants.UnknownDate)
-                    {
-                        @:value="@DateFormatter.DatabaseDateTimeToDateInputText(@Model.DeathDate)"
-                    } />
-                </div>
+                <input type="text"
+                       id="input-death-date"
+                       class="input"
+                       placeholder="@DateHelper.InputDateFlatFormat"
+                @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+                {
+                    @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
+                } />
 
-                <input type="hidden" id="hiddenDeathDate" name="DeathDate" value="@DateFormatter.DatabaseDateTimeToDateInputText(@Model.DeathDate)" />
+                <input type="hidden" id="input-hidden-death-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
             </fieldset>
         </div>
     </div>
@@ -179,7 +168,9 @@
 }
 @section Scripts {
     <script>
-        const UnknownDate = '@PathToMyRootsWebAppConstants.UnknownDate';
+        const DateInputPattern = '@Html.Raw(DateHelper.InputDateValidationPattern)';
+        const UnknownInputDate = '@Html.Raw(DateHelper.UnknownInputDate)';
+        const DateInputFlatFormat = '@Html.Raw(DateHelper.InputDateFlatFormat)';
     </script>
 
     <script src="~/js/add-edit-person.js"></script>

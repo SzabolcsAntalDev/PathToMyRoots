@@ -28,7 +28,8 @@
 
 .input {
     display: block;
-    margin: 4px 0px 4px 4px;
+    padding: 4px;
+    margin: 8px 0px 4px 4px;
     border: 1px solid #fff;
     color: #fff;
     background-color: #4a5164;
@@ -38,6 +39,7 @@
         outline: none;
     }
 
+
 .div-borders {
     /*background-color:orange;*/
     display: flex;
@@ -46,9 +48,13 @@
     gap: 8px;
 }
 
+
+
+
+
+
 .div-border {
     flex: 1;
-    /*background-color: blue;*/
     display: flex;
     flex-direction: column;
 }
@@ -56,7 +62,7 @@
 .label-border-title {
 }
 
-.fieldset-radio {
+.fieldset-radios {
     display: flex;
     flex-direction: column;
     margin: 8px 0px 0px 0px;
@@ -64,7 +70,13 @@
 
 .input-radio {
     accent-color: #4a5164;
+    margin: 8px;
 }
+
+
+
+
+
 
 .div-button {
     /*background-color: orange;*/

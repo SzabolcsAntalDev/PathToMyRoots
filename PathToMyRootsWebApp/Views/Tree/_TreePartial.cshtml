@@ -1,5 +1,6 @@
-﻿@model PathToMyRootsWebApp.Models.PersonModel
-@using PathToMyRootsWebApp.Constants
+﻿@using PathToMyRootsWebApp.Constants
+@using PathToMyRootsWebApp.Utils
+@model PathToMyRootsWebApp.Models.PersonModel
 
 <div class="tree-diagram-container-div" id="tree-diagram-container-div">
     <div class="tree-diagram" id="tree-diagram"></div>
@@ -9,8 +10,8 @@
 <link rel="stylesheet" href="~/css/tree-partial.css" />
 
 <script>
-    const UnknownDate = '@Html.Raw(PathToMyRootsWebAppConstants.UnknownDate)';
-    const UnknownValue = '@Html.Raw(PathToMyRootsWebAppConstants.UnknownValue)';
+    const UnknownServerDate = '@Html.Raw(DateHelper.UnknownServerDate)';
+    const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.29.3/date-fns.min.js"></script>

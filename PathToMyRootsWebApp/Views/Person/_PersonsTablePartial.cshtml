@@ -32,8 +32,8 @@
                     <td>@person.LastName</td>
                     <td>@person.MaidenName</td>
                     <td>@person.OtherNames</td>
-                    <td>@DateFormatter.DatabaseDateTimeToHumanReadableDateFormat(person.BirthDate)</td>
-                    <td>@DateFormatter.DatabaseDateTimeToHumanReadableDateFormat(person.DeathDate)</td>
+                    <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.BirthDate)</td>
+                    <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.DeathDate)</td>
                     <td>
                         @if (person.BiologicalMother == null)
                         {
