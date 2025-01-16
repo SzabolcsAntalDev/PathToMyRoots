@@ -201,9 +201,34 @@ function createTreeNode(person) {
     treeNode.biologicalMotherId = person.biologicalMotherId;
     treeNode.biologicalFatherId = person.biologicalFatherId;
     treeNode.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
-    treeNode.innerText = `${person.id} - ${person.lastName} ${person.maidenName ? `(${person.maidenName}) ` : ''}${person.firstName}${person.otherNames ? ` ${person.otherNames}` : ''} 
-                        (${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`;
+    treeNode.innerText = personToNodeText(person);
     return treeNode;
+}
+
+function personToNodeText(person) {
+    let details = [];
+
+    if (person.id)
+        details.push(person.id);
+
+    if (person.nobleTitle)
+        details.push(person.nobleTitle);
+
+    if (person.lastName)
+        details.push(person.lastName);
+
+    if (person.maidenName)
+        details.push(`(${person.maidenName})`);
+
+    if (person.firstName)
+        details.push(person.firstName);
+
+    if (person.otherNames)
+        details.push(person.otherNames);
+
+    details.push(`\n(${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`);
+
+    return details.filter(Boolean).join(' ');
 }
 
 function dateToString(date) {

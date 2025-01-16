@@ -10,7 +10,17 @@ namespace PathToMyRootsWebApp.Utils
             if (personModel == null)
                 return PathToMyRootsWebAppConstants.UnknownValue;
 
-            return $"{personModel.LastName} {personModel.FirstName}";
+            var nameParts = new List<string>();
+
+            if (!string.IsNullOrEmpty(personModel.NobleTitle))
+                nameParts.Add(personModel.NobleTitle);
+
+            if (!string.IsNullOrEmpty(personModel.LastName))
+                nameParts.Add(personModel.LastName);
+
+            nameParts.Add(personModel.FirstName);
+
+            return string.Join(" ", nameParts);
         }
 
         public static string ToShortFullInfo(PersonModel? personModel)
@@ -18,9 +28,22 @@ namespace PathToMyRootsWebApp.Utils
             if (personModel == null)
                 return PathToMyRootsWebAppConstants.UnknownValue;
 
-            return
-                $"{personModel.LastName}" + (string.IsNullOrEmpty(personModel.MaidenName) ? null : $" ({personModel.MaidenName})") + $" {personModel.FirstName} " +
-                $"({DateHelper.ServerDateToYearFormat(personModel.BirthDate)}-{DateHelper.ServerDateToYearFormat(personModel.DeathDate)})";
+            var nameParts = new List<string>();
+
+            if (!string.IsNullOrEmpty(personModel.NobleTitle))
+                nameParts.Add(personModel.NobleTitle);
+
+            if (!string.IsNullOrEmpty(personModel.LastName))
+                nameParts.Add(personModel.LastName);
+
+            if (!string.IsNullOrEmpty(personModel.MaidenName))
+                nameParts.Add($"({personModel.MaidenName})");
+
+            nameParts.Add(personModel.FirstName);
+
+            nameParts.Add($"({DateHelper.ServerDateToYearFormat(personModel.BirthDate)}-{DateHelper.ServerDateToYearFormat(personModel.DeathDate)})");
+
+            return string.Join(" ", nameParts);
         }
 
         public static string ToGender(PersonModel? personModel)
