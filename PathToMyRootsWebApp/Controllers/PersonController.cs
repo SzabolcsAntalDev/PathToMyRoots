@@ -54,11 +54,21 @@ namespace PathToMyRootsWebApp.Controllers
         public async Task<IActionResult> AddPerson()
         {
             var allPersons = await _personApiService.GetPersonsAsync();
-            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
-            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
-            ViewBag.Spouses = allPersons.ToList();
+            ViewBag.Fathers = Sort(allPersons.Where(p => p.IsMale));
+            ViewBag.Mothers = Sort(allPersons.Where(p => !p.IsMale));
+            ViewBag.Spouses = Sort(allPersons);
 
             return View("AddEditPerson", new PersonModel());
+        }
+
+        private IList<PersonModel?> Sort(IEnumerable<PersonModel?> personModels)
+        {
+            return personModels
+                .OrderBy(p => p.NobleTitle)
+                .ThenBy(p => p.LastName)
+                .ThenBy(p => p.MaidenName)
+                .ThenBy(p => p.FirstName)
+                .ToList();
         }
 
         [HttpGet]
