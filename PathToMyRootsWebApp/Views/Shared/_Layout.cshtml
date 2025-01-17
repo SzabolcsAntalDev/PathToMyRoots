@@ -17,10 +17,10 @@
             </a>
 
             <ul class="ul-menu">
-                <li class="li-menu">
+                <li class="li-menu @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "Persons" ? "active" : "")">
                     <a class="a-menu" asp-controller="Person" asp-action="Persons">Persons</a>
                 </li>
-                <li class="li-menu">
+                <li class="li-menu @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "AddPerson" ? "active" : "")">
                     <a class="a-menu" asp-controller="Person" asp-action="AddPerson">Add Person</a>
                 </li>
             </ul>

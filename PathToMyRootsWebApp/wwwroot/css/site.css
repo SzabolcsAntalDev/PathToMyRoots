@@ -66,6 +66,11 @@ a {
     /*background-color: lightgray;*/
 }
 
+.ul-menu .li-menu.active {
+    background-color: #3b3e4f;
+    font-weight: bold;
+}
+
 .a-menu {
     display: block;
     text-decoration: none;
