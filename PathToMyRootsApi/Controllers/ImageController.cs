@@ -32,5 +32,22 @@ namespace PathToMyRootsApi.Controllers
 
             return Ok(new { Url = uniqueFileName });
         }
+
+        [HttpDelete("delete/{imageName}")]
+        public IActionResult DeleteImage(string imageName)
+        {
+            if (string.IsNullOrWhiteSpace(imageName))
+                return BadRequest("Image name is required.");
+
+            var uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+            var filePath = Path.Combine(uploadsFolder, imageName);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("Image not found.");
+
+            System.IO.File.Delete(filePath);
+
+            return Ok(new { Success = true, Message = "Image deleted successfully." });
+        }
     }
 }

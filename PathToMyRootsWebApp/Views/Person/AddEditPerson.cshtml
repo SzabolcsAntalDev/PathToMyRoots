@@ -148,12 +148,16 @@
                     </option>
                 }
             </select>
-            <input type="file" id="input-image-url" accept="image/*" />
+            <input type="file" id="input-image-url" accept="image/*" style="display: none"/>
+            <button id="button-upload-image">Select Image</button>
             <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />
         </div>
     </div>
 
-    <img id="img-preview-image" alt="Image Preview" style="max-width: 200px; background-color: red;"  />
+    <div id="div-preview-image" style="position: relative; max-width: 200px;">
+        <img id="img-preview-image" style="max-width: 100%;" />
+        <button id="button-remove-image" style="position: absolute; top: 5px; right: 5px;">X</button>
+    </div>
 
     <div id="div-cropper-overlay" style="display: none;">
         <div id="div-cropper-container">

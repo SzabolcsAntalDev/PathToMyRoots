@@ -5,33 +5,33 @@ function toggleDate(name) {
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
     var inputRadioConcrete = document.getElementById("input-radio-" + name + "-date-concrete");
 
-    var dateInput = document.getElementById("input-" + name + "-date");
-    var hiddenDateInput = document.getElementById("input-hidden-" + name + "-date");
+    var inputDate = document.getElementById("input-" + name + "-date");
+    var inputHiddenDate = document.getElementById("input-hidden-" + name + "-date");
 
     if (inputRadioAlive != null && inputRadioAlive.checked) {
-        dateInput.style.display = "none";
-        dateInput.removeAttribute("pattern");
-        dateInput.removeAttribute("title");
+        inputDate.style.display = "none";
+        inputDate.removeAttribute("pattern");
+        inputDate.removeAttribute("title");
 
-        hiddenDateInput.value = null;
+        inputHiddenDate.value = null;
     }
 
     if (inputRadioUnknown.checked) {
-        dateInput.style.display = "none";
-        dateInput.removeAttribute("pattern");
-        dateInput.removeAttribute("title");
-        dateInput.removeAttribute("required");
+        inputDate.style.display = "none";
+        inputDate.removeAttribute("pattern");
+        inputDate.removeAttribute("title");
+        inputDate.removeAttribute("required");
 
-        hiddenDateInput.value = UnknownInputDate;
+        inputHiddenDate.value = UnknownInputDate;
     }
 
     if (inputRadioConcrete.checked) {
-        dateInput.style.display = "block";
-        dateInput.setAttribute("pattern", DateInputPattern);
-        dateInput.setAttribute("title", "Date format should be " + DateInputFlatFormat);
-        dateInput.setAttribute("required", "");
+        inputDate.style.display = "block";
+        inputDate.setAttribute("pattern", DateInputPattern);
+        inputDate.setAttribute("title", "Date format should be " + DateInputFlatFormat);
+        inputDate.setAttribute("required", "");
 
-        hiddenDateInput.value = dateInput.value;
+        inputHiddenDate.value = inputDate.value;
     }
 }
 
@@ -50,8 +50,12 @@ function toggleDeathDate() {
 }
 
 const inputImageUrl = document.getElementById("input-image-url");
-const inputHiddenImageUrl = document.getElementById("input-hidden-image-url");
+const buttonUploadImage = document.getElementById("button-upload-image");
+const divPreviewImage = document.getElementById("div-preview-image");
 const imgPreviewImage = document.getElementById("img-preview-image");
+const buttonRemoveImage = document.getElementById("button-remove-image");
+const inputHiddenImageUrl = document.getElementById("input-hidden-image-url");
+
 
 const divCropperOverlay = document.getElementById("div-cropper-overlay");
 const buttonCropConfirm = document.getElementById("button-crop-confirm");
@@ -65,18 +69,26 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleBirthDate();
     toggleDeathDate();
 
-    updatePreviewImage();
+    updateDivPreviewImage();
 });
 
 let cropper;
 
-function updatePreviewImage() {
+buttonUploadImage.addEventListener("click", (event) => {
+    event.preventDefault();
+    inputImageUrl.click();
+});
+
+function updateDivPreviewImage() {
     const imageUrl = inputHiddenImageUrl.value;
-    if (!imageUrl)
+    if (!imageUrl) {
+        imgPreviewImage.src = "";
+        divPreviewImage.style.display = 'none';
         return;
+    }
 
     imgPreviewImage.src = "https://localhost:7241/uploads/" + imageUrl;
-    imgPreviewImage.style.display = 'block';
+    divPreviewImage.style.display = 'inline-block';
 }
 
 inputImageUrl.addEventListener("change", (event) => {
@@ -109,25 +121,39 @@ buttonCropConfirm.addEventListener("click", async (event) => {
     croppedCanvas.toBlob(async (blob) => {
         const formData = new FormData();
         formData.append("image", blob, "cropped-image.png");
-        try {
-            const response = await fetch(apiUrl + "api/image/upload/", {
-                method: 'POST',
-                body: formData,
-            });
 
-            if (!response.ok) {
-                throw new Error(`Server error: ${response.statusText}`);
-            }
+        await deleteImage(inputHiddenImageUrl.value);
 
-            const responseJson = await response.json();
+        const response = await fetch(apiUrl + "api/image/upload/", {
+            method: 'POST',
+            body: formData,
+        });
 
-            inputHiddenImageUrl.value = responseJson.url;
-            updatePreviewImage();
+        const responseJson = await response.json();
 
-            divCropperOverlay.style.display = 'none';
-        }
-        catch (error) {
-            console.error("Upload failed:", error);
-        }
+        inputHiddenImageUrl.value = responseJson.url;
+        updateDivPreviewImage();
+
+        divCropperOverlay.style.display = 'none';
+        inputImageUrl.value = "";
     }, "image/png");
 });
+
+buttonRemoveImage.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    await deleteImage(inputHiddenImageUrl.value);
+
+    inputHiddenImageUrl.value = "";
+    updateDivPreviewImage();
+});
+
+async function deleteImage(imageName) {
+    if (!imageName)
+        return;
+
+    var url = apiUrl + `api/image/delete/${imageName}`;
+    await fetch(url, {
+        method: "DELETE",
+    });
+}

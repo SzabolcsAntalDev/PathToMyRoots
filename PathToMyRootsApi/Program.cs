@@ -11,6 +11,17 @@ namespace PathToMyRootsApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", policy =>
+                {
+                    policy.WithOrigins("https://localhost:7239")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+            builder.Services.AddControllers();
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -20,6 +31,7 @@ namespace PathToMyRootsApi
 
             var app = builder.Build();
 
+            app.UseCors("AllowSpecificOrigin");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthorization();
