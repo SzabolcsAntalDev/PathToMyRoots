@@ -45,6 +45,7 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = person.Spouse.FirstName,
                     LastName = person.Spouse.LastName
                 },
+                ImageUrl = person.ImageUrl
             };
         }
 
@@ -85,6 +86,7 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
                 },
+                ImageUrl = personDto.ImageUrl
             };
         }
 
@@ -112,30 +114,35 @@ namespace PathToMyRootsApi.Mappings
                 Spouse = family.Spouse == null ? null : new PersonDto
                 {
                     Id = family.Spouse.Id,
+                    NobleTitle = family.Spouse.NobleTitle,
                     FirstName = family.Spouse.FirstName,
                     LastName = family.Spouse.LastName,
                     IsMale = family.Spouse.IsMale,
                     BiologicalMotherId = family.Spouse.BiologicalMotherId,
                     BiologicalFatherId = family.Spouse.BiologicalFatherId
                 },
-                InverseBiologicalMother = family.InverseBiologicalMother
-            .Select(child => new PersonDto
-            {
-                Id = child.Id,
-                FirstName = child.FirstName,
-                LastName = child.LastName,
-                BiologicalMotherId = child.BiologicalMotherId,
-                BiologicalFatherId = child.BiologicalFatherId
-            }).ToList(),
+                InverseBiologicalMother =
+                    family.InverseBiologicalMother
+                        .Select(child => new PersonDto
+                        {
+                            Id = child.Id,
+                            NobleTitle = child.NobleTitle,
+                            FirstName = child.FirstName,
+                            LastName = child.LastName,
+                            BiologicalMotherId = child.BiologicalMotherId,
+                            BiologicalFatherId = child.BiologicalFatherId
+                        }).ToList(),
                 InverseBiologicalFather = family.InverseBiologicalFather
-            .Select(child => new PersonDto
-            {
-                Id = child.Id,
-                FirstName = child.FirstName,
-                LastName = child.LastName,
-                BiologicalMotherId = child.BiologicalMotherId,
-                BiologicalFatherId = child.BiologicalFatherId
-            }).ToList()
+                        .Select(child => new PersonDto
+                        {
+                            Id = child.Id,
+                            NobleTitle = child.NobleTitle,
+                            FirstName = child.FirstName,
+                            LastName = child.LastName,
+                            BiologicalMotherId = child.BiologicalMotherId,
+                            BiologicalFatherId = child.BiologicalFatherId
+                        }).ToList(),
+                ImageUrl = family.ImageUrl
             };
         }
     }

@@ -42,6 +42,7 @@ namespace PathToMyRootsWebApp.Mappings
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
                 },
+                ImageUrl = personDto.ImageUrl
             };
         }
 
@@ -81,7 +82,8 @@ namespace PathToMyRootsWebApp.Mappings
                     Id = personModel.Spouse.Id,
                     FirstName = personModel.Spouse.FirstName,
                     LastName = personModel.Spouse.LastName,
-                }
+                },
+                ImageUrl = personModel.ImageUrl
             };
         }
 
@@ -111,7 +113,8 @@ namespace PathToMyRootsWebApp.Mappings
                     Id = personDto.Spouse.Id,
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
-                }
+                },
+                ImageUrl = personDto.ImageUrl
             };
         }
     }

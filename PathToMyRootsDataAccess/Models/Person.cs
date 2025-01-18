@@ -41,4 +41,6 @@ public partial class Person
     public virtual ICollection<Person> InverseSpouse { get; set; } = new List<Person>();
 
     public virtual Person? Spouse { get; set; }
+
+    public string? ImageUrl { get; set; }
 }

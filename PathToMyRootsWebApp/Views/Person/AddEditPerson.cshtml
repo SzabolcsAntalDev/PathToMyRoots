@@ -108,13 +108,13 @@
         </div>
     </div>
 
-
     <div class="div-container">
         <div class="div-labels-for-inputs">
             <label for="IsMale" class="label-for-input">Gender:</label>
             <label for="BiologicalFatherId" class="label-for-input">Father:</label>
             <label for="BiologicalMotherId" class="label-for-input">Mother:</label>
             <label for="SpouseId" class="label-for-input">Spouse:</label>
+            <label for="ImageUrl" class="label-for-input">Image:</label>
         </div>
         <div class="div-inputs">
             <select id="IsMale" name="IsMale" class="input">
@@ -148,25 +148,35 @@
                     </option>
                 }
             </select>
+            <input type="file" id="input-image-url" accept="image/*" />
+            <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />
+        </div>
+    </div>
+
+    <img id="img-preview-image" alt="Image Preview" style="max-width: 200px; background-color: red;"  />
+
+    <div id="div-cropper-overlay" style="display: none;">
+        <div id="div-cropper-container">
+            <img id="img-image-to-crop" src="" alt="Image to Crop" />
+            <button id="button-crop-confirm">Confirm Crop</button>
         </div>
     </div>
 
     <div class="div-button">
-        <form asp-action="EditPerson" method="post">
-            @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
-            {
-                <button type="submit" class="button">Add</button>
-            }
-            else
-            {
-                <button type="submit" class="button">Update</button>
-            }
-        </form>
+        @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
+        {
+            <button type="submit" class="button">Add</button>
+        }
+        else
+        {
+            <button type="submit" class="button">Update</button>
+        }
     </div>
 </form>
 
 @section Styles {
     <link rel="stylesheet" href="~/css/add-edit-person.css" />
+    <link rel="stylesheet" href="~/css/libs/cropper.css" />
 }
 @section Scripts {
     <script>
@@ -175,5 +185,6 @@
         const DateInputFlatFormat = '@Html.Raw(DateHelper.InputDateFlatFormat)';
     </script>
 
+    <script src="~/js/libs/cropper.js"></script>
     <script src="~/js/add-edit-person.js"></script>
 }

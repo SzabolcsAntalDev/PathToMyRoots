@@ -83,6 +83,7 @@ namespace PathToMyRootsDataAccess.Services
             existingPerson.BiologicalMotherId = updatedPerson.BiologicalMotherId;
             existingPerson.BiologicalFatherId = updatedPerson.BiologicalFatherId;
             existingPerson.SpouseId = updatedPerson.SpouseId;
+            existingPerson.ImageUrl= updatedPerson.ImageUrl;
 
             await _applicationDbContext.SaveChangesAsync();
 

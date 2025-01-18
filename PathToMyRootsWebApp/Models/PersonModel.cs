@@ -19,5 +19,6 @@ namespace PathToMyRootsWebApp.Models
         public virtual PersonModel? BiologicalFather { get; set; }
         public virtual PersonModel? BiologicalMother { get; set; }
         public virtual PersonModel? Spouse { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
