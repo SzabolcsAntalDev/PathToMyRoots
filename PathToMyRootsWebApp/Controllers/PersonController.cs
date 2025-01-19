@@ -14,36 +14,26 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        //public async Task<IActionResult> Persons(string searchQuery)
-        //{
-        //    var persons = await _personApiService.GetPersonsAsync();
-
-        //    if (!string.IsNullOrEmpty(searchQuery))
-        //    {
-        //        persons =
-        //            persons
-        //                .Where(p =>
-        //                    p.FirstName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-        //                    p.LastName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-        //                    p.MaidenName != null && p.MaidenName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-        //                    p.OtherNames != null && p.OtherNames.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-        //                .ToList();
-        //    }
-
-        //    ViewData["SearchQuery"] = searchQuery;
-        //    return View(persons);
-        //}
-
-        public async Task<IActionResult> Persons(int page = 0, int pageSize = 20)
+        public async Task<IActionResult> Persons(int page = 0, string searchText = "", int pageSize = 16)
         {
             var persons = await _personApiService.GetPersonsAsync();
-            var paginatedPersons = persons
+            var filteredPersons = string.IsNullOrEmpty(searchText)
+                ? persons :
+                persons.Where(p =>
+                    (p.NobleTitle != null && p.NobleTitle.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                    (p.FirstName != null && p.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                    (p.MaidenName != null && p.MaidenName.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                    (p.OtherNames != null && p.OtherNames.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                    (p.LastName != null && p.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase))).ToList();
+
+            var paginatedPersons = filteredPersons
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToList();
 
+            ViewBag.SearchText = searchText;
             ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)persons.Count / pageSize);
+            ViewBag.TotalPages = (int)Math.Ceiling((double)filteredPersons.Count / pageSize);
 
             if (Request.Headers.XRequestedWith == "XMLHttpRequest")
                 return PartialView("_PersonsTablePartial", paginatedPersons);

@@ -3,30 +3,45 @@
         link.addEventListener("click", event => {
             event.preventDefault();
             const page = link.getAttribute("data-page");
-            fetch(`/Person/Persons?page=${page}`, {
-                method: "GET",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    const container = document.querySelector("#persons-content");
-                    container.innerHTML = data;
-                    attachPaginationEventListeners();
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                });
+            fetchData(page, document.getElementById("input-search").value);
         });
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function addAllListeners() {
     attachPaginationEventListeners();
+
+    const inputSearch = document.getElementById("input-search");
+    const buttonSearch = document.getElementById("button-search");
+
+    buttonSearch.addEventListener("click", () => {
+        fetchData(0, inputSearch.value);
+    });
+
+    inputSearch.addEventListener("keypress", event => {
+        if (event.key === "Enter") {
+            fetchData(0, inputSearch.value);
+        }
+    });
+}
+
+function fetchData(page, searchText) {
+    fetch(`/Person/Persons?page=${page}&searchText=${encodeURIComponent(searchText)}`, {
+        method: "GET",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+        .then(response => {
+            return response.text();
+        })
+        .then(data => {
+            const container = document.querySelector("#persons-content");
+            container.innerHTML = data;
+            addAllListeners();
+        })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    addAllListeners()
 });
