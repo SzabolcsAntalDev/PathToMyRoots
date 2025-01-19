@@ -52,13 +52,27 @@
     display: block;
 }
 
-.tree-node-text {
+.tree-div-texts {
+    display: inline-flex;
+    flex-direction: column;
     overflow: hidden;
-    text-overflow: ellipsis;
     margin: auto;
 }
 
+.tree-node-name-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Ensures ellipsis works for single lines */
+    text-align: center;
+    font-weight: bold;
+}
 
+.tree-node-lived-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Ensures ellipsis works for single lines */
+    text-align: center;
+}
 
 .tree-node-male {
     display: inline-flex;

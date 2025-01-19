@@ -203,27 +203,34 @@ function createTreeNode(person) {
     treeNode.biologicalFatherId = person.biologicalFatherId;
     treeNode.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
 
-    const image = document.createElement('img');
+    const imgPerson = document.createElement('img');
     if (person.imageUrl)
-        image.src = "https://localhost:7241/uploads/" + person.imageUrl;
+        imgPerson.src = "https://localhost:7241/uploads/" + person.imageUrl;
 
-    image.className = 'tree-node-image';
+    imgPerson.className = 'tree-node-image';
 
-    const textSpan = document.createElement('span');
-    textSpan.innerText = personToNodeText(person);
-    textSpan.className = 'tree-node-text';
+    const divTexts = document.createElement('div');
+    divTexts.className = "tree-div-texts";
 
-    treeNode.appendChild(image);
-    treeNode.appendChild(textSpan);
+    const spanPersonName = document.createElement('span');
+    spanPersonName.innerText = personToPersonNameNodeText(person);
+    spanPersonName.className = 'tree-node-name-text';
+
+    const spanPersonLived = document.createElement('span');
+    spanPersonLived.innerText = personToPersonLivedNodeText(person);
+    spanPersonLived.className = 'tree-node-lived-text';
+
+    divTexts.appendChild(spanPersonName);
+    divTexts.appendChild(spanPersonLived);
+
+    treeNode.appendChild(imgPerson);
+    treeNode.appendChild(divTexts);
 
     return treeNode;
 }
 
-function personToNodeText(person) {
+function personToPersonNameNodeText(person) {
     let details = [];
-
-    //if (person.id)
-    //    details.push(person.id);
 
     if (person.nobleTitle)
         details.push(person.nobleTitle);
@@ -240,10 +247,13 @@ function personToNodeText(person) {
     if (person.otherNames)
         details.push(person.otherNames);
 
-    details.push(`\n(${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`);
-
     return details.filter(Boolean).join(' ');
 }
+
+function personToPersonLivedNodeText(person) {
+    return `(${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`;
+}
+
 
 function dateToString(date) {
     if (date == null)
