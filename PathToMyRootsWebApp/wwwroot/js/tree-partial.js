@@ -4,6 +4,7 @@ const linesVerticalOffset = 4;
 const sleepInterval = 0;
 
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
+const imageApiUrl = "https://localhost:7241/";
 
 async function createTreeDiagram(personId) {
     const treeDiagram = document.getElementById('tree-diagram');
@@ -201,15 +202,28 @@ function createTreeNode(person) {
     treeNode.biologicalMotherId = person.biologicalMotherId;
     treeNode.biologicalFatherId = person.biologicalFatherId;
     treeNode.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
-    treeNode.innerText = personToNodeText(person);
+
+    const image = document.createElement('img');
+    if (person.imageUrl)
+        image.src = "https://localhost:7241/uploads/" + person.imageUrl;
+
+    image.className = 'tree-node-image';
+
+    const textSpan = document.createElement('span');
+    textSpan.innerText = personToNodeText(person);
+    textSpan.className = 'tree-node-text';
+
+    treeNode.appendChild(image);
+    treeNode.appendChild(textSpan);
+
     return treeNode;
 }
 
 function personToNodeText(person) {
     let details = [];
 
-    if (person.id)
-        details.push(person.id);
+    //if (person.id)
+    //    details.push(person.id);
 
     if (person.nobleTitle)
         details.push(person.nobleTitle);
