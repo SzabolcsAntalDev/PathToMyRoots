@@ -223,8 +223,13 @@ function createTreeNode(person) {
     divTexts.appendChild(spanPersonName);
     divTexts.appendChild(spanPersonLived);
 
+    const buttonEditPerson = document.createElement('button');
+    buttonEditPerson.innerText = "E";
+    buttonEditPerson.className = "button-edit-person";
+
     treeNode.appendChild(imgPerson);
     treeNode.appendChild(divTexts);
+    treeNode.appendChild(buttonEditPerson);
 
     return treeNode;
 }

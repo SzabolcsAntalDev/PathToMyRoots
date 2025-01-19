@@ -76,24 +76,26 @@
 
 .tree-node-male {
     display: inline-flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: row; 
+    align-items: center; 
     width: 200px;
     padding: 5px;
     border: 1px solid black;
     font-size: 13px;
     background-color: #6e7381;
+    position: relative;
 }
 
 .tree-node-female {
     display: inline-flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: row; 
+    align-items: center; 
     width: 200px;
     padding: 5px;
     border: 1px solid black;
     font-size: 13px;
     background-color: #8a8f9a;
+    position: relative;
 }
 
 .tree-node-married {
@@ -107,3 +109,16 @@
     font-size: 11px;
     background-color: #a1a4b0;
 }
+
+.button-edit-person {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border: 1px solid #ccc;
+    color: #fff;
+    background-color: #3b3e4f;
+}
+
+    .button-edit-person:hover {
+        background-color: #4a5164;
+    }
