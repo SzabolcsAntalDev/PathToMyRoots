@@ -226,6 +226,11 @@ function createTreeNode(person) {
     const buttonEditPerson = document.createElement('button');
     buttonEditPerson.innerText = "E";
     buttonEditPerson.className = "button-edit-person";
+    buttonEditPerson.addEventListener('click', function () {
+        const personId = person.id;
+        const url = `/Person/EditPerson?id=${personId}`;
+        window.location.href = url;
+    });
 
     treeNode.appendChild(imgPerson);
     treeNode.appendChild(divTexts);
