@@ -149,13 +149,15 @@
     <div class="person-input-sections-container">
         <div id="person-preview-image-container" class="person-preview-image-container">
             <img id="img-preview-image" style="max-width: 100%" />
-            <button id="button-remove-image" class="action-button-on-image">X</button>
+            <button id="button-remove-image" class="action-button-on-image">
+                <img src="~/icons/delete.svg" class="action-img" title="Delete">
+            </button>
         </div>
     </div>
 
     <div id="person-cropper-background-container" style="display: none;">
         <div id="person-cropper-image-and-button-container">
-            <img id="person-image-to-crop" alt="Image to Crop" />
+            <img id="person-image-to-crop" />
             <button id="confirm-crop-button">Confirm Crop</button>
         </div>
     </div>

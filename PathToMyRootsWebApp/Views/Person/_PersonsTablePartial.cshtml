@@ -26,7 +26,6 @@
                 <tr>
                     <td>
                         <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
-                             alt="@(person.IsMale ? "Male" : "Female")"
                              class="persons-img-gender" />
                     </td>
                     <td>@person.NobleTitle</td>
@@ -76,15 +75,15 @@
                     <td width="1%">
                         <div class="div-actions">
                             <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                                <img src="~/icons/tree.svg" alt="View Tree" class="persons-action-img" title="View Tree">
+                                <img src="~/icons/tree.svg" class="action-img" title="View Tree">
                             </a>
                             <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                                <img src="~/icons/edit.svg" alt="Edit" class="persons-action-img" title="Edit">
+                                <img src="~/icons/edit.svg" class="action-img" title="Edit">
                             </a>
                             <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
                                 <input type="hidden" name="id" value="@person.Id" />
                                 <button type="submit" class="persons-action-button">
-                                    <img src="~/icons/delete.svg" alt="Delete" class="persons-action-img" title="Delete">
+                                    <img src="~/icons/delete.svg" class="action-img" title="Delete">
                                 </button>
                             </form>
                         </div>

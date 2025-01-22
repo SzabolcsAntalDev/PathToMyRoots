@@ -21,9 +21,19 @@ $font-size-extra-large: 30px;
 
 $thickness-small: 4px;
 $thickness-medium: 8px;
-$thickness-large: 30px;
+$thickness-large: 20px;
+$thickness-extra-large: 40px;
+$thickness-super-large: 60px;
 
 $border: 1px solid $foreground-color;
+
+$action-image-size: 20px;
+$distance-between-nodes: 30px;
+$node-width: 200px;
+$married-node-width: 50px;
+
+$node-image-width: 60px;
+$node-image-height: 80px;
 
 html {
     font-size: $font-size-small;
@@ -77,10 +87,19 @@ h2 {
     }
 }
 
+.action-img {
+    width: $action-image-size;
+    height: $action-image-size;
+    vertical-align: middle;
+}
+
 .action-button-on-image {
     @extend %button;
     position: absolute;
     margin: 0px;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
     top: $thickness-small;
     right: $thickness-small;
 }
@@ -154,8 +173,8 @@ table {
 }
 
 .persons-img-gender {
-    width: 20px;
-    height: 20px;
+    width: $action-image-size;
+    height: $action-image-size;
 }
 
 .persons-div-actions {
@@ -165,12 +184,6 @@ table {
 
 .persons-action-hyperlink {
     display: inline-block;
-}
-
-.persons-action-img {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
 }
 
 .persons-action-button {
@@ -234,20 +247,20 @@ table {
 
 .tree-level-container {
     display: block;
-    padding: 30px 0px;
+    padding: $distance-between-nodes 0px;
 }
 
 .tree-nodes-group {
     display: inline-block;
     vertical-align: top;
-    padding: 0px 30px;
+    padding: 0px $distance-between-nodes;
 }
 
 %tree-node {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    width: 200px;
+    width: $node-width;
     padding: $thickness-small;
     border: $border;
     background-color: #6e7381;
@@ -266,7 +279,7 @@ table {
 
 .tree-node-married {
     display: inline-block;
-    width: 50px;
+    width: $married-node-width;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: clip;
@@ -278,10 +291,10 @@ table {
 
 .tree-node-image {
     margin-right: $thickness-small;
-    min-height: 80px;
-    min-width: 60px;
-    height: 80px;
-    width: 60px;
+    min-height: $node-image-height;
+    min-width: $node-image-width;
+    height: $node-image-height;
+    width: $node-image-width;
     background-color: red;
     object-fit: cover;
     display: block;
@@ -330,7 +343,6 @@ table {
     display: flex;
     flex-direction: column;
     background-color: $background-color-nav;
-    /*min-width: 250px;*/
 }
 
 .nav-logo-container-hyperlink {
@@ -338,15 +350,16 @@ table {
     display: flex;
     text-decoration: none;
     align-items: center;
-    margin: 20px 0px;
-    padding: 20px 20px 20px 0px;
+    margin: $thickness-large 0px;
+    padding: $thickness-large;
+    padding-left: 0px;
     background-color: transparent;
 }
 
 .nav-logo-image {
     width: 50px;
     height: 100%;
-    margin-right: 5px;
+    margin-right: $thickness-small;
 }
 
 .nav-ul {
@@ -364,7 +377,7 @@ table {
     display: block;
     text-decoration: none;
     white-space: nowrap;
-    padding: 10px 20px;
+    padding: $thickness-medium $thickness-large;
     background-color: transparent;
     font-size: $font-size-medium;
 }
@@ -372,7 +385,7 @@ table {
 
 .main-content-container {
     display: inline-block;
-    padding: 60px;
+    padding: $thickness-super-large;
     width: 100%;
     min-width: 800px;
     white-space: nowrap;
@@ -388,14 +401,14 @@ table {
     display: flex;
     text-decoration: none;
     align-items: center;
-    padding: 10px;
+    padding: $thickness-medium;
     background-color: transparent;
 }
 
 .footer-logo-img {
     width: 40px;
     height: 100%;
-    margin: 0px 5px 0px 0px;
+    margin: 0px $thickness-small 0px 0px;
 }
 
 
@@ -410,7 +423,7 @@ table {
     }
 
     label {
-        margin: auto 16px auto 0px;
+        margin: auto $thickness-medium auto 0px;
         white-space: nowrap;
     }
 

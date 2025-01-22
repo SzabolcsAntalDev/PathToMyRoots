@@ -223,9 +223,15 @@ function createTreeNode(person) {
     divTexts.appendChild(spanPersonName);
     divTexts.appendChild(spanPersonLived);
 
+    const imgEditPerson = document.createElement('img');
+    imgEditPerson.className = "action-img";
+    imgEditPerson.src = "../../icons/edit.svg";
+    imgEditPerson.title = "Edit";
+
     const buttonEditPerson = document.createElement('button');
-    buttonEditPerson.innerText = "E";
+    buttonEditPerson.appendChild(imgEditPerson);
     buttonEditPerson.className = "action-button-on-image";
+
     buttonEditPerson.addEventListener('click', function () {
         const personId = person.id;
         const url = `/Person/EditPerson?id=${personId}`;
