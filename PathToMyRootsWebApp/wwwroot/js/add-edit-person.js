@@ -51,15 +51,14 @@ function toggleDeathDate() {
 
 const inputImageUrl = document.getElementById("input-image-url");
 const buttonUploadImage = document.getElementById("button-upload-image");
-const divPreviewImage = document.getElementById("div-preview-image");
+const divPreviewImage = document.getElementById("person-preview-image-container");
 const imgPreviewImage = document.getElementById("img-preview-image");
 const buttonRemoveImage = document.getElementById("button-remove-image");
 const inputHiddenImageUrl = document.getElementById("input-hidden-image-url");
 
-
-const divCropperOverlay = document.getElementById("div-cropper-overlay");
-const buttonCropConfirm = document.getElementById("button-crop-confirm");
-const imgImageToCrop = document.getElementById("img-image-to-crop");
+const divCropperOverlay = document.getElementById("person-cropper-background-container");
+const buttonCropConfirm = document.getElementById("confirm-crop-button");
+const imgImageToCrop = document.getElementById("person-image-to-crop");
 
 document.addEventListener("DOMContentLoaded", function () {
 

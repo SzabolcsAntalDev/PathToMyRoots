@@ -3,102 +3,94 @@
 @using PathToMyRootsWebApp.Models
 @model PathToMyRootsWebApp.Models.PersonModel
 
-@{
-    ViewData["Title"] = Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue ? "Edit Person" : "Add Person";
-}
+<h1>
+    @if (Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue)
+    {
+        @:Edit Person
+    }
+    else
+    {
+        @:Add Person
+    }
+</h1>
 
-<h1>@ViewData["Title"]</h1>
-
-<form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="form-person">
+<form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" style="display: inline-block">
     @if (Model?.Id > 0)
     {
         <input type="hidden" name="Id" value="@Model.Id" />
     }
-
-    <div class="div-container">
-        <div class="div-labels-for-inputs">
-            <label for="NobleTitle" class="label-for-input">Noble Title:</label>
-            <label for="FirstName" class="label-for-input">First Name:</label>
-            <label for="LastName" class="label-for-input">Last Name:</label>
-            <label for="MaidenName" class="label-for-input">Maiden Name:</label>
-            <label for="OtherNames" class="label-for-input">Other Names:</label>
+    <div class="person-input-sections-container">
+        <div class="person-input-labels-container">
+            <label for="NobleTitle" >Noble Title:</label>
+            <label for="FirstName">First Name:</label>
+            <label for="LastName">Last Name:</label>
+            <label for="MaidenName">Maiden Name:</label>
+            <label for="OtherNames">Other Names:</label>
         </div>
-        <div class="div-inputs">
-            <input type="text" id="NobleTitle" name="NobleTitle" class="input" value="@Model?.NobleTitle" />
-            <input type="text" id="FirstName" name="FirstName" class="input" value="@Model?.FirstName" />
-            <input type="text" id="LastName" name="LastName" class="input" value="@Model?.LastName" />
-            <input type="text" id="MaidenName" name="MaidenName" class="input" value="@Model?.MaidenName" />
-            <input type="text" id="OtherNames" name="OtherNames" class="input" value="@Model?.OtherNames" />
+        <div class="person-inputs-container">
+            <input type="text" id="NobleTitle" name="NobleTitle" value="@Model?.NobleTitle" />
+            <input type="text" id="FirstName" name="FirstName" value="@Model?.FirstName" />
+            <input type="text" id="LastName" name="LastName" value="@Model?.LastName" />
+            <input type="text" id="MaidenName" name="MaidenName" value="@Model?.MaidenName" />
+            <input type="text" id="OtherNames" name="OtherNames" value="@Model?.OtherNames" />
         </div>
     </div>
 
-    <div class="div-borders">
-        <div class="div-border">
-            <label class="label-border-title">Birth Date:</label>
-            <fieldset class="fieldset-radios">
-                <label class="label-for-input">
-                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-unknown" class="input-radio"
+    <div class="person-input-bordered-sections-container">
+        <div class="person-bordered-section">
+            <label>Birth Date:</label>
+            <fieldset>
+                <label>
+                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-unknown" onclick="toggleBirthDate()"
                     @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
                     {
                         @:checked
-                    }
-                           onclick="toggleBirthDate()" /> Unknown
+                    } />
+                    Unknown
                 </label>
-                <label class="label-for-input">
-                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete" class="input-radio"
+                <label>
+                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete" onclick="toggleBirthDate()"
                     @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                     {
                         @:checked
-                    }
-                           onclick="toggleBirthDate()" /> Date
+                    } />Date
                 </label>
-
-                <input type="text"
-                       id="input-birth-date"
-                       class="input"
-                       placeholder="@DateHelper.InputDateFlatFormat"
+                <input type="text" id="input-birth-date" placeholder="@DateHelper.InputDateFlatFormat"
                 @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                 {
                     @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
                 } />
-
                 <input type="hidden" id="input-hidden-birth-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
             </fieldset>
         </div>
 
-        <div class="div-border">
-            <label class="label-border-title">Death Date:</label>
-            <fieldset class="fieldset-radios">
-                <label class="label-for-input">
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-alive" class="input-radio"
+        <div class="person-bordered-section">
+            <label>Death Date:</label>
+            <fieldset>
+                <label>
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-alive" onclick="toggleDeathDate()"
                     @if (Model?.DeathDate == null)
                     {
                         @:checked
-                    }
-                           onclick="toggleDeathDate()" /> Alive
+                    } />Alive
                 </label>
-                <label class="label-for-input">
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-unknown" class="input-radio"
+                <label>
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-unknown" onclick="toggleDeathDate()"
                     @if (Model?.DeathDate == DateHelper.UnknownServerDate)
                     {
                         @:checked
-                    }
-                           onclick="toggleDeathDate()" /> Unknown
+                    } />Unknown
                 </label>
-                <label class="label-for-input">
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete" class="input-radio"
+                <label>
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete" onclick="toggleDeathDate()"
                     @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
                     {
                         @:checked
-                    }
-                           onclick="toggleDeathDate()" /> Date
+                    } />Date
                 </label>
-
-                <input type="text"
-                       id="input-death-date"
-                       class="input"
-                       placeholder="@DateHelper.InputDateFlatFormat"
+                <input type="text" id="input-death-date" placeholder="@DateHelper.InputDateFlatFormat"
                 @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+
                 {
                     @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
                 } />
@@ -108,20 +100,20 @@
         </div>
     </div>
 
-    <div class="div-container">
-        <div class="div-labels-for-inputs">
-            <label for="IsMale" class="label-for-input">Gender:</label>
-            <label for="BiologicalFatherId" class="label-for-input">Father:</label>
-            <label for="BiologicalMotherId" class="label-for-input">Mother:</label>
-            <label for="SpouseId" class="label-for-input">Spouse:</label>
-            <label for="ImageUrl" class="label-for-input">Image:</label>
+    <div class="person-input-sections-container">
+        <div class="person-input-labels-container">
+            <label for="IsMale">Gender:</label>
+            <label for="BiologicalFatherId">Father:</label>
+            <label for="BiologicalMotherId">Mother:</label>
+            <label for="SpouseId">Spouse:</label>
+            <label for="ImageUrl">Image:</label>
         </div>
-        <div class="div-inputs">
-            <select id="IsMale" name="IsMale" class="input">
+        <div class="person-inputs-container">
+            <select id="IsMale" name="IsMale">
                 <option value="true" selected="@(Model?.IsMale == true)">Male</option>
                 <option value="false" selected="@(Model?.IsMale == false)">Female</option>
             </select>
-            <select id="BiologicalFatherId" name="BiologicalFatherId" class="input">
+            <select id="BiologicalFatherId" name="BiologicalFatherId">
                 <option value="">-- Select Father --</option>
                 @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
                 {
@@ -130,7 +122,7 @@
                     </option>
                 }
             </select>
-            <select id="BiologicalMotherId" name="BiologicalMotherId" class="input">
+            <select id="BiologicalMotherId" name="BiologicalMotherId">
                 <option value="">-- Select Mother --</option>
                 @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
                 {
@@ -139,7 +131,7 @@
                     </option>
                 }
             </select>
-            <select id="SpouseId" name="SpouseId" class="input">
+            <select id="SpouseId" name="SpouseId">
                 <option value="">-- Select Spouse --</option>
                 @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
                 {
@@ -149,41 +141,41 @@
                 }
             </select>
             <input type="file" id="input-image-url" accept="image/*" style="display: none" />
-            <button id="button-upload-image" class="button">Select Image...</button>
+            <button id="button-upload-image">Select Image...</button>
             <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />
         </div>
     </div>
 
-    <div class="div-container">
-        <div id="div-preview-image" class="div-preview-image">
-            <img id="img-preview-image" class="img-preview-image" />
-            <button id="button-remove-image" class="button-remove-image">X</button>
+    <div class="person-input-sections-container">
+        <div id="person-preview-image-container" class="person-preview-image-container">
+            <img id="img-preview-image" style="max-width: 100%" />
+            <button id="button-remove-image" class="action-button-on-image">X</button>
         </div>
     </div>
 
-    <div id="div-cropper-overlay" style="display: none;">
-        <div id="div-cropper-container">
-            <img id="img-image-to-crop" src="" alt="Image to Crop" />
-            <button id="button-crop-confirm">Confirm Crop</button>
+    <div id="person-cropper-background-container" style="display: none;">
+        <div id="person-cropper-image-and-button-container">
+            <img id="person-image-to-crop" alt="Image to Crop" />
+            <button id="confirm-crop-button">Confirm Crop</button>
         </div>
     </div>
 
-    <div class="div-button">
+    <div style="display: block; text-align: right;">
         @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
         {
-            <button type="submit" class="button">Add</button>
+            <button type="submit">Add</button>
         }
         else
         {
-            <button type="submit" class="button">Update</button>
+            <button type="submit">Update</button>
         }
     </div>
 </form>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/add-edit-person.css" />
     <link rel="stylesheet" href="~/css/libs/cropper.css" />
 }
+
 @section Scripts {
     <script>
         const DateInputPattern = '@Html.Raw(DateHelper.InputDateValidationPattern)';

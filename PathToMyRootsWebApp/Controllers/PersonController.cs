@@ -14,7 +14,7 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons(int page = 0, string searchText = "", int pageSize = 16)
+        public async Task<IActionResult> Persons(int page = 0, string searchText = "", int pageSize = 15)
         {
             var persons = await _personApiService.GetPersonsAsync();
             var filteredPersons = string.IsNullOrEmpty(searchText)

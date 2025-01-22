@@ -3,7 +3,7 @@
 @model List<PathToMyRootsWebApp.Models.PersonModel>
 
 <div>
-    <table>
+    <table class="table-first-column-borderless">
         <thead>
             <tr>
                 <th></th>
@@ -27,7 +27,7 @@
                     <td>
                         <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
                              alt="@(person.IsMale ? "Male" : "Female")"
-                             class="img-gender" />
+                             class="persons-img-gender" />
                     </td>
                     <td>@person.NobleTitle</td>
                     <td>@person.FirstName</td>
@@ -75,16 +75,16 @@
 
                     <td width="1%">
                         <div class="div-actions">
-                            <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
-                                <img src="~/icons/tree.svg" alt="View Tree" class="img-action" title="View Tree">
+                            <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
+                                <img src="~/icons/tree.svg" alt="View Tree" class="persons-action-img" title="View Tree">
                             </a>
-                            <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
-                                <img src="~/icons/edit.svg" alt="Edit" class="img-action" title="Edit">
+                            <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="persons-action-hyperlink">
+                                <img src="~/icons/edit.svg" alt="Edit" class="persons-action-img" title="Edit">
                             </a>
                             <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
                                 <input type="hidden" name="id" value="@person.Id" />
-                                <button type="submit" style="background: transparent; border: none; padding: 0; cursor: pointer;">
-                                    <img src="~/icons/delete.svg" alt="Delete" class="img-action" title="Delete">
+                                <button type="submit" class="persons-action-button">
+                                    <img src="~/icons/delete.svg" alt="Delete" class="persons-action-img" title="Delete">
                                 </button>
                             </form>
                         </div>
@@ -94,26 +94,26 @@
         </tbody>
     </table>
 </div>
-<div class="pagination">
+<div class="persons-pagination">
     @if (ViewBag.CurrentPage > 0)
     {
-        <a href="#" class="pagination-link" data-page="0">First</a><a href="#" class="pagination-link" data-page="@(ViewBag.CurrentPage - 1)">Prev</a>
+        <button data-page="0">First</button><button data-page="@(ViewBag.CurrentPage - 1)">Prev</button>
     }
     else
     {
-        <a href="#" class="pagination-link-disabled">First</a><a href="#" class="pagination-link-disabled" onclick="return false;">Prev</a>
+        <button disabled>First</button><button disabled>Prev</button>
     }
 
-    <span class="pages-text">
+    <span>
         @(ViewBag.CurrentPage + 1) / @ViewBag.TotalPages
     </span>
 
     @if (ViewBag.CurrentPage < ViewBag.TotalPages - 1)
     {
-        <a href="#" class="pagination-link" data-page="@(ViewBag.CurrentPage + 1)">Next</a><a href="#" class="pagination-link" data-page="@(ViewBag.TotalPages - 1)">Last</a>
+        <button data-page="@(ViewBag.CurrentPage + 1)">Next</button><button data-page="@(ViewBag.TotalPages - 1)">Last</button>
     }
     else
     {
-        <a href="#" class="pagination-link-disabled" onclick="return false;">Next</a><a href="#" class="pagination-link-disabled" onclick="return false;">Last</a>
+        <button disabled>Next</button><button disabled>Last</button>
     }
 </div>

@@ -2,12 +2,10 @@
 @using PathToMyRootsWebApp.Utils
 @model PathToMyRootsWebApp.Models.PersonModel
 
-<div class="tree-diagram-container-div" id="tree-diagram-container-div">
-    <div class="tree-diagram" id="tree-diagram"></div>
-    <svg class="tree-lines" id="tree-lines"></svg>
+<div class="tree-diagram-and-lines-container" id="tree-diagram-container-div">
+    <div class="tree-diagram-container" id="tree-diagram"></div>
+    <svg class="tree-lines-container" id="tree-lines"></svg>
 </div>
-
-<link rel="stylesheet" href="~/css/tree-partial.css" />
 
 <script>
     const UnknownServerDate = '@Html.Raw(DateHelper.UnknownServerDate)';

@@ -1,5 +1,5 @@
 ﻿function attachPaginationEventListeners() {
-    document.querySelectorAll(".pagination-link").forEach(link => {
+    document.querySelectorAll("button").forEach(link => {
         link.addEventListener("click", event => {
             event.preventDefault();
             const page = link.getAttribute("data-page");

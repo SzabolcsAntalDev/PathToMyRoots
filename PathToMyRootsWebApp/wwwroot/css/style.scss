@@ -1,0 +1,475 @@
+﻿$font-family-default: 'Fira Sans', sans-serif;
+
+$foreground-color: white;
+$background-color: #3b3e4f;
+$foreground-color-disabled: gray;
+$background-color-disabled: #3b3e4f;
+$foreground-color-highlight: white;
+$background-color-highlight: #4a5164;
+
+$background-color-nav: #3c4252;
+$background-color-footer: #484c58;
+
+$male-color: blue;
+$female-color: red;
+$married-color: green;
+
+$font-size-small: 13px;
+$font-size-medium: 17px;
+$font-size-large: 24px;
+$font-size-extra-large: 30px;
+
+$thickness-small: 4px;
+$thickness-medium: 8px;
+$thickness-large: 30px;
+
+$border: 1px solid $foreground-color;
+
+html {
+    font-size: $font-size-small;
+    font-family: $font-family-default;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: $font-size-extra-large;
+}
+
+h2 {
+    font-size: $font-size-large;
+}
+
+.font-size-medium {
+    font-size: $font-size-medium;
+}
+
+.font-size-large {
+    font-size: $font-size-large;
+}
+
+%button {
+    color: $foreground-color;
+    background-color: $background-color;
+    font-size: $font-size-small;
+    padding: $thickness-medium;
+    margin: $thickness-medium;
+    border: $border;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover {
+        color: $foreground-color-highlight;
+        background-color: $background-color-highlight;
+    }
+
+    &:disabled {
+        color: $foreground-color-disabled;
+        background-color: $background-color-disabled;
+        border-color: $foreground-color-disabled;
+        cursor: auto;
+    }
+}
+
+.action-button-on-image {
+    @extend %button;
+    position: absolute;
+    margin: 0px;
+    top: $thickness-small;
+    right: $thickness-small;
+}
+
+button {
+    @extend %button;
+}
+
+a {
+    color: $foreground-color;
+    font-size: $font-size-small;
+
+    &:hover {
+        color: $foreground-color-highlight;
+        background-color: $background-color-highlight;
+    }
+}
+
+input[type="text"] {
+    padding: $thickness-medium;
+    margin: $thickness-medium;
+    border: $border;
+    color: $foreground-color;
+    background-color: $background-color;
+    font-size: $font-size-small;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+input[type="radio"] {
+    accent-color: $background-color;
+    margin: $thickness-medium;
+}
+
+select {
+    padding: $thickness-medium;
+    margin: $thickness-medium;
+    border: $border;
+    color: $foreground-color;
+    background-color: $background-color;
+    font-size: $font-size-small;
+}
+
+table {
+    table-layout: auto;
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+        border: $border;
+        white-space: nowrap;
+        padding: $thickness-medium;
+    }
+
+    tr:hover {
+        background-color: $background-color-highlight;
+
+        th {
+            background-color: $background-color;
+        }
+    }
+}
+
+.table-first-column-borderless {
+    td:first-child, th:first-child {
+        border: none;
+        width: 1%;
+    }
+}
+
+.persons-img-gender {
+    width: 20px;
+    height: 20px;
+}
+
+.persons-div-actions {
+    display: inline-flex;
+    align-items: center;
+}
+
+.persons-action-hyperlink {
+    display: inline-block;
+}
+
+.persons-action-img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.persons-action-button {
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+.persons-search {
+    input, button {
+        margin: $thickness-medium 0px;
+    }
+}
+
+.persons-pagination {
+    text-align: center;
+
+    button {
+        margin: $thickness-medium 0px;
+    }
+
+    span {
+        margin: 0px $thickness-medium;
+    }
+}
+
+
+.tree-content-container {
+    display: block;
+    width: 100%;
+    overflow: auto;
+}
+
+.tree-content {
+    display: flex;
+}
+
+.tree-diagram-and-lines-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+}
+
+.tree-diagram-container {
+    display: inline-block;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+    padding: $thickness-medium;
+}
+
+.tree-lines-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+.tree-level-container {
+    display: block;
+    padding: 30px 0px;
+}
+
+.tree-nodes-group {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0px 30px;
+}
+
+%tree-node {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 200px;
+    padding: $thickness-small;
+    border: $border;
+    background-color: #6e7381;
+    position: relative;
+}
+
+.tree-node-male {
+    @extend %tree-node;
+    background-color: $male-color;
+}
+
+.tree-node-female {
+    @extend %tree-node;
+    background-color: $female-color;
+}
+
+.tree-node-married {
+    display: inline-block;
+    width: 50px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: clip;
+    padding: $thickness-small;
+    border: $border;
+    font-size: $font-size-small;
+    background-color: $married-color;
+}
+
+.tree-node-image {
+    margin-right: $thickness-small;
+    min-height: 80px;
+    min-width: 60px;
+    height: 80px;
+    width: 60px;
+    background-color: red;
+    object-fit: cover;
+    display: block;
+}
+
+.tree-node-texts {
+    display: inline-flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: auto;
+}
+
+%tree-node-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: $font-size-small;
+}
+
+.tree-node-name-text {
+    @extend %tree-node-text;
+    font-weight: bold;
+}
+
+.tree-node-lived-text {
+    @extend %tree-node-text;
+}
+
+.tree-line-svg {
+    stroke: $foreground-color;
+    stroke-width: 1px;
+    fill: transparent;
+}
+
+
+.container-without-footer {
+    display: flex;
+    flex-grow: 1;
+    background-color: $background-color;
+    color: $foreground-color;
+}
+
+
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: $background-color-nav;
+    /*min-width: 250px;*/
+}
+
+.nav-logo-container-hyperlink {
+    height: auto;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    margin: 20px 0px;
+    padding: 20px 20px 20px 0px;
+    background-color: transparent;
+}
+
+.nav-logo-image {
+    width: 50px;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.nav-ul {
+    background-color: $background-color-nav;
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-li.active {
+    background-color: $background-color;
+    font-weight: bold;
+}
+
+.nav-a {
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 10px 20px;
+    background-color: transparent;
+    font-size: $font-size-medium;
+}
+
+
+.main-content-container {
+    display: inline-block;
+    padding: 60px;
+    width: 100%;
+    min-width: 800px;
+    white-space: nowrap;
+}
+
+
+.footer-container {
+    display: flex;
+    background-color: $background-color-footer;
+}
+
+.footer-logo-container-hyperlink {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    padding: 10px;
+    background-color: transparent;
+}
+
+.footer-logo-img {
+    width: 40px;
+    height: 100%;
+    margin: 0px 5px 0px 0px;
+}
+
+
+.person-input-sections-container {
+    display: flex;
+    width: 450px;
+    margin: $thickness-medium 0px;
+
+    .person-input-labels-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin: auto 16px auto 0px;
+        white-space: nowrap;
+    }
+
+    .person-inputs-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .person-preview-image-container {
+        max-width: 200px;
+        margin: 0px $thickness-medium 0px auto;
+        position: relative;
+    }
+}
+
+.person-input-bordered-sections-container {
+    display: flex;
+    flex-direction: row;
+    margin: $thickness-medium;
+    margin-left: 0px;
+    gap: $thickness-medium;
+    padding: $thickness-medium 0px;
+
+    .person-bordered-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            margin: $thickness-medium 0px 0px 0px;
+        }
+    }
+}
+
+
+#person-cropper-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#person-cropper-image-and-button-container {
+    position: relative;
+    background-color: $background-color;
+    padding: $thickness-large;
+    text-align: center;
+}
+
+#person-image-to-crop {
+    max-width: 100%;
+    max-height: 400px;
+}

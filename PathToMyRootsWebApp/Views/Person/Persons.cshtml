@@ -2,16 +2,11 @@
 @using PathToMyRootsWebApp.Utils
 @model List<PathToMyRootsWebApp.Models.PersonModel>
 
-<div class="div-persons">
-    @{
-        ViewData["Title"] = "Persons";
-    }
-
-    <h1>@ViewData["Title"]</h1>
-
-    <div class="div-search">
-        <input type="text" id="input-search" class="input-search" placeholder="Search..." value="@ViewBag.SearchText" />
-        <button id="button-search" class="button-search">Search</button>
+<h1>Persons</h1>
+<div>
+    <div class="persons-search">
+        <input type="text" id="input-search" style="width: 200px" placeholder="Search..." value="@ViewBag.SearchText" />
+        <button id="button-search">Search</button>
     </div>
 
     <div id="persons-content" class="persons-content">
@@ -19,9 +14,6 @@
     </div>
 </div>
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/persons.css" />
-}
 @section Scripts {
     <script src="~/js/persons.js"></script>
 }
