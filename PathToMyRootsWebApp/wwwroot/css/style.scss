@@ -29,7 +29,7 @@ $border: 1px solid $foreground-color;
 
 $action-image-size: 20px;
 $distance-between-nodes: 30px;
-$node-width: 200px;
+$person-node-width: 200px;
 $married-node-width: 50px;
 
 $node-image-width: 60px;
@@ -260,7 +260,7 @@ table {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    width: $node-width;
+    width: $person-node-width;
     padding: $thickness-small;
     border: $border;
     background-color: #6e7381;
