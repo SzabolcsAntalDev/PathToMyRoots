@@ -3,7 +3,7 @@
 function toggleDate(name) {
     var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-alive");
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
-    var inputRadioConcrete = document.getElementById("input-radio-" + name + "-date-concrete");
+    var inputRadioConcreteDate = document.getElementById("input-radio-" + name + "-date-concrete-date");
 
     var inputDate = document.getElementById("input-" + name + "-date");
     var inputHiddenDate = document.getElementById("input-hidden-" + name + "-date");
@@ -25,7 +25,7 @@ function toggleDate(name) {
         inputHiddenDate.value = UnknownInputDate;
     }
 
-    if (inputRadioConcrete.checked) {
+    if (inputRadioConcreteDate.checked) {
         inputDate.style.display = "block";
         inputDate.setAttribute("pattern", DateInputPattern);
         inputDate.setAttribute("title", "Date format should be " + DateInputFlatFormat);
@@ -51,13 +51,14 @@ function toggleDeathDate() {
 
 const inputImageUrl = document.getElementById("input-image-url");
 const buttonUploadImage = document.getElementById("button-upload-image");
-const divPreviewImage = document.getElementById("person-preview-image-container");
+const previewImageContainer = document.getElementById("person-preview-image-container");
 const imgPreviewImage = document.getElementById("img-preview-image");
 const buttonRemoveImage = document.getElementById("button-remove-image");
 const inputHiddenImageUrl = document.getElementById("input-hidden-image-url");
 
-const divCropperOverlay = document.getElementById("person-cropper-background-container");
-const buttonCropConfirm = document.getElementById("confirm-crop-button");
+let cropper;
+const cropperBackgroundContainer = document.getElementById("person-cropper-background-container");
+const confirmCropButton = document.getElementById("confirm-crop-button");
 const imgImageToCrop = document.getElementById("person-image-to-crop");
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -68,26 +69,24 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleBirthDate();
     toggleDeathDate();
 
-    updateDivPreviewImage();
+    updatePreviewImageContainer();
 });
-
-let cropper;
 
 buttonUploadImage.addEventListener("click", (event) => {
     event.preventDefault();
     inputImageUrl.click();
 });
 
-function updateDivPreviewImage() {
+function updatePreviewImageContainer() {
     const imageUrl = inputHiddenImageUrl.value;
     if (!imageUrl) {
         imgPreviewImage.src = "";
-        divPreviewImage.style.display = 'none';
+        previewImageContainer.style.display = 'none';
         return;
     }
 
     imgPreviewImage.src = "https://localhost:7241/uploads/" + imageUrl;
-    divPreviewImage.style.display = 'inline-block';
+    previewImageContainer.style.display = 'inline-block';
 }
 
 inputImageUrl.addEventListener("change", (event) => {
@@ -96,7 +95,7 @@ inputImageUrl.addEventListener("change", (event) => {
 
     fileReader.onload = (e) => {
         imgImageToCrop.src = e.target.result;
-        divCropperOverlay.style.display = 'flex';
+        cropperBackgroundContainer.style.display = 'flex';
 
         if (cropper)
             cropper.destroy();
@@ -112,7 +111,7 @@ inputImageUrl.addEventListener("change", (event) => {
     fileReader.readAsDataURL(imageFile);
 });
 
-buttonCropConfirm.addEventListener("click", async (event) => {
+confirmCropButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
     const croppedCanvas = cropper.getCroppedCanvas();
@@ -131,9 +130,9 @@ buttonCropConfirm.addEventListener("click", async (event) => {
         const responseJson = await response.json();
 
         inputHiddenImageUrl.value = responseJson.url;
-        updateDivPreviewImage();
+        updatePreviewImageContainer();
 
-        divCropperOverlay.style.display = 'none';
+        cropperBackgroundContainer.style.display = 'none';
         inputImageUrl.value = "";
     }, "image/png");
 });
@@ -144,7 +143,7 @@ buttonRemoveImage.addEventListener("click", async (event) => {
     await deleteImage(inputHiddenImageUrl.value);
 
     inputHiddenImageUrl.value = "";
-    updateDivPreviewImage();
+    updatePreviewImageContainer();
 });
 
 async function deleteImage(imageName) {

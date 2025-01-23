@@ -49,7 +49,7 @@
                     Unknown
                 </label>
                 <label>
-                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete" onclick="toggleBirthDate()"
+                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete-date" onclick="toggleBirthDate()"
                     @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                     {
                         @:checked
@@ -82,7 +82,7 @@
                     } />Unknown
                 </label>
                 <label>
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete" onclick="toggleDeathDate()"
+                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete-date" onclick="toggleDeathDate()"
                     @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
                     {
                         @:checked

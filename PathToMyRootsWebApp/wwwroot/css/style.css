@@ -189,7 +189,7 @@ table tr:hover th {
   background-color: transparent;
 }
 
-.tree-level-container {
+.tree-level-row {
   display: block;
   padding: 30px 0px;
 }

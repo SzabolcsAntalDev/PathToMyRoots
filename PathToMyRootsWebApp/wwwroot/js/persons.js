@@ -1,12 +1,6 @@
-﻿function attachPaginationEventListeners() {
-    document.querySelectorAll("button").forEach(link => {
-        link.addEventListener("click", event => {
-            event.preventDefault();
-            const page = link.getAttribute("data-page");
-            fetchData(page, document.getElementById("input-search").value);
-        });
-    });
-}
+﻿document.addEventListener("DOMContentLoaded", () => {
+    addAllListeners()
+});
 
 function addAllListeners() {
     attachPaginationEventListeners();
@@ -25,6 +19,16 @@ function addAllListeners() {
     });
 }
 
+function attachPaginationEventListeners() {
+    document.querySelectorAll("button").forEach(link => {
+        link.addEventListener("click", event => {
+            event.preventDefault();
+            const page = link.getAttribute("data-page");
+            fetchData(page, document.getElementById("input-search").value);
+        });
+    });
+}
+
 function fetchData(page, searchText) {
     fetch(`/Person/Persons?page=${page}&searchText=${encodeURIComponent(searchText)}`, {
         method: "GET",
@@ -33,15 +37,10 @@ function fetchData(page, searchText) {
         }
     })
         .then(response => {
-            return response.text();
-        })
-        .then(data => {
-            const container = document.querySelector("#persons-content");
+            const data = response.text();
+            const personsContainer = document.querySelector("#persons-container");
             container.innerHTML = data;
             addAllListeners();
-        })
+        });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    addAllListeners()
-});

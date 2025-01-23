@@ -1,207 +1,153 @@
-﻿const nodeWidth = 100;
-const nodeHeight = 50;
-const linesVerticalOffset = 4;
+﻿const linesVerticalOffset = 4;
 const sleepInterval = 0;
 
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
 const imageApiUrl = "https://localhost:7241/";
 
 async function createTreeDiagram(personId) {
-    const treeDiagram = document.getElementById('tree-diagram');
-    const treeLines = document.getElementById('tree-lines');
+    const treeDiagramContainer = document.getElementById('tree-diagram-container');
+    const treeLinesContainer = document.getElementById('tree-lines-container');
 
     const processedPersonIds = new Set();
     processedPersonIds.add(null);
 
-    let levelIndexesToDivsDictionary = {};
+    let levelIndexesToRowsDictionary = {};
     let baseLevelIndex = 0;
-    await createNodesFrom(personId, processedPersonIds, levelIndexesToDivsDictionary, baseLevelIndex);
+    await createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, baseLevelIndex);
 
-    const descSortedLevelIndexes = Object.keys(levelIndexesToDivsDictionary)
+    const descSortedLevelIndexes = Object.keys(levelIndexesToRowsDictionary)
         .map(Number)
         .sort((a, b) => b - a);
 
     const rootLevelIndex = descSortedLevelIndexes[0]
 
-    let parentsLevelDiv = levelIndexesToDivsDictionary[rootLevelIndex];
-    treeDiagram.appendChild(parentsLevelDiv);
+    let parentsRow = levelIndexesToRowsDictionary[rootLevelIndex];
+    treeDiagramContainer.appendChild(parentsRow);
     await sleep(sleepInterval);
 
     // sort children
     for (let i = 1; i < descSortedLevelIndexes.length; i++) {
         const childrenLevelIndex = descSortedLevelIndexes[i];
-        const childrenLevelDiv = levelIndexesToDivsDictionary[childrenLevelIndex];
+        const childrenRow = levelIndexesToRowsDictionary[childrenLevelIndex];
 
-        let sortedChildrenLevelDiv = createTreeLevelDiv();
-        treeDiagram.appendChild(sortedChildrenLevelDiv);
-        parentsLevelDiv = await fillWithSortedChildren(sortedChildrenLevelDiv, parentsLevelDiv, childrenLevelDiv);
+        let sortedChildrenRow = createRow();
+        treeDiagramContainer.appendChild(sortedChildrenRow);
+        parentsRow = await fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
     }
 
     // draw lines
-    const treeDiagramStyle = window.getComputedStyle(treeDiagram);
-    const treeDiagramWidth = treeDiagram.offsetWidth || parseFloat(treeDiagramStyle.width);
-    const treeDiagramHeight = treeDiagram.offsetHeight || parseFloat(treeDiagramStyle.height);
+    const treeDiagramContainerStyle = window.getComputedStyle(treeDiagramContainer);
+    const treeDiagramContainerWidth = treeDiagramContainer.offsetWidth || parseFloat(treeDiagramContainerStyle.width);
+    const treeDiagramContainerHeight = treeDiagramContainer.offsetHeight || parseFloat(treeDiagramContainerStyle.height);
 
-    treeLines.style.width = `${treeDiagramWidth}px`;
-    treeLines.style.height = `${treeDiagramHeight}px`;
+    treeLinesContainer.style.width = `${treeDiagramContainerWidth}px`;
+    treeLinesContainer.style.height = `${treeDiagramContainerHeight}px`;
 
-    const levelDivsCollection = treeDiagram.querySelectorAll(".tree-level-container");
-    for (let i = 1; i < levelDivsCollection.length; i++) {
-        const parentsLevelDiv1 = levelDivsCollection[i - 1];
-        const childrenLevelDiv = levelDivsCollection[i];
+    const rows = treeDiagramContainer.querySelectorAll(".tree-level-row");
+    for (let i = 1; i < rows.length; i++) {
+        const parentsRowInner = rows[i - 1];
+        const childrenRowInner = rows[i];
 
-        await drawLines(parentsLevelDiv1, childrenLevelDiv);
+        await drawLines(parentsRowInner, childrenRowInner);
     }
 }
 
-async function fillWithSortedChildren(sortedChildrenLevelDiv, parentsLevelDiv, childrenLevelDiv) {
-    let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-nodes-group');
+async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, level) {
+    if (personId == null || processedPersonIds.has(personId))
+        return;
 
-    for (let parentsDiv of parentsDivs) {
-        let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
-        let motherId = parentsDiv.querySelector('.tree-node-female')?.id;
+    const person = await (await fetch(`${apiUrl}${personId}`)).json();
 
-        let pairDivs = childrenLevelDiv.querySelectorAll('.tree-nodes-group');
-        for (let pairDiv of pairDivs) {
-            let malesChildBiologicalMotherId = pairDiv.querySelector('.tree-node-male')?.biologicalMotherId;
-            let malesChildBiologicalFatherId = pairDiv.querySelector('.tree-node-male')?.biologicalFatherId;
-            let femalesChildBiologicalMotherId = pairDiv.querySelector('.tree-node-female')?.biologicalMotherId;
-            let femalesChildBiologicalFatherId = pairDiv.querySelector('.tree-node-female')?.biologicalFatherId;
+    const nodesGroup = createNodesGroup();
+
+    if (person.isMale) {
+        nodesGroup.appendChild(createNode(person));
+
+        if (person.spouse != null) {
+            const spouse = await (await fetch(`${apiUrl}${person.spouseId}`)).json();
+            nodesGroup.appendChild(createNode(spouse));
+        }
+    }
+    else {
+        if (person.spouse != null) {
+            const spouse = await (await fetch(`${apiUrl}${person.spouseId}`)).json();
+            nodesGroup.appendChild(createNode(spouse));
+        }
+        nodesGroup.appendChild(createNode(person));
+    }
+
+    if (person.spouse != null) {
+        nodesGroup.appendChild(createLineBreak());
+        nodesGroup.appendChild(createNodeMarried());
+    }
+
+    if (levelIndexesToRowsDictionary[level] == null)
+        levelIndexesToRowsDictionary[level] = createRow();
+
+    levelIndexesToRowsDictionary[level].appendChild(nodesGroup);
+
+    processedPersonIds.add(personId);
+    processedPersonIds.add(person.spouseId);
+
+    await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+    if (person.spouse != null)
+        await createRowsFrom(person.spouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+
+    if (person.inverseBiologicalMother != null)
+        for (let child of person.inverseBiologicalMother)
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+
+    if (person.inverseBiologicalFather != null)
+        for (let child of person.inverseBiologicalFather)
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+}
+
+async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
+    let parentsNodeGroups = parentsRow.querySelectorAll('.tree-nodes-group');
+
+    for (let parentNodeGroup of parentsNodeGroups) {
+        let fatherId = parentNodeGroup.querySelector('.tree-node-male')?.id;
+        let motherId = parentNodeGroup.querySelector('.tree-node-female')?.id;
+
+        let childrenNodeGroups = childrenRow.querySelectorAll('.tree-nodes-group');
+        for (let childrenNodeGroup of childrenNodeGroups) {
+            let malesChildBiologicalFatherId = childrenNodeGroup.querySelector('.tree-node-male')?.biologicalFatherId;
+            let malesChildBiologicalMotherId = childrenNodeGroup.querySelector('.tree-node-male')?.biologicalMotherId;
+            let femalesChildBiologicalFatherId = childrenNodeGroup.querySelector('.tree-node-female')?.biologicalFatherId;
+            let femalesChildBiologicalMotherId = childrenNodeGroup.querySelector('.tree-node-female')?.biologicalMotherId;
 
             if ((fatherId != null && malesChildBiologicalFatherId != null && fatherId == malesChildBiologicalFatherId) ||
                 (fatherId != null && femalesChildBiologicalFatherId != null && fatherId == femalesChildBiologicalFatherId) ||
                 (motherId != null && malesChildBiologicalMotherId != null && motherId == malesChildBiologicalMotherId) ||
                 (motherId != null && femalesChildBiologicalMotherId != null && motherId == femalesChildBiologicalMotherId)) {
-                sortedChildrenLevelDiv.appendChild(pairDiv);
+                sortedChildrenRow.appendChild(childrenNodeGroup);
                 await sleep(sleepInterval);
 
             }
         }
     }
 
-    return sortedChildrenLevelDiv;
+    return sortedChildrenRow;
 }
 
-async function drawLines(parentsLevelDiv, childrenLevelDiv) {
-    let parentsDivs = parentsLevelDiv.querySelectorAll('.tree-nodes-group');
-    let childrenDivs = childrenLevelDiv.querySelectorAll('.tree-nodes-group');
-
-    let i = -5 * linesVerticalOffset;
-
-    for (let parentsDiv of parentsDivs) {
-        let fatherId = parentsDiv.querySelector('.tree-node-male')?.id;
-        let motherId = parentsDiv.querySelector('.tree-node-female')?.id;
-
-        let pairDivs = childrenLevelDiv.querySelectorAll('.tree-nodes-group');
-
-        for (let pairDiv of pairDivs) {
-            let pairMaleNode = pairDiv.querySelector('.tree-node-male');
-            let pairFemaleNode = pairDiv.querySelector('.tree-node-female');
-
-            let malesBiologicalFatherId = pairMaleNode?.biologicalFatherId;
-            let malesBiologicalMotherId = pairMaleNode?.biologicalMotherId;
-            let femalesBiologicalFatherId = pairFemaleNode?.biologicalFatherId;
-            let femalesBiologicalMotherId = pairFemaleNode?.biologicalMotherId;
-
-            if (pairMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
-                drawLine(parentsDiv, pairMaleNode, i += linesVerticalOffset);
-                await sleep(sleepInterval);
-            }
-
-            if (pairFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
-                drawLine(parentsDiv, pairFemaleNode, i += linesVerticalOffset);
-                await sleep(sleepInterval);
-            }
-        }
-    }
+function createRow() {
+    const row = document.createElement('div');
+    row.className = 'tree-level-row';
+    return row;
 }
 
-function drawLine(parentElement, childElement, verticalOffset) {
-    const parentRect = parentElement.getBoundingClientRect();
-    const childRect = childElement.getBoundingClientRect();
-
-    const svg = document.getElementById("tree-lines");
-
-    const parentX = parentRect.left + parentRect.width / 2 - svg.getBoundingClientRect().left;
-    const parentY = parentRect.top + parentRect.height - svg.getBoundingClientRect().top;
-    const childX = childRect.left + childRect.width / 2 - svg.getBoundingClientRect().left;
-    const childY = childRect.top - svg.getBoundingClientRect().top;
-
-    const middleY = ((parentY + childY) / 2) + verticalOffset;
-
-    const pathData = `
-        M ${parentX},${parentY}
-        L ${parentX},${middleY}
-        L ${childX},${middleY}
-        L ${childX},${childY}
-    `;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', pathData);
-    path.setAttribute('class', 'tree-line-svg');
-
-    svg.appendChild(path);
+function createNodesGroup() {
+    const nodesGroup = document.createElement('div');
+    nodesGroup.className = 'tree-nodes-group';
+    return nodesGroup;
 }
 
-async function createNodesFrom(personId, processedPersonIds, divsOnLevels, level) {
-    if (personId == null || processedPersonIds.has(personId))
-        return;
-
-    const response = await fetch(`${apiUrl}${personId}`);
-    const person = await response.json();
-
-    const treeDiv = createTreeDiv();
-
-    if (person.isMale) {
-        treeDiv.appendChild(createTreeNode(person));
-
-        if (person.spouse != null) {
-            const spouseResponse = await fetch(`${apiUrl}${person.spouseId}`);
-            const spouse = await spouseResponse.json();
-            treeDiv.appendChild(createTreeNode(spouse));
-        }
-    }
-    else {
-        if (person.spouse != null) {
-            const spouseResponse = await fetch(`${apiUrl}${person.spouseId}`);
-            const spouse = await spouseResponse.json();
-            treeDiv.appendChild(createTreeNode(spouse));
-        }
-        treeDiv.appendChild(createTreeNode(person));
-    }
-
-    if (person.spouse != null) {
-        treeDiv.appendChild(createLineBreak());
-        treeDiv.appendChild(createTreeNodeMarried());
-    }
-
-    if (divsOnLevels[level] == null)
-        divsOnLevels[level] = createTreeLevelDiv();
-
-    divsOnLevels[level].appendChild(treeDiv);
-
-    processedPersonIds.add(personId);
-    processedPersonIds.add(person.spouseId);
-
-    await createNodesFrom(person.biologicalFatherId, processedPersonIds, divsOnLevels, level + 1);
-    if (person.spouse != null)
-        await createNodesFrom(person.spouse.biologicalFatherId, processedPersonIds, divsOnLevels, level + 1);
-
-    if (person.inverseBiologicalMother != null)
-        for (let child of person.inverseBiologicalMother)
-            await createNodesFrom(child.id, processedPersonIds, divsOnLevels, level - 1);
-
-    if (person.inverseBiologicalFather != null)
-        for (let child of person.inverseBiologicalFather)
-            await createNodesFrom(child.id, processedPersonIds, divsOnLevels, level - 1);
-}
-
-function createTreeNode(person) {
-    const treeNode = document.createElement('div');
-    treeNode.id = person.id;
-    treeNode.biologicalMotherId = person.biologicalMotherId;
-    treeNode.biologicalFatherId = person.biologicalFatherId;
-    treeNode.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
+function createNode(person) {
+    const node = document.createElement('div');
+    node.id = person.id;
+    node.biologicalMotherId = person.biologicalMotherId;
+    node.biologicalFatherId = person.biologicalFatherId;
+    node.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
 
     const imgPerson = document.createElement('img');
     if (person.imageUrl)
@@ -209,8 +155,8 @@ function createTreeNode(person) {
 
     imgPerson.className = 'tree-node-image';
 
-    const divTexts = document.createElement('div');
-    divTexts.className = "tree-node-texts";
+    const textsContainer = document.createElement('div');
+    textsContainer.className = "tree-node-texts";
 
     const spanPersonName = document.createElement('span');
     spanPersonName.innerText = personToPersonNameNodeText(person);
@@ -220,8 +166,8 @@ function createTreeNode(person) {
     spanPersonLived.innerText = personToPersonLivedNodeText(person);
     spanPersonLived.className = 'tree-node-lived-text';
 
-    divTexts.appendChild(spanPersonName);
-    divTexts.appendChild(spanPersonLived);
+    textsContainer.appendChild(spanPersonName);
+    textsContainer.appendChild(spanPersonLived);
 
     const imgEditPerson = document.createElement('img');
     imgEditPerson.className = "action-img";
@@ -238,11 +184,11 @@ function createTreeNode(person) {
         window.location.href = url;
     });
 
-    treeNode.appendChild(imgPerson);
-    treeNode.appendChild(divTexts);
-    treeNode.appendChild(buttonEditPerson);
+    node.appendChild(imgPerson);
+    node.appendChild(textsContainer);
+    node.appendChild(buttonEditPerson);
 
-    return treeNode;
+    return node;
 }
 
 function personToPersonNameNodeText(person) {
@@ -270,7 +216,6 @@ function personToPersonLivedNodeText(person) {
     return `(${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`;
 }
 
-
 function dateToString(date) {
     if (date == null)
         return "";
@@ -286,23 +231,72 @@ function createLineBreak() {
     return lineBreak;
 }
 
-function createTreeNodeMarried() {
-    const treeNodeMarried = document.createElement('div');
-    treeNodeMarried.className = 'tree-node-married';
-    treeNodeMarried.innerText = 'married';
-    return treeNodeMarried;
+function createNodeMarried() {
+    const nodeMarried = document.createElement('div');
+    nodeMarried.className = 'tree-node-married';
+    nodeMarried.innerText = 'married';
+    return nodeMarried;
 }
 
-function createTreeDiv() {
-    const treeDiv = document.createElement('div');
-    treeDiv.className = 'tree-nodes-group';
-    return treeDiv;
+async function drawLines(parentsRow, childrenRow) {
+    let parentsNodesGroups = parentsRow.querySelectorAll('.tree-nodes-group');
+
+    let i = -5 * linesVerticalOffset;
+
+    for (let parentsNodeGroup of parentsNodesGroups) {
+        let fatherId = parentsNodeGroup.querySelector('.tree-node-male')?.id;
+        let motherId = parentsNodeGroup.querySelector('.tree-node-female')?.id;
+
+        let childrenNodesGroups = childrenRow.querySelectorAll('.tree-nodes-group');
+
+        for (let childrenNodesGroup of childrenNodesGroups) {
+            let childMaleNode = childrenNodesGroup.querySelector('.tree-node-male');
+            let childFemaleNode = childrenNodesGroup.querySelector('.tree-node-female');
+
+            let malesBiologicalFatherId = childMaleNode?.biologicalFatherId;
+            let malesBiologicalMotherId = childMaleNode?.biologicalMotherId;
+            let femalesBiologicalFatherId = childFemaleNode?.biologicalFatherId;
+            let femalesBiologicalMotherId = childFemaleNode?.biologicalMotherId;
+
+            if (childMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
+                drawLine(parentsNodeGroup, childMaleNode, i += linesVerticalOffset);
+                await sleep(sleepInterval);
+            }
+
+            if (childFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
+                drawLine(parentsNodeGroup, childFemaleNode, i += linesVerticalOffset);
+                await sleep(sleepInterval);
+            }
+        }
+    }
 }
 
-function createTreeLevelDiv() {
-    const treeLevelDiv = document.createElement('div');
-    treeLevelDiv.className = 'tree-level-container';
-    return treeLevelDiv;
+function drawLine(parent, child, verticalOffset) {
+    const parentRect = parent.getBoundingClientRect();
+    const childRect = child.getBoundingClientRect();
+
+    const linesContainer = document.getElementById("tree-lines-container");
+    const linesContainerClientRect = linesContainer.getBoundingClientRect();
+
+    const parentX = parentRect.left + parentRect.width / 2 - linesContainerClientRect.left;
+    const parentY = parentRect.top + parentRect.height - linesContainerClientRect.top;
+    const childX = childRect.left + childRect.width / 2 - linesContainerClientRect.left;
+    const childY = childRect.top - linesContainerClientRect.top;
+
+    const middleY = ((parentY + childY) / 2) + verticalOffset;
+
+    const pathData = `
+        M ${parentX},${parentY}
+        L ${parentX},${middleY}
+        L ${childX},${middleY}
+        L ${childX},${childY}
+    `;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', pathData);
+    path.setAttribute('class', 'tree-line-svg');
+
+    linesContainer.appendChild(path);
 }
 
 function sleep(ms) {
