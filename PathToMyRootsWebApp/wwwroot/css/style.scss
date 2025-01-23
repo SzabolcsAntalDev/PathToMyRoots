@@ -213,8 +213,7 @@ table {
 
 
 .tree-content-container {
-    display: block;
-    overflow: auto;
+    display: inline-block;
 }
 
 .tree-content {
@@ -386,9 +385,8 @@ table {
 .main-content-container {
     display: inline-block;
     margin: $thickness-super-large;
-    min-width: 800px;
-    width: 100%;
     overflow: auto;
+    width: 100%;
 }
 
 

@@ -157,8 +157,7 @@ table tr:hover th {
 }
 
 .tree-content-container {
-  display: block;
-  overflow: auto;
+  display: inline-block;
 }
 
 .tree-content {
@@ -320,9 +319,8 @@ table tr:hover th {
 .main-content-container {
   display: inline-block;
   margin: 60px;
-  min-width: 800px;
-  width: 100%;
   overflow: auto;
+  width: 100%;
 }
 
 .footer-container {
