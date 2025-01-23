@@ -214,7 +214,6 @@ table {
 
 .tree-content-container {
     display: block;
-    width: 100%;
     overflow: auto;
 }
 
@@ -336,6 +335,7 @@ table {
     flex-grow: 1;
     background-color: $background-color;
     color: $foreground-color;
+    overflow: hidden;
 }
 
 
@@ -385,10 +385,10 @@ table {
 
 .main-content-container {
     display: inline-block;
-    padding: $thickness-super-large;
-    width: 100%;
+    margin: $thickness-super-large;
     min-width: 800px;
-    white-space: nowrap;
+    width: 100%;
+    overflow: auto;
 }
 
 

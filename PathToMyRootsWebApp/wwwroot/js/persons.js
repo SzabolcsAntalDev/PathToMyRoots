@@ -37,9 +37,11 @@ function fetchData(page, searchText) {
         }
     })
         .then(response => {
-            const data = response.text();
+            return response.text();
+        })
+        .then(data => {
             const personsContainer = document.querySelector("#persons-container");
-            container.innerHTML = data;
+            personsContainer.innerHTML = data;
             addAllListeners();
         });
 }
