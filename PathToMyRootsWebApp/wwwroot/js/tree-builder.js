@@ -5,8 +5,25 @@ const apiUrl = "https://localhost:7241/api/person/getfamily/";
 const imageApiUrl = "https://localhost:7241/";
 
 async function createTreeDiagram(personId) {
-    const treeDiagramContainer = document.getElementById('tree-diagram-container');
-    const treeLinesContainer = document.getElementById('tree-lines-container');
+
+    const treeContent = document.getElementById("tree-content");
+
+    const diagramAndLinesContainer = document.createElement('div');
+    diagramAndLinesContainer.className = 'tree-diagram-and-lines-container';
+    diagramAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
+
+    const diagramContainer = document.createElement('div');
+    diagramContainer.className = 'tree-diagram-container';
+    diagramContainer.id = 'tree-diagram-container' + personId;
+
+    const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    linesContainer.setAttribute('class', 'tree-lines-container');
+    linesContainer.id = 'tree-lines-container' + personId;
+
+    diagramAndLinesContainer.appendChild(diagramContainer);
+    diagramAndLinesContainer.appendChild(linesContainer);
+
+    treeContent.appendChild(diagramAndLinesContainer);
 
     const processedPersonIds = new Set();
     processedPersonIds.add(null);
@@ -22,7 +39,7 @@ async function createTreeDiagram(personId) {
     const rootLevelIndex = descSortedLevelIndexes[0]
 
     let parentsRow = levelIndexesToRowsDictionary[rootLevelIndex];
-    treeDiagramContainer.appendChild(parentsRow);
+    diagramContainer.appendChild(parentsRow);
     await sleep(sleepInterval);
 
     // sort children
@@ -31,24 +48,24 @@ async function createTreeDiagram(personId) {
         const childrenRow = levelIndexesToRowsDictionary[childrenLevelIndex];
 
         let sortedChildrenRow = createRow();
-        treeDiagramContainer.appendChild(sortedChildrenRow);
+        diagramContainer.appendChild(sortedChildrenRow);
         parentsRow = await fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
     }
 
     // draw lines
-    const treeDiagramContainerStyle = window.getComputedStyle(treeDiagramContainer);
-    const treeDiagramContainerWidth = treeDiagramContainer.offsetWidth || parseFloat(treeDiagramContainerStyle.width);
-    const treeDiagramContainerHeight = treeDiagramContainer.offsetHeight || parseFloat(treeDiagramContainerStyle.height);
+    const treeDiagramContainerStyle = window.getComputedStyle(diagramContainer);
+    const treeDiagramContainerWidth = diagramContainer.offsetWidth || parseFloat(treeDiagramContainerStyle.width);
+    const treeDiagramContainerHeight = diagramContainer.offsetHeight || parseFloat(treeDiagramContainerStyle.height);
 
-    treeLinesContainer.style.width = `${treeDiagramContainerWidth}px`;
-    treeLinesContainer.style.height = `${treeDiagramContainerHeight}px`;
+    linesContainer.style.width = `${treeDiagramContainerWidth}px`;
+    linesContainer.style.height = `${treeDiagramContainerHeight}px`;
 
-    const rows = treeDiagramContainer.querySelectorAll(".tree-level-row");
+    const rows = diagramContainer.querySelectorAll(".tree-level-row");
     for (let i = 1; i < rows.length; i++) {
         const parentsRowInner = rows[i - 1];
         const childrenRowInner = rows[i];
 
-        await drawLines(parentsRowInner, childrenRowInner);
+        await drawLines(linesContainer, parentsRowInner, childrenRowInner);
     }
 }
 
@@ -238,7 +255,7 @@ function createNodeMarried() {
     return nodeMarried;
 }
 
-async function drawLines(parentsRow, childrenRow) {
+async function drawLines(linesContainer, parentsRow, childrenRow) {
     let parentsNodesGroups = parentsRow.querySelectorAll('.tree-nodes-group');
 
     let i = -5 * linesVerticalOffset;
@@ -259,23 +276,22 @@ async function drawLines(parentsRow, childrenRow) {
             let femalesBiologicalMotherId = childFemaleNode?.biologicalMotherId;
 
             if (childMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
-                drawLine(parentsNodeGroup, childMaleNode, i += linesVerticalOffset);
+                drawLine(linesContainer, parentsNodeGroup, childMaleNode, i += linesVerticalOffset);
                 await sleep(sleepInterval);
             }
 
             if (childFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
-                drawLine(parentsNodeGroup, childFemaleNode, i += linesVerticalOffset);
+                drawLine(linesContainer, parentsNodeGroup, childFemaleNode, i += linesVerticalOffset);
                 await sleep(sleepInterval);
             }
         }
     }
 }
 
-function drawLine(parent, child, verticalOffset) {
+function drawLine(linesContainer, parent, child, verticalOffset) {
     const parentRect = parent.getBoundingClientRect();
     const childRect = child.getBoundingClientRect();
 
-    const linesContainer = document.getElementById("tree-lines-container");
     const linesContainerClientRect = linesContainer.getBoundingClientRect();
 
     const parentX = parentRect.left + parentRect.width / 2 - linesContainerClientRect.left;

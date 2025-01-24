@@ -1,5 +1,5 @@
 ﻿function exportToPNG() {
-    const container = document.getElementById('tree-diagram-container-div');
+    const container = document.getElementById('tree-diagram-and-lines-container');
     const originalOverflow = container.style.overflow;
     container.style.overflow = 'visible';
 

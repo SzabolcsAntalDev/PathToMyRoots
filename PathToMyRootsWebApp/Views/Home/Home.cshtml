@@ -1,17 +1,24 @@
-﻿@model PathToMyRootsWebApp.Models.PersonModel
+﻿@using PathToMyRootsWebApp.Utils
 
 <div class="tree-content-container">
     <h1>Welcome</h1>
 
-    <div class="tree-content">
-        @await Html.PartialAsync("../Tree/_TreePartial", Model)
+    <div class="tree-content" id="tree-content">
+    </div>
+
+    <div class="navigation-buttons">
+        <button id="prevTree" class="nav-button">Prev</button>
+        <button id="nextTree" class="nav-button">Next</button>
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/js/utils.js"></script>
+    <script src="~/js/tree-builder.js"></script>
     <script src="~/js/home.js"></script>
+
     <script>
-        const personId = @Model.Id;
-        createTreeDiagram(personId);
+        const UnknownServerDate = '@Html.Raw(DateHelper.UnknownServerDate)';
+        const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
     </script>
 }
