@@ -14,7 +14,7 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons(int page = 0, string searchText = "", int pageSize = 15)
+        public async Task<IActionResult> Persons(int page, string searchText, int pageSize = 15)
         {
             var persons = await _personApiService.GetPersonsAsync();
             var filteredPersons = string.IsNullOrEmpty(searchText)
@@ -31,14 +31,19 @@ namespace PathToMyRootsWebApp.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            ViewBag.SearchText = searchText;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)filteredPersons.Count / pageSize);
+            var totalPages = (int)Math.Ceiling((double)filteredPersons.Count / pageSize);
+
+            var personsPageModel = new PersonsPageModel()
+            {
+                PersonModels = paginatedPersons,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
 
             if (Request.Headers.XRequestedWith == "XMLHttpRequest")
-                return PartialView("_PersonsTablePartial", paginatedPersons);
+                return PartialView("_PersonsTablePartial", personsPageModel);
 
-            return View(paginatedPersons);
+            return View(personsPageModel);
         }
 
         public async Task<IActionResult> AddPerson()

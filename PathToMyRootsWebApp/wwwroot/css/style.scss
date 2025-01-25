@@ -146,7 +146,6 @@ select {
 }
 
 table {
-    table-layout: auto;
     width: 100%;
     border-collapse: collapse;
 
@@ -154,6 +153,12 @@ table {
         border: $border;
         white-space: nowrap;
         padding: $thickness-medium;
+        width: auto;
+    }
+
+    .td-shrink {
+        width: 1%;
+        white-space: nowrap;
     }
 
     tr:hover {
@@ -165,16 +170,8 @@ table {
     }
 }
 
-.table-first-column-borderless {
-    td:first-child, th:first-child {
-        border: none;
-        width: 1%;
-    }
-}
-
-.persons-img-gender {
-    width: $action-image-size;
-    height: $action-image-size;
+.persons-img {
+    height: 50px;
 }
 
 .persons-div-actions {

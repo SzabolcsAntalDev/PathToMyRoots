@@ -1,118 +1,94 @@
 ﻿@using PathToMyRootsWebApp.Constants
 @using PathToMyRootsWebApp.Utils
-@model List<PathToMyRootsWebApp.Models.PersonModel>
+@model PathToMyRootsWebApp.Models.PersonsPageModel
 
-<div>
-    <table class="table-first-column-borderless">
-        <thead>
+<table id="persons-table"
+       data-current-page="@Model.CurrentPage"
+       data-total-pages="@Model.TotalPages">
+    <thead>
+        <tr>
+            <th class="td-shrink"></th>
+            <th>Noble Title</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Maiden Name</th>
+            <th>Other Names</th>
+            <th>Birth Date</th>
+            <th>Death Date</th>
+            <th>Mother</th>
+            <th>Father</th>
+            <th>Spouse</th>
+            <th class="td-shrink"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model.PersonModels)
+        {
             <tr>
-                <th></th>
-                <th>Noble Title</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Maiden Name</th>
-                <th>Other Names</th>
-                <th>Birth Date</th>
-                <th>Death Date</th>
-                <th>Mother</th>
-                <th>Father</th>
-                <th>Spouse</th>
-                <th></th>
+                <td class="td-shrink">
+                    <img class="persons-img" src="https://localhost:7241/api/Image/get/@person.ImageUrl" />
+                </td>
+                <td>@person.NobleTitle</td>
+                <td>@person.FirstName</td>
+                <td>@person.LastName</td>
+                <td>@person.MaidenName</td>
+                <td>@person.OtherNames</td>
+                <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.BirthDate)</td>
+                <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.DeathDate)</td>
+                <td>
+                    @if (person.BiologicalMother == null)
+                    {
+                        <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
+                    }
+                    else
+                    {
+                        <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalMotherId">
+                            @PersonModelFormatter.ToShortFullName(person.BiologicalMother)
+                        </a>
+                    }
+                </td>
+                <td>
+                    @if (person.BiologicalFather == null)
+                    {
+                        <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
+                    }
+                    else
+                    {
+                        <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalFatherId">
+                            @PersonModelFormatter.ToShortFullName(person.BiologicalFather)
+                        </a>
+                    }
+                </td>
+                <td>
+                    @if (person.Spouse == null)
+                    {
+                        <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
+                    }
+                    else
+                    {
+                        <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SpouseId">
+                            @PersonModelFormatter.ToShortFullName(person.Spouse)
+                        </a>
+                    }
+                </td>
+
+                <td class="td-shrink">
+                    <div class="persons-div-actions">
+                        <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
+                            <img src="~/icons/tree.svg" class="action-img" title="View Tree">
+                        </a>
+                        <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="persons-action-hyperlink">
+                            <img src="~/icons/edit.svg" class="action-img" title="Edit">
+                        </a>
+                        <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="@person.Id" />
+                            <button type="submit" class="persons-action-button">
+                                <img src="~/icons/delete.svg" class="action-img" title="Delete">
+                            </button>
+                        </form>
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var person in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="~/icons/@(person.IsMale ? "male.svg" : "female.svg")"
-                             class="persons-img-gender" />
-                    </td>
-                    <td>@person.NobleTitle</td>
-                    <td>@person.FirstName</td>
-                    <td>@person.LastName</td>
-                    <td>@person.MaidenName</td>
-                    <td>@person.OtherNames</td>
-                    <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.BirthDate)</td>
-                    <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.DeathDate)</td>
-                    <td>
-                        @if (person.BiologicalMother == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalMotherId">
-                                @PersonModelFormatter.ToShortFullName(person.BiologicalMother)
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (person.BiologicalFather == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.BiologicalFatherId">
-                                @PersonModelFormatter.ToShortFullName(person.BiologicalFather)
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (person.Spouse == null)
-                        {
-                            <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
-                        }
-                        else
-                        {
-                            <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SpouseId">
-                                @PersonModelFormatter.ToShortFullName(person.Spouse)
-                            </a>
-                        }
-                    </td>
-
-                    <td width="1%">
-                        <div class="div-actions">
-                            <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                                <img src="~/icons/tree.svg" class="action-img" title="View Tree">
-                            </a>
-                            <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                                <img src="~/icons/edit.svg" class="action-img" title="Edit">
-                            </a>
-                            <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
-                                <input type="hidden" name="id" value="@person.Id" />
-                                <button type="submit" class="persons-action-button">
-                                    <img src="~/icons/delete.svg" class="action-img" title="Delete">
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div class="pagination-container">
-    @if (ViewBag.CurrentPage > 0)
-    {
-        <button data-page="0">First</button><button data-page="@(ViewBag.CurrentPage - 1)">Prev</button>
-    }
-    else
-    {
-        <button disabled>First</button><button disabled>Prev</button>
-    }
-
-    <span>
-        @(ViewBag.CurrentPage + 1) / @ViewBag.TotalPages
-    </span>
-
-    @if (ViewBag.CurrentPage < ViewBag.TotalPages - 1)
-    {
-        <button data-page="@(ViewBag.CurrentPage + 1)">Next</button><button data-page="@(ViewBag.TotalPages - 1)">Last</button>
-    }
-    else
-    {
-        <button disabled>Next</button><button disabled>Last</button>
-    }
-</div>
+        }
+    </tbody>
+</table>

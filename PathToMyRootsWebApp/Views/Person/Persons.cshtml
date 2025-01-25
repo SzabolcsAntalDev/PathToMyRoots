@@ -1,20 +1,28 @@
 ﻿@using PathToMyRootsWebApp.Constants
 @using PathToMyRootsWebApp.Utils
-@model List<PathToMyRootsWebApp.Models.PersonModel>
 
 <h1>Persons</h1>
 
-<div>
-    <div class="persons-search">
-        <input type="text" id="input-search" style="width: 200px" placeholder="Search..." value="@ViewBag.SearchText" />
-        <button id="button-search">Search</button>
-    </div>
+<div class="persons-search">
+    <input type="text" id="input-search" style="width: 200px" placeholder="Search..." />
+    <button id="button-search">Search</button>
+</div>
 
-    <div id="persons-container">
-        @await Html.PartialAsync("_PersonsTablePartial", Model)
-    </div>
+<div id="persons-container" class="persons-container">
+    @await Html.PartialAsync("_PersonsTablePartial")
+</div>
+
+<div class="pagination-container">
+    <button id="first-button">First</button>
+    <button id="prev-button">Prev</button>
+    <span id="pagination-text"></span>
+    <button id="next-button">Next</button>
+    <button id="last-button">Last</button>
 </div>
 
 @section Scripts {
     <script src="~/js/persons.js"></script>
+    <script>
+        setupPaginationButtons(0, @Model.TotalPages);
+    </script>
 }
