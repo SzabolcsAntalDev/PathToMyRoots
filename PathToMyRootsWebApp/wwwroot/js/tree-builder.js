@@ -173,9 +173,7 @@ function createNode(person) {
     node.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
 
     const imgPerson = document.createElement('img');
-    if (person.imageUrl)
-        imgPerson.src = "https://localhost:7241/uploads/" + person.imageUrl;
-
+    imgPerson.src = "https://localhost:7241/uploads/" + person.imageUrl;
     imgPerson.className = 'tree-node-image';
 
     const textsContainer = document.createElement('div');
