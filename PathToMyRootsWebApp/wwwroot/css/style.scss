@@ -14,10 +14,10 @@ $male-color: blue;
 $female-color: red;
 $married-color: green;
 
-$font-size-small: 13px;
-$font-size-medium: 17px;
-$font-size-large: 24px;
-$font-size-extra-large: 30px;
+$font-size-small: 11px;
+$font-size-medium: 14px;
+$font-size-large: 18px;
+$font-size-extra-large: 21px;
 
 $thickness-small: 4px;
 $thickness-medium: 8px;
@@ -28,12 +28,12 @@ $thickness-super-large: 60px;
 $border: 1px solid $foreground-color;
 
 $action-image-size: 20px;
-$distance-between-nodes: 30px;
-$person-node-width: 200px;
+$distance-between-nodes: 20px;
+$person-node-width: 150px;
 $married-node-width: 50px;
 
-$node-image-width: 60px;
-$node-image-height: 80px;
+$node-image-width: 45px;
+$node-image-height: 60px;
 
 html {
     font-size: $font-size-small;
@@ -187,7 +187,7 @@ table {
 }
 
 .persons-img {
-    height: 50px;
+    width: 30px;
 }
 
 .persons-div-actions {
