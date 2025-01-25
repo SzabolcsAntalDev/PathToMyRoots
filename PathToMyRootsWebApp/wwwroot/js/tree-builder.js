@@ -6,7 +6,7 @@ const imageApiUrl = "https://localhost:7241/";
 
 async function createTreeDiagram(personId) {
 
-    const treeContent = document.getElementById("tree-content");
+    const treesContainer = document.getElementById("trees-container");
 
     const diagramAndLinesContainer = document.createElement('div');
     diagramAndLinesContainer.className = 'tree-diagram-and-lines-container';
@@ -23,7 +23,7 @@ async function createTreeDiagram(personId) {
     diagramAndLinesContainer.appendChild(diagramContainer);
     diagramAndLinesContainer.appendChild(linesContainer);
 
-    treeContent.appendChild(diagramAndLinesContainer);
+    treesContainer.appendChild(diagramAndLinesContainer);
 
     const processedPersonIds = new Set();
     processedPersonIds.add(null);

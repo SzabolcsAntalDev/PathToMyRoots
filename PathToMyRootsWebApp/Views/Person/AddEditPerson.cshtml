@@ -3,176 +3,178 @@
 @using PathToMyRootsWebApp.Models
 @model PathToMyRootsWebApp.Models.PersonModel
 
-<h1>
-    @if (Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue)
-    {
-        @:Edit Person
-    }
-    else
-    {
-        @:Add Person
-    }
-</h1>
-
-<form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" style="display: inline-block">
-    @if (Model?.Id > 0)
-    {
-        <input type="hidden" name="Id" value="@Model.Id" />
-    }
-    <div class="person-input-sections-container">
-        <div class="person-input-labels-container">
-            <label for="NobleTitle" >Noble Title:</label>
-            <label for="FirstName">First Name:</label>
-            <label for="LastName">Last Name:</label>
-            <label for="MaidenName">Maiden Name:</label>
-            <label for="OtherNames">Other Names:</label>
-        </div>
-        <div class="person-inputs-container">
-            <input type="text" id="NobleTitle" name="NobleTitle" value="@Model?.NobleTitle" />
-            <input type="text" id="FirstName" name="FirstName" value="@Model?.FirstName" />
-            <input type="text" id="LastName" name="LastName" value="@Model?.LastName" />
-            <input type="text" id="MaidenName" name="MaidenName" value="@Model?.MaidenName" />
-            <input type="text" id="OtherNames" name="OtherNames" value="@Model?.OtherNames" />
-        </div>
-    </div>
-
-    <div class="person-input-bordered-sections-container">
-        <div class="person-bordered-section">
-            <label>Birth Date:</label>
-            <fieldset>
-                <label>
-                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-unknown" onclick="toggleBirthDate()"
-                    @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
-                    {
-                        @:checked
-                    } />
-                    Unknown
-                </label>
-                <label>
-                    <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete-date" onclick="toggleBirthDate()"
-                    @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
-                    {
-                        @:checked
-                    } />Date
-                </label>
-                <input type="text" id="input-birth-date" placeholder="@DateHelper.InputDateFlatFormat"
-                @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
-                {
-                    @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
-                } />
-                <input type="hidden" id="input-hidden-birth-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
-            </fieldset>
-        </div>
-
-        <div class="person-bordered-section">
-            <label>Death Date:</label>
-            <fieldset>
-                <label>
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-alive" onclick="toggleDeathDate()"
-                    @if (Model?.DeathDate == null)
-                    {
-                        @:checked
-                    } />Alive
-                </label>
-                <label>
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-unknown" onclick="toggleDeathDate()"
-                    @if (Model?.DeathDate == DateHelper.UnknownServerDate)
-                    {
-                        @:checked
-                    } />Unknown
-                </label>
-                <label>
-                    <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete-date" onclick="toggleDeathDate()"
-                    @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
-                    {
-                        @:checked
-                    } />Date
-                </label>
-                <input type="text" id="input-death-date" placeholder="@DateHelper.InputDateFlatFormat"
-                @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
-
-                {
-                    @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
-                } />
-
-                <input type="hidden" id="input-hidden-death-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
-            </fieldset>
-        </div>
-    </div>
-
-    <div class="person-input-sections-container">
-        <div class="person-input-labels-container">
-            <label for="IsMale">Gender:</label>
-            <label for="BiologicalFatherId">Father:</label>
-            <label for="BiologicalMotherId">Mother:</label>
-            <label for="SpouseId">Spouse:</label>
-            <label for="ImageUrl">Image:</label>
-        </div>
-        <div class="person-inputs-container">
-            <select id="IsMale" name="IsMale">
-                <option value="true" selected="@(Model?.IsMale == true)">Male</option>
-                <option value="false" selected="@(Model?.IsMale == false)">Female</option>
-            </select>
-            <select id="BiologicalFatherId" name="BiologicalFatherId">
-                <option value="">-- Select Father --</option>
-                @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
-                {
-                    <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
-                        @PersonModelFormatter.ToShortFullInfo(father)
-                    </option>
-                }
-            </select>
-            <select id="BiologicalMotherId" name="BiologicalMotherId">
-                <option value="">-- Select Mother --</option>
-                @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
-                {
-                    <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
-                        @PersonModelFormatter.ToShortFullInfo(mother)
-                    </option>
-                }
-            </select>
-            <select id="SpouseId" name="SpouseId">
-                <option value="">-- Select Spouse --</option>
-                @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
-                {
-                    <option value="@spouse.Id" selected=@(Model?.SpouseId == spouse.Id)>
-                        @PersonModelFormatter.ToShortFullInfo(spouse)
-                    </option>
-                }
-            </select>
-            <input type="file" id="input-image-url" accept="image/*" style="display: none" />
-            <button id="button-upload-image">Select Image...</button>
-            <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />
-        </div>
-    </div>
-
-    <div class="person-input-sections-container">
-        <div id="person-preview-image-container" class="person-preview-image-container">
-            <img id="img-preview-image" style="max-width: 100%" />
-            <button id="button-remove-image" class="action-button-on-image">
-                <img src="~/icons/delete.svg" class="action-img" title="Delete">
-            </button>
-        </div>
-    </div>
-
-    <div id="person-cropper-background-container" style="display: none;">
-        <div id="person-cropper-image-and-button-container">
-            <img id="person-image-to-crop" />
-            <button id="confirm-crop-button">Confirm Crop</button>
-        </div>
-    </div>
-
-    <div style="display: block; text-align: right;">
-        @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
+<div>
+    <h1>
+        @if (Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue)
         {
-            <button type="submit">Add</button>
+            @:Edit Person
         }
         else
         {
-            <button type="submit">Update</button>
+            @:Add Person
         }
-    </div>
-</form>
+    </h1>
+
+    <form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" style="display: inline-block">
+        @if (Model?.Id > 0)
+        {
+            <input type="hidden" name="Id" value="@Model.Id" />
+        }
+        <div class="person-input-sections-container">
+            <div class="person-input-labels-container">
+                <label for="NobleTitle" >Noble Title:</label>
+                <label for="FirstName">First Name:</label>
+                <label for="LastName">Last Name:</label>
+                <label for="MaidenName">Maiden Name:</label>
+                <label for="OtherNames">Other Names:</label>
+            </div>
+            <div class="person-inputs-container">
+                <input type="text" id="NobleTitle" name="NobleTitle" value="@Model?.NobleTitle" />
+                <input type="text" id="FirstName" name="FirstName" value="@Model?.FirstName" />
+                <input type="text" id="LastName" name="LastName" value="@Model?.LastName" />
+                <input type="text" id="MaidenName" name="MaidenName" value="@Model?.MaidenName" />
+                <input type="text" id="OtherNames" name="OtherNames" value="@Model?.OtherNames" />
+            </div>
+        </div>
+
+        <div class="person-input-bordered-sections-container">
+            <div class="person-bordered-section">
+                <label>Birth Date:</label>
+                <fieldset>
+                    <label>
+                        <input type="radio" name="input-radio-birth" id="input-radio-birth-date-unknown" onclick="toggleBirthDate()"
+                        @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
+                        {
+                            @:checked
+                        } />
+                        Unknown
+                    </label>
+                    <label>
+                        <input type="radio" name="input-radio-birth" id="input-radio-birth-date-concrete-date" onclick="toggleBirthDate()"
+                        @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
+                        {
+                            @:checked
+                        } />Date
+                    </label>
+                    <input type="text" id="input-birth-date" placeholder="@DateHelper.InputDateFlatFormat"
+                    @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
+                    {
+                        @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
+                    } />
+                    <input type="hidden" id="input-hidden-birth-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
+                </fieldset>
+            </div>
+
+            <div class="person-bordered-section">
+                <label>Death Date:</label>
+                <fieldset>
+                    <label>
+                        <input type="radio" name="input-radio-death" id="input-radio-death-date-alive" onclick="toggleDeathDate()"
+                        @if (Model?.DeathDate == null)
+                        {
+                            @:checked
+                        } />Alive
+                    </label>
+                    <label>
+                        <input type="radio" name="input-radio-death" id="input-radio-death-date-unknown" onclick="toggleDeathDate()"
+                        @if (Model?.DeathDate == DateHelper.UnknownServerDate)
+                        {
+                            @:checked
+                        } />Unknown
+                    </label>
+                    <label>
+                        <input type="radio" name="input-radio-death" id="input-radio-death-date-concrete-date" onclick="toggleDeathDate()"
+                        @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+                        {
+                            @:checked
+                        } />Date
+                    </label>
+                    <input type="text" id="input-death-date" placeholder="@DateHelper.InputDateFlatFormat"
+                    @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+
+                    {
+                        @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
+                    } />
+
+                    <input type="hidden" id="input-hidden-death-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="person-input-sections-container">
+            <div class="person-input-labels-container">
+                <label for="IsMale">Gender:</label>
+                <label for="BiologicalFatherId">Father:</label>
+                <label for="BiologicalMotherId">Mother:</label>
+                <label for="SpouseId">Spouse:</label>
+                <label for="ImageUrl">Image:</label>
+            </div>
+            <div class="person-inputs-container">
+                <select id="IsMale" name="IsMale">
+                    <option value="true" selected="@(Model?.IsMale == true)">Male</option>
+                    <option value="false" selected="@(Model?.IsMale == false)">Female</option>
+                </select>
+                <select id="BiologicalFatherId" name="BiologicalFatherId">
+                    <option value="">-- Select Father --</option>
+                    @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
+                    {
+                        <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
+                            @PersonModelFormatter.ToShortFullInfo(father)
+                        </option>
+                    }
+                </select>
+                <select id="BiologicalMotherId" name="BiologicalMotherId">
+                    <option value="">-- Select Mother --</option>
+                    @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
+                    {
+                        <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
+                            @PersonModelFormatter.ToShortFullInfo(mother)
+                        </option>
+                    }
+                </select>
+                <select id="SpouseId" name="SpouseId">
+                    <option value="">-- Select Spouse --</option>
+                    @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
+                    {
+                        <option value="@spouse.Id" selected=@(Model?.SpouseId == spouse.Id)>
+                            @PersonModelFormatter.ToShortFullInfo(spouse)
+                        </option>
+                    }
+                </select>
+                <input type="file" id="input-image-url" accept="image/*" style="display: none" />
+                <button id="button-upload-image">Select Image...</button>
+                <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />
+            </div>
+        </div>
+
+        <div class="person-input-sections-container">
+            <div id="person-preview-image-container" class="person-preview-image-container">
+                <img id="img-preview-image" style="max-width: 100%" />
+                <button id="button-remove-image" class="action-button-on-image">
+                    <img src="~/icons/delete.svg" class="action-img" title="Delete">
+                </button>
+            </div>
+        </div>
+
+        <div id="person-cropper-background-container" style="display: none;">
+            <div id="person-cropper-image-and-button-container">
+                <img id="person-image-to-crop" />
+                <button id="confirm-crop-button">Confirm Crop</button>
+            </div>
+        </div>
+
+        <div style="display: block; text-align: right;">
+            @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
+            {
+                <button type="submit">Add</button>
+            }
+            else
+            {
+                <button type="submit">Update</button>
+            }
+        </div>
+    </form>
+</div>
 
 @section Styles {
     <link rel="stylesheet" href="~/css/libs/cropper.css" />

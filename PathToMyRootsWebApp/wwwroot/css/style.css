@@ -156,7 +156,7 @@ table tr:hover th {
   margin: 0px 8px;
 }
 
-.container-without-footer {
+.nav-bar-and-page-data-container {
   display: flex;
   flex-grow: 1;
   background-color: #3b3e4f;
@@ -164,19 +164,20 @@ table tr:hover th {
   overflow: hidden;
 }
 
-.main-content-container {
-  display: inline-block;
+.page-data-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   margin: 60px;
   overflow: auto;
   width: 100%;
 }
 
-.tree-content-container {
-  display: inline-block;
-}
-
-.tree-content {
+.trees-container {
   display: flex;
+  flex-grow: 1;
+  overflow: auto;
+  width: 100%;
 }
 
 .tree-diagram-and-lines-container {
