@@ -211,6 +211,20 @@ table {
     }
 }
 
+.container-without-footer {
+    display: flex;
+    flex-grow: 1;
+    background-color: $background-color;
+    color: $foreground-color;
+    overflow: hidden;
+}
+
+.main-content-container {
+    display: inline-block;
+    margin: $thickness-super-large;
+    overflow: auto;
+    width: 100%;
+}
 
 .tree-content-container {
     display: inline-block;
@@ -329,15 +343,6 @@ table {
 }
 
 
-.container-without-footer {
-    display: flex;
-    flex-grow: 1;
-    background-color: $background-color;
-    color: $foreground-color;
-    overflow: hidden;
-}
-
-
 .nav-bar {
     display: flex;
     flex-direction: column;
@@ -379,14 +384,6 @@ table {
     padding: $thickness-medium $thickness-large;
     background-color: transparent;
     font-size: $font-size-medium;
-}
-
-
-.main-content-container {
-    display: inline-block;
-    margin: $thickness-super-large;
-    overflow: auto;
-    width: 100%;
 }
 
 

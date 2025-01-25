@@ -156,6 +156,21 @@ table tr:hover th {
   margin: 0px 8px;
 }
 
+.container-without-footer {
+  display: flex;
+  flex-grow: 1;
+  background-color: #3b3e4f;
+  color: white;
+  overflow: hidden;
+}
+
+.main-content-container {
+  display: inline-block;
+  margin: 60px;
+  overflow: auto;
+  width: 100%;
+}
+
 .tree-content-container {
   display: inline-block;
 }
@@ -265,14 +280,6 @@ table tr:hover th {
   fill: transparent;
 }
 
-.container-without-footer {
-  display: flex;
-  flex-grow: 1;
-  background-color: #3b3e4f;
-  color: white;
-  overflow: hidden;
-}
-
 .nav-bar {
   display: flex;
   flex-direction: column;
@@ -314,13 +321,6 @@ table tr:hover th {
   padding: 8px 20px;
   background-color: transparent;
   font-size: 17px;
-}
-
-.main-content-container {
-  display: inline-block;
-  margin: 60px;
-  overflow: auto;
-  width: 100%;
 }
 
 .footer-container {
