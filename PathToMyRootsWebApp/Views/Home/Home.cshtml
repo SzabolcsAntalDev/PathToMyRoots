@@ -5,7 +5,7 @@
 <div class="trees-container" id="trees-container">
 </div>
 
-<div class="navigation-buttons">
+<div class="pagination-container">
     <button id="prevTree" class="nav-button">Prev</button>
     <button id="nextTree" class="nav-button">Next</button>
 </div>
@@ -18,5 +18,7 @@
     <script>
         const UnknownServerDate = '@Html.Raw(DateHelper.UnknownServerDate)';
         const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
+
+        showTree(1)
     </script>
 }

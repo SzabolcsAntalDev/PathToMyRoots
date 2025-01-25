@@ -4,6 +4,14 @@ const sleepInterval = 0;
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
 const imageApiUrl = "https://localhost:7241/";
 
+async function removeTreeDiagram(personId) {
+    const treesContainer = document.getElementById("trees-container");
+    const diagramAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
+
+    if (diagramAndLinesContainer)
+        treesContainer.removeChild(diagramAndLinesContainer);
+}
+
 async function createTreeDiagram(personId) {
 
     const treesContainer = document.getElementById("trees-container");
@@ -13,12 +21,10 @@ async function createTreeDiagram(personId) {
     diagramAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
 
     const diagramContainer = document.createElement('div');
-    diagramContainer.className = 'tree-diagram-container';
-    diagramContainer.id = 'tree-diagram-container' + personId;
+    diagramContainer.setAttribute('class', 'tree-diagram-container');
 
     const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     linesContainer.setAttribute('class', 'tree-lines-container');
-    linesContainer.id = 'tree-lines-container' + personId;
 
     diagramAndLinesContainer.appendChild(diagramContainer);
     diagramAndLinesContainer.appendChild(linesContainer);

@@ -1,15 +1,27 @@
-﻿document.getElementById('prevTree').addEventListener('click', function () {
-    showTree(1);
+﻿const treeIds = [13, 71];
+let currentIndex = 0;
+
+document.getElementById('prevTree').addEventListener('click', function () {
+    showTree(-1);
 });
 
 document.getElementById('nextTree').addEventListener('click', function () {
-    showTree(2);
+    showTree(1);
 });
 
-function showTree(treeNumber) {
-    if (treeNumber === 1) {
-        createTreeDiagram(71);
-    } else if (treeNumber === 2) {
-        createTreeDiagram(13);
+function showTree(direction) {
+    const currentTreeNumber = treeIds[currentIndex];
+    removeTreeDiagram(currentTreeNumber);
+
+    currentIndex += direction;
+
+    if (currentIndex < 0) {
+        currentIndex = treeIds.length - 1;
     }
+    else if (currentIndex >= treeIds.length) {
+        currentIndex = 0;
+    }
+
+    const nextTreeNumber = treeIds[currentIndex];
+    createTreeDiagram(nextTreeNumber);
 }
