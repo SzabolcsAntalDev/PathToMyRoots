@@ -120,6 +120,13 @@ table tr:hover th {
   background-color: #3b3e4f;
 }
 
+.persons-container {
+  display: flex;
+  flex-grow: 1;
+  overflow: auto;
+  width: 100%;
+}
+
 .persons-img {
   height: 50px;
 }

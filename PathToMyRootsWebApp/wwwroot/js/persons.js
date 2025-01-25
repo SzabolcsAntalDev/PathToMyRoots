@@ -71,11 +71,13 @@ function fetchData(page, searchText) {
             return response.text();
         })
         .then(data => {
-            const personsContainer = document.querySelector("#persons-container");
+            const personsContainer = document.getElementById("persons-container");
             personsContainer.innerHTML = data;
 
-            var currentPage = parseInt(document.getElementById("persons-table").getAttribute("data-current-page"), 10);
-            var totalPages = parseInt(document.getElementById("persons-table").getAttribute("data-total-pages"), 10);
+            const personsTable = document.getElementById("persons-table")
+
+            var currentPage = parseInt(personsTable.getAttribute("data-current-page"), 10);
+            var totalPages = parseInt(personsTable.getAttribute("data-total-pages"), 10);
 
             setupPaginationButtons(currentPage, totalPages);
         });
