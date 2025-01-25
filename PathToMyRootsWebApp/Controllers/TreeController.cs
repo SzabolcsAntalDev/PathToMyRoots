@@ -5,7 +5,7 @@ namespace PathToMyRootsWebApp.Controllers
 {
     public class TreeController : Controller
     {
-        private PersonApiService _personApiService;
+        private readonly PersonApiService _personApiService;
 
         public TreeController(PersonApiService personApiService)
         {

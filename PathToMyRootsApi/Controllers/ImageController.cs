@@ -13,6 +13,23 @@ namespace PathToMyRootsApi.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
+        [HttpGet("get/{imageName}")]
+        public IActionResult GetImage(string imageName)
+        {
+            if (string.IsNullOrWhiteSpace(imageName))
+                return BadRequest("Image name is required.");
+
+            var uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+            var filePath = Path.Combine(uploadsFolder, imageName);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("Image not found.");
+
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+            return File(fileBytes, "image/png", imageName);
+        }
+
         [HttpPost("upload")]
         public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
         {
