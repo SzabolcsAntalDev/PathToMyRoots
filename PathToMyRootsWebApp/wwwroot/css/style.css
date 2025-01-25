@@ -146,13 +146,13 @@ table tr:hover th {
   margin: 8px 0px;
 }
 
-.persons-pagination {
+.pagination-container {
   text-align: center;
 }
-.persons-pagination button {
+.pagination-container button {
   margin: 8px 0px;
 }
-.persons-pagination span {
+.pagination-container span {
   margin: 0px 8px;
 }
 
@@ -183,8 +183,8 @@ table tr:hover th {
 .tree-diagram-and-lines-container {
   overflow-x: auto;
   white-space: nowrap;
-  width: 100%;
   position: relative;
+  margin: 0 auto;
 }
 
 .tree-diagram-container {
@@ -192,7 +192,6 @@ table tr:hover th {
   overflow-x: auto;
   white-space: nowrap;
   text-align: center;
-  padding: 8px;
 }
 
 .tree-lines-container {
