@@ -149,16 +149,25 @@ table {
     width: 100%;
     border-collapse: collapse;
 
+    tr {
+        display: flex;
+    }
+
     th, td {
+        flex-grow: 1;
+        overflow: auto;
         border: $border;
         white-space: nowrap;
         padding: $thickness-medium;
-        width: auto;
+        width: 1%;
+        display: flex;
+        align-items: center;
     }
 
     .td-shrink {
-        width: 1%;
-        white-space: nowrap;
+        flex-grow: 0;
+        width: auto;
+        padding: $thickness-small;
     }
 
     tr:hover {
@@ -198,8 +207,16 @@ table {
 }
 
 .persons-search {
+    display: flex;
+
     input, button {
         margin: $thickness-medium 0px;
+    }
+    span{
+        margin: auto $thickness-small auto auto;
+    }
+    select{
+        margin: auto 0;
     }
 }
 

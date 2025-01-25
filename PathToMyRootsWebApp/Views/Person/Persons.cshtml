@@ -4,8 +4,15 @@
 <h1>Persons</h1>
 
 <div class="persons-search">
-    <input type="text" id="input-search" style="width: 200px" placeholder="Search..." />
+    <input id="input-search" type="text" style="width: 200px" placeholder="Search..." />
     <button id="button-search">Search</button>
+    <span>Page size: </span>
+    <select id="page-size-select">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+    </select>
 </div>
 
 <div id="persons-container" class="persons-container">
@@ -23,6 +30,6 @@
 @section Scripts {
     <script src="~/js/persons.js"></script>
     <script>
-        setupPaginationButtons(0, @Model.TotalPages);
+        setupPaginationButtons('', @Model.TotalPages);
     </script>
 }

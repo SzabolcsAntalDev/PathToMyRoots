@@ -90,12 +90,10 @@
                         } />Date
                     </label>
                     <input type="text" id="input-death-date" placeholder="@DateHelper.InputDateFlatFormat"
-                    @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
-
-                    {
-                        @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
-                    } />
-
+                        @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+                        {
+                            @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
+                        } />
                     <input type="hidden" id="input-hidden-death-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
                 </fieldset>
             </div>

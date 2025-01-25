@@ -14,7 +14,7 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons(int page, string searchText, int pageSize = 8)
+        public async Task<IActionResult> Persons(string searchText, int pageNumber, int pageSize = 10)
         {
             var persons = await _personApiService.GetPersonsAsync();
             var filteredPersons = string.IsNullOrEmpty(searchText)
@@ -27,7 +27,7 @@ namespace PathToMyRootsWebApp.Controllers
                     (p.LastName != null && p.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase))).ToList();
 
             var paginatedPersons = filteredPersons
-                .Skip(page * pageSize)
+                .Skip(pageNumber * pageSize)
                 .Take(pageSize)
                 .ToList();
 
@@ -36,7 +36,7 @@ namespace PathToMyRootsWebApp.Controllers
             var personsPageModel = new PersonsPageModel()
             {
                 PersonModels = paginatedPersons,
-                CurrentPage = page,
+                PageNumber = pageNumber,
                 TotalPages = totalPages
             };
 

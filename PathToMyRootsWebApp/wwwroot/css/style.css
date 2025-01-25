@@ -1,5 +1,5 @@
 ﻿html {
-  font-size: 13px;
+  font-size: 11px;
   font-family: "Fira Sans", sans-serif;
   height: 100%;
 }
@@ -12,25 +12,25 @@ body {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 21px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .font-size-medium {
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .font-size-large {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 button, .action-button-on-image {
   color: white;
   background-color: #3b3e4f;
-  font-size: 13px;
+  font-size: 11px;
   padding: 8px;
   margin: 8px;
   border: 1px solid white;
@@ -66,7 +66,7 @@ button:disabled, .action-button-on-image:disabled {
 
 a {
   color: white;
-  font-size: 13px;
+  font-size: 11px;
 }
 a:hover {
   color: white;
@@ -79,7 +79,7 @@ input[type=text] {
   border: 1px solid white;
   color: white;
   background-color: #3b3e4f;
-  font-size: 13px;
+  font-size: 11px;
 }
 input[type=text]:focus {
   outline: none;
@@ -96,22 +96,30 @@ select {
   border: 1px solid white;
   color: white;
   background-color: #3b3e4f;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
 }
+table tr {
+  display: flex;
+}
 table th, table td {
+  flex-grow: 1;
+  overflow: auto;
   border: 1px solid white;
   white-space: nowrap;
   padding: 8px;
-  width: auto;
+  width: 1%;
+  display: flex;
+  align-items: center;
 }
 table .td-shrink {
-  width: 1%;
-  white-space: nowrap;
+  flex-grow: 0;
+  width: auto;
+  padding: 4px;
 }
 table tr:hover {
   background-color: #4a5164;
@@ -128,7 +136,7 @@ table tr:hover th {
 }
 
 .persons-img {
-  height: 50px;
+  width: 30px;
 }
 
 .persons-div-actions {
@@ -147,8 +155,17 @@ table tr:hover th {
   background-color: transparent;
 }
 
+.persons-search {
+  display: flex;
+}
 .persons-search input, .persons-search button {
   margin: 8px 0px;
+}
+.persons-search span {
+  margin: auto 4px auto auto;
+}
+.persons-search select {
+  margin: auto 0;
 }
 
 .pagination-container {
@@ -209,20 +226,20 @@ table tr:hover th {
 
 .tree-level-row {
   display: block;
-  padding: 30px 0px;
+  padding: 20px 0px;
 }
 
 .tree-nodes-group {
   display: inline-block;
   vertical-align: top;
-  padding: 0px 30px;
+  padding: 0px 20px;
 }
 
 .tree-node-female, .tree-node-male {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  width: 200px;
+  width: 150px;
   padding: 4px;
   border: 1px solid white;
   background-color: #6e7381;
@@ -245,16 +262,16 @@ table tr:hover th {
   overflow: clip;
   padding: 4px;
   border: 1px solid white;
-  font-size: 13px;
+  font-size: 11px;
   background-color: green;
 }
 
 .tree-node-image {
   margin-right: 4px;
-  min-height: 80px;
-  min-width: 60px;
-  height: 80px;
-  width: 60px;
+  min-height: 60px;
+  min-width: 45px;
+  height: 60px;
+  width: 45px;
   background-color: red;
   object-fit: cover;
   display: block;
@@ -272,7 +289,7 @@ table tr:hover th {
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .tree-node-name-text {
@@ -325,7 +342,7 @@ table tr:hover th {
   white-space: nowrap;
   padding: 8px 20px;
   background-color: transparent;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .footer-container {

@@ -3,11 +3,13 @@
 @model PathToMyRootsWebApp.Models.PersonsPageModel
 
 <table id="persons-table"
-       data-current-page="@Model.CurrentPage"
+       data-current-page="@Model.PageNumber"
        data-total-pages="@Model.TotalPages">
     <thead>
         <tr>
-            <th class="td-shrink"></th>
+            <th class="td-shrink">
+                <img class="persons-img" style="height: 0" src="https://localhost:7241/api/Image/get/missingImage.png" />
+            </th>
             <th>Noble Title</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -18,7 +20,21 @@
             <th>Mother</th>
             <th>Father</th>
             <th>Spouse</th>
-            <th class="td-shrink"></th>
+            <th class="td-shrink">
+                <div class="persons-div-actions" style="visibility: hidden">
+                    <a class="persons-action-hyperlink">
+                        <img src="~/icons/tree.svg" class="action-img">
+                    </a>
+                    <a class="persons-action-hyperlink">
+                        <img src="~/icons/edit.svg" class="action-img">
+                    </a>
+                    <form style="display: inline;">
+                        <button class="persons-action-button">
+                            <img src="~/icons/delete.svg" class="action-img">
+                        </button>
+                    </form>
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>

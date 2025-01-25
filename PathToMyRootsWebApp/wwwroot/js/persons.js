@@ -2,18 +2,30 @@
     addListeners();
 });
 
-function addListeners() {
-    const inputSearch = document.getElementById("input-search");
-    const buttonSearch = document.getElementById("button-search");
+function getSearchText() {
+    return document.getElementById("input-search").value;
+}
 
-    inputSearch.addEventListener("keypress", event => {
+function getPageSize() {
+    return document.getElementById("page-size-select").value;
+}
+function addListeners() {
+    const searchInput = document.getElementById("input-search");
+    const searchButton = document.getElementById("button-search");
+    const pageSizeSelect = document.getElementById("page-size-select");
+
+    searchInput.addEventListener("keypress", event => {
         if (event.key === "Enter") {
-            fetchData(0, inputSearch.value);
+            fetchData(getSearchText(), 0, getPageSize());
         }
     });
 
-    buttonSearch.addEventListener("click", () => {
-        fetchData(0, inputSearch.value);
+    searchButton.addEventListener("click", () => {
+        fetchData(getSearchText(), 0, getPageSize());
+    });
+
+    pageSizeSelect.addEventListener("change", () => {
+        fetchData(getSearchText(), 0, getPageSize());
     });
 
     document.querySelectorAll("button").forEach(button => {
@@ -21,9 +33,8 @@ function addListeners() {
             event.preventDefault();
 
             const pageNumber = button.getAttribute("data-page");
-            const searchText = document.getElementById("input-search").value;
 
-            fetchData(pageNumber, searchText);
+            fetchData(getSearchText(), pageNumber, getPageSize());
         });
     });
 }
@@ -60,8 +71,8 @@ function setupPaginationButtons(currentPage, totalPages) {
     }
 }
 
-function fetchData(page, searchText) {
-    fetch(`/Person/Persons?page=${page}&searchText=${encodeURIComponent(searchText)}`, {
+function fetchData(searchText, pageNumber, pageSize) {
+    fetch(`/Person/Persons?searchText=${encodeURIComponent(searchText)}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {
         method: "GET",
         headers: {
             "X-Requested-With": "XMLHttpRequest"
