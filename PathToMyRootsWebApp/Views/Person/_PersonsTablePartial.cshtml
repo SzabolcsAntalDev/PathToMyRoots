@@ -21,7 +21,7 @@
             <th>Father</th>
             <th>Spouse</th>
             <th class="td-shrink">
-                <div class="persons-div-actions" style="visibility: hidden">
+                <div class="persons-actions-container" style="visibility: hidden">
                     <a class="persons-action-hyperlink">
                         <img src="~/icons/tree.svg" class="action-img">
                     </a>
@@ -89,7 +89,7 @@
                 </td>
 
                 <td class="td-shrink">
-                    <div class="persons-div-actions">
+                    <div class="persons-actions-container">
                         <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
                             <img src="~/icons/tree.svg" class="action-img" title="View Tree">
                         </a>
