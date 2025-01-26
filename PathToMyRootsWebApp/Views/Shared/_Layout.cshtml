@@ -34,12 +34,19 @@
         </nav>
 
         <div class="right-container">
+
             <div class="top-container">
-                <div class="theme-selector">
-                    <button id="light-theme-button">Light Theme</button>
-                    <button id="dark-theme-button">Dark Theme</button>
+
+                <div class="theme-switcher-container">
+                    <label class="switch-control">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider-rectangle"></span>
+                    </label>
+                    <span id="theme-span">Light Theme</span>
                 </div>
+
             </div>
+
             <main class="page-data-container">
                 @RenderBody()
             </main>

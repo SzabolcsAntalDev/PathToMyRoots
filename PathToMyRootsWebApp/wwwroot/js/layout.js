@@ -1,5 +1,5 @@
-﻿const lightThemeButton = document.getElementById('light-theme-button');
-const darkThemeButton = document.getElementById('dark-theme-button');
+﻿const themeToggle = document.getElementById('theme-toggle');
+const themeSpan = document.getElementById('theme-span');
 
 function applyTheme(theme) {
     document.documentElement.classList.remove('theme-light', 'theme-dark');
@@ -7,10 +7,13 @@ function applyTheme(theme) {
     localStorage.setItem('theme', theme);
 }
 
-lightThemeButton.addEventListener('click', () => {
-    applyTheme('theme-light');
-});
-
-darkThemeButton.addEventListener('click', () => {
-    applyTheme('theme-dark');
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        themeSpan.textContent = "Dark Theme"
+        applyTheme('theme-dark');
+    }
+    else {
+        themeSpan.textContent = "Light Theme"
+        applyTheme('theme-light');
+    }
 });

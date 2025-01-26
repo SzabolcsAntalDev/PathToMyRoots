@@ -123,7 +123,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     margin: $thickness-super-large;
-    overflow: auto;
+    margin-top: 0px;
     min-width: 800px;
     min-height: 600px;
 }
@@ -246,6 +246,54 @@ table {
 }
 
 
+.theme-switcher-container {
+    margin: $thickness-large;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+
+    .switch-control {
+        margin: $thickness-small auto;
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 26px;
+
+        .slider-rectangle {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background-color-footer);
+            transition: 0.4s;
+            border-radius: 13px;
+        }
+
+        .slider-rectangle:before {
+            position: absolute;
+            content: '';
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--foreground-color);
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-rectangle:before {
+            transform: translateX(22px);
+        }
+    }
+
+    #theme-label {
+        margin: $thickness-small;
+    }
+}
+
+
 .nav-logo-container-hyperlink {
     height: auto;
     display: flex;
@@ -282,12 +330,6 @@ table {
     background-color: transparent;
     font-size: $font-size-medium;
 }
-
-
-.theme-selector {
-    margin-left: auto;
-}
-
 
 .footer-logo-container-hyperlink {
     display: flex;
