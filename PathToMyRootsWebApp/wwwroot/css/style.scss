@@ -164,6 +164,7 @@ h2 {
     }
 
     &:disabled {
+        background-color: var(--background-color);
         color: var(--foreground-color-disabled);
         border-color: var(--foreground-color-disabled);
         cursor: auto;
@@ -228,6 +229,19 @@ table {
         width: 1%;
         display: flex;
         align-items: center;
+    }
+
+    td:not(:last-child) {
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+
+    td:last-child {
+        border-top-color: transparent;
+    }
+
+    th:not(:last-child) {
+        border-right-color: transparent;
     }
 
     .td-shrink {
@@ -543,7 +557,6 @@ table {
     width: $person-node-width;
     padding: $thickness-small;
     border: $border;
-    background-color: #6e7381;
     position: relative;
 }
 

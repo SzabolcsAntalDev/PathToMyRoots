@@ -105,6 +105,7 @@ h2 {
   background-color: var(--background-color-highlight);
 }
 .action-button-on-image:disabled, button:disabled {
+  background-color: var(--background-color);
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
   cursor: auto;
@@ -161,6 +162,16 @@ table th, table td {
   width: 1%;
   display: flex;
   align-items: center;
+}
+table td:not(:last-child) {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+table td:last-child {
+  border-top-color: transparent;
+}
+table th:not(:last-child) {
+  border-right-color: transparent;
 }
 table .td-shrink {
   flex-grow: 0;
@@ -448,7 +459,6 @@ table tr:hover th {
   width: 150px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
-  background-color: #6e7381;
   position: relative;
 }
 
