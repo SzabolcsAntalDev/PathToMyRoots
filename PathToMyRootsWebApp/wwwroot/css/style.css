@@ -1,4 +1,28 @@
-﻿html {
+﻿:root.theme-light {
+  --foreground-color: #1d2025;
+  --foreground-color-disabled: gray;
+  --background-color: #f1f2f4;
+  --background-color-nav: #dcdfe4;
+  --background-color-footer: #b2b8c4;
+  --background-color-highlight: #f7f8fa;
+  --male-color: #d6dbe0;
+  --female-color: #f1f2f4;
+  --married-color: #c1c2c3;
+}
+
+:root.theme-dark {
+  --foreground-color: #f7f8fa;
+  --foreground-color-disabled: gray;
+  --background-color: #1d2025;
+  --background-color-nav: #22252a;
+  --background-color-footer: #2c333b;
+  --background-color-highlight: #454f59;
+  --male-color: #4b5f6f;
+  --female-color: #8c849c;
+  --married-color: #5c6c7b;
+}
+
+html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
   height: 100%;
@@ -28,23 +52,21 @@ h2 {
 }
 
 button, .action-button-on-image {
-  color: white;
-  background-color: #3b3e4f;
+  color: var(--foreground-color);
+  background-color: var(--background-color);
   font-size: 11px;
   padding: 8px;
   margin: 8px;
-  border: 1px solid white;
+  border: 1px solid var(--foreground-color);
   display: inline-block;
   cursor: pointer;
 }
 button:hover, .action-button-on-image:hover {
-  color: white;
-  background-color: #4a5164;
+  background-color: var(--background-color-highlight);
 }
 button:disabled, .action-button-on-image:disabled {
-  color: gray;
-  background-color: #3b3e4f;
-  border-color: gray;
+  color: var(--foreground-color-disabled);
+  border-color: var(--foreground-color-disabled);
   cursor: auto;
 }
 
@@ -65,20 +87,20 @@ button:disabled, .action-button-on-image:disabled {
 }
 
 a {
-  color: white;
+  color: var(--foreground-color);
   font-size: 11px;
 }
 a:hover {
-  color: white;
-  background-color: #4a5164;
+  color: var(--foreground-color);
+  background-color: var(--background-color-highlight);
 }
 
 input[type=text] {
   padding: 8px;
   margin: 8px;
-  border: 1px solid white;
-  color: white;
-  background-color: #3b3e4f;
+  border: 1px solid var(--foreground-color);
+  color: var(--foreground-color);
+  background-color: var(--background-color);
   font-size: 11px;
 }
 input[type=text]:focus {
@@ -86,16 +108,16 @@ input[type=text]:focus {
 }
 
 input[type=radio] {
-  accent-color: #3b3e4f;
+  accent-color: var(--background-color);
   margin: 8px;
 }
 
 select {
   padding: 8px;
   margin: 8px;
-  border: 1px solid white;
-  color: white;
-  background-color: #3b3e4f;
+  border: 1px solid var(--foreground-color);
+  color: var(--foreground-color);
+  background-color: var(--background-color);
   font-size: 11px;
 }
 
@@ -109,7 +131,7 @@ table tr {
 table th, table td {
   flex-grow: 1;
   overflow: auto;
-  border: 1px solid white;
+  border: 1px solid var(--foreground-color);
   white-space: nowrap;
   padding: 8px;
   width: 1%;
@@ -122,10 +144,10 @@ table .td-shrink {
   padding: 4px;
 }
 table tr:hover {
-  background-color: #4a5164;
+  background-color: var(--background-color-highlight);
 }
 table tr:hover th {
-  background-color: #3b3e4f;
+  background-color: var(--background-color);
 }
 
 .persons-container {
@@ -181,8 +203,8 @@ table tr:hover th {
 .nav-bar-and-page-data-container {
   display: flex;
   flex-grow: 1;
-  background-color: #3b3e4f;
-  color: white;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
   overflow: hidden;
 }
 
@@ -241,17 +263,17 @@ table tr:hover th {
   align-items: center;
   width: 150px;
   padding: 4px;
-  border: 1px solid white;
+  border: 1px solid var(--foreground-color);
   background-color: #6e7381;
   position: relative;
 }
 
 .tree-node-male {
-  background-color: blue;
+  background-color: var(--male-color);
 }
 
 .tree-node-female {
-  background-color: red;
+  background-color: var(--female-color);
 }
 
 .tree-node-married {
@@ -261,9 +283,9 @@ table tr:hover th {
   text-overflow: ellipsis;
   overflow: clip;
   padding: 4px;
-  border: 1px solid white;
+  border: 1px solid var(--foreground-color);
   font-size: 11px;
-  background-color: green;
+  background-color: var(--married-color);
 }
 
 .tree-node-image {
@@ -272,7 +294,6 @@ table tr:hover th {
   min-width: 45px;
   height: 60px;
   width: 45px;
-  background-color: red;
   object-fit: cover;
   display: block;
 }
@@ -297,7 +318,7 @@ table tr:hover th {
 }
 
 .tree-line-svg {
-  stroke: white;
+  stroke: var(--foreground-color);
   stroke-width: 1px;
   fill: transparent;
 }
@@ -305,7 +326,7 @@ table tr:hover th {
 .nav-bar {
   display: flex;
   flex-direction: column;
-  background-color: #3c4252;
+  background-color: var(--background-color-nav);
 }
 
 .nav-logo-container-hyperlink {
@@ -326,13 +347,13 @@ table tr:hover th {
 }
 
 .nav-ul {
-  background-color: #3c4252;
+  background-color: var(--background-color-nav);
   list-style-type: none;
   padding: 0;
 }
 
 .nav-li.active {
-  background-color: #3b3e4f;
+  background-color: var(--background-color);
   font-weight: bold;
 }
 
@@ -347,7 +368,7 @@ table tr:hover th {
 
 .footer-container {
   display: flex;
-  background-color: #484c58;
+  background-color: var(--background-color-footer);
 }
 
 .footer-logo-container-hyperlink {
@@ -422,7 +443,7 @@ table tr:hover th {
 
 #person-cropper-image-and-button-container {
   position: relative;
-  background-color: #3b3e4f;
+  background-color: var(--background-color);
   padding: 20px;
   text-align: center;
 }

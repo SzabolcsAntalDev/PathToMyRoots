@@ -1,18 +1,63 @@
 ﻿$font-family-default: 'Fira Sans', sans-serif;
 
-$foreground-color: white;
-$background-color: #3b3e4f;
-$foreground-color-disabled: gray;
-$background-color-disabled: #3b3e4f;
-$foreground-color-highlight: white;
-$background-color-highlight: #4a5164;
+$foreground-color-light: #1d2025;
+$foreground-color-disabled-light: gray;
 
-$background-color-nav: #3c4252;
-$background-color-footer: #484c58;
+$background-color-light: #f1f2f4;
+$background-color-nav-light: #dcdfe4;
+$background-color-footer-light: #b2b8c4;
+$background-color-highlight-light: #f7f8fa;
 
-$male-color: blue;
-$female-color: red;
-$married-color: green;
+$male-color-light: #d6dbe0;
+$female-color-light: #f1f2f4;
+$married-color-light: #c1c2c3;
+
+%theme-light {
+    --foreground-color: #{$foreground-color-light};
+    --foreground-color-disabled: #{$foreground-color-disabled-light};
+    --background-color: #{$background-color-light};
+    --background-color-nav: #{$background-color-nav-light};
+    --background-color-footer: #{$background-color-footer-light};
+    --background-color-highlight: #{$background-color-highlight-light};
+    --male-color: #{$male-color-light};
+    --female-color: #{$female-color-light};
+    --married-color: #{$married-color-light};
+}
+
+
+$foreground-color-dark: #f7f8fa;
+$foreground-color-disabled-dark: gray;
+
+$background-color-dark: #1d2025;
+$background-color-nav-dark: #22252a;
+$background-color-footer-dark: #2c333b;
+$background-color-highlight-dark: #454f59;
+
+$male-color-dark: #4b5f6f;
+$female-color-dark: #8c849c;
+$married-color-dark: #5c6c7b;
+
+%theme-dark {
+    --foreground-color: #{$foreground-color-dark};
+    --foreground-color-disabled: #{$foreground-color-disabled-dark};
+    --background-color: #{$background-color-dark};
+    --background-color-nav: #{$background-color-nav-dark};
+    --background-color-footer: #{$background-color-footer-dark};
+    --background-color-highlight: #{$background-color-highlight-dark};
+    --male-color: #{$male-color-dark};
+    --female-color: #{$female-color-dark};
+    --married-color: #{$married-color-dark};
+}
+
+:root.theme-light {
+    @extend %theme-light;
+}
+
+:root.theme-dark {
+    @extend %theme-dark;
+}
+
+
 
 $font-size-small: 11px;
 $font-size-medium: 14px;
@@ -25,7 +70,7 @@ $thickness-large: 20px;
 $thickness-extra-large: 40px;
 $thickness-super-large: 60px;
 
-$border: 1px solid $foreground-color;
+$border: 1px solid var(--foreground-color);
 
 $action-image-size: 20px;
 $distance-between-nodes: 20px;
@@ -65,8 +110,8 @@ h2 {
 }
 
 %button {
-    color: $foreground-color;
-    background-color: $background-color;
+    color: var(--foreground-color);
+    background-color: var(--background-color);
     font-size: $font-size-small;
     padding: $thickness-medium;
     margin: $thickness-medium;
@@ -75,14 +120,12 @@ h2 {
     cursor: pointer;
 
     &:hover {
-        color: $foreground-color-highlight;
-        background-color: $background-color-highlight;
+        background-color: var(--background-color-highlight);
     }
 
     &:disabled {
-        color: $foreground-color-disabled;
-        background-color: $background-color-disabled;
-        border-color: $foreground-color-disabled;
+        color: var(--foreground-color-disabled);
+        border-color: var(--foreground-color-disabled);
         cursor: auto;
     }
 }
@@ -109,12 +152,12 @@ button {
 }
 
 a {
-    color: $foreground-color;
+    color: var(--foreground-color);
     font-size: $font-size-small;
 
     &:hover {
-        color: $foreground-color-highlight;
-        background-color: $background-color-highlight;
+        color: var(--foreground-color);
+        background-color: var(--background-color-highlight);
     }
 }
 
@@ -122,8 +165,8 @@ input[type="text"] {
     padding: $thickness-medium;
     margin: $thickness-medium;
     border: $border;
-    color: $foreground-color;
-    background-color: $background-color;
+    color: var(--foreground-color);
+    background-color: var(--background-color);
     font-size: $font-size-small;
 
     &:focus {
@@ -132,7 +175,7 @@ input[type="text"] {
 }
 
 input[type="radio"] {
-    accent-color: $background-color;
+    accent-color: var(--background-color);
     margin: $thickness-medium;
 }
 
@@ -140,8 +183,8 @@ select {
     padding: $thickness-medium;
     margin: $thickness-medium;
     border: $border;
-    color: $foreground-color;
-    background-color: $background-color;
+    color: var(--foreground-color);
+    background-color: var(--background-color);
     font-size: $font-size-small;
 }
 
@@ -171,10 +214,10 @@ table {
     }
 
     tr:hover {
-        background-color: $background-color-highlight;
+        background-color: var(--background-color-highlight);
 
         th {
-            background-color: $background-color;
+            background-color: var(--background-color);
         }
     }
 }
@@ -235,8 +278,8 @@ table {
 .nav-bar-and-page-data-container {
     display: flex;
     flex-grow: 1;
-    background-color: $background-color;
-    color: $foreground-color;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
     overflow: hidden;
 }
 
@@ -302,12 +345,12 @@ table {
 
 .tree-node-male {
     @extend %tree-node;
-    background-color: $male-color;
+    background-color: var(--male-color);
 }
 
 .tree-node-female {
     @extend %tree-node;
-    background-color: $female-color;
+    background-color: var(--female-color);
 }
 
 .tree-node-married {
@@ -319,7 +362,7 @@ table {
     padding: $thickness-small;
     border: $border;
     font-size: $font-size-small;
-    background-color: $married-color;
+    background-color: var(--married-color);
 }
 
 .tree-node-image {
@@ -328,7 +371,6 @@ table {
     min-width: $node-image-width;
     height: $node-image-height;
     width: $node-image-width;
-    background-color: red;
     object-fit: cover;
     display: block;
 }
@@ -358,7 +400,7 @@ table {
 }
 
 .tree-line-svg {
-    stroke: $foreground-color;
+    stroke: var(--foreground-color);
     stroke-width: 1px;
     fill: transparent;
 }
@@ -367,7 +409,7 @@ table {
 .nav-bar {
     display: flex;
     flex-direction: column;
-    background-color: $background-color-nav;
+    background-color: var(--background-color-nav);
 }
 
 .nav-logo-container-hyperlink {
@@ -388,13 +430,13 @@ table {
 }
 
 .nav-ul {
-    background-color: $background-color-nav;
+    background-color: var(--background-color-nav);
     list-style-type: none;
     padding: 0;
 }
 
 .nav-li.active {
-    background-color: $background-color;
+    background-color: var(--background-color);
     font-weight: bold;
 }
 
@@ -410,7 +452,7 @@ table {
 
 .footer-container {
     display: flex;
-    background-color: $background-color-footer;
+    background-color: var(--background-color-footer);
 }
 
 .footer-logo-container-hyperlink {
@@ -493,7 +535,7 @@ table {
 
 #person-cropper-image-and-button-container {
     position: relative;
-    background-color: $background-color;
+    background-color: var(--background-color);
     padding: $thickness-large;
     text-align: center;
 }
