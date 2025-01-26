@@ -83,6 +83,7 @@ $node-image-height: 60px;
 html {
     font-size: $font-size-small;
     font-family: $font-family-default;
+    color: var(--foreground-color);
     height: 100%;
 }
 
@@ -97,7 +98,6 @@ body {
     display: flex;
     flex-grow: 1;
     background-color: var(--background-color);
-    color: var(--foreground-color);
     overflow: auto;
 }
 
@@ -150,9 +150,9 @@ h2 {
 }
 
 %button {
-    color: var(--foreground-color);
-    background-color: var(--background-color);
-    font-size: $font-size-small;
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
     padding: $thickness-medium;
     margin: $thickness-medium;
     border: $border;
@@ -164,7 +164,7 @@ h2 {
     }
 
     &:disabled {
-        background-color: var(--background-color);
+        background-color: inherit;
         color: var(--foreground-color-disabled);
         border-color: var(--foreground-color-disabled);
         cursor: auto;
@@ -176,11 +176,9 @@ button {
 }
 
 a {
-    color: var(--foreground-color);
-    font-size: $font-size-small;
+    color: inherit;
 
     &:hover {
-        color: var(--foreground-color);
         background-color: var(--background-color-highlight);
     }
 }
@@ -189,15 +187,16 @@ input[type="text"] {
     padding: $thickness-medium;
     margin: $thickness-medium;
     border: $border;
-    color: var(--foreground-color);
-    background-color: var(--background-color);
-    font-size: $font-size-small;
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
 
     &:focus {
         outline: none;
     }
 }
 
+// Szabi
 input[type="radio"] {
     accent-color: var(--background-color);
     margin: $thickness-medium;
@@ -207,9 +206,9 @@ select {
     padding: $thickness-medium;
     margin: $thickness-medium;
     border: $border;
-    color: var(--foreground-color);
-    background-color: var(--background-color);
-    font-size: $font-size-small;
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
 }
 
 table {
@@ -326,7 +325,7 @@ table {
 }
 
 .nav-ul {
-    background-color: var(--background-color-nav);
+    background-color:inherit;
     list-style-type: none;
     padding: 0;
 }
@@ -350,7 +349,6 @@ table {
     text-decoration: none;
     align-items: center;
     padding: $thickness-medium;
-    background-color: transparent;
 }
 
 .footer-logo-img {
@@ -507,7 +505,6 @@ table {
     max-width: 100%;
     max-height: 400px;
 }
-
 
 
 .trees-container {

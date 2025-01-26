@@ -25,6 +25,7 @@
 html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
+  color: var(--foreground-color);
   height: 100%;
 }
 
@@ -39,7 +40,6 @@ body {
   display: flex;
   flex-grow: 1;
   background-color: var(--background-color);
-  color: var(--foreground-color);
   overflow: auto;
 }
 
@@ -92,9 +92,9 @@ h2 {
 }
 
 .action-button-on-image, button {
-  color: var(--foreground-color);
-  background-color: var(--background-color);
-  font-size: 11px;
+  color: inherit;
+  background-color: inherit;
+  font-size: inherit;
   padding: 8px;
   margin: 8px;
   border: 1px solid var(--foreground-color);
@@ -105,18 +105,16 @@ h2 {
   background-color: var(--background-color-highlight);
 }
 .action-button-on-image:disabled, button:disabled {
-  background-color: var(--background-color);
+  background-color: inherit;
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
   cursor: auto;
 }
 
 a {
-  color: var(--foreground-color);
-  font-size: 11px;
+  color: inherit;
 }
 a:hover {
-  color: var(--foreground-color);
   background-color: var(--background-color-highlight);
 }
 
@@ -124,9 +122,9 @@ input[type=text] {
   padding: 8px;
   margin: 8px;
   border: 1px solid var(--foreground-color);
-  color: var(--foreground-color);
-  background-color: var(--background-color);
-  font-size: 11px;
+  color: inherit;
+  background-color: inherit;
+  font-size: inherit;
 }
 input[type=text]:focus {
   outline: none;
@@ -141,9 +139,9 @@ select {
   padding: 8px;
   margin: 8px;
   border: 1px solid var(--foreground-color);
-  color: var(--foreground-color);
-  background-color: var(--background-color);
-  font-size: 11px;
+  color: inherit;
+  background-color: inherit;
+  font-size: inherit;
 }
 
 table {
@@ -245,7 +243,7 @@ table tr:hover th {
 }
 
 .nav-ul {
-  background-color: var(--background-color-nav);
+  background-color: inherit;
   list-style-type: none;
   padding: 0;
 }
@@ -269,7 +267,6 @@ table tr:hover th {
   text-decoration: none;
   align-items: center;
   padding: 8px;
-  background-color: transparent;
 }
 
 .footer-logo-img {
