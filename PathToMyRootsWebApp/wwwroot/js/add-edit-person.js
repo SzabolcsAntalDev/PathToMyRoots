@@ -85,7 +85,7 @@ function updatePreviewImageContainer() {
         return;
     }
 
-    imgPreviewImage.src = "https://localhost:7241/uploads/" + imageUrl;
+    imgPreviewImage.src = "https://localhost:7241/api/Image/get/" + imageUrl;
     previewImageContainer.style.display = 'inline-block';
 }
 
