@@ -144,6 +144,15 @@ select {
   font-size: inherit;
 }
 
+.tree-action-img, .person-action-img, .persons-action-img {
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  vertical-align: middle;
+  fill: var(--foreground-color);
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.7));
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -325,10 +334,8 @@ table tr:hover th {
   background-color: transparent;
 }
 
-.action-img {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
+.persons-action-img {
+  margin: 0px 4px;
 }
 
 .action-button-on-image {

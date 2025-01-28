@@ -149,7 +149,9 @@
             <div id="person-preview-image-container" class="person-preview-image-container">
                 <img id="img-preview-image" style="max-width: 100%" />
                 <button id="button-remove-image" class="action-button-on-image">
-                    <img src="~/icons/delete.svg" class="action-img" title="Delete">
+                    <svg class="person-action-img">
+                        <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
+                    </svg>
                 </button>
             </div>
         </div>

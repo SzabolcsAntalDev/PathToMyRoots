@@ -190,13 +190,17 @@ function createNode(person) {
     textsContainer.appendChild(spanPersonName);
     textsContainer.appendChild(spanPersonLived);
 
-    const imgEditPerson = document.createElement('img');
-    imgEditPerson.className = "action-img";
-    imgEditPerson.src = "../../icons/edit.svg";
-    imgEditPerson.title = "Edit";
+    const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgElement.setAttribute('class', 'tree-action-img');
+    svgElement.setAttribute('width', '20');
+    svgElement.setAttribute('height', '20');
+
+    const useElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    useElement.setAttribute('href', '/icons/icons.svg#edit');
+    svgElement.appendChild(useElement);
 
     const buttonEditPerson = document.createElement('button');
-    buttonEditPerson.appendChild(imgEditPerson);
+    buttonEditPerson.appendChild(svgElement);
     buttonEditPerson.className = "action-button-on-image";
 
     buttonEditPerson.addEventListener('click', function () {

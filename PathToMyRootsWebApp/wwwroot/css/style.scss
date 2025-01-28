@@ -211,6 +211,15 @@ select {
     font-size: inherit;
 }
 
+%action-img {
+    width: $action-image-size;
+    height: $action-image-size;
+    margin: 0px;
+    vertical-align: middle;
+    fill: var(--foreground-color);
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.7));
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -414,10 +423,9 @@ table {
     background-color: transparent;
 }
 
-.action-img {
-    width: $action-image-size;
-    height: $action-image-size;
-    vertical-align: middle;
+.persons-action-img {
+    @extend %action-img;
+    margin: 0px $thickness-small;
 }
 
 .action-button-on-image {
@@ -479,6 +487,10 @@ table {
             margin: $thickness-medium 0px 0px 0px;
         }
     }
+}
+
+.person-action-img{
+    @extend %action-img;
 }
 
 #person-cropper-background-container {
@@ -611,6 +623,10 @@ table {
 
 .tree-node-lived-text {
     @extend %tree-node-text;
+}
+
+.tree-action-img {
+    @extend %action-img;
 }
 
 .tree-line-svg {
