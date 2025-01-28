@@ -202,6 +202,7 @@ function createNode(person) {
     const buttonEditPerson = document.createElement('button');
     buttonEditPerson.appendChild(svgElement);
     buttonEditPerson.className = "action-button-on-image";
+    buttonEditPerson.style.visibility = 'hidden';
 
     buttonEditPerson.addEventListener('click', function () {
         const personId = person.id;
@@ -212,6 +213,14 @@ function createNode(person) {
     node.appendChild(imgPerson);
     node.appendChild(textsContainer);
     node.appendChild(buttonEditPerson);
+
+    node.addEventListener("mouseenter", () => {
+        buttonEditPerson.style.visibility = 'visible';
+    });
+
+    node.addEventListener("mouseleave", () => {
+        buttonEditPerson.style.visibility = 'hidden';
+    });
 
     return node;
 }
