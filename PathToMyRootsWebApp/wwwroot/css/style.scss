@@ -78,7 +78,7 @@ $border: 1px solid var(--foreground-color);
 $action-image-size: 20px;
 $distance-between-nodes: 20px;
 $person-node-width: 150px;
-$married-node-width: 50px;
+$married-node-width: 70px;
 
 $node-image-width: 45px;
 $node-image-height: 60px;
@@ -612,7 +612,7 @@ table {
     margin: auto;
 }
 
-%tree-node-text {
+%tree-node-main-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -620,13 +620,22 @@ table {
     font-size: $font-size-small;
 }
 
-.tree-node-name-text {
-    @extend %tree-node-text;
+.tree-node-main-name-text {
+    @extend %tree-node-main-text;
     font-weight: bold;
 }
 
-.tree-node-lived-text {
-    @extend %tree-node-text;
+.tree-node-main-lived-text {
+    @extend %tree-node-main-text;
+}
+
+.tree-node-married-text {
+    @extend %tree-node-main-text;
+}
+
+.tree-node-married-date-text {
+    @extend %tree-node-main-text;
+    font-weight: bold;
 }
 
 .tree-action-img {

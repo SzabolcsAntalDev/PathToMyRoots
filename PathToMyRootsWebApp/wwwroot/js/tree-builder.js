@@ -124,7 +124,7 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
 
     if (person.spouse != null) {
         nodesGroup.appendChild(createLineBreak());
-        nodesGroup.appendChild(createNodeMarried());
+        nodesGroup.appendChild(createNodeMarried(person));
     }
 
     if (levelIndexesToRowsDictionary[level] == null)
@@ -204,11 +204,11 @@ function createNode(person) {
 
     const spanPersonName = document.createElement('span');
     spanPersonName.innerText = personToPersonNameNodeText(person);
-    spanPersonName.className = 'tree-node-name-text';
+    spanPersonName.className = 'tree-node-main-name-text';
 
     const spanPersonLived = document.createElement('span');
     spanPersonLived.innerText = personToPersonLivedNodeText(person);
-    spanPersonLived.className = 'tree-node-lived-text';
+    spanPersonLived.className = 'tree-node-main-lived-text';
 
     textsContainer.appendChild(spanPersonName);
     textsContainer.appendChild(spanPersonLived);
@@ -254,14 +254,14 @@ function personToPersonNameNodeText(person) {
     if (person.nobleTitle)
         details.push(person.nobleTitle);
 
-    if (person.lastName)
-        details.push(person.lastName);
+    if (person.firstName)
+        details.push(person.firstName);
 
     if (person.maidenName)
         details.push(`(${person.maidenName})`);
 
-    if (person.firstName)
-        details.push(person.firstName);
+    if (person.lastName)
+        details.push(person.lastName);
 
     if (person.otherNames)
         details.push(person.otherNames);
@@ -288,11 +288,30 @@ function createLineBreak() {
     return lineBreak;
 }
 
-function createNodeMarried() {
-    const nodeMarried = document.createElement('div');
-    nodeMarried.className = 'tree-node-married';
-    nodeMarried.innerText = 'married';
-    return nodeMarried;
+function createNodeMarried(person) {
+    const node = document.createElement('div');
+    node.className = 'tree-node-married';
+
+    const textsContainer = document.createElement('div');
+    textsContainer.className = "tree-node-texts";
+
+    const spanMarried = document.createElement('span');
+    spanMarried.innerText = 'married';
+    spanMarried.className = 'tree-node-married-text';
+
+    const spanMarriedDate = document.createElement('span');
+    spanMarriedDate.innerText = personToPersonMarriedDateText(person);
+    spanMarriedDate.className = 'tree-node-married-date-text';
+
+    textsContainer.appendChild(spanMarried);
+    textsContainer.appendChild(spanMarriedDate);
+
+    node.appendChild(textsContainer);
+    return node;
+}
+
+function personToPersonMarriedDateText(person) {
+    return `${dateToString(person.marriageDate)}`;
 }
 
 async function drawLines(linesContainer, parentsRow, childrenRow) {
