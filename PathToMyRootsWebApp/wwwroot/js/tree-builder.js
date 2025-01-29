@@ -28,6 +28,8 @@ function createLoadingText() {
     setTimeout(() => {
         fadeInElement(loadingTextContainer);
     }, getFadeIntervalInSeconds());
+
+    return loadingTextContainer;
 }
 
 async function removeTreeDiagram(personId) {
@@ -51,7 +53,7 @@ async function removeTreeDiagram(personId) {
 async function createTreeDiagram(personId) {
     const treesContainer = document.getElementById("trees-container");
 
-    const loadingTextContainer = document.getElementById("loading-text-container");
+    const loadingTextContainer = document.getElementById("loading-text-container") ?? createLoadingText();
     fadeInElement(loadingTextContainer);
 
     const diagramAndLinesContainer = document.createElement('div');

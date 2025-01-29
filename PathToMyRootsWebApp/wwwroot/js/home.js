@@ -25,5 +25,3 @@ async function showTree(direction) {
     const nextTreeNumber = treeIds[currentIndex];
     createTreeDiagram(nextTreeNumber);
 }
-
-createLoadingText();
