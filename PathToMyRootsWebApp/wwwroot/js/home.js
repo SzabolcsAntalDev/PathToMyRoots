@@ -9,10 +9,10 @@ document.getElementById('nextTree').addEventListener('click', function () {
     showTree(1);
 });
 
-function showTree(direction) {
+async function showTree(direction) {
     const currentTreeNumber = treeIds[currentIndex];
-    removeTreeDiagram(currentTreeNumber);
 
+    await removeTreeDiagram(currentTreeNumber);
     currentIndex += direction;
 
     if (currentIndex < 0) {
@@ -25,3 +25,5 @@ function showTree(direction) {
     const nextTreeNumber = treeIds[currentIndex];
     createTreeDiagram(nextTreeNumber);
 }
+
+createLoadingText();

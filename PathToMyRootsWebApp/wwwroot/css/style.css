@@ -22,6 +22,14 @@
   --married-color: #5c6c7b;
 }
 
+:root.theme-light {
+  --fade-interval-in-seconds: 0.5s;
+}
+
+:root.theme-dark {
+  --fade-interval-in-seconds: 0.5s;
+}
+
 html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
@@ -150,7 +158,6 @@ select {
   margin: 0px;
   vertical-align: middle;
   fill: var(--foreground-color);
-  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 table {
@@ -418,6 +425,7 @@ table tr:hover th {
 
 .trees-container {
   display: flex;
+  position: relative;
   flex-grow: 1;
   overflow: auto;
   width: 100%;
@@ -519,4 +527,36 @@ table tr:hover th {
   stroke: var(--foreground-color);
   stroke-width: 1px;
   fill: transparent;
+}
+
+.loading-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.loading-text-container label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.fade-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fade-in {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--fade-interval-in-seconds) ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--fade-interval-in-seconds) ease-in-out, visibility 0s linear var(--fade-interval-in-seconds);
 }

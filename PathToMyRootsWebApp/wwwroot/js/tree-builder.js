@@ -4,20 +4,59 @@ const sleepInterval = 0;
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
 const imageApiUrl = "https://localhost:7241/";
 
-async function removeTreeDiagram(personId) {
-    const treesContainer = document.getElementById("trees-container");
-    const diagramAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
+function getFadeIntervalInSeconds() {
+    const fadeSeconds = getComputedStyle(document.documentElement).getPropertyValue('--fade-interval-in-seconds');
+    const fadeDuration = parseFloat(fadeSeconds);
 
-    if (diagramAndLinesContainer)
-        treesContainer.removeChild(diagramAndLinesContainer);
+    return fadeDuration;
+}
+
+function createLoadingText() {
+    const treesContainer = document.getElementById("trees-container");
+
+    const loadingTextContainer = document.createElement("div");
+    loadingTextContainer.id = "loading-text-container";
+    loadingTextContainer.className = "loading-text-container";
+    hideElement(loadingTextContainer);
+
+    const loadingText = document.createElement("label");
+    loadingText.textContent = "Loading...";
+
+    loadingTextContainer.appendChild(loadingText);
+    treesContainer.appendChild(loadingTextContainer);
+
+    setTimeout(() => {
+        fadeInElement(loadingTextContainer);
+    }, getFadeIntervalInSeconds());
+}
+
+async function removeTreeDiagram(personId) {
+    const loadingTextContainer = document.getElementById("loading-text-container");
+    if (loadingTextContainer)
+        fadeInElement(loadingTextContainer);
+
+    const diagramAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
+    if (diagramAndLinesContainer) {
+        fadeOutElement(diagramAndLinesContainer)
+
+        await new Promise(resolve => {
+            setTimeout(() => {
+                diagramAndLinesContainer.remove();
+                resolve();
+            }, getFadeIntervalInSeconds() * 1000);
+        });
+    }
 }
 
 async function createTreeDiagram(personId) {
-
     const treesContainer = document.getElementById("trees-container");
+
+    const loadingTextContainer = document.getElementById("loading-text-container");
+    fadeInElement(loadingTextContainer);
 
     const diagramAndLinesContainer = document.createElement('div');
     diagramAndLinesContainer.className = 'tree-diagram-and-lines-container';
+    hideElement(diagramAndLinesContainer);
     diagramAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
 
     const diagramContainer = document.createElement('div');
@@ -73,6 +112,22 @@ async function createTreeDiagram(personId) {
 
         await drawLines(linesContainer, parentsRowInner, childrenRowInner);
     }
+
+    scrollToMiddle(diagramAndLinesContainer, diagramContainer);
+
+    fadeOutElement(loadingTextContainer);
+    fadeInElement(diagramAndLinesContainer);
+}
+
+function scrollToMiddle(container, element) {
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+
+    const verticalOffset = elementRect.top - containerRect.top - (container.clientHeight / 2) + (element.clientHeight / 2);
+    const horizontalOffset = elementRect.left - containerRect.left - (container.clientWidth / 2) + (element.clientWidth / 2);
+
+    container.scrollTop += verticalOffset;
+    container.scrollLeft += horizontalOffset;
 }
 
 async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, level) {
@@ -334,4 +389,19 @@ function drawLine(linesContainer, parent, child, verticalOffset) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function hideElement(element) {
+    element.classList.add('fade-hidden');
+}
+
+function fadeInElement(element) {
+    element.classList.remove('fade-hidden');
+    element.classList.remove('fade-out');
+    element.classList.add('fade-in');
+}
+
+function fadeOutElement(element) {
+    element.classList.remove('fade-in');
+    element.classList.add('fade-out');
 }
