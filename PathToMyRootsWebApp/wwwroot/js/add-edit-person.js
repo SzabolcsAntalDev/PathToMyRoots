@@ -1,5 +1,8 @@
 ﻿const apiUrl = "https://localhost:7241/";
 
+const personMarriageBorderedSectionContainer = document.getElementById('person-input-bordered-sections-container');
+const inputRadioMarriageDateConcreteDate = document.getElementById('input-radio-marriage-date-concrete-date');
+const spouseIdSelect = document.getElementById('SpouseId');
 function toggleDate(name) {
     var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-alive");
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
@@ -49,6 +52,17 @@ function toggleDeathDate() {
     toggleDate("death");
 }
 
+function spouseIdChanged() {
+    personMarriageBorderedSectionContainer.style.display =
+        spouseIdSelect.value
+            ? 'flex'
+            : 'none';
+}
+
+function toggleMarriageDate() {
+    toggleDate("marriage");
+}
+
 const inputImageUrl = document.getElementById("input-image-url");
 const buttonUploadImage = document.getElementById("button-upload-image");
 const previewImageContainer = document.getElementById("person-preview-image-container");
@@ -65,9 +79,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addDateInputChangedListener("birth");
     addDateInputChangedListener("death");
+    addDateInputChangedListener("marriage");
 
     toggleBirthDate();
     toggleDeathDate();
+
+    spouseIdChanged();
+    toggleMarriageDate();
 
     updatePreviewImageContainer();
 });

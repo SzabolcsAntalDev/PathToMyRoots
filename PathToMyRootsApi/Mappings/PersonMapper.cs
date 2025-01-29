@@ -45,6 +45,7 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = person.Spouse.FirstName,
                     LastName = person.Spouse.LastName
                 },
+                MarriageDate = person.MarriageDate,
                 ImageUrl = person.ImageUrl
             };
         }
@@ -86,6 +87,7 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = personDto.Spouse.FirstName,
                     LastName = personDto.Spouse.LastName,
                 },
+                MarriageDate = personDto.MarriageDate,
                 ImageUrl = personDto.ImageUrl
             };
         }
@@ -121,6 +123,7 @@ namespace PathToMyRootsApi.Mappings
                     BiologicalMotherId = family.Spouse.BiologicalMotherId,
                     BiologicalFatherId = family.Spouse.BiologicalFatherId
                 },
+                MarriageDate = family.MarriageDate,
                 InverseBiologicalMother =
                     family.InverseBiologicalMother
                         .Select(child => new PersonDto

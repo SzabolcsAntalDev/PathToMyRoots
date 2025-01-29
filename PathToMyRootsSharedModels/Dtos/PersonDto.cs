@@ -17,6 +17,7 @@
         public PersonDto? BiologicalFather { get; set; }
         public PersonDto? BiologicalMother { get; set; }
         public PersonDto? Spouse { get; set; }
+        public string? MarriageDate { get; set; }
         public List<PersonDto> InverseBiologicalMother { get; set; } = new();
         public List<PersonDto> InverseBiologicalFather { get; set; } = new();
         public string? ImageUrl { get; set; }

@@ -42,5 +42,8 @@ public partial class Person
 
     public virtual Person? Spouse { get; set; }
 
+    [RegularExpression(@"^\+\d{8}$", ErrorMessage = "Date must be in +YYYYMMDD format.")]
+    public string? MarriageDate { get; set; }
+
     public string? ImageUrl { get; set; }
 }

@@ -104,8 +104,6 @@
                 <label for="IsMale">Gender:</label>
                 <label for="BiologicalFatherId">Father:</label>
                 <label for="BiologicalMotherId">Mother:</label>
-                <label for="SpouseId">Spouse:</label>
-                <label for="ImageUrl">Image:</label>
             </div>
             <div class="person-inputs-container">
                 <select id="IsMale" name="IsMale">
@@ -130,7 +128,15 @@
                         </option>
                     }
                 </select>
-                <select id="SpouseId" name="SpouseId">
+            </div>
+        </div>
+
+        <div class="person-input-sections-container">
+            <div class="person-input-labels-container">
+                <label for="SpouseId">Spouse:</label>
+            </div>
+            <div class='person-inputs-container'>
+                <select id="SpouseId" name="SpouseId" onchange="spouseIdChanged()">
                     <option value="">-- Select Spouse --</option>
                     @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
                     {
@@ -139,6 +145,42 @@
                         </option>
                     }
                 </select>
+                <div class="person-input-bordered-sections-container" id="person-input-bordered-sections-container" style="display: none;">
+                    <div class="person-bordered-section">
+                        <label>Marriage Date:</label>
+                        <fieldset>
+                            <label>
+                                <input type="radio" name="input-radio-marriage" id="input-radio-marriage-date-unknown" onclick="toggleMarriageDate()"
+                                @if (Model?.MarriageDate == null || Model?.MarriageDate == DateHelper.UnknownServerDate)
+                                {
+                                    @:checked
+                                } />
+                                Unknown
+                            </label>
+                            <label>
+                                <input type="radio" name="input-radio-marriage" id="input-radio-marriage-date-concrete-date" onclick="toggleMarriageDate()"
+                                @if (Model?.MarriageDate != null && Model.MarriageDate != DateHelper.UnknownServerDate)
+                                {
+                                    @:checked
+                                } />Date
+                            </label>
+                            <input type="text" id="input-marriage-date" placeholder="@DateHelper.InputDateFlatFormat"
+                            @if (Model?.MarriageDate != null && Model.MarriageDate != DateHelper.UnknownServerDate)
+                            {
+                                @:value="@DateHelper.ServerDateToInputDate(@Model.MarriageDate)"
+                            } />
+                            <input type="hidden" id="input-hidden-marriage-date" name="MarriageDate" value="@DateHelper.ServerDateToInputDate(@Model.MarriageDate)" />
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="person-input-sections-container">
+            <div class="person-input-labels-container">
+                <label for="ImageUrl">Image:</label>
+            </div>
+            <div class="person-inputs-container">
                 <input type="file" id="input-image-url" accept="image/*" style="display: none" />
                 <button id="button-upload-image">Select Image...</button>
                 <input type="hidden" id="input-hidden-image-url" name="ImageUrl" value="@Model?.ImageUrl" />

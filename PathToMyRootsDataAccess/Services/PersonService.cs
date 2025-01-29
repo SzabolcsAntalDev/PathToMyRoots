@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PathToMyRootsDataAccess.Models;
+using System;
 
 namespace PathToMyRootsDataAccess.Services
 {
@@ -46,21 +47,22 @@ namespace PathToMyRootsDataAccess.Services
             // Szabi: identity should be 0 cause sql insert fails otherwise
             person.Id = 0;
 
-            // Add the person to the database
             await _applicationDbContext.Persons.AddAsync(person);
             await _applicationDbContext.SaveChangesAsync();
 
-            // If the SpouseId is set, update the corresponding spouse record
             if (person.SpouseId.HasValue)
             {
                 var spouse = await _applicationDbContext.Persons.FindAsync(person.SpouseId.Value);
                 if (spouse != null)
                 {
-                    spouse.SpouseId = person.Id; // Set the spouse's SpouseId to the current person's Id
+                    spouse.SpouseId = person.Id;
+                    spouse.MarriageDate = person.MarriageDate;
+
                     _applicationDbContext.Persons.Update(spouse);
                     await _applicationDbContext.SaveChangesAsync();
                 }
             }
+
             return person;
         }
 
@@ -83,9 +85,23 @@ namespace PathToMyRootsDataAccess.Services
             existingPerson.BiologicalMotherId = updatedPerson.BiologicalMotherId;
             existingPerson.BiologicalFatherId = updatedPerson.BiologicalFatherId;
             existingPerson.SpouseId = updatedPerson.SpouseId;
-            existingPerson.ImageUrl= updatedPerson.ImageUrl;
+            existingPerson.ImageUrl = updatedPerson.ImageUrl;
+            existingPerson.MarriageDate = updatedPerson.MarriageDate;
 
             await _applicationDbContext.SaveChangesAsync();
+
+            if (existingPerson.SpouseId.HasValue)
+            {
+                var spouse = await _applicationDbContext.Persons.FindAsync(existingPerson.SpouseId.Value);
+                if (spouse != null)
+                {
+                    spouse.SpouseId = existingPerson.Id;
+                    spouse.MarriageDate = existingPerson.MarriageDate;
+
+                    _applicationDbContext.Persons.Update(spouse);
+                    await _applicationDbContext.SaveChangesAsync();
+                }
+            }
 
             return existingPerson;
         }

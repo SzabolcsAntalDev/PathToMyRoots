@@ -479,17 +479,17 @@ table {
     margin-left: 0px;
     gap: $thickness-medium;
     padding: $thickness-medium 0px;
+}
 
-    .person-bordered-section {
-        flex: 1;
+.person-bordered-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    fieldset {
         display: flex;
         flex-direction: column;
-
-        fieldset {
-            display: flex;
-            flex-direction: column;
-            margin: $thickness-medium 0px 0px 0px;
-        }
+        margin: $thickness-medium 0px 0px 0px;
     }
 }
 
