@@ -1,5 +1,5 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
-    addListeners();
+﻿document.addEventListener("DOMContentLoaded", async () => {
+    await addListeners();
 });
 
 function getSearchText() {
@@ -9,32 +9,32 @@ function getSearchText() {
 function getPageSize() {
     return document.getElementById("page-size-select").value;
 }
-function addListeners() {
+async function addListeners() {
     const searchInput = document.getElementById("input-search");
     const searchButton = document.getElementById("button-search");
     const pageSizeSelect = document.getElementById("page-size-select");
 
-    searchInput.addEventListener("keypress", event => {
+    searchInput.addEventListener("keypress", async event => {
         if (event.key === "Enter") {
-            fetchData(getSearchText(), 0, getPageSize());
+            await fetchData(getSearchText(), 0, getPageSize());
         }
     });
 
-    searchButton.addEventListener("click", () => {
-        fetchData(getSearchText(), 0, getPageSize());
+    searchButton.addEventListener("click", async () => {
+        await fetchData(getSearchText(), 0, getPageSize());
     });
 
-    pageSizeSelect.addEventListener("change", () => {
-        fetchData(getSearchText(), 0, getPageSize());
+    pageSizeSelect.addEventListener("change", async () => {
+        await fetchData(getSearchText(), 0, getPageSize());
     });
 
     document.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", event => {
+        button.addEventListener("click", async event => {
             event.preventDefault();
 
             const pageNumber = button.getAttribute("data-page");
 
-            fetchData(getSearchText(), pageNumber, getPageSize());
+            await fetchData(getSearchText(), pageNumber, getPageSize());
         });
     });
 }
@@ -71,7 +71,11 @@ function setupPaginationButtons(currentPage, totalPages) {
     }
 }
 
-function fetchData(searchText, pageNumber, pageSize) {
+async function fetchData(searchText, pageNumber, pageSize) {
+    const personsContainer = document.getElementById("persons-container");
+
+    await fadeOutElement(personsContainer);
+
     fetch(`/Person/Persons?searchText=${encodeURIComponent(searchText)}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {
         method: "GET",
         headers: {
@@ -82,7 +86,6 @@ function fetchData(searchText, pageNumber, pageSize) {
             return response.text();
         })
         .then(data => {
-            const personsContainer = document.getElementById("persons-container");
             personsContainer.innerHTML = data;
 
             const personsTable = document.getElementById("persons-table")
@@ -91,5 +94,7 @@ function fetchData(searchText, pageNumber, pageSize) {
             var totalPages = parseInt(personsTable.getAttribute("data-total-pages"), 10);
 
             setupPaginationButtons(currentPage, totalPages);
+
+            fadeInElement(personsContainer);
         });
 }

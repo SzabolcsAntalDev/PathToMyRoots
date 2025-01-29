@@ -49,7 +49,7 @@ $married-color-dark: #5c6c7b;
     --married-color: #{$married-color-dark};
 }
 
-$fade-interval-in-seconds: 0.5s;
+$fade-interval-in-seconds: 0.25s;
 
 :root.theme-light {
     @extend %theme-light;

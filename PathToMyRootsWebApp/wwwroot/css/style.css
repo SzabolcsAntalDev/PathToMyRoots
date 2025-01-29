@@ -23,11 +23,11 @@
 }
 
 :root.theme-light {
-  --fade-interval-in-seconds: 0.5s;
+  --fade-interval-in-seconds: 0.25s;
 }
 
 :root.theme-dark {
-  --fade-interval-in-seconds: 0.5s;
+  --fade-interval-in-seconds: 0.25s;
 }
 
 html {
