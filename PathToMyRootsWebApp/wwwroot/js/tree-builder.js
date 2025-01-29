@@ -4,33 +4,6 @@ const sleepInterval = 0;
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
 const imageApiUrl = "https://localhost:7241/";
 
-async function createOrGetLoadingTextContainer() {
-    const treesContainer = document.getElementById("trees-container");
-
-    var loadingTextContainer = document.getElementById("loading-text-container");
-    if (!loadingTextContainer) {
-        loadingTextContainer = document.createElement("div");
-
-        loadingTextContainer.id = "loading-text-container";
-        loadingTextContainer.className = "loading-text-container";
-        hideElement(loadingTextContainer);
-
-        const loadingText = document.createElement("label");
-        loadingText.textContent = "Loading...";
-
-        loadingTextContainer.appendChild(loadingText);
-        treesContainer.appendChild(loadingTextContainer);
-    }
-
-    await new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, 1);
-    });
-
-    return loadingTextContainer;
-}
-
 async function removeTreeDiagram(personId) {
     const loadingTextContainer = document.getElementById("loading-text-container");
     if (loadingTextContainer)
@@ -46,7 +19,7 @@ async function removeTreeDiagram(personId) {
 async function createTreeDiagram(personId) {
     const treesContainer = document.getElementById("trees-container");
 
-    const loadingTextContainer = await createOrGetLoadingTextContainer();
+    const loadingTextContainer = await createOrGetLoadingTextContainer(treesContainer);
     fadeInElement(loadingTextContainer);
 
     const diagramAndLinesContainer = document.createElement('div');

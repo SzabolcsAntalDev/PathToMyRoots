@@ -11,6 +11,31 @@ function formatDateString(dateStr) {
         .replace("{2}", day);
 }
 
+async function createOrGetLoadingTextContainer(parent) {
+    var loadingTextContainer = document.getElementById("loading-text-container");
+    if (!loadingTextContainer) {
+        loadingTextContainer = document.createElement("div");
+
+        loadingTextContainer.id = "loading-text-container";
+        loadingTextContainer.className = "loading-text-container";
+        hideElement(loadingTextContainer);
+
+        const loadingText = document.createElement("label");
+        loadingText.textContent = "Loading...";
+
+        loadingTextContainer.appendChild(loadingText);
+        parent.appendChild(loadingTextContainer);
+    }
+
+    await new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, 1);
+    });
+
+    return loadingTextContainer;
+}
+
 function getFadeIntervalInSeconds() {
     const fadeIntervalInSeconds = getComputedStyle(document.documentElement).getPropertyValue('--fade-interval-in-seconds');
     return parseFloat(fadeIntervalInSeconds);

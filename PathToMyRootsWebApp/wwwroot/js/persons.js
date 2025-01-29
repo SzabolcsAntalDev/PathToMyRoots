@@ -74,6 +74,9 @@ function setupPaginationButtons(currentPage, totalPages) {
 async function fetchData(searchText, pageNumber, pageSize) {
     const personsContainer = document.getElementById("persons-container");
 
+    const loadingTextContainer = await createOrGetLoadingTextContainer(personsContainer.parentElement);
+    fadeInElement(loadingTextContainer);
+
     await fadeOutElement(personsContainer);
 
     fetch(`/Person/Persons?searchText=${encodeURIComponent(searchText)}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {
@@ -95,6 +98,7 @@ async function fetchData(searchText, pageNumber, pageSize) {
 
             setupPaginationButtons(currentPage, totalPages);
 
+            fadeOutElement(loadingTextContainer);
             fadeInElement(personsContainer);
         });
 }
