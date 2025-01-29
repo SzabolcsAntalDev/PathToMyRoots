@@ -2,7 +2,7 @@
 
 const personMarriageBorderedSectionContainer = document.getElementById('person-input-bordered-sections-container');
 const inputRadioMarriageDateConcreteDate = document.getElementById('input-radio-marriage-date-concrete-date');
-const spouseIdSelect = document.getElementById('SpouseId');
+const spouseIdSelect = document.getElementById('spouse-id');
 function toggleDate(name) {
     var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-alive");
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
@@ -76,7 +76,6 @@ const confirmCropButton = document.getElementById("confirm-crop-button");
 const imgImageToCrop = document.getElementById("person-image-to-crop");
 
 document.addEventListener("DOMContentLoaded", function () {
-
     addDateInputChangedListener("birth");
     addDateInputChangedListener("death");
     addDateInputChangedListener("marriage");

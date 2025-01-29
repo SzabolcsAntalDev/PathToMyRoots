@@ -22,18 +22,18 @@
         }
         <div class="person-input-sections-container">
             <div class="person-input-labels-container">
-                <label for="NobleTitle" >Noble Title:</label>
-                <label for="FirstName">First Name:</label>
-                <label for="LastName">Last Name:</label>
-                <label for="MaidenName">Maiden Name:</label>
-                <label for="OtherNames">Other Names:</label>
+                <label for="noble-title" >Noble Title:</label>
+                <label for="first-name">First Name:</label>
+                <label for="last-name">Last Name:</label>
+                <label for="maiden-name">Maiden Name:</label>
+                <label for="other-names">Other Names:</label>
             </div>
             <div class="person-inputs-container">
-                <input type="text" id="NobleTitle" name="NobleTitle" value="@Model?.NobleTitle" />
-                <input type="text" id="FirstName" name="FirstName" value="@Model?.FirstName" />
-                <input type="text" id="LastName" name="LastName" value="@Model?.LastName" />
-                <input type="text" id="MaidenName" name="MaidenName" value="@Model?.MaidenName" />
-                <input type="text" id="OtherNames" name="OtherNames" value="@Model?.OtherNames" />
+                <input type="text" id="noble-title" name="NobleTitle" value="@Model?.NobleTitle" />
+                <input type="text" id="first-name" name="FirstName" value="@Model?.FirstName" />
+                <input type="text" id="last-name" name="LastName" value="@Model?.LastName" />
+                <input type="text" id="maiden-name" name="MaidenName" value="@Model?.MaidenName" />
+                <input type="text" id="other-names" name="OtherNames" value="@Model?.OtherNames" />
             </div>
         </div>
 
@@ -101,16 +101,16 @@
 
         <div class="person-input-sections-container">
             <div class="person-input-labels-container">
-                <label for="IsMale">Gender:</label>
-                <label for="BiologicalFatherId">Father:</label>
-                <label for="BiologicalMotherId">Mother:</label>
+                <label for="is-male">Gender:</label>
+                <label for="biological-father-id">Father:</label>
+                <label for="biological-mother-id">Mother:</label>
             </div>
             <div class="person-inputs-container">
-                <select id="IsMale" name="IsMale">
+                <select id="is-male" name="IsMale">
                     <option value="true" selected="@(Model?.IsMale == true)">Male</option>
                     <option value="false" selected="@(Model?.IsMale == false)">Female</option>
                 </select>
-                <select id="BiologicalFatherId" name="BiologicalFatherId">
+                <select id="biological-father-id" name="BiologicalFatherId">
                     <option value="">-- Select Father --</option>
                     @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
                     {
@@ -119,7 +119,7 @@
                         </option>
                     }
                 </select>
-                <select id="BiologicalMotherId" name="BiologicalMotherId">
+                <select id="biological-mother-id" name="BiologicalMotherId">
                     <option value="">-- Select Mother --</option>
                     @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
                     {
@@ -133,10 +133,10 @@
 
         <div class="person-input-sections-container">
             <div class="person-input-labels-container">
-                <label for="SpouseId">Spouse:</label>
+                <label for="spouse-id">Spouse:</label>
             </div>
             <div class='person-inputs-container'>
-                <select id="SpouseId" name="SpouseId" onchange="spouseIdChanged()">
+                <select id="spouse-id" name="SpouseId" onchange="spouseIdChanged()">
                     <option value="">-- Select Spouse --</option>
                     @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
                     {
