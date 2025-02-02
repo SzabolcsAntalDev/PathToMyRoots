@@ -26,6 +26,8 @@ namespace PathToMyRootsApi.Mappings
                 DeathDate = person.DeathDate,
                 BiologicalMotherId = person.BiologicalMotherId,
                 BiologicalFatherId = person.BiologicalFatherId,
+                AdoptiveMotherId = person.AdoptiveMotherId,
+                AdoptiveFatherId = person.AdoptiveFatherId,
                 SpouseId = person.SpouseId,
                 BiologicalMother = person.BiologicalMother == null ? null : new PersonDto
                 {
@@ -38,6 +40,18 @@ namespace PathToMyRootsApi.Mappings
                     Id = person.BiologicalFather.Id,
                     FirstName = person.BiologicalFather.FirstName,
                     LastName = person.BiologicalFather.LastName,
+                },
+                AdoptiveMother = person.AdoptiveMother == null ? null : new PersonDto
+                {
+                    Id = person.AdoptiveMother.Id,
+                    FirstName = person.AdoptiveMother.FirstName,
+                    LastName = person.AdoptiveMother.LastName,
+                },
+                AdoptiveFather = person.AdoptiveFather == null ? null : new PersonDto
+                {
+                    Id = person.AdoptiveFather.Id,
+                    FirstName = person.AdoptiveFather.FirstName,
+                    LastName = person.AdoptiveFather.LastName,
                 },
                 Spouse = person.Spouse == null ? null : new PersonDto
                 {
@@ -68,6 +82,8 @@ namespace PathToMyRootsApi.Mappings
                 DeathDate = personDto.DeathDate,
                 BiologicalMotherId = personDto.BiologicalMotherId,
                 BiologicalFatherId = personDto.BiologicalFatherId,
+                AdoptiveMotherId = personDto.AdoptiveMotherId,
+                AdoptiveFatherId = personDto.AdoptiveFatherId,
                 SpouseId = personDto.SpouseId,
                 BiologicalMother = personDto.BiologicalMother == null ? null : new Person
                 {
@@ -80,6 +96,18 @@ namespace PathToMyRootsApi.Mappings
                     Id = personDto.BiologicalFather.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
                     FirstName = personDto.BiologicalFather.FirstName,
                     LastName = personDto.BiologicalFather.LastName,
+                },
+                AdoptiveMother = personDto.AdoptiveMother == null ? null : new Person
+                {
+                    Id = personDto.AdoptiveMother.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
+                    FirstName = personDto.AdoptiveMother.FirstName,
+                    LastName = personDto.AdoptiveMother.LastName,
+                },
+                AdoptiveFather = personDto.AdoptiveFather == null ? null : new Person
+                {
+                    Id = personDto.AdoptiveFather.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
+                    FirstName = personDto.AdoptiveFather.FirstName,
+                    LastName = personDto.AdoptiveFather.LastName,
                 },
                 Spouse = personDto.Spouse == null ? null : new Person
                 {
@@ -112,6 +140,8 @@ namespace PathToMyRootsApi.Mappings
                 DeathDate = family.DeathDate,
                 BiologicalMotherId = family.BiologicalMotherId,
                 BiologicalFatherId = family.BiologicalFatherId,
+                AdoptiveMotherId = family.AdoptiveMotherId,
+                AdoptiveFatherId = family.AdoptiveFatherId,
                 SpouseId = family.SpouseId,
                 Spouse = family.Spouse == null ? null : new PersonDto
                 {
@@ -144,6 +174,27 @@ namespace PathToMyRootsApi.Mappings
                             LastName = child.LastName,
                             BiologicalMotherId = child.BiologicalMotherId,
                             BiologicalFatherId = child.BiologicalFatherId
+                        }).ToList(),
+                InverseAdoptiveMother =
+                    family.InverseAdoptiveMother
+                        .Select(child => new PersonDto
+                        {
+                            Id = child.Id,
+                            NobleTitle = child.NobleTitle,
+                            FirstName = child.FirstName,
+                            LastName = child.LastName,
+                            AdoptiveMotherId = child.AdoptiveMotherId,
+                            AdoptiveFatherId = child.AdoptiveFatherId
+                        }).ToList(),
+                InverseAdoptiveFather = family.InverseAdoptiveFather
+                        .Select(child => new PersonDto
+                        {
+                            Id = child.Id,
+                            NobleTitle = child.NobleTitle,
+                            FirstName = child.FirstName,
+                            LastName = child.LastName,
+                            AdoptiveMotherId = child.AdoptiveMotherId,
+                            AdoptiveFatherId = child.AdoptiveFatherId
                         }).ToList(),
                 ImageUrl = family.ImageUrl
             };

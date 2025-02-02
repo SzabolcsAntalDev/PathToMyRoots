@@ -23,6 +23,8 @@ namespace PathToMyRootsWebApp.Mappings
                 DeathDate = personDto.DeathDate,
                 BiologicalMotherId = personDto.BiologicalMotherId,
                 BiologicalFatherId = personDto.BiologicalFatherId,
+                AdoptiveMotherId = personDto.AdoptiveMotherId,
+                AdoptiveFatherId = personDto.AdoptiveFatherId,
                 SpouseId = personDto.SpouseId,
                 BiologicalMother = personDto.BiologicalMother == null ? null : new PersonModel
                 {
@@ -35,6 +37,18 @@ namespace PathToMyRootsWebApp.Mappings
                     Id = personDto.BiologicalFather.Id,
                     FirstName = personDto.BiologicalFather.FirstName,
                     LastName = personDto.BiologicalFather.LastName,
+                },
+                AdoptiveMother = personDto.AdoptiveMother == null ? null : new PersonModel
+                {
+                    Id = personDto.AdoptiveMother.Id,
+                    FirstName = personDto.AdoptiveMother.FirstName,
+                    LastName = personDto.AdoptiveMother.LastName,
+                },
+                AdoptiveFather = personDto.AdoptiveFather == null ? null : new PersonModel
+                {
+                    Id = personDto.AdoptiveFather.Id,
+                    FirstName = personDto.AdoptiveFather.FirstName,
+                    LastName = personDto.AdoptiveFather.LastName,
                 },
                 Spouse = personDto.Spouse == null ? null : new PersonModel
                 {
@@ -65,6 +79,8 @@ namespace PathToMyRootsWebApp.Mappings
                 DeathDate = personModel.DeathDate,
                 BiologicalMotherId = personModel.BiologicalMotherId,
                 BiologicalFatherId = personModel.BiologicalFatherId,
+                AdoptiveMotherId = personModel.AdoptiveMotherId,
+                AdoptiveFatherId = personModel.AdoptiveFatherId,
                 SpouseId = personModel.SpouseId,
                 BiologicalMother = personModel.BiologicalMother == null ? null : new PersonDto
                 {
@@ -77,6 +93,18 @@ namespace PathToMyRootsWebApp.Mappings
                     Id = personModel.BiologicalFather.Id,
                     FirstName = personModel.BiologicalFather.FirstName,
                     LastName = personModel.BiologicalFather.LastName,
+                },
+                AdoptiveMother = personModel.AdoptiveMother == null ? null : new PersonDto
+                {
+                    Id = personModel.AdoptiveMother.Id,
+                    FirstName = personModel.AdoptiveMother.FirstName,
+                    LastName = personModel.AdoptiveMother.LastName,
+                },
+                AdoptiveFather = personModel.AdoptiveFather == null ? null : new PersonDto
+                {
+                    Id = personModel.AdoptiveFather.Id,
+                    FirstName = personModel.AdoptiveFather.FirstName,
+                    LastName = personModel.AdoptiveFather.LastName,
                 },
                 Spouse = personModel.Spouse == null ? null : new PersonDto
                 {

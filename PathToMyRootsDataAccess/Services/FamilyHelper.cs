@@ -20,6 +20,8 @@ namespace PathToMyRootsDataAccess.Services
                 .Include(p => p.Spouse)
                 .Include(p => p.InverseBiologicalMother)
                 .Include(p => p.InverseBiologicalFather)
+                .Include(p => p.InverseAdoptiveMother)
+                .Include(p => p.InverseAdoptiveFather)
                 //.Include(p => p.InverseBiologicalFather)
                 //.Include(p => p.InverseBiologicalMother)
                 //.Include(p => p.InverseSpouse)

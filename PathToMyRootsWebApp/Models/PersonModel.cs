@@ -15,9 +15,13 @@ namespace PathToMyRootsWebApp.Models
         public string? DeathDate { get; set; }
         public int? BiologicalMotherId { get; set; }
         public int? BiologicalFatherId { get; set; }
+        public int? AdoptiveMotherId { get; set; }
+        public int? AdoptiveFatherId { get; set; }
         public int? SpouseId { get; set; }
         public virtual PersonModel? BiologicalFather { get; set; }
         public virtual PersonModel? BiologicalMother { get; set; }
+        public virtual PersonModel? AdoptiveFather { get; set; }
+        public virtual PersonModel? AdoptiveMother { get; set; }
         public virtual PersonModel? Spouse { get; set; }
         public string? MarriageDate { get; set; }
         public string? ImageUrl { get; set; }

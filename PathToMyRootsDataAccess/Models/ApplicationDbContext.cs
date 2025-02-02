@@ -35,13 +35,25 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("CHAR(9)")  // Use CHAR(9) for storing date strings like "+20220520"
                 .HasColumnName("DeathDate");
 
-            entity.HasOne(d => d.BiologicalFather).WithMany(p => p.InverseBiologicalFather)
+            entity.HasOne(d => d.BiologicalFather)
+                .WithMany(p => p.InverseBiologicalFather)
                 .HasForeignKey(d => d.BiologicalFatherId)
                 .HasConstraintName("FK__Persons__Biologi__25869641");
 
-            entity.HasOne(d => d.BiologicalMother).WithMany(p => p.InverseBiologicalMother)
+            entity.HasOne(d => d.BiologicalMother)
+                .WithMany(p => p.InverseBiologicalMother)
                 .HasForeignKey(d => d.BiologicalMotherId)
                 .HasConstraintName("FK__Persons__Biologi__24927208");
+
+            entity.HasOne(d => d.AdoptiveFather)
+                .WithMany(p => p.InverseAdoptiveFather)
+                .HasForeignKey(d => d.AdoptiveFatherId)
+                .HasConstraintName("FK__Persons__Adoptiv__2F10007E");
+
+            entity.HasOne(d => d.AdoptiveMother)
+                .WithMany(p => p.InverseAdoptiveMother)
+                .HasForeignKey(d => d.AdoptiveMotherId)
+                .HasConstraintName("FK__Persons__Adoptiv__2E3D1A6B");
 
             entity.HasOne(d => d.Spouse).WithMany(p => p.InverseSpouse)
                 .HasForeignKey(d => d.SpouseId)
