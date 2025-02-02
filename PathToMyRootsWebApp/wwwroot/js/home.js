@@ -1,5 +1,5 @@
 ﻿const treeIds = [13, 71];
-let currentIndex = 0;
+let currentIndex = 1;
 
 document.getElementById('prevTree').addEventListener('click', function () {
     showTree(-1);

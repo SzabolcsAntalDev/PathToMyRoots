@@ -120,7 +120,6 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
         return;
 
     const person = await (await fetch(`${apiUrl}${personId}`)).json();
-
     const nodesGroup = createNodesGroup();
 
     if (person.isMale) {
@@ -341,9 +340,8 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         let fatherId = parentsNodeGroup.querySelector('.tree-node-male')?.id;
         let motherId = parentsNodeGroup.querySelector('.tree-node-female')?.id;
 
-        let childrenNodesGroups = childrenRow.querySelectorAll('.tree-nodes-group');
-
         const childNodes = [];
+        let childrenNodesGroups = childrenRow.querySelectorAll('.tree-nodes-group');
 
         for (let childrenNodesGroup of childrenNodesGroups) {
             let childMaleNode = childrenNodesGroup.querySelector('.tree-node-male');
@@ -361,28 +359,28 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
                 childNodes.push(childFemaleNode);
         }
 
-        const nodesLeft = [];
-        const nodesRight = [];
+        const childrenOnLeft = [];
+        const childrenOnRight = [];
 
         const parentRect = parentsNodeGroup.getBoundingClientRect();
         const parentRectHorizontalCenter = parentRect.left + (parentRect.width / 2);
 
         childNodes.forEach(child => {
-            const childRect = c.getBoundingClientRect();
+            const childRect = child.getBoundingClientRect();
             const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
 
             if (parentRectHorizontalCenter > childRectHorizontalCenter)
-                nodesLeft.push(child);
+                childrenOnLeft.push(child);
             else
-                nodesRight.push(child);
+                childrenOnRight.push(child);
         });
 
-        nodesLeft.forEach(c => {
-            drawLine(linesContainer, parentsNodeGroup, c, offset += linesVerticalOffset);
+        childrenOnLeft.forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset);
         });
 
-        nodesRight.reverse().forEach(c => {
-            drawLine(linesContainer, parentsNodeGroup, c, offset += linesVerticalOffset);
+        childrenOnRight.reverse().forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset);
         });
     }
 }
