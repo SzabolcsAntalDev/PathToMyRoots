@@ -273,14 +273,14 @@ function personToPersonNameNodeText(person) {
     if (person.nobleTitle)
         details.push(person.nobleTitle);
 
-    if (person.firstName)
-        details.push(person.firstName);
+    if (person.lastName)
+        details.push(person.lastName);
 
     if (person.maidenName)
         details.push(`(${person.maidenName})`);
 
-    if (person.lastName)
-        details.push(person.lastName);
+    if (person.firstName)
+        details.push(person.firstName);
 
     if (person.otherNames)
         details.push(person.otherNames);
@@ -355,10 +355,20 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
             let femalesBiologicalFatherId = childFemaleNode?.biologicalFatherId;
             let femalesBiologicalMotherId = childFemaleNode?.biologicalMotherId;
 
-            if (childMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId))
+            if (childMaleNode != null &&
+                (
+                    (fatherId != null && malesBiologicalFatherId != null && fatherId == malesBiologicalFatherId) ||
+                    (motherId != null && malesBiologicalMotherId != null && motherId == malesBiologicalMotherId)
+                )
+            )
                 childNodes.push(childMaleNode);
 
-            if (childFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId))
+            if (childFemaleNode != null &&
+                (
+                    (fatherId != null && femalesBiologicalFatherId != null && fatherId == femalesBiologicalFatherId) ||
+                    (motherId != null && femalesBiologicalMotherId != null && motherId == femalesBiologicalMotherId)
+                )
+            )
                 childNodes.push(childFemaleNode);
         }
 

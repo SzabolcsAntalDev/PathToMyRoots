@@ -18,7 +18,13 @@ namespace PathToMyRootsWebApp.Utils
             if (!string.IsNullOrEmpty(personModel.LastName))
                 nameParts.Add(personModel.LastName);
 
+            if (!string.IsNullOrEmpty(personModel.MaidenName))
+                nameParts.Add($"({personModel.MaidenName})");
+
             nameParts.Add(personModel.FirstName);
+
+            if (!string.IsNullOrEmpty(personModel.OtherNames))
+                nameParts.Add($"{personModel.OtherNames}");
 
             return string.Join(" ", nameParts);
         }
@@ -40,6 +46,9 @@ namespace PathToMyRootsWebApp.Utils
                 nameParts.Add($"({personModel.MaidenName})");
 
             nameParts.Add(personModel.FirstName);
+
+            if (!string.IsNullOrEmpty(personModel.OtherNames))
+                nameParts.Add($"{personModel.OtherNames}");
 
             nameParts.Add($"({DateHelper.ServerDateToYearFormat(personModel.BirthDate)}-{DateHelper.ServerDateToYearFormat(personModel.DeathDate)})");
 
