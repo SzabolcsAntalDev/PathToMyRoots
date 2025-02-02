@@ -215,6 +215,11 @@ select {
     font-size: inherit;
 }
 
+option {
+    color: var(--foreground-color);
+    background-color: var(--background-color);
+}
+
 %action-img {
     width: $action-image-size;
     height: $action-image-size;

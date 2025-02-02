@@ -153,6 +153,11 @@ select {
   font-size: inherit;
 }
 
+option {
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+}
+
 .tree-action-img, .person-action-img, .persons-action-img {
   width: 20px;
   height: 20px;
