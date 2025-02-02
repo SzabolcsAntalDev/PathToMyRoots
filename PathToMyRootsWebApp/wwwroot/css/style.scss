@@ -553,13 +553,16 @@ table {
 }
 
 .tree-level-row {
-    display: block;
+    display: flex;
+    justify-content: center;
 }
 
 .tree-nodes-group {
     display: inline-block;
     vertical-align: top;
     padding: 0px $distance-between-nodes;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 %tree-node {
