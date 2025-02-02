@@ -219,11 +219,13 @@ function createNode(person) {
     textsContainer.className = "tree-node-texts";
 
     const spanPersonName = document.createElement('span');
-    spanPersonName.innerText = personToPersonNameNodeText(person);
+    const personNameNodeText = personToPersonNameNodeText(person);
+    spanPersonName.innerText = personNameNodeText;
     spanPersonName.className = 'tree-node-main-name-text';
 
     const spanPersonLived = document.createElement('span');
-    spanPersonLived.innerText = personToPersonLivedNodeText(person);
+    const personLivedNodeText = personToPersonLivedNodeText(person);
+    spanPersonLived.innerText = personLivedNodeText;
     spanPersonLived.className = 'tree-node-main-lived-text';
 
     textsContainer.appendChild(spanPersonName);
@@ -252,6 +254,7 @@ function createNode(person) {
     node.appendChild(imgPerson);
     node.appendChild(textsContainer);
     node.appendChild(buttonEditPerson);
+    node.title = `${personNameNodeText}\n${personLivedNodeText}`
 
     node.addEventListener("mouseenter", () => {
         buttonEditPerson.style.visibility = 'visible';
