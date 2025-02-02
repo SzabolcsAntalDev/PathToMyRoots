@@ -458,13 +458,12 @@ table tr:hover th {
 
 .tree-level-row {
   display: block;
-  padding: 20px 0px;
 }
 
 .tree-nodes-group {
   display: inline-block;
   vertical-align: top;
-  padding: 0px 20px;
+  padding: 0px 15px;
 }
 
 .tree-node-female, .tree-node-male {

@@ -76,7 +76,7 @@ $thickness-super-large: 60px;
 $border: 1px solid var(--foreground-color);
 
 $action-image-size: 20px;
-$distance-between-nodes: 20px;
+$distance-between-nodes: 15px;
 $person-node-width: 150px;
 $married-node-width: 70px;
 
@@ -554,7 +554,6 @@ table {
 
 .tree-level-row {
     display: block;
-    padding: $distance-between-nodes 0px;
 }
 
 .tree-nodes-group {

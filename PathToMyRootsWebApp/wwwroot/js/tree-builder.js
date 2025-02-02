@@ -45,12 +45,16 @@ async function createTreeDiagram(personId) {
     let baseLevelIndex = 0;
     await createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, baseLevelIndex);
 
+    let maxChildrenWithParentsOnRows = 0;
+    Object.values(levelIndexesToRowsDictionary).forEach(row => {
+        maxChildrenWithParentsOnRows = Math.max(maxChildrenWithParentsOnRows, getNumberOfChildrenWithParents(row));
+    });
+
     const descSortedLevelIndexes = Object.keys(levelIndexesToRowsDictionary)
         .map(Number)
         .sort((a, b) => b - a);
 
     const rootLevelIndex = descSortedLevelIndexes[0]
-
     let parentsRow = levelIndexesToRowsDictionary[rootLevelIndex];
     diagramContainer.appendChild(parentsRow);
     await sleep(sleepInterval);
@@ -65,6 +69,14 @@ async function createTreeDiagram(personId) {
         parentsRow = await fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
     }
 
+    // set bottom padding to each child except the last one
+    const rows = diagramContainer.querySelectorAll(".tree-level-row");
+    rows.forEach((row, index) => {
+        if (index !== rows.length - 1) {
+            row.style.padding = "0px 0px " + ((maxChildrenWithParentsOnRows + 3) * linesVerticalOffset) + "px 0px";
+        }
+    });
+
     // draw lines
     const treeDiagramContainerStyle = window.getComputedStyle(diagramContainer);
     const treeDiagramContainerWidth = diagramContainer.offsetWidth || parseFloat(treeDiagramContainerStyle.width);
@@ -73,18 +85,23 @@ async function createTreeDiagram(personId) {
     linesContainer.style.width = `${treeDiagramContainerWidth}px`;
     linesContainer.style.height = `${treeDiagramContainerHeight}px`;
 
-    const rows = diagramContainer.querySelectorAll(".tree-level-row");
     for (let i = 1; i < rows.length; i++) {
         const parentsRowInner = rows[i - 1];
         const childrenRowInner = rows[i];
 
-        await drawLines(linesContainer, parentsRowInner, childrenRowInner);
+        await drawLines(linesContainer, parentsRowInner, childrenRowInner, maxChildrenWithParentsOnRows);
     }
 
     scrollToMiddle(diagramAndLinesContainer, diagramContainer);
 
     fadeOutElement(loadingTextContainer);
     fadeInElement(diagramAndLinesContainer);
+}
+
+function getNumberOfChildrenWithParents(row) {
+    return Array
+        .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
+        .filter(p => p.biologicalFatherId !== null || p.biologicalMotherId !== null).length;
 }
 
 function scrollToMiddle(container, element) {
@@ -275,7 +292,7 @@ function personToPersonLivedNodeText(person) {
 
 function dateToString(date) {
     if (date == null)
-        return "";
+        return "?";
 
     if (date === UnknownServerDate)
         return HumanReadableDateUnknownDate;
@@ -314,16 +331,19 @@ function personToPersonMarriedDateText(person) {
     return `${dateToString(person.marriageDate)}`;
 }
 
-async function drawLines(linesContainer, parentsRow, childrenRow) {
+async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWithParentsOnRows) {
+
+    const numOfChildrensWithParentOnRow = getNumberOfChildrenWithParents(childrenRow);
+    let offset = (((maxChildrenWithParentsOnRows - numOfChildrensWithParentOnRow) / 2) + 1) * linesVerticalOffset;
+
     let parentsNodesGroups = parentsRow.querySelectorAll('.tree-nodes-group');
-
-    let i = -5 * linesVerticalOffset;
-
     for (let parentsNodeGroup of parentsNodesGroups) {
         let fatherId = parentsNodeGroup.querySelector('.tree-node-male')?.id;
         let motherId = parentsNodeGroup.querySelector('.tree-node-female')?.id;
 
         let childrenNodesGroups = childrenRow.querySelectorAll('.tree-nodes-group');
+
+        const childNodes = [];
 
         for (let childrenNodesGroup of childrenNodesGroups) {
             let childMaleNode = childrenNodesGroup.querySelector('.tree-node-male');
@@ -334,16 +354,36 @@ async function drawLines(linesContainer, parentsRow, childrenRow) {
             let femalesBiologicalFatherId = childFemaleNode?.biologicalFatherId;
             let femalesBiologicalMotherId = childFemaleNode?.biologicalMotherId;
 
-            if (childMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId)) {
-                drawLine(linesContainer, parentsNodeGroup, childMaleNode, i += linesVerticalOffset);
-                await sleep(sleepInterval);
-            }
+            if (childMaleNode != null && (fatherId == malesBiologicalFatherId || motherId == malesBiologicalMotherId))
+                childNodes.push(childMaleNode);
 
-            if (childFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId)) {
-                drawLine(linesContainer, parentsNodeGroup, childFemaleNode, i += linesVerticalOffset);
-                await sleep(sleepInterval);
-            }
+            if (childFemaleNode != null && (fatherId == femalesBiologicalFatherId || motherId == femalesBiologicalMotherId))
+                childNodes.push(childFemaleNode);
         }
+
+        const nodesLeft = [];
+        const nodesRight = [];
+
+        const parentRect = parentsNodeGroup.getBoundingClientRect();
+        const parentRectHorizontalCenter = parentRect.left + (parentRect.width / 2);
+
+        childNodes.forEach(child => {
+            const childRect = c.getBoundingClientRect();
+            const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
+
+            if (parentRectHorizontalCenter > childRectHorizontalCenter)
+                nodesLeft.push(child);
+            else
+                nodesRight.push(child);
+        });
+
+        nodesLeft.forEach(c => {
+            drawLine(linesContainer, parentsNodeGroup, c, offset += linesVerticalOffset);
+        });
+
+        nodesRight.reverse().forEach(c => {
+            drawLine(linesContainer, parentsNodeGroup, c, offset += linesVerticalOffset);
+        });
     }
 }
 
@@ -358,7 +398,7 @@ function drawLine(linesContainer, parent, child, verticalOffset) {
     const childX = childRect.left + childRect.width / 2 - linesContainerClientRect.left;
     const childY = childRect.top - linesContainerClientRect.top;
 
-    const middleY = ((parentY + childY) / 2) + verticalOffset;
+    const middleY = parentY + verticalOffset;
 
     const pathData = `
         M ${parentX},${parentY}
