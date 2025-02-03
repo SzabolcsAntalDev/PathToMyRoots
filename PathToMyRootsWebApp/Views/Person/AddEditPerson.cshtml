@@ -102,8 +102,10 @@
         <div class="person-input-sections-container">
             <div class="person-input-labels-container">
                 <label for="is-male">Gender:</label>
-                <label for="biological-father-id">Father:</label>
-                <label for="biological-mother-id">Mother:</label>
+                <label for="biological-father-id">Biological Father:</label>
+                <label for="biological-mother-id">Biological Mother:</label>
+                <label for="adoptive-father-id">Adoptive Father:</label>
+                <label for="adoptive-mother-id">Adoptive Mother:</label>
             </div>
             <div class="person-inputs-container">
                 <select id="is-male" name="IsMale">
@@ -111,7 +113,7 @@
                     <option value="false" selected="@(Model?.IsMale == false)">Female</option>
                 </select>
                 <select id="biological-father-id" name="BiologicalFatherId">
-                    <option value="">-- Select Father --</option>
+                    <option value="">-- Select Biological Father --</option>
                     @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
                     {
                         <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
@@ -120,10 +122,28 @@
                     }
                 </select>
                 <select id="biological-mother-id" name="BiologicalMotherId">
-                    <option value="">-- Select Mother --</option>
+                    <option value="">-- Select Biological Mother --</option>
                     @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
                     {
                         <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
+                            @PersonModelFormatter.ToShortFullInfo(mother)
+                        </option>
+                    }
+                </select>
+                <select id="adoptive-father-id" name="AdoptiveFatherId">
+                    <option value="">-- Select Adoptive Father --</option>
+                    @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
+                    {
+                        <option value="@father.Id" selected=@(Model?.AdoptiveFatherId == father.Id)>
+                            @PersonModelFormatter.ToShortFullInfo(father)
+                        </option>
+                    }
+                </select>
+                <select id="adoptive-mother-id" name="AdoptiveMotherId">
+                    <option value="">-- Select Adoptive Mother --</option>
+                    @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
+                    {
+                        <option value="@mother.Id" selected=@(Model?.AdoptiveMotherId == mother.Id)>
                             @PersonModelFormatter.ToShortFullInfo(mother)
                         </option>
                     }

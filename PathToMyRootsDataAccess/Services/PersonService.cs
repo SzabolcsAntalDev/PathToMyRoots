@@ -18,8 +18,10 @@ namespace PathToMyRootsDataAccess.Services
         {
             var persons = await
                 _applicationDbContext.Persons
-                    .Include(p => p.BiologicalMother)
                     .Include(p => p.BiologicalFather)
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.AdoptiveFather)
+                    .Include(p => p.AdoptiveMother)
                     .Include(p => p.Spouse)
                     .ToListAsync();
 
@@ -36,8 +38,10 @@ namespace PathToMyRootsDataAccess.Services
         {
             return await
                 _applicationDbContext.Persons
-                    .Include(p => p.BiologicalMother)
                     .Include(p => p.BiologicalFather)
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.AdoptiveFather)
+                    .Include(p => p.AdoptiveMother)
                     .Include(p => p.Spouse)
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -84,6 +88,8 @@ namespace PathToMyRootsDataAccess.Services
             existingPerson.DeathDate = updatedPerson.DeathDate;
             existingPerson.BiologicalMotherId = updatedPerson.BiologicalMotherId;
             existingPerson.BiologicalFatherId = updatedPerson.BiologicalFatherId;
+            existingPerson.AdoptiveMotherId = updatedPerson.AdoptiveMotherId;
+            existingPerson.AdoptiveFatherId = updatedPerson.AdoptiveFatherId;
             existingPerson.SpouseId = updatedPerson.SpouseId;
             existingPerson.ImageUrl = updatedPerson.ImageUrl;
             existingPerson.MarriageDate = updatedPerson.MarriageDate;

@@ -1,4 +1,4 @@
-﻿const linesVerticalOffset = 4;
+﻿const linesVerticalOffset = 8;
 const sleepInterval = 0;
 
 const apiUrl = "https://localhost:7241/api/person/getfamily/";
@@ -101,7 +101,11 @@ async function createTreeDiagram(personId) {
 function getNumberOfChildrenWithParents(row) {
     return Array
         .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
-        .filter(p => p.biologicalFatherId !== null || p.biologicalMotherId !== null).length;
+        .filter(p =>
+            p.biologicalFatherId !== null ||
+            p.biologicalMotherId !== null ||
+            p.adoptiveFatherId !== null ||
+            p.adoptiveMotherId !== null).length;
 }
 
 function scrollToMiddle(container, element) {
@@ -133,6 +137,7 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     else {
         if (person.spouse != null) {
             const spouse = await (await fetch(`${apiUrl}${person.spouseId}`)).json();
+            person.spouse = spouse;
             nodesGroup.appendChild(createNode(spouse));
         }
         nodesGroup.appendChild(createNode(person));
@@ -141,6 +146,8 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     if (person.spouse != null) {
         nodesGroup.appendChild(createLineBreak());
         nodesGroup.appendChild(createNodeMarried(person));
+        nodesGroup.inverseBiologicalParents = getCommonBiologicalChildren(person, person.spouse);
+        nodesGroup.inverseAdoptiveParents = getCommonAdoptiveChildren(person, person.spouse);
     }
 
     if (levelIndexesToRowsDictionary[level] == null)
@@ -162,10 +169,47 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     if (person.inverseBiologicalFather != null)
         for (let child of person.inverseBiologicalFather)
             await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+
+    await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+    if (person.spouse != null)
+        await createRowsFrom(person.spouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+
+    if (person.inverseAdoptiveMother != null)
+        for (let child of person.inverseAdoptiveMother)
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+
+    if (person.inverseAdoptiveFather != null)
+        for (let child of person.inverseAdoptiveFather)
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+}
+
+function getCommonBiologicalChildren(person, spouse) {
+    if (person.isMale) {
+        return person.inverseBiologicalFather.filter(child =>
+            spouse.inverseBiologicalMother.some(spouseChild => spouseChild.id === child.id)
+        );
+    } else {
+        return person.inverseBiologicalMother.filter(child =>
+            spouse.inverseBiologicalFather.some(spouseChild => spouseChild.id === child.id)
+        );
+    }
+}
+
+function getCommonAdoptiveChildren(person, spouse) {
+    if (person.isMale) {
+        return person.inverseAdoptiveFather.filter(child =>
+            spouse.inverseAdoptiveMother.some(spouseChild => spouseChild.id === child.id)
+        );
+    } else {
+        return person.inverseAdoptiveMother.filter(child =>
+            spouse.inverseAdoptiveFather.some(spouseChild => spouseChild.id === child.id)
+        );
+    }
 }
 
 async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
-    let parentsNodeGroups = parentsRow.querySelectorAll('.tree-nodes-group');
+    const parentsNodeGroups = parentsRow.querySelectorAll('.tree-nodes-group');
+    const orphans = [];
 
     for (let parentNodeGroup of parentsNodeGroups) {
         let fatherId = parentNodeGroup.querySelector('.tree-node-male')?.id;
@@ -173,21 +217,37 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
 
         let childrenNodeGroups = childrenRow.querySelectorAll('.tree-nodes-group');
         for (let childrenNodeGroup of childrenNodeGroups) {
+
             let malesChildBiologicalFatherId = childrenNodeGroup.querySelector('.tree-node-male')?.biologicalFatherId;
             let malesChildBiologicalMotherId = childrenNodeGroup.querySelector('.tree-node-male')?.biologicalMotherId;
             let femalesChildBiologicalFatherId = childrenNodeGroup.querySelector('.tree-node-female')?.biologicalFatherId;
             let femalesChildBiologicalMotherId = childrenNodeGroup.querySelector('.tree-node-female')?.biologicalMotherId;
 
+            let malesChildAdoptiveFatherId = childrenNodeGroup.querySelector('.tree-node-male')?.adoptiveFatherId;
+            let malesChildAdoptiveMotherId = childrenNodeGroup.querySelector('.tree-node-male')?.adoptiveMotherId;
+            let femalesChildAdoptiveFatherId = childrenNodeGroup.querySelector('.tree-node-female')?.adoptiveFatherId;
+            let femalesChildAdoptiveMotherId = childrenNodeGroup.querySelector('.tree-node-female')?.adoptiveMotherId;
+
             if ((fatherId != null && malesChildBiologicalFatherId != null && fatherId == malesChildBiologicalFatherId) ||
                 (fatherId != null && femalesChildBiologicalFatherId != null && fatherId == femalesChildBiologicalFatherId) ||
                 (motherId != null && malesChildBiologicalMotherId != null && motherId == malesChildBiologicalMotherId) ||
-                (motherId != null && femalesChildBiologicalMotherId != null && motherId == femalesChildBiologicalMotherId)) {
-                sortedChildrenRow.appendChild(childrenNodeGroup);
-                await sleep(sleepInterval);
+                (motherId != null && femalesChildBiologicalMotherId != null && motherId == femalesChildBiologicalMotherId) ||
 
+                (fatherId != null && malesChildAdoptiveFatherId != null && fatherId == malesChildAdoptiveFatherId) ||
+                (fatherId != null && femalesChildAdoptiveFatherId != null && fatherId == femalesChildAdoptiveFatherId) ||
+                (motherId != null && malesChildAdoptiveMotherId != null && motherId == malesChildAdoptiveMotherId) ||
+                (motherId != null && femalesChildAdoptiveMotherId != null && motherId == femalesChildAdoptiveMotherId)) {
+                sortedChildrenRow.appendChild(childrenNodeGroup);
+            }
+            else {
+                orphans.push(childrenNodeGroup);
             }
         }
     }
+
+    orphans.forEach(o => {
+        sortedChildrenRow.appendChild(o);
+    });
 
     return sortedChildrenRow;
 }
@@ -209,6 +269,8 @@ function createNode(person) {
     node.id = person.id;
     node.biologicalMotherId = person.biologicalMotherId;
     node.biologicalFatherId = person.biologicalFatherId;
+    node.adoptiveMotherId = person.adoptiveMotherId;
+    node.adoptiveFatherId = person.adoptiveFatherId;
     node.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
 
     const imgPerson = document.createElement('img');
@@ -343,7 +405,8 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         let fatherId = parentsNodeGroup.querySelector('.tree-node-male')?.id;
         let motherId = parentsNodeGroup.querySelector('.tree-node-female')?.id;
 
-        const childNodes = [];
+        const biologicalChildNodes = [];
+        const adoptiveChildNodes = [];
         let childrenNodesGroups = childrenRow.querySelectorAll('.tree-nodes-group');
 
         for (let childrenNodesGroup of childrenNodesGroups) {
@@ -355,13 +418,18 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
             let femalesBiologicalFatherId = childFemaleNode?.biologicalFatherId;
             let femalesBiologicalMotherId = childFemaleNode?.biologicalMotherId;
 
+            let malesAdoptiveFatherId = childMaleNode?.adoptiveFatherId;
+            let malesAdoptiveMotherId = childMaleNode?.adoptiveMotherId;
+            let femalesAdoptiveFatherId = childFemaleNode?.adoptiveFatherId;
+            let femalesAdoptiveMotherId = childFemaleNode?.adoptiveMotherId;
+
             if (childMaleNode != null &&
                 (
                     (fatherId != null && malesBiologicalFatherId != null && fatherId == malesBiologicalFatherId) ||
                     (motherId != null && malesBiologicalMotherId != null && motherId == malesBiologicalMotherId)
                 )
             )
-                childNodes.push(childMaleNode);
+                biologicalChildNodes.push(childMaleNode);
 
             if (childFemaleNode != null &&
                 (
@@ -369,47 +437,94 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
                     (motherId != null && femalesBiologicalMotherId != null && motherId == femalesBiologicalMotherId)
                 )
             )
-                childNodes.push(childFemaleNode);
+                biologicalChildNodes.push(childFemaleNode);
+
+            if (childMaleNode != null &&
+                (
+                    (fatherId != null && malesAdoptiveFatherId != null && fatherId == malesAdoptiveFatherId) ||
+                    (motherId != null && malesAdoptiveMotherId != null && motherId == malesAdoptiveMotherId)
+                )
+            )
+                adoptiveChildNodes.push(childMaleNode);
+
+            if (childFemaleNode != null &&
+                (
+                    (fatherId != null && femalesAdoptiveFatherId != null && fatherId == femalesAdoptiveFatherId) ||
+                    (motherId != null && femalesAdoptiveMotherId != null && motherId == femalesAdoptiveMotherId)
+                )
+            )
+                adoptiveChildNodes.push(childFemaleNode);
         }
 
-        const childrenOnLeft = [];
-        const childrenOnRight = [];
+        const biologicalChildrenOnLeft = [];
+        const biologicalChildrenOnRight = [];
+        const adoptiveChildrenOnLeft = [];
+        const adoptiveChildrenOnRight = [];
 
         const parentRect = parentsNodeGroup.getBoundingClientRect();
         const parentRectHorizontalCenter = parentRect.left + (parentRect.width / 2);
 
-        childNodes.forEach(child => {
+        biologicalChildNodes.forEach(child => {
             const childRect = child.getBoundingClientRect();
             const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
 
             if (parentRectHorizontalCenter > childRectHorizontalCenter)
-                childrenOnLeft.push(child);
+                biologicalChildrenOnLeft.push(child);
             else
-                childrenOnRight.push(child);
+                biologicalChildrenOnRight.push(child);
         });
 
-        childrenOnLeft.forEach(child => {
-            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset);
+        adoptiveChildNodes.forEach(child => {
+            const childRect = child.getBoundingClientRect();
+            const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
+
+            if (parentRectHorizontalCenter > childRectHorizontalCenter)
+                adoptiveChildrenOnLeft.push(child);
+            else
+                adoptiveChildrenOnRight.push(child);
         });
 
-        childrenOnRight.reverse().forEach(child => {
-            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset);
+        biologicalChildrenOnLeft.forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset, true);
+        });
+
+        biologicalChildrenOnRight.reverse().forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset, true);
+        });
+
+        adoptiveChildrenOnLeft.forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset, false);
+        });
+
+        adoptiveChildrenOnRight.reverse().forEach(child => {
+            drawLine(linesContainer, parentsNodeGroup, child, offset += linesVerticalOffset, false);
         });
     }
 }
 
-function drawLine(linesContainer, parent, child, verticalOffset) {
-    const parentRect = parent.getBoundingClientRect();
+function drawLine(linesContainer, parentsNodeGroup, child, verticalOffset, isBiological) {
+    const parentRect = parentsNodeGroup.getBoundingClientRect();
     const childRect = child.getBoundingClientRect();
 
     const linesContainerClientRect = linesContainer.getBoundingClientRect();
 
-    const parentX = parentRect.left + parentRect.width / 2 - linesContainerClientRect.left;
-    const parentY = parentRect.top + parentRect.height - linesContainerClientRect.top;
-    const childX = childRect.left + childRect.width / 2 - linesContainerClientRect.left;
-    const childY = childRect.top - linesContainerClientRect.top;
+    const hasBiologicalChildren = parentsNodeGroup.inverseBiologicalParents.length > 0;
+    const hasAdoptiveChildren = parentsNodeGroup.inverseAdoptiveParents.length > 0;
 
+    let parentX = parentRect.left + parentRect.width / 2 - linesContainerClientRect.left;
+    const parentY = parentRect.top + parentRect.height - linesContainerClientRect.top;
+    let childX = childRect.left + childRect.width / 2 - linesContainerClientRect.left;
+    const childY = childRect.top - linesContainerClientRect.top;
     const middleY = parentY + verticalOffset;
+
+    if (hasBiologicalChildren && hasAdoptiveChildren)
+        parentX += isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
+
+    const hasBiologicalParents = child.biologicalFatherId != null && child.biologicalMotherId != null;
+    const hasAdoptiveParents = child.adoptiveFatherId != null && child.adoptiveMotherId != null;
+
+    if (hasBiologicalParents && hasAdoptiveParents)
+        childX += isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
 
     const pathData = `
         M ${parentX},${parentY}
@@ -420,7 +535,7 @@ function drawLine(linesContainer, parent, child, verticalOffset) {
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', pathData);
-    path.setAttribute('class', 'tree-line-svg');
+    path.setAttribute('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');
 
     linesContainer.appendChild(path);
 }

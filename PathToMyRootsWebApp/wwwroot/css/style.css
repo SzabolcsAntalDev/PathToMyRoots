@@ -536,10 +536,19 @@ table tr:hover th {
   font-weight: bold;
 }
 
-.tree-line-svg {
-  stroke: var(--foreground-color);
+.tree-line-adoptive-svg, .tree-line-biological-svg {
   stroke-width: 1px;
   fill: transparent;
+}
+
+.tree-line-biological-svg {
+  stroke: var(--foreground-color);
+  stroke-dasharray: 3, 3;
+}
+
+.tree-line-adoptive-svg {
+  stroke-dasharray: 5, 5;
+  stroke: orange;
 }
 
 .loading-text-container {

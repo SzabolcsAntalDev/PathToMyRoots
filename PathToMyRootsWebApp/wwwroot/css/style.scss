@@ -648,10 +648,21 @@ table {
     @extend %action-img;
 }
 
-.tree-line-svg {
-    stroke: var(--foreground-color);
+%tree-line-svg {
     stroke-width: 1px;
     fill: transparent;
+}
+
+.tree-line-biological-svg {
+    @extend %tree-line-svg;
+    stroke: var(--foreground-color);
+    stroke-dasharray: 3,3;
+}
+
+.tree-line-adoptive-svg {
+    @extend %tree-line-svg;
+    stroke-dasharray: 5,5;
+    stroke: orange;
 }
 
 .loading-text-container {
