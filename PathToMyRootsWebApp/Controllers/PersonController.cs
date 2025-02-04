@@ -123,13 +123,19 @@ namespace PathToMyRootsWebApp.Controllers
         {
             personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
             personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
-            personModel.MarriageDate = DateHelper.InputDateToServerDate(personModel.MarriageDate);
+            personModel.FirstMarriageStartDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageStartDate);
+            personModel.FirstMarriageEndDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageEndDate);
+            personModel.SecondMarriageStartDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageStartDate);
+            personModel.SecondMarriageEndDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageEndDate);
 
             if (ModelState.IsValid)
             {
                 if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
                     DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2) &&
-                    DateHelper.IsServerDateValid(personModel.MarriageDate, out string errorMessage3))
+                    DateHelper.IsServerDateValid(personModel.FirstMarriageStartDate, out string errorMessage3) &&
+                    DateHelper.IsServerDateValid(personModel.FirstMarriageEndDate, out string errorMessage4) &&
+                    DateHelper.IsServerDateValid(personModel.SecondMarriageStartDate, out string errorMessage5) &&
+                    DateHelper.IsServerDateValid(personModel.SecondMarriageEndDate, out string errorMessage6))
                 {
 
                     var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);

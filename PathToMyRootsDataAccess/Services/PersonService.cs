@@ -6,9 +6,9 @@ namespace PathToMyRootsDataAccess.Services
 {
     public class PersonService
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly PathToMyRootsDbContext _applicationDbContext;
         private readonly FamilyHelper _familyHelper;
-        public PersonService(ApplicationDbContext applicationDbContext)
+        public PersonService(PathToMyRootsDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
             _familyHelper = new FamilyHelper(_applicationDbContext);
@@ -22,7 +22,8 @@ namespace PathToMyRootsDataAccess.Services
                     .Include(p => p.BiologicalMother)
                     .Include(p => p.AdoptiveFather)
                     .Include(p => p.AdoptiveMother)
-                    .Include(p => p.Spouse)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
                     .ToListAsync();
 
             return persons;
@@ -42,7 +43,8 @@ namespace PathToMyRootsDataAccess.Services
                     .Include(p => p.BiologicalMother)
                     .Include(p => p.AdoptiveFather)
                     .Include(p => p.AdoptiveMother)
-                    .Include(p => p.Spouse)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
 
@@ -54,15 +56,30 @@ namespace PathToMyRootsDataAccess.Services
             await _applicationDbContext.Persons.AddAsync(person);
             await _applicationDbContext.SaveChangesAsync();
 
-            if (person.SpouseId.HasValue)
+            if (person.FirstSpouseId.HasValue)
             {
-                var spouse = await _applicationDbContext.Persons.FindAsync(person.SpouseId.Value);
-                if (spouse != null)
+                var firstSpouse = await _applicationDbContext.Persons.FindAsync(person.FirstSpouseId.Value);
+                if (firstSpouse != null)
                 {
-                    spouse.SpouseId = person.Id;
-                    spouse.MarriageDate = person.MarriageDate;
+                    firstSpouse.FirstSpouseId = person.Id;
+                    firstSpouse.FirstMarriageStartDate = person.FirstMarriageStartDate;
+                    firstSpouse.FirstMarriageEndDate = person.FirstMarriageEndDate;
 
-                    _applicationDbContext.Persons.Update(spouse);
+                    _applicationDbContext.Persons.Update(firstSpouse);
+                    await _applicationDbContext.SaveChangesAsync();
+                }
+            }
+
+            if (person.SecondSpouseId.HasValue)
+            {
+                var secondSpouse = await _applicationDbContext.Persons.FindAsync(person.SecondSpouseId.Value);
+                if (secondSpouse != null)
+                {
+                    secondSpouse.SecondSpouseId = person.Id;
+                    secondSpouse.SecondMarriageStartDate = person.SecondMarriageStartDate;
+                    secondSpouse.SecondMarriageEndDate = person.SecondMarriageEndDate;
+
+                    _applicationDbContext.Persons.Update(secondSpouse);
                     await _applicationDbContext.SaveChangesAsync();
                 }
             }
@@ -90,21 +107,40 @@ namespace PathToMyRootsDataAccess.Services
             existingPerson.BiologicalFatherId = updatedPerson.BiologicalFatherId;
             existingPerson.AdoptiveMotherId = updatedPerson.AdoptiveMotherId;
             existingPerson.AdoptiveFatherId = updatedPerson.AdoptiveFatherId;
-            existingPerson.SpouseId = updatedPerson.SpouseId;
+            existingPerson.FirstSpouseId = updatedPerson.FirstSpouseId;
+            existingPerson.SecondSpouseId = updatedPerson.SecondSpouseId;
             existingPerson.ImageUrl = updatedPerson.ImageUrl;
-            existingPerson.MarriageDate = updatedPerson.MarriageDate;
+            existingPerson.FirstMarriageStartDate = updatedPerson.FirstMarriageStartDate;
+            existingPerson.FirstMarriageEndDate = updatedPerson.FirstMarriageEndDate;
+            existingPerson.SecondMarriageStartDate = updatedPerson.SecondMarriageStartDate;
+            existingPerson.SecondMarriageEndDate = updatedPerson.SecondMarriageEndDate;
 
             await _applicationDbContext.SaveChangesAsync();
 
-            if (existingPerson.SpouseId.HasValue)
+            if (existingPerson.FirstSpouseId.HasValue)
             {
-                var spouse = await _applicationDbContext.Persons.FindAsync(existingPerson.SpouseId.Value);
-                if (spouse != null)
+                var firstSpouse = await _applicationDbContext.Persons.FindAsync(existingPerson.FirstSpouseId.Value);
+                if (firstSpouse != null)
                 {
-                    spouse.SpouseId = existingPerson.Id;
-                    spouse.MarriageDate = existingPerson.MarriageDate;
+                    firstSpouse.FirstSpouseId = existingPerson.Id;
+                    firstSpouse.FirstMarriageStartDate = existingPerson.FirstMarriageStartDate;
+                    firstSpouse.FirstMarriageEndDate = existingPerson.FirstMarriageEndDate;
 
-                    _applicationDbContext.Persons.Update(spouse);
+                    _applicationDbContext.Persons.Update(firstSpouse);
+                    await _applicationDbContext.SaveChangesAsync();
+                }
+            }
+
+            if (existingPerson.SecondSpouseId.HasValue)
+            {
+                var secondSpouse = await _applicationDbContext.Persons.FindAsync(existingPerson.SecondSpouseId.Value);
+                if (secondSpouse != null)
+                {
+                    secondSpouse.SecondSpouseId = existingPerson.Id;
+                    secondSpouse.SecondMarriageStartDate = existingPerson.SecondMarriageStartDate;
+                    secondSpouse.SecondMarriageEndDate = existingPerson.SecondMarriageEndDate;
+
+                    _applicationDbContext.Persons.Update(secondSpouse);
                     await _applicationDbContext.SaveChangesAsync();
                 }
             }

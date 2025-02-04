@@ -153,43 +153,43 @@
 
         <div class="person-input-sections-container">
             <div class="person-input-labels-container">
-                <label for="spouse-id">Spouse:</label>
+                <label for="first-spouse-id">First Spouse:</label>
             </div>
             <div class='person-inputs-container'>
-                <select id="spouse-id" name="SpouseId" onchange="spouseIdChanged()">
-                    <option value="">-- Select Spouse --</option>
+                <select id="first-spouse-id" name="FirstSpouseId" onchange="firstSpouseIdChanged()">
+                    <option value="">-- Select First Spouse --</option>
                     @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
                     {
-                        <option value="@spouse.Id" selected=@(Model?.SpouseId == spouse.Id)>
+                        <option value="@spouse.Id" selected=@(Model?.FirstSpouseId == spouse.Id)>
                             @PersonModelFormatter.ToShortFullInfo(spouse)
                         </option>
                     }
                 </select>
                 <div class="person-input-bordered-sections-container" id="person-input-bordered-sections-container" style="display: none;">
                     <div class="person-bordered-section">
-                        <label>Marriage Date:</label>
+                        <label>First Marriage Start Date:</label>
                         <fieldset>
                             <label>
-                                <input type="radio" name="input-radio-marriage" id="input-radio-marriage-date-unknown" onclick="toggleMarriageDate()"
-                                @if (Model?.MarriageDate == null || Model?.MarriageDate == DateHelper.UnknownServerDate)
+                                <input type="radio" name="input-radio-first-marriage-start-date" id="input-radio-first-marriage-start-date-unknown" onclick="toggleFirstMarriageStartDate()"
+                                @if (Model?.FirstMarriageStartDate == null || Model?.FirstMarriageStartDate == DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />
                                 Unknown
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-marriage" id="input-radio-marriage-date-concrete-date" onclick="toggleMarriageDate()"
-                                @if (Model?.MarriageDate != null && Model.MarriageDate != DateHelper.UnknownServerDate)
+                                <input type="radio" name="input-radio-first-marriage-start-date" id="input-radio-first-marriage-start-date-concrete-date" onclick="toggleFirstMarriageStartDate()"
+                                @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Date
                             </label>
-                            <input type="text" id="input-marriage-date" placeholder="@DateHelper.InputDateFlatFormat"
-                            @if (Model?.MarriageDate != null && Model.MarriageDate != DateHelper.UnknownServerDate)
+                            <input type="text" id="input-first-marriage-start-date" placeholder="@DateHelper.InputDateFlatFormat"
+                            @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
                             {
-                                @:value="@DateHelper.ServerDateToInputDate(@Model.MarriageDate)"
+                                @:value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)"
                             } />
-                            <input type="hidden" id="input-hidden-marriage-date" name="MarriageDate" value="@DateHelper.ServerDateToInputDate(@Model.MarriageDate)" />
+                            <input type="hidden" id="input-hidden-first-marriage-start-date" name="FirstMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)" />
                         </fieldset>
                     </div>
                 </div>

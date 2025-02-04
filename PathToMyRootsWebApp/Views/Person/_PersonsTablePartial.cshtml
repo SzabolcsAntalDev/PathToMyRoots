@@ -82,14 +82,14 @@
                     }
                 </td>
                 <td>
-                    @if (person.Spouse == null)
+                    @if (person.FirstSpouse == null)
                     {
                         <span>@PathToMyRootsWebAppConstants.UnknownValue</span>
                     }
                     else
                     {
-                        <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SpouseId">
-                            @PersonModelFormatter.ToShortFullName(person.Spouse)
+                        <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.FirstSpouseId">
+                            @PersonModelFormatter.ToShortFullName(person.FirstSpouse)
                         </a>
                     }
                 </td>

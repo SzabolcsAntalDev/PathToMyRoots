@@ -129,25 +129,25 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     if (person.isMale) {
         nodesGroup.appendChild(createNode(person));
 
-        if (person.spouse != null) {
-            const spouse = await (await fetch(`${apiUrl}${person.spouseId}`)).json();
-            nodesGroup.appendChild(createNode(spouse));
+        if (person.firstSpouse != null) {
+            const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
+            nodesGroup.appendChild(createNode(firstSpouse));
         }
     }
     else {
-        if (person.spouse != null) {
-            const spouse = await (await fetch(`${apiUrl}${person.spouseId}`)).json();
-            person.spouse = spouse;
-            nodesGroup.appendChild(createNode(spouse));
+        if (person.firstSpouse != null) {
+            const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
+            person.firstSpouse = firstSpouse;
+            nodesGroup.appendChild(createNode(firstSpouse));
         }
         nodesGroup.appendChild(createNode(person));
     }
 
-    if (person.spouse != null) {
+    if (person.firstSpouse != null) {
         nodesGroup.appendChild(createLineBreak());
         nodesGroup.appendChild(createNodeMarried(person));
-        nodesGroup.inverseBiologicalParents = getCommonBiologicalChildren(person, person.spouse);
-        nodesGroup.inverseAdoptiveParents = getCommonAdoptiveChildren(person, person.spouse);
+        nodesGroup.inverseBiologicalParents = getCommonBiologicalChildren(person, person.firstSpouse);
+        nodesGroup.inverseAdoptiveParents = getCommonAdoptiveChildren(person, person.firstSpouse);
     }
 
     if (levelIndexesToRowsDictionary[level] == null)
@@ -156,11 +156,11 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     levelIndexesToRowsDictionary[level].appendChild(nodesGroup);
 
     processedPersonIds.add(personId);
-    processedPersonIds.add(person.spouseId);
+    processedPersonIds.add(person.firstSpouseId);
 
     await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
-    if (person.spouse != null)
-        await createRowsFrom(person.spouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+    if (person.firstSpouse != null)
+        await createRowsFrom(person.firstSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
 
     if (person.inverseBiologicalMother != null)
         for (let child of person.inverseBiologicalMother)
@@ -171,8 +171,8 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
             await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
 
     await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
-    if (person.spouse != null)
-        await createRowsFrom(person.spouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+    if (person.firstSpouse != null)
+        await createRowsFrom(person.firstSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
 
     if (person.inverseAdoptiveMother != null)
         for (let child of person.inverseAdoptiveMother)

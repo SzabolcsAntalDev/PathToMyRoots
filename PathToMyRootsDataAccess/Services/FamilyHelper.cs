@@ -5,9 +5,9 @@ namespace PathToMyRootsDataAccess.Services
 {
     public class FamilyHelper
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly PathToMyRootsDbContext _applicationDbContext;
 
-        public FamilyHelper(ApplicationDbContext applicationDbContext)
+        public FamilyHelper(PathToMyRootsDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
@@ -15,16 +15,12 @@ namespace PathToMyRootsDataAccess.Services
         public async Task<Person> GetFamilyAsync(int personId)
         {
             var person = await _applicationDbContext.Persons
-                //.Include(p => p.BiologicalFather)
-                //.Include(p => p.BiologicalMother)
-                .Include(p => p.Spouse)
                 .Include(p => p.InverseBiologicalMother)
                 .Include(p => p.InverseBiologicalFather)
                 .Include(p => p.InverseAdoptiveMother)
                 .Include(p => p.InverseAdoptiveFather)
-                //.Include(p => p.InverseBiologicalFather)
-                //.Include(p => p.InverseBiologicalMother)
-                //.Include(p => p.InverseSpouse)
+                .Include(p => p.FirstSpouse)
+                .Include(p => p.SecondSpouse)
                 .SingleAsync(p => p.Id == personId);
 
             return person;

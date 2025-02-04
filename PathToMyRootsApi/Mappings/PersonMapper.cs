@@ -28,7 +28,8 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalFatherId = person.BiologicalFatherId,
                 AdoptiveMotherId = person.AdoptiveMotherId,
                 AdoptiveFatherId = person.AdoptiveFatherId,
-                SpouseId = person.SpouseId,
+                FirstSpouseId = person.FirstSpouseId,
+                SecondSpouseId = person.SecondSpouseId,
                 BiologicalMother = person.BiologicalMother == null ? null : new PersonDto
                 {
                     Id = person.BiologicalMother.Id,
@@ -53,13 +54,22 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = person.AdoptiveFather.FirstName,
                     LastName = person.AdoptiveFather.LastName,
                 },
-                Spouse = person.Spouse == null ? null : new PersonDto
+                FirstSpouse = person.FirstSpouse == null ? null : new PersonDto
                 {
-                    Id = person.Spouse.Id,
-                    FirstName = person.Spouse.FirstName,
-                    LastName = person.Spouse.LastName
+                    Id = person.FirstSpouse.Id,
+                    FirstName = person.FirstSpouse.FirstName,
+                    LastName = person.FirstSpouse.LastName
                 },
-                MarriageDate = person.MarriageDate,
+                SecondSpouse = person.SecondSpouse == null ? null : new PersonDto
+                {
+                    Id = person.SecondSpouse.Id,
+                    FirstName = person.SecondSpouse.FirstName,
+                    LastName = person.SecondSpouse.LastName
+                },
+                FirstMarriageStartDate = person.FirstMarriageStartDate,
+                FirstMarriageEndDate = person.FirstMarriageEndDate,
+                SecondMarriageStartDate = person.SecondMarriageStartDate,
+                SecondMarriageEndDate = person.SecondMarriageEndDate,
                 ImageUrl = person.ImageUrl
             };
         }
@@ -84,7 +94,8 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalFatherId = personDto.BiologicalFatherId,
                 AdoptiveMotherId = personDto.AdoptiveMotherId,
                 AdoptiveFatherId = personDto.AdoptiveFatherId,
-                SpouseId = personDto.SpouseId,
+                FirstSpouseId = personDto.FirstSpouseId,
+                SecondSpouseId = personDto.SecondSpouseId,
                 BiologicalMother = personDto.BiologicalMother == null ? null : new Person
                 {
                     Id = personDto.BiologicalMother.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
@@ -109,13 +120,22 @@ namespace PathToMyRootsApi.Mappings
                     FirstName = personDto.AdoptiveFather.FirstName,
                     LastName = personDto.AdoptiveFather.LastName,
                 },
-                Spouse = personDto.Spouse == null ? null : new Person
+                FirstSpouse = personDto.FirstSpouse == null ? null : new Person
                 {
-                    Id = personDto.Spouse.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
-                    FirstName = personDto.Spouse.FirstName,
-                    LastName = personDto.Spouse.LastName,
+                    Id = personDto.FirstSpouse.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
+                    FirstName = personDto.FirstSpouse.FirstName,
+                    LastName = personDto.FirstSpouse.LastName,
                 },
-                MarriageDate = personDto.MarriageDate,
+                SecondSpouse = personDto.SecondSpouse == null ? null : new Person
+                {
+                    Id = personDto.SecondSpouse.Id ?? PathToMyRootsApiConstants.UnsetIntValue,
+                    FirstName = personDto.SecondSpouse.FirstName,
+                    LastName = personDto.SecondSpouse.LastName,
+                },
+                FirstMarriageStartDate = personDto.FirstMarriageStartDate,
+                FirstMarriageEndDate = personDto.FirstMarriageEndDate,
+                SecondMarriageStartDate = personDto.SecondMarriageStartDate,
+                SecondMarriageEndDate = personDto.SecondMarriageEndDate,
                 ImageUrl = personDto.ImageUrl
             };
         }
@@ -142,18 +162,36 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalFatherId = family.BiologicalFatherId,
                 AdoptiveMotherId = family.AdoptiveMotherId,
                 AdoptiveFatherId = family.AdoptiveFatherId,
-                SpouseId = family.SpouseId,
-                Spouse = family.Spouse == null ? null : new PersonDto
+                FirstSpouseId = family.FirstSpouseId,
+                SecondSpouseId = family.SecondSpouseId,
+                FirstSpouse = family.FirstSpouse == null ? null : new PersonDto
                 {
-                    Id = family.Spouse.Id,
-                    NobleTitle = family.Spouse.NobleTitle,
-                    FirstName = family.Spouse.FirstName,
-                    LastName = family.Spouse.LastName,
-                    IsMale = family.Spouse.IsMale,
-                    BiologicalMotherId = family.Spouse.BiologicalMotherId,
-                    BiologicalFatherId = family.Spouse.BiologicalFatherId
+                    Id = family.FirstSpouse.Id,
+                    NobleTitle = family.FirstSpouse.NobleTitle,
+                    FirstName = family.FirstSpouse.FirstName,
+                    LastName = family.FirstSpouse.LastName,
+                    IsMale = family.FirstSpouse.IsMale,
+                    BiologicalFatherId = family.FirstSpouse.BiologicalFatherId,
+                    BiologicalMotherId = family.FirstSpouse.BiologicalMotherId,
+                    AdoptiveFatherId = family.FirstSpouse.AdoptiveFatherId,
+                    AdoptiveMotherId = family.FirstSpouse.AdoptiveMotherId
                 },
-                MarriageDate = family.MarriageDate,
+                SecondSpouse = family.SecondSpouse == null ? null : new PersonDto
+                {
+                    Id = family.SecondSpouse.Id,
+                    NobleTitle = family.SecondSpouse.NobleTitle,
+                    FirstName = family.SecondSpouse.FirstName,
+                    LastName = family.SecondSpouse.LastName,
+                    IsMale = family.SecondSpouse.IsMale,
+                    BiologicalFatherId = family.SecondSpouse.BiologicalFatherId,
+                    BiologicalMotherId = family.SecondSpouse.BiologicalMotherId,
+                    AdoptiveFatherId = family.SecondSpouse.AdoptiveFatherId,
+                    AdoptiveMotherId = family.SecondSpouse.AdoptiveMotherId
+                },
+                FirstMarriageStartDate = family.FirstMarriageStartDate,
+                FirstMarriageEndDate = family.FirstMarriageEndDate,
+                SecondMarriageStartDate = family.SecondMarriageStartDate,
+                SecondMarriageEndDate = family.SecondMarriageEndDate,
                 InverseBiologicalMother =
                     family.InverseBiologicalMother
                         .Select(child => new PersonDto
