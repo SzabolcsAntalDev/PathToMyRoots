@@ -356,7 +356,7 @@ function personToPersonLivedNodeText(person) {
 
 function dateToString(date) {
     if (date == null)
-        return "?";
+        return "";
 
     if (date === UnknownServerDate)
         return HumanReadableDateUnknownDate;
