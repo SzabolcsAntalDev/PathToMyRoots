@@ -10,7 +10,7 @@ $background-color-highlight-light: #f7f8fa;
 
 $male-color-light: #d6dbe0;
 $female-color-light: #f1f2f4;
-$married-color-light: #c1c2c3;
+$marriage-color-light: #c1c2c3;
 
 %theme-light {
     --foreground-color: #{$foreground-color-light};
@@ -21,7 +21,7 @@ $married-color-light: #c1c2c3;
     --background-color-highlight: #{$background-color-highlight-light};
     --male-color: #{$male-color-light};
     --female-color: #{$female-color-light};
-    --married-color: #{$married-color-light};
+    --marriage-color: #{$marriage-color-light};
 }
 
 
@@ -35,7 +35,7 @@ $background-color-highlight-dark: #454f59;
 
 $male-color-dark: #4b5f6f;
 $female-color-dark: #8c849c;
-$married-color-dark: #5c6c7b;
+$marriage-color-dark: #5c6c7b;
 
 %theme-dark {
     --foreground-color: #{$foreground-color-dark};
@@ -46,7 +46,7 @@ $married-color-dark: #5c6c7b;
     --background-color-highlight: #{$background-color-highlight-dark};
     --male-color: #{$male-color-dark};
     --female-color: #{$female-color-dark};
-    --married-color: #{$married-color-dark};
+    --marriage-color: #{$marriage-color-dark};
 }
 
 $fade-interval-in-seconds: 0.5s;
@@ -78,7 +78,7 @@ $border: 1px solid var(--foreground-color);
 $action-image-size: 20px;
 $distance-between-nodes: 15px;
 $person-node-width: 150px;
-$married-node-width: 70px;
+$marriage-node-width: 70px;
 
 $node-image-width: 45px;
 $node-image-height: 60px;
@@ -561,12 +561,16 @@ table {
     display: flex;
 }
 
-.tree-nodes-group {
-    display: inline-block;
-    vertical-align: top;
+.tree-nodes-group-container {
+    display: flex;
     padding: 0px $distance-between-nodes;
     margin-left: auto;
     margin-right: auto;
+}
+
+.tree-nodes-group {
+    display: inline-block;
+    padding: 0px;
 }
 
 %tree-node {
@@ -589,16 +593,13 @@ table {
     background-color: var(--female-color);
 }
 
-.tree-node-married {
-    display: inline-block;
-    width: $married-node-width;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: clip;
-    padding: $thickness-small;
-    border: $border;
+.tree-node-marriage {
+    @extend %tree-node;
+    width: $marriage-node-width;
+    margin: auto $distance-between-nodes;
     font-size: $font-size-small;
-    background-color: var(--married-color);
+    background-color: var(--marriage-color);
+    vertical-align: central;
 }
 
 .tree-node-image {
@@ -635,11 +636,11 @@ table {
     @extend %tree-node-main-text;
 }
 
-.tree-node-married-text {
+.tree-node-marriage-text {
     @extend %tree-node-main-text;
 }
 
-.tree-node-married-date-text {
+.tree-node-marriage-date-text {
     @extend %tree-node-main-text;
     font-weight: bold;
 }
@@ -656,13 +657,19 @@ table {
 .tree-line-biological-svg {
     @extend %tree-line-svg;
     stroke: var(--foreground-color);
-    stroke-dasharray: 3,3;
+    stroke-dasharray: 4,4;
 }
 
 .tree-line-adoptive-svg {
     @extend %tree-line-svg;
-    stroke-dasharray: 5,5;
+    stroke-dasharray: 6,6;
     stroke: orange;
+}
+
+.tree-line-marriage-svg {
+    @extend %tree-line-svg;
+    stroke-dasharray: 2,2;
+    stroke: red;
 }
 
 .loading-text-container {

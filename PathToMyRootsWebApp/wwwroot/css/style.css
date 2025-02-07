@@ -7,7 +7,7 @@
   --background-color-highlight: #f7f8fa;
   --male-color: #d6dbe0;
   --female-color: #f1f2f4;
-  --married-color: #c1c2c3;
+  --marriage-color: #c1c2c3;
 }
 
 :root.theme-dark {
@@ -19,7 +19,7 @@
   --background-color-highlight: #454f59;
   --male-color: #4b5f6f;
   --female-color: #8c849c;
-  --married-color: #5c6c7b;
+  --marriage-color: #5c6c7b;
 }
 
 :root.theme-light {
@@ -465,15 +465,19 @@ table tr:hover th {
   display: flex;
 }
 
-.tree-nodes-group {
-  display: inline-block;
-  vertical-align: top;
+.tree-nodes-group-container {
+  display: flex;
   padding: 0px 15px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.tree-node-female, .tree-node-male {
+.tree-nodes-group {
+  display: inline-block;
+  padding: 0px;
+}
+
+.tree-node-marriage, .tree-node-female, .tree-node-male {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -491,16 +495,12 @@ table tr:hover th {
   background-color: var(--female-color);
 }
 
-.tree-node-married {
-  display: inline-block;
+.tree-node-marriage {
   width: 70px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: clip;
-  padding: 4px;
-  border: 1px solid var(--foreground-color);
+  margin: auto 15px;
   font-size: 11px;
-  background-color: var(--married-color);
+  background-color: var(--marriage-color);
+  vertical-align: central;
 }
 
 .tree-node-image {
@@ -520,7 +520,7 @@ table tr:hover th {
   margin: auto;
 }
 
-.tree-node-married-date-text, .tree-node-married-text, .tree-node-main-lived-text, .tree-node-main-name-text {
+.tree-node-marriage-date-text, .tree-node-marriage-text, .tree-node-main-lived-text, .tree-node-main-name-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -532,23 +532,28 @@ table tr:hover th {
   font-weight: bold;
 }
 
-.tree-node-married-date-text {
+.tree-node-marriage-date-text {
   font-weight: bold;
 }
 
-.tree-line-adoptive-svg, .tree-line-biological-svg {
+.tree-line-marriage-svg, .tree-line-adoptive-svg, .tree-line-biological-svg {
   stroke-width: 1px;
   fill: transparent;
 }
 
 .tree-line-biological-svg {
   stroke: var(--foreground-color);
-  stroke-dasharray: 3, 3;
+  stroke-dasharray: 4, 4;
 }
 
 .tree-line-adoptive-svg {
-  stroke-dasharray: 5, 5;
+  stroke-dasharray: 6, 6;
   stroke: orange;
+}
+
+.tree-line-marriage-svg {
+  stroke-dasharray: 2, 2;
+  stroke: red;
 }
 
 .loading-text-container {
