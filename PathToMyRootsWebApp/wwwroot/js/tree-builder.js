@@ -1,7 +1,7 @@
 ﻿const linesVerticalOffset = 8;
 const sleepInterval = 0;
 
-const apiUrl = "https://localhost:7241/api/person/getfamily/";
+const apiUrl = "https://localhost:7241/api/person/";
 const imageApiUrl = "https://localhost:7241/";
 
 async function removeTreeDiagram(personId) {

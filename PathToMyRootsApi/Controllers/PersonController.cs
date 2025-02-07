@@ -20,64 +20,55 @@ namespace PathToMyRootsApi.Controllers
         public async Task<ActionResult<List<PersonDto>>> GetPersons()
         {
             var persons = await _personService.GetPersonsAsync();
-            var personDtos = persons.Select(PersonMapper.PersonToPersonDto).ToList();
+            var personsDtos = persons.Select(PersonDtoMapper.PersonToPersonDto).ToList();
 
-            return Ok(personDtos);
-        }
-
-        [HttpGet("getfamily/{personId}")]
-        public async Task<ActionResult<PersonDto>> GetFamily(int personId)
-        {
-            var family = await _personService.GetFamilyAsync(personId);
-            var familyDtos = PersonMapper.MapFamily(family);
-
-            return Ok(familyDtos);
+            return Ok(personsDtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PersonDto>> GetPersonById(int id)
+        public async Task<ActionResult<PersonDto>> GetPerson(int id)
         {
             var person = await _personService.GetPersonAsync(id);
-            return Ok(PersonMapper.PersonToPersonDto(person));
+            var personDto = PersonDtoMapper.PersonToPersonDto(person);
+            return Ok(personDto);
         }
 
         public async Task<ActionResult<PersonDto>> AddPerson([FromBody] PersonDto personDto)
         {
-            var person = PersonMapper.PersonDtoToPerson(personDto);
+            var person = PersonDtoMapper.PersonDtoToPerson(personDto);
             if (person == null)
                 return BadRequest("Invalid PersonDto.");
 
-            var addedPerson = await _personService.AddPersonAsync(person);
-            return CreatedAtAction(nameof(GetPersonById), new { id = addedPerson.Id });
+            var personFromDb = await _personService.AddPersonAsync(person);
+            return CreatedAtAction(nameof(GetPerson), new { id = personFromDb.Id });
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<PersonDto>> EditPerson(int id, [FromBody] PersonDto personDto)
         {
-            var personFromRequest = PersonMapper.PersonDtoToPerson(personDto);
-            if (personFromRequest == null)
+            var person = PersonDtoMapper.PersonDtoToPerson(personDto);
+            if (person == null)
                 return BadRequest("Invalid PersonDto.");
 
-            var existingPerson = await _personService.GetPersonAsync(id);
-            if (existingPerson == null)
+            var personFromDb = await _personService.GetPersonAsync(id);
+            if (personFromDb == null)
                 return NotFound($"Person with id {id} not found.");
 
-            var updatedPerson = await _personService.EditPersonAsync(personFromRequest);
+            var personFromDbEdited = await _personService.EditPersonAsync(person);
 
-            var updatedPersonDto = PersonMapper.PersonToPersonDto(updatedPerson);
-            return Ok(updatedPersonDto);
+            var personDtoFromDbEdited = PersonDtoMapper.PersonToPersonDto(personFromDbEdited);
+            return Ok(personDtoFromDbEdited);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePerson(int id)
         {
-            var existingPerson = await _personService.GetPersonAsync(id);
-            if (existingPerson == null)
+            var personFromDb = await _personService.GetPersonAsync(id);
+            if (personFromDb == null)
                 return NotFound($"Person with id {id} not found.");
 
-            var result = await _personService.DeletePersonAsync(id);
-
-            return result
+            var success = await _personService.DeletePersonAsync(id);
+            return success
                 ? NoContent()
                 : NotFound($"Person with id {id} not found.");
         }

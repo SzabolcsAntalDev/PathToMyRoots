@@ -14,30 +14,31 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Persons(string searchText, int pageNumber, int pageSize = 10)
+        // Szabi: remove 10 from page size
+        public async Task<IActionResult> Persons(string filterText, int currentPageNumber, int pageSize = 10)
         {
-            var persons = await _personApiService.GetPersonsAsync();
-            var filteredPersons = string.IsNullOrEmpty(searchText)
-                ? persons :
-                persons.Where(p =>
-                    (p.NobleTitle != null && p.NobleTitle.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                    (p.FirstName != null && p.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                    (p.MaidenName != null && p.MaidenName.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                    (p.OtherNames != null && p.OtherNames.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                    (p.LastName != null && p.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase))).ToList();
+            var personsModels = await _personApiService.GetPersonsAsync();
+            var filteredPersonModels = string.IsNullOrEmpty(filterText)
+                ? personsModels
+                : personsModels.Where(p =>
+                    p.NobleTitle.ContainsIgnoreCase(filterText) ||
+                    p.FirstName.ContainsIgnoreCase(filterText) ||
+                    p.LastName.ContainsIgnoreCase(filterText) ||
+                    p.MaidenName.ContainsIgnoreCase(filterText) ||
+                    p.OtherNames.ContainsIgnoreCase(filterText)).ToList();
 
-            var paginatedPersons = filteredPersons
-                .Skip(pageNumber * pageSize)
+
+            var paginatedPersonModels = filteredPersonModels
+                .Skip(currentPageNumber * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var totalPages = (int)Math.Ceiling((double)filteredPersons.Count / pageSize);
-
+            var totalNumberOfPages = (int)Math.Ceiling((double)filteredPersonModels.Count / pageSize);
             var personsPageModel = new PersonsPageModel()
             {
-                PersonModels = paginatedPersons,
-                PageNumber = pageNumber,
-                TotalPages = totalPages
+                PaginatedPersonModels = paginatedPersonModels,
+                CurrentPageNumber = currentPageNumber,
+                TotalNumberOfPages = totalNumberOfPages
             };
 
             if (Request.Headers.XRequestedWith == "XMLHttpRequest")
@@ -48,22 +49,8 @@ namespace PathToMyRootsWebApp.Controllers
 
         public async Task<IActionResult> AddPerson()
         {
-            var allPersons = await _personApiService.GetPersonsAsync();
-            ViewBag.Fathers = Sort(allPersons.Where(p => p.IsMale));
-            ViewBag.Mothers = Sort(allPersons.Where(p => !p.IsMale));
-            ViewBag.Spouses = Sort(allPersons);
-
+            await AddFathersMothersAndSpousesToViewBag();
             return View("AddEditPerson", new PersonModel());
-        }
-
-        private IList<PersonModel?> Sort(IEnumerable<PersonModel?> personModels)
-        {
-            return personModels
-                .OrderBy(p => p.NobleTitle)
-                .ThenBy(p => p.LastName)
-                .ThenBy(p => p.MaidenName)
-                .ThenBy(p => p.FirstName)
-                .ToList();
         }
 
         [HttpGet]
@@ -76,11 +63,7 @@ namespace PathToMyRootsWebApp.Controllers
                 return RedirectToAction("Persons");
             }
 
-            var allPersons = await _personApiService.GetPersonsAsync();
-            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
-            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
-            ViewBag.Spouses = allPersons.ToList();
-
+            await AddFathersMothersAndSpousesToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -90,30 +73,29 @@ namespace PathToMyRootsWebApp.Controllers
         {
             personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
             personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
+            personModel.FirstMarriageStartDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageStartDate);
+            personModel.FirstMarriageEndDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageEndDate);
+            personModel.SecondMarriageStartDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageStartDate);
+            personModel.SecondMarriageEndDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageEndDate);
 
             if (ModelState.IsValid)
             {
                 if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
-                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2))
+                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2) &&
+                    DateHelper.IsServerDateValid(personModel.FirstMarriageStartDate, out string errorMessage3) &&
+                    DateHelper.IsServerDateValid(personModel.FirstMarriageEndDate, out string errorMessage4) &&
+                    DateHelper.IsServerDateValid(personModel.SecondMarriageStartDate, out string errorMessage5) &&
+                    DateHelper.IsServerDateValid(personModel.SecondMarriageEndDate, out string errorMessage6))
                 {
-                    var result = await _personApiService.AddPersonAsync(personModel);
-
-                    if (result)
-                    {
+                    var success = await _personApiService.AddPersonAsync(personModel);
+                    if (success)
                         return RedirectToAction("Persons");
-                    }
                     else
-                    {
                         TempData["ErrorMessage"] = "There was an error adding the person.";
-                    }
                 }
             }
 
-            var allPersons = await _personApiService.GetPersonsAsync();
-            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
-            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
-            ViewBag.Spouses = allPersons.ToList();
-
+            await AddFathersMothersAndSpousesToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -151,11 +133,7 @@ namespace PathToMyRootsWebApp.Controllers
                 }
             }
 
-            var allPersons = await _personApiService.GetPersonsAsync();
-            ViewBag.Mothers = allPersons.Where(p => !p.IsMale).ToList();
-            ViewBag.Fathers = allPersons.Where(p => p.IsMale).ToList();
-            ViewBag.Spouses = allPersons.ToList();
-
+            await AddFathersMothersAndSpousesToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -168,9 +146,27 @@ namespace PathToMyRootsWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> DeletePerson(int id)
         {
-            var result = await _personApiService.DeletePersonAsync(id);
-
+            var success = await _personApiService.DeletePersonAsync(id);
             return RedirectToAction("Persons");
+        }
+
+        private async Task AddFathersMothersAndSpousesToViewBag()
+        {
+            var personsModels = await _personApiService.GetPersonsAsync();
+            ViewBag.Fathers = Sort(personsModels.Where(p => p.IsMale));
+            ViewBag.Mothers = Sort(personsModels.Where(p => !p.IsMale));
+            ViewBag.Spouses = Sort(personsModels); // Szabi: add only females when gender is male
+        }
+
+        private IList<PersonModel?> Sort(IEnumerable<PersonModel?> personModels)
+        {
+            return personModels
+                .OrderBy(p => p.NobleTitle)
+                .ThenBy(p => p.LastName)
+                .ThenBy(p => p.MaidenName)
+                .ThenBy(p => p.FirstName)
+                .ThenBy(p => p.OtherNames)
+                .ToList();
         }
     }
 }

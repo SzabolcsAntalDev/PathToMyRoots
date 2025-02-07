@@ -12,16 +12,10 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
-        public async Task<IActionResult> Tree(int? id)
+        public async Task<IActionResult> Tree(int id)
         {
-            if (!id.HasValue)
-            {
-                return RedirectToAction("Tree", new { id = 15 });
-            }
-
-            var family = await _personApiService.GetFamilyAsync(id.Value);
-
-            return View(family);
+            var person = await _personApiService.GetPersonAsync(id);
+            return View(person);
         }
     }
 }

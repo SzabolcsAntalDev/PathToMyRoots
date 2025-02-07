@@ -19,6 +19,7 @@
         const UnknownServerDate = '@Html.Raw(DateHelper.UnknownServerDate)';
         const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
 
-        showTree(1)
+        const personId = @Model.Id;
+        showTree(personId);
     </script>
 }

@@ -314,16 +314,16 @@ table tr:hover th {
   width: 100%;
 }
 
-.persons-search {
+.persons-filter {
   display: flex;
 }
-.persons-search input, .persons-search button {
+.persons-filter input, .persons-filter button {
   margin: 8px 0px;
 }
-.persons-search span {
+.persons-filter span {
   margin: auto 4px auto auto;
 }
-.persons-search select {
+.persons-filter select {
   margin: auto 0;
 }
 

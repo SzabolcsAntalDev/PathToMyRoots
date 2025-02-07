@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PathToMyRootsWebApp.Services;
 
 namespace PathToMyRootsWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Home()
+        private readonly PersonApiService _personApiService;
+
+        public HomeController(PersonApiService personApiService)
         {
-            return View();
+            _personApiService = personApiService;
+        }
+
+        public async Task<IActionResult> Home()
+        {
+            var person = await _personApiService.GetPersonAsync(1);
+            return View(person);
         }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class PersonsPageModel
     {
-        public List<PersonModel?> PersonModels { get; set; }
-        public int PageNumber { get; set; }
-        public int TotalPages { get; set; }
+        public List<PersonModel?> PaginatedPersonModels { get; set; }
+        public int CurrentPageNumber { get; set; }
+        public int TotalNumberOfPages { get; set; }
     }
 }

@@ -117,7 +117,7 @@
                     @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
                     {
                         <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
-                            @PersonModelFormatter.ToShortFullInfo(father)
+                            @PersonModelFormatter.ToFullNameAndBirthDate(father)
                         </option>
                     }
                 </select>
@@ -126,7 +126,7 @@
                     @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
                     {
                         <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
-                            @PersonModelFormatter.ToShortFullInfo(mother)
+                            @PersonModelFormatter.ToFullNameAndBirthDate(mother)
                         </option>
                     }
                 </select>
@@ -135,7 +135,7 @@
                     @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
                     {
                         <option value="@father.Id" selected=@(Model?.AdoptiveFatherId == father.Id)>
-                            @PersonModelFormatter.ToShortFullInfo(father)
+                            @PersonModelFormatter.ToFullNameAndBirthDate(father)
                         </option>
                     }
                 </select>
@@ -144,7 +144,7 @@
                     @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
                     {
                         <option value="@mother.Id" selected=@(Model?.AdoptiveMotherId == mother.Id)>
-                            @PersonModelFormatter.ToShortFullInfo(mother)
+                            @PersonModelFormatter.ToFullNameAndBirthDate(mother)
                         </option>
                     }
                 </select>
@@ -161,7 +161,7 @@
                     @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
                     {
                         <option value="@spouse.Id" selected=@(Model?.FirstSpouseId == spouse.Id)>
-                            @PersonModelFormatter.ToShortFullInfo(spouse)
+                            @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                         </option>
                     }
                 </select>

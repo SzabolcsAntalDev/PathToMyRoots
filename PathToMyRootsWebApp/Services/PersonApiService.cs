@@ -22,14 +22,11 @@ namespace PathToMyRootsWebApp.Services
         public async Task<List<PersonModel?>> GetPersonsAsync()
         {
             var response = await _httpClient.GetAsync($"{BaseUrl}/getpersons");
-
             if (response.IsSuccessStatusCode)
             {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var personDtos = JsonSerializer.Deserialize<List<PersonDto>>(jsonString, CaseInsensitiveJsonSerializerOptions);
-                return personDtos == null
-                    ? new List<PersonModel?>()
-                    : personDtos.Select(PersonModelMapper.PersonDtoToPersonModel).ToList();
+                var responseContentJson = await response.Content.ReadAsStringAsync();
+                var personsDtos = JsonSerializer.Deserialize<List<PersonDto>>(responseContentJson, CaseInsensitiveJsonSerializerOptions)!;
+                return personsDtos.Select(PersonModelMapper.PersonDtoToPersonModel).ToList();
             }
             else
             {
@@ -37,29 +34,13 @@ namespace PathToMyRootsWebApp.Services
             }
         }
 
-        public async Task<PersonModel?> GetFamilyAsync(int personId)
-        {
-            var response = await _httpClient.GetAsync($"{BaseUrl}/getfamily/{personId}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var personDto = JsonSerializer.Deserialize<PersonDto>(jsonString, CaseInsensitiveJsonSerializerOptions);
-                var familyModel = PersonModelMapper.MapFamily(personDto);
-                return familyModel;
-            }
-
-            return new PersonModel();
-        }
-
         public async Task<PersonModel?> GetPersonAsync(int id)
         {
             var response = await _httpClient.GetAsync($"{BaseUrl}/{id}");
-
             if (response.IsSuccessStatusCode)
             {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var personDto = JsonSerializer.Deserialize<PersonDto>(jsonString, CaseInsensitiveJsonSerializerOptions);
+                var responseContentJson = await response.Content.ReadAsStringAsync();
+                var personDto = JsonSerializer.Deserialize<PersonDto>(responseContentJson, CaseInsensitiveJsonSerializerOptions);
                 return PersonModelMapper.PersonDtoToPersonModel(personDto);
             }
             else
@@ -70,28 +51,25 @@ namespace PathToMyRootsWebApp.Services
 
         public async Task<bool> AddPersonAsync(PersonModel personModel)
         {
-            var json = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
+            var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{BaseUrl}", content);
-
+            var response = await _httpClient.PostAsync($"{BaseUrl}", requestBody);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> EditPersonAsync(int id, PersonModel personModel)
         {
-            var json = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
+            var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"{BaseUrl}/{id}", content);
-
+            var response = await _httpClient.PutAsync($"{BaseUrl}/{id}", requestBody);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeletePersonAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
-
             return response.IsSuccessStatusCode;
         }
     }

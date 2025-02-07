@@ -27,46 +27,16 @@ namespace PathToMyRootsWebApp.Mappings
                 AdoptiveFatherId = personDto.AdoptiveFatherId,
                 FirstSpouseId = personDto.FirstSpouseId,
                 SecondSpouseId = personDto.SecondSpouseId,
-                BiologicalMother = personDto.BiologicalMother == null ? null : new PersonModel
-                {
-                    Id = personDto.BiologicalMother.Id,
-                    FirstName = personDto.BiologicalMother.FirstName,
-                    LastName = personDto.BiologicalMother.LastName,
-                },
-                BiologicalFather = personDto.BiologicalFather == null ? null : new PersonModel
-                {
-                    Id = personDto.BiologicalFather.Id,
-                    FirstName = personDto.BiologicalFather.FirstName,
-                    LastName = personDto.BiologicalFather.LastName,
-                },
-                AdoptiveMother = personDto.AdoptiveMother == null ? null : new PersonModel
-                {
-                    Id = personDto.AdoptiveMother.Id,
-                    FirstName = personDto.AdoptiveMother.FirstName,
-                    LastName = personDto.AdoptiveMother.LastName,
-                },
-                AdoptiveFather = personDto.AdoptiveFather == null ? null : new PersonModel
-                {
-                    Id = personDto.AdoptiveFather.Id,
-                    FirstName = personDto.AdoptiveFather.FirstName,
-                    LastName = personDto.AdoptiveFather.LastName,
-                },
-                FirstSpouse = personDto.FirstSpouse == null ? null : new PersonModel
-                {
-                    Id = personDto.FirstSpouse.Id,
-                    FirstName = personDto.FirstSpouse.FirstName,
-                    LastName = personDto.FirstSpouse.LastName,
-                },
-                SecondSpouse = personDto.SecondSpouse == null ? null : new PersonModel
-                {
-                    Id = personDto.SecondSpouse.Id,
-                    FirstName = personDto.SecondSpouse.FirstName,
-                    LastName = personDto.SecondSpouse.LastName,
-                },
                 FirstMarriageStartDate = personDto.FirstMarriageStartDate,
                 FirstMarriageEndDate = personDto.FirstMarriageEndDate,
                 SecondMarriageStartDate = personDto.SecondMarriageStartDate,
                 SecondMarriageEndDate = personDto.SecondMarriageEndDate,
+                BiologicalMother = ShallowPersonDtoToPersonModel(personDto.BiologicalMother),
+                BiologicalFather = ShallowPersonDtoToPersonModel(personDto.BiologicalFather),
+                AdoptiveMother = ShallowPersonDtoToPersonModel(personDto.AdoptiveMother),
+                AdoptiveFather = ShallowPersonDtoToPersonModel(personDto.AdoptiveFather),
+                FirstSpouse = ShallowPersonDtoToPersonModel(personDto.FirstSpouse),
+                SecondSpouse = ShallowPersonDtoToPersonModel(personDto.SecondSpouse),
                 ImageUrl = personDto.ImageUrl
             };
         }
@@ -93,36 +63,6 @@ namespace PathToMyRootsWebApp.Mappings
                 AdoptiveFatherId = personModel.AdoptiveFatherId,
                 FirstSpouseId = personModel.FirstSpouseId,
                 SecondSpouseId = personModel.SecondSpouseId,
-                BiologicalMother = personModel.BiologicalMother == null ? null : new PersonDto
-                {
-                    Id = personModel.BiologicalMother.Id,
-                    FirstName = personModel.BiologicalMother.FirstName,
-                    LastName = personModel.BiologicalMother.LastName,
-                },
-                BiologicalFather = personModel.BiologicalFather == null ? null : new PersonDto
-                {
-                    Id = personModel.BiologicalFather.Id,
-                    FirstName = personModel.BiologicalFather.FirstName,
-                    LastName = personModel.BiologicalFather.LastName,
-                },
-                AdoptiveMother = personModel.AdoptiveMother == null ? null : new PersonDto
-                {
-                    Id = personModel.AdoptiveMother.Id,
-                    FirstName = personModel.AdoptiveMother.FirstName,
-                    LastName = personModel.AdoptiveMother.LastName,
-                },
-                AdoptiveFather = personModel.AdoptiveFather == null ? null : new PersonDto
-                {
-                    Id = personModel.AdoptiveFather.Id,
-                    FirstName = personModel.AdoptiveFather.FirstName,
-                    LastName = personModel.AdoptiveFather.LastName,
-                },
-                FirstSpouse = personModel.FirstSpouse == null ? null : new PersonDto
-                {
-                    Id = personModel.FirstSpouse.Id,
-                    FirstName = personModel.FirstSpouse.FirstName,
-                    LastName = personModel.FirstSpouse.LastName,
-                },
                 FirstMarriageStartDate = personModel.FirstMarriageStartDate,
                 FirstMarriageEndDate = personModel.FirstMarriageEndDate,
                 SecondMarriageStartDate = personModel.SecondMarriageStartDate,
@@ -131,14 +71,12 @@ namespace PathToMyRootsWebApp.Mappings
             };
         }
 
-        public static PersonModel MapFamily(PersonDto? personDto)
+        private static PersonModel? ShallowPersonDtoToPersonModel(PersonDto? personDto)
         {
             if (personDto == null)
-            {
-                return null!;
-            }
+                return null;
 
-            return new PersonModel
+            return new PersonModel()
             {
                 Id = personDto.Id,
                 NobleTitle = personDto.NobleTitle,
@@ -146,30 +84,8 @@ namespace PathToMyRootsWebApp.Mappings
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,
                 OtherNames = personDto.OtherNames,
-                IsMale = personDto.IsMale,
                 BirthDate = personDto.BirthDate,
                 DeathDate = personDto.DeathDate,
-                BiologicalMotherId = personDto.BiologicalMotherId,
-                BiologicalFatherId = personDto.BiologicalFatherId,
-                FirstSpouseId = personDto.FirstSpouseId,
-                SecondSpouseId = personDto.SecondSpouseId,
-                FirstSpouse = personDto.FirstSpouse == null ? null : new PersonModel
-                {
-                    Id = personDto.FirstSpouse.Id,
-                    FirstName = personDto.FirstSpouse.FirstName,
-                    LastName = personDto.FirstSpouse.LastName,
-                },
-                SecondSpouse = personDto.SecondSpouse == null ? null : new PersonModel
-                {
-                    Id = personDto.SecondSpouse.Id,
-                    FirstName = personDto.SecondSpouse.FirstName,
-                    LastName = personDto.SecondSpouse.LastName,
-                },
-                FirstMarriageStartDate = personDto.FirstMarriageStartDate,
-                FirstMarriageEndDate = personDto.FirstMarriageEndDate,
-                SecondMarriageStartDate = personDto.SecondMarriageStartDate,
-                SecondMarriageEndDate = personDto.SecondMarriageEndDate,
-                ImageUrl = personDto.ImageUrl
             };
         }
     }
