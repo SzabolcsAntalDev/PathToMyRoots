@@ -85,13 +85,16 @@ VALUES
 /* 56 */ (	'Katalin',			'Kovács',				'Antal',		'Púj',			62, 				63, 				NULL, 				NULL,			55, 			NULL, 			NULL,					NULL, 						0, 		'+19001021', 	NULL,			'02bd4eeb-df2a-44ab-8f38-bd9c623a8f06.png'	),
 /* 57 */ (	'Anyja',			'Lindanak',				NULL,           NULL,			NULL, 				NULL, 				NULL, 				NULL,			58, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',  	NULL, 			NULL 										),
 /* 58 */ (	'Apja',				'Lindanak',				NULL,           NULL,			NULL, 				NULL, 				NULL, 				NULL,			57, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',  	NULL, 			NULL 										),
-/* 59 */ (	'Zoltán Pál',		'Takács',				NULL,           NULL,			NULL, 				NULL, 				NULL, 				NULL,			48, 			60, 			NULL,					NULL, 						1, 		'+yyyymmdd',  	NULL, 			'64afb2cf-3fa0-482d-8caf-ebf8b09587d6.png' 	),
+/* 59 */ (	'Zoltán Pál',		'Takács',				NULL,           NULL,			66, 				67, 				NULL, 				NULL,			48, 			60, 			NULL,					NULL, 						1, 		'+yyyymmdd',  	NULL, 			'64afb2cf-3fa0-482d-8caf-ebf8b09587d6.png' 	),
 /* 60 */ (	'Kata',				'Takács',				'Kató',         NULL,			NULL, 				NULL, 				NULL, 				NULL,			59, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',  	NULL, 			'a981ad6a-456f-42c5-bbed-fd0d98db864f.png' 	),
 /* 61 */ (	'Benjámin',			'Takács',				NULL,           NULL,			59, 				48, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',  	NULL, 			'22436f79-f212-459c-b7c1-e3f0fe2175f4.png' 	),
 /* 62 */ (	'János',			'Antal',				NULL,           'Púj',			NULL, 				NULL, 				NULL, 				NULL,			63, 			NULL, 			'+18981130',			NULL, 						1, 		'+18741028',  	'+19540916',	NULL									 	),
 /* 63 */ (	'Erzsébet',			'Antal',				'Péntek',       'Pistika, Jankó',NULL, 				NULL, 				NULL, 				NULL,			62, 			NULL, 			'+18981130',			NULL, 						0, 		'+18780706',  	'+19540913', 	NULL									 	),
 /* 64 */ (	'János',			'Ambrus',				NULL,           'Pál-Pista',	NULL, 				NULL, 				NULL, 				NULL,			65, 			NULL, 			'+yyyymmdd',			NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd',	NULL									 	),
-/* 65 */ (	'Anna',				'Ambrus',				'Gál-Máté',     'Czondi',		15, 				16, 				NULL, 				NULL,			64, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	)
+/* 65 */ (	'Anna',				'Ambrus',				'Gál-Máté',     'Czondi',		15, 				16, 				NULL, 				NULL,			64, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	),
+/* 66 */ (	'Apja',				'Pál Zoltán',			'Takács',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			67, 			NULL, 			'+yyyymmdd',			NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	),
+/* 67 */ (	'Anyja',			'Pál Zoltán',			'Takács',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			66, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	)
+
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_BiologicalFatherID
     FOREIGN KEY (BiologicalFatherID) REFERENCES Persons(ID);

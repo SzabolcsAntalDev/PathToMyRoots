@@ -256,7 +256,7 @@ function getCommonAdoptiveChildren(person, spouse) {
 
 async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
     const parentsNodeGroupContainers = parentsRow.querySelectorAll('.tree-nodes-group-container');
-    const orphans = [];
+    const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
 
     for (let parentsNodeGroupContainer of parentsNodeGroupContainers) {
 
@@ -288,8 +288,12 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
             mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
         }
 
-        let childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
+        const firstSpousesNodeGroupContainers = [];
+
         for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
+
+            if (firstSpousesNodeGroupContainers.includes(childrenNodeGroupContainer))
+                continue;
 
             let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
             let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
@@ -297,45 +301,197 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
             let childMaleId = Number(childMaleNode?.id);
             let childFemaleId = Number(childFemaleNode?.id);
 
-            let added = false;
-
             if (leftMarriageBiologicalChildrenIds != null &&
                 (leftMarriageBiologicalChildrenIds.includes(childMaleId) || leftMarriageBiologicalChildrenIds.includes(childFemaleId))) {
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                added = true;
+
+                const isMale = leftMarriageBiologicalChildrenIds.includes(childMaleId);
+
+                if (isMale) {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
+                else {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
                 continue;
             }
 
             if (leftMarriageAdoptiveChildrenIds != null &&
                 (leftMarriageAdoptiveChildrenIds.includes(childMaleId) || leftMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                added = true;
+
+                const isMale = leftMarriageAdoptiveChildrenIds.includes(childMaleId);
+
+                if (isMale) {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
+                else {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
                 continue;
             }
 
             if (mainMarriageBiologicalChildrenIds != null &&
                 (mainMarriageBiologicalChildrenIds.includes(childMaleId) || mainMarriageBiologicalChildrenIds.includes(childFemaleId))) {
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                added = true;
+
+                const isMale = mainMarriageBiologicalChildrenIds.includes(childMaleId);
+
+                if (isMale) {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
+                else {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
                 continue;
             }
 
             if (mainMarriageAdoptiveChildrenIds != null &&
                 (mainMarriageAdoptiveChildrenIds.includes(childMaleId) || mainMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                added = true;
+
+                const isMale = mainMarriageAdoptiveChildrenIds.includes(childMaleId);
+
+                if (isMale) {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
+                else {
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+
+                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                    }
+                    else
+                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                }
                 continue;
             }
-
-            orphans.push(childrenNodeGroupContainer);
         }
     }
 
-    orphans.forEach(o => {
-        sortedChildrenRow.appendChild(o);
+    // orphans
+    childrenRow.querySelectorAll('.tree-nodes-group-container').forEach(childrenNodeGroupContainer => {
+
+        let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
+        let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
+
+        let childMaleId = Number(childMaleNode?.id);
+        let childFemaleId = Number(childFemaleNode?.id);
+        let added = false;
+
+        const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+        if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+            sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+            firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+            added = true;
+        }
+
+        const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+        if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+            sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+            firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+            added = true;
+        }
+
+        if (!added)
+            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
     });
 
     return sortedChildrenRow;
+}
+
+function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, maleNode) {
+    if (maleNode.secondSpouseId == null)
+        return null;
+
+    for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
+        if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
+            continue;
+
+        let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
+        let childFemaleId = Number(childFemaleNode?.id);
+
+        if (maleNode.firstSpouseId == childFemaleId)
+            return childrenNodeGroupContainer;
+    }
+
+    return null;
+}
+
+function getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, femaleNode) {
+    if (femaleNode.secondSpouseId == null)
+        return null;
+
+    for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
+        if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
+            continue;
+
+        let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
+        let childMaleId = Number(childMaleNode?.id);
+
+        if (femaleNode.firstSpouseId == childMaleId)
+            return childrenNodeGroupContainer;
+    }
+
+    return null;
 }
 
 function createRow() {
@@ -487,7 +643,8 @@ function createNodeMarriage(person, spouse, isLastMarriage) {
 
     node.inverseBiologicalParents = getCommonBiologicalChildren(person, spouse);
     node.inverseAdoptiveParents = getCommonAdoptiveChildren(person, spouse);
-
+    node.maleId = person.isMale ? person.id : spouse.id;
+    node.femaleId = !person.isMale ? person.id : spouse.id;
     node.isLastMarriage = isLastMarriage;
 
     return node;
