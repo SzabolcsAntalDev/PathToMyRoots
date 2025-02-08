@@ -125,8 +125,14 @@ function sortGroupNodeContainersByBirthDates(nodeGroupContainers) {
         let birthDateB = maleB?.birthDate || femaleB?.birthDate;
 
         const parseDate = (date) => {
-            if (!date) return Infinity;
-            if (date === "+yyyymmdd") return 99999999;
+            if (!date)
+                return Infinity;
+
+            if (date === "+yyyymmdd")
+                return 99999999;
+
+            date = date.replace("mm", "00").replace("dd", "00");
+
             return parseInt(date.slice(1), 10) || 99999999;
         };
 

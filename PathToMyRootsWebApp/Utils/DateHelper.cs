@@ -8,6 +8,7 @@ namespace PathToMyRootsWebApp.Utils
         #region Constants
         public const string HumanReadableDateStillAlive = "Alive";
         public const string HumanReadableDateUnknownDate = "?";
+        public const string HumanReadableDateMissingDate = "";
 
         public const string InputDateFormat = "{0}-{1}-{2}";
         public const string ServerDateFormatFormat = "+{0}{1}{2}";

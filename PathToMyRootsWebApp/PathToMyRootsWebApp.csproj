@@ -22,8 +22,4 @@
     <ProjectReference Include="..\PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

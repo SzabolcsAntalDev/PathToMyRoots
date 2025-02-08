@@ -552,8 +552,7 @@ table tr:hover th {
 }
 
 .tree-line-marriage-svg {
-  stroke-dasharray: 2, 2;
-  stroke: red;
+  stroke: forestgreen;
 }
 
 .loading-text-container {

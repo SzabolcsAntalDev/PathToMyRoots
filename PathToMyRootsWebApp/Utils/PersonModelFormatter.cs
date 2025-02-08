@@ -27,7 +27,7 @@ namespace PathToMyRootsWebApp.Utils
                 nameParts.Add($"{personModel.OtherNames}");
 
             if (personModel.BirthDate != null)
-                nameParts.Add($"b. {DateHelper.ServerDateToYearFormat(personModel.BirthDate)}");
+                nameParts.Add($"(b. {DateHelper.ServerDateToYearFormat(personModel.BirthDate)})");
 
             return string.Join(" ", nameParts);
         }
