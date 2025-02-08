@@ -114,7 +114,7 @@
                 </select>
                 <select id="biological-father-id" name="BiologicalFatherId">
                     <option value="">-- Select Biological Father --</option>
-                    @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
+                    @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
                     {
                         <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(father)
@@ -123,7 +123,7 @@
                 </select>
                 <select id="biological-mother-id" name="BiologicalMotherId">
                     <option value="">-- Select Biological Mother --</option>
-                    @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
+                    @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
                     {
                         <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(mother)
@@ -132,7 +132,7 @@
                 </select>
                 <select id="adoptive-father-id" name="AdoptiveFatherId">
                     <option value="">-- Select Adoptive Father --</option>
-                    @foreach (var father in (List<PersonModel>)ViewBag.Fathers)
+                    @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
                     {
                         <option value="@father.Id" selected=@(Model?.AdoptiveFatherId == father.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(father)
@@ -141,7 +141,7 @@
                 </select>
                 <select id="adoptive-mother-id" name="AdoptiveMotherId">
                     <option value="">-- Select Adoptive Mother --</option>
-                    @foreach (var mother in (List<PersonModel>)ViewBag.Mothers)
+                    @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
                     {
                         <option value="@mother.Id" selected=@(Model?.AdoptiveMotherId == mother.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(mother)
@@ -158,9 +158,9 @@
             <div class='person-inputs-container'>
                 <select id="first-spouse-id" name="FirstSpouseId" onchange="firstSpouseIdChanged()">
                     <option value="">-- Select First Spouse --</option>
-                    @foreach (var spouse in (List<PersonModel>)ViewBag.Spouses)
+                    @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
                     {
-                        <option value="@spouse.Id" selected=@(Model?.FirstSpouseId == spouse.Id)>
+                        <option value="@spouse.Id" data-is-male="@spouse.IsMale" selected=@(Model?.FirstSpouseId == spouse.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                         </option>
                     }

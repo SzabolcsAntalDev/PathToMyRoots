@@ -153,9 +153,7 @@ namespace PathToMyRootsWebApp.Controllers
         private async Task AddFathersMothersAndSpousesToViewBag()
         {
             var personsModels = await _personApiService.GetPersonsAsync();
-            ViewBag.Fathers = Sort(personsModels.Where(p => p.IsMale));
-            ViewBag.Mothers = Sort(personsModels.Where(p => !p.IsMale));
-            ViewBag.Spouses = Sort(personsModels); // Szabi: add only females when gender is male
+            ViewBag.Persons = Sort(personsModels);
         }
 
         private IList<PersonModel?> Sort(IEnumerable<PersonModel?> personModels)
