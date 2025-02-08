@@ -45,6 +45,10 @@ async function createTreeDiagram(personId) {
     let baseLevelIndex = 0;
     await createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, baseLevelIndex);
 
+    Object.values(levelIndexesToRowsDictionary).forEach(row => {
+        sortGroupNodeContainers(row);
+    })
+
     let maxChildrenWithParentsOnRows = 0;
     Object.values(levelIndexesToRowsDictionary).forEach(row => {
         maxChildrenWithParentsOnRows = Math.max(maxChildrenWithParentsOnRows, getNumberOfChildrenWithParents(row));
@@ -96,6 +100,41 @@ async function createTreeDiagram(personId) {
 
     fadeOutElement(loadingTextContainer);
     fadeInElement(diagramAndLinesContainer);
+}
+
+function sortGroupNodeContainers(row) {
+    var nodeGroupContainers = row.querySelectorAll('.tree-nodes-group-container');
+    sortedNodes = sortGroupNodeContainersByBirthDates(nodeGroupContainers);
+
+    row.innerHTML = '';
+
+    sortedNodes.forEach(node => {
+        let date = node.querySelector('.tree-node-male')?.birthDate;
+        row.appendChild(node);
+    });
+}
+
+function sortGroupNodeContainersByBirthDates(nodeGroupContainers) {
+    return Array.from(nodeGroupContainers).sort((a, b) => {
+        let maleA = a.querySelector('.tree-node-male');
+        let femaleA = a.querySelector('.tree-node-female');
+        let birthDateA = maleA?.birthDate || femaleA?.birthDate;
+
+        let maleB = b.querySelector('.tree-node-male');
+        let femaleB = b.querySelector('.tree-node-female');
+        let birthDateB = maleB?.birthDate || femaleB?.birthDate;
+
+        const parseDate = (date) => {
+            if (!date) return Infinity;
+            if (date === "+yyyymmdd") return 99999999;
+            return parseInt(date.slice(1), 10) || 99999999;
+        };
+
+        let dateA = parseDate(birthDateA);
+        let dateB = parseDate(birthDateB);
+
+        return dateA - dateB;
+    });
 }
 
 function getNumberOfChildrenWithParents(row) {
@@ -256,7 +295,6 @@ function getCommonAdoptiveChildren(person, spouse) {
 
 async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
     const parentsNodeGroupContainers = parentsRow.querySelectorAll('.tree-nodes-group-container');
-    const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
 
     for (let parentsNodeGroupContainer of parentsNodeGroupContainers) {
 
@@ -289,6 +327,7 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
         }
 
         const firstSpousesNodeGroupContainers = [];
+        const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
 
         for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
 
@@ -426,7 +465,11 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
     }
 
     // orphans
-    childrenRow.querySelectorAll('.tree-nodes-group-container').forEach(childrenNodeGroupContainer => {
+    const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
+    const firstSpousesNodeGroupContainers = [];
+    childrenNodeGroupContainers.forEach(childrenNodeGroupContainer => {
+        if (firstSpousesNodeGroupContainers.includes(childrenNodeGroupContainer))
+            return;
 
         let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
         let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
@@ -515,6 +558,7 @@ function createNodesGroup() {
 function createNode(person) {
     const node = document.createElement('div');
     node.id = person.id;
+    node.birthDate = person.birthDate;
     node.biologicalMotherId = person.biologicalMotherId;
     node.biologicalFatherId = person.biologicalFatherId;
     node.adoptiveMotherId = person.adoptiveMotherId;
@@ -582,6 +626,8 @@ function createNode(person) {
 
 function personToPersonNameNodeText(person) {
     let details = [];
+
+    details.push(person.id);
 
     if (person.nobleTitle)
         details.push(person.nobleTitle);
