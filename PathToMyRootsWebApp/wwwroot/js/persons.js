@@ -1,5 +1,9 @@
 ﻿document.addEventListener("DOMContentLoaded", async () => {
     await addListeners();
+
+    document.querySelectorAll("td, th").forEach(cell => {
+        cell.setAttribute("title", cell.textContent.trim());
+    });
 });
 
 function getFilterText() {

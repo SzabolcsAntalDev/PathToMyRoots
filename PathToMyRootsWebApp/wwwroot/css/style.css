@@ -175,13 +175,14 @@ table tr {
 }
 table th, table td {
   flex-grow: 1;
-  overflow: auto;
+  display: flex;
   border: 1px solid var(--foreground-color);
-  white-space: nowrap;
   padding: 8px;
   width: 1%;
-  display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
 }
 table td:not(:last-child) {
   border-top-color: transparent;

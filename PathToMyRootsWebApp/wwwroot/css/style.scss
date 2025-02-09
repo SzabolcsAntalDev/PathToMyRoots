@@ -238,13 +238,14 @@ table {
 
     th, td {
         flex-grow: 1;
-        overflow: auto;
+        display: flex;
         border: $border;
-        white-space: nowrap;
         padding: $thickness-medium;
         width: 1%;
-        display: flex;
         align-items: center;
+        white-space: nowrap;
+        overflow: clip;
+        text-overflow: ellipsis;
     }
 
     td:not(:last-child) {
