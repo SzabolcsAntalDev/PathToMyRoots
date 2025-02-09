@@ -105,7 +105,25 @@ VALUES
 /* 75 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			76, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'299e06b0-a8d1-440f-a738-22658a98a030.png'	),
 /* 76 */ (	'Judit',			'Csüdömné Szalai',		'Szalai',     	NULL,			71, 				72, 				NULL, 				NULL,			75, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'45c973cf-0cbd-4500-b237-07529ef6620f.png'	),
 /* 77 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			75, 				76, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'71656d0a-d6e0-458d-899e-f18d9a4242a0.png'	),
-/* 78 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			75, 				76, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'0bc3e1d4-bdc9-4eaf-8e7e-32472dc3141f.png'	)
+/* 78 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			75, 				76, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'0bc3e1d4-bdc9-4eaf-8e7e-32472dc3141f.png'	),
+/* 79 */ (	'Ernő',				'Ambrus',				NULL,	     	NULL,			64, 				65, 				NULL, 				NULL,			80, 			NULL, 			'+19761016',			NULL, 						1, 		NULL,  			NULL, 			'ed1673ea-aabc-4665-9cc5-1621e3bc999f.png'	),
+/* 80 */ (	'Annus',			'Ambrus',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			79, 			NULL, 			'+19761016',			NULL, 						0, 		NULL, 			'+2018mmdd',	'92951830-3bff-4f49-96c8-dcac30f22989.png'	),
+/* 81 */ (	'Levente',			'Gál Boncsi',			NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			82, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'9cc048b9-cd5e-4d72-86e7-5e156f556feb.png'	),
+/* 82 */ (	'Krisztina Andrea',	'Gál Boncsi',			'Ambrus',     	NULL,			79, 				80, 				NULL, 				NULL,			81, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'a048e041-2a31-4b74-a23c-b2671414b504.png'	),
+/* 83 */ (	'Zita',				'Gál Boncsi  ',			NULL,	     	NULL,			81, 				82, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'47d6e9c9-2eea-47c8-8d48-f2c4798a6087.png'	),
+/* 84 */ (	'Szandi',			'Gál Boncsi',			NULL,	     	NULL,			81, 				82, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'b8530b35-06e9-4b67-a92f-5e99a0c9ec74.png'	),
+/* 85 */ (	'László',			'Kállay',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			86, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'11152c58-8e31-4178-9f72-7293f73d94d4.png'	),
+/* 86 */ (	'Katalin',			'Kállay',				'Ambrus',     	NULL,			79, 				80, 				NULL, 				NULL,			85, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'fb6bce99-6521-4d24-9196-5ffdd3cc26f4.png'	),
+/* 87 */ (	'Roland',			'Kállay',				NULL,	     	NULL,			85, 				86, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'4be0d892-f762-4e05-a8c3-75b646596f7c.png'	),
+/* 88 */ (	'Krisztián',		'Kállay',				NULL,	     	NULL,			85, 				86, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'963d49d4-88bf-40e5-b92f-0b9b01890134.png'	),
+/* 89 */ (	'János',			'Ambrus',				NULL,	     	NULL,			64, 				65, 				NULL, 				NULL,			90, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'd8c21ea5-404b-4d3e-96c0-1871dd687c08.png'	),
+/* 90 */ (	'Hajnal',			'Ambrus',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			89, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'168f7a90-6703-4f97-9465-d27b8d248194.png'	),
+/* 91 */ (	'Róbert',			'Ambrus',				NULL,	     	NULL,			89, 				90, 				NULL, 				NULL,			92, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'ee7f79b7-9a4c-4ef9-870c-7164022bfad9.png'	),
+/* 92 */ (	'Ildikó',			'Ambrus',				'Birta',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			91, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'b79834b6-7ef1-416f-bd39-157c690dc6ce.png'	),
+/* 93 */ (	'Tóni',				'Ambrus',				NULL,	     	NULL,			89, 				90, 				NULL, 				NULL,			94, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 94 */ (	'felesége',			'Ambrus',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			93, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	)
+
+
 
 
 ALTER TABLE Persons
