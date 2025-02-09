@@ -1,47 +1,31 @@
-﻿function setupSpouseSelects() {
-    updateSpouseSelects('first');
-    updateSpouseSelects('second');
-
+﻿function isMaleSelectChanged() {
     firstSpouseIdChanged();
     secondSpouseIdChanged();
-}
-
-function isMaleSelectChanged() {
-    updateSpouseSelects('first').value = "";
-    updateSpouseSelects('second').value = "";
-
-    firstSpouseIdChanged();
-    secondSpouseIdChanged();
-}
-
-function updateSpouseSelects(name) {
-    const isMale = document.getElementById('is-male-select').value.toLowerCase();
-    const spouseSelect = document.getElementById(name + '-spouse-select');
-
-    document.querySelectorAll('#' + name + '-spouse-select option').forEach(option => {
-        if (option.value === "")
-            return;
-
-        option.style.display = option.dataset.isMale.toLowerCase() !== isMale ? '' : 'none';
-    });
-
-    return spouseSelect;
 }
 
 function firstSpouseIdChanged() {
-    spouseIdChanged('first');
+    updateSpouseSelects('second', 'first');
 }
 
 function secondSpouseIdChanged() {
-    spouseIdChanged('second');
+    updateSpouseSelects('first', 'second');
 }
 
-function spouseIdChanged(name) {
-    const spouseMarriageDatesContainer = document.getElementById(name + '-spouse-marriage-dates-container');
-    const spouseSelect = document.getElementById(name + '-spouse-select');
+function updateSpouseSelects(idleSelectName, changedSelectName) {
+    const isMale = document.getElementById('is-male-select').value.toLowerCase();
+    const changedSelect = document.getElementById(changedSelectName + '-spouse-select');
+    const changedSelectValue = changedSelect.value;
 
-    spouseMarriageDatesContainer.style.display =
-        spouseSelect.value
+    document.querySelectorAll('#' + idleSelectName + '-spouse-select option').forEach(option => {
+        option.style.display =
+            (option.value !== "" && (option.dataset.isMale.toLowerCase() === isMale || option.value == changedSelectValue))
+                ? 'none'
+                : '';
+    });
+
+    const changedSpouseMarriageDatesContainer = document.getElementById(changedSelectName + '-spouse-marriage-dates-container');
+    changedSpouseMarriageDatesContainer.style.display =
+        changedSelect.value
             ? 'flex'
             : 'none';
 }

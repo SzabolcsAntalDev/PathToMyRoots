@@ -13,7 +13,7 @@
     secondMarriageStartDateTypeChanged();
     secondMarriageEndDateTypeChanged();
 
-    setupSpouseSelects();
+    isMaleSelectChanged();
     
     updatePreviewImageContainer();
 });
