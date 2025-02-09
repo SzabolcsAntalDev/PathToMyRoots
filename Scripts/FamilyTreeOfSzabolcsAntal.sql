@@ -42,7 +42,7 @@ VALUES
 /* 12 */ (	'Ilona', 			'Márton', 				'Mihály',		NULL,		 	NULL, 				NULL, 				NULL,				NULL,			11, 			NULL,			NULL,					NULL, 						0, 		'+19101205', 	'+19840428',	NULL										),
 /* 13 */ (	'Márton', 			'Korpos', 				NULL, 			'Rigó, Ács',	NULL, 				NULL, 				NULL,				NULL,			14, 			NULL,			NULL,					NULL, 						1, 		'+20190101', 	'+20190106',	NULL										),
 /* 14 */ (	'Katalin', 			'Korpos', 				'Albert',		'Kukó',	 		NULL, 				NULL, 				NULL,				NULL,			13, 			NULL,			NULL,					NULL, 						0, 		'+20191125', 	'+20191120', 	NULL										),
-/* 15 */ (	'Márton', 			'Gál-Máté', 			NULL, 			'Czondi', 		NULL, 				NULL, 				NULL,				NULL,			16, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
+/* 15 */ (	'Márton', 			'Gál-Máté', 			NULL, 			'Czondi', 		95, 				97, 				NULL,				NULL,			16, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
 /* 16 */ (	'Katalin',			'Gál-Máté', 			'Ambrus-Péter', 'Péter', 		NULL, 				NULL, 				NULL,				NULL,			15, 			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
 /* 17 */ (	'Lóránd', 			'Silye', 				NULL,			NULL, 			NULL, 				NULL,				NULL,				NULL,			4, 				NULL,			NULL,					NULL, 						1, 		'+19800820', 	NULL, 			'd724e0c1-0b42-4d08-a1fe-43a01f4f1e95.png'	),
 /* 18 */ (	'Sámuel', 			'Silye', 				NULL,			NULL, 			17, 				4, 					NULL,				NULL,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+20200226', 	NULL, 			'db9ece57-8d28-456d-9d95-8f261398f4df.png'	),
@@ -121,8 +121,13 @@ VALUES
 /* 91 */ (	'Róbert',			'Ambrus',				NULL,	     	NULL,			89, 				90, 				NULL, 				NULL,			92, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'ee7f79b7-9a4c-4ef9-870c-7164022bfad9.png'	),
 /* 92 */ (	'Ildikó',			'Ambrus',				'Birta',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			91, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'b79834b6-7ef1-416f-bd39-157c690dc6ce.png'	),
 /* 93 */ (	'Tóni',				'Ambrus',				NULL,	     	NULL,			89, 				90, 				NULL, 				NULL,			94, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
-/* 94 */ (	'felesége',			'Ambrus',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			93, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	)
-
+/* 94 */ (	'felesége',			'Ambrus',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			93, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 95 */ (	'János',			'Gál-Máté',				NULL,	     	'Czondi',		NULL, 				NULL, 				NULL, 				NULL,			96, 			97, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 96 */ (	'János e. felesége','Gál-Máté',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			95, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 97 */ (	'János m. felesége','Gál-Máté',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			95, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 98 */ (	'István',			'Gál-Máté',				NULL,	     	'Czondi',		95, 				97, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 99 */ (	'János',			'Ambrus',				NULL,	     	'Pál-Pista',	NULL, 				NULL, 				NULL, 				NULL,			100, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 100 */ (	'Erzsébet',			'Ambrus',				'Gál-Máté',	    'Czondi',		95, 				97, 				NULL, 				NULL,			99, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	)
 
 
 
