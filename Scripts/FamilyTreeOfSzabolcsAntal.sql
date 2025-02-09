@@ -26,7 +26,8 @@ CREATE TABLE Persons
 
 INSERT INTO Persons (
 			FirstName, 			LastName, 				MaidenName, 	OtherNames, 	BiologicalFatherID, BiologicalMotherID, AdoptiveFatherID, AdoptiveMotherID, FirstSpouseID,	SecondSpouseID, FirstMarriageStartDate, SecondMarriageStartDate,	IsMale, BirthDate, 		DeathDate, 		ImageUrl)
-VALUES                                                                                                                                                                                                                                                                                          
+VALUES
+
 /* 1  */ (	'András', 			'Antal', 				NULL, 			'Púj', 			7, 					8, 					NULL,				NULL,			2, 				NULL,			NULL,					NULL, 						1, 		'+19580310', 	NULL, 			'a802a6f1-cf37-47f9-9384-dcac755b2596.png'	),
 /* 2  */ (	'Irénke', 			'Antal', 				'Korpos', 		'Rigó',			6, 					5, 					NULL,				NULL,			1, 				NULL,			NULL,					NULL, 						0, 		'+19620501', 	NULL, 			'd4691786-9873-4f29-bf20-ec23359cd1ae.png'	),
 /* 3  */ (	'Szabolcs-Csongor', 'Antal', 				NULL, 			NULL, 			1, 					2, 					NULL,				NULL,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+19910816', 	NULL, 			'b045774e-7737-4c0b-b5b6-2b2a13abc112.png'	),
@@ -93,7 +94,19 @@ VALUES
 /* 64 */ (	'János',			'Ambrus',				NULL,           'Pál-Pista',	NULL, 				NULL, 				NULL, 				NULL,			65, 			NULL, 			'+yyyymmdd',			NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd',	NULL									 	),
 /* 65 */ (	'Anna',				'Ambrus',				'Gál-Máté',     'Czondi',		15, 				16, 				NULL, 				NULL,			64, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	),
 /* 66 */ (	'Apja',				'Pál Zoltán',			'Takács',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			67, 			NULL, 			'+yyyymmdd',			NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	),
-/* 67 */ (	'Anyja',			'Pál Zoltán',			'Takács',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			66, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	)
+/* 67 */ (	'Anyja',			'Pál Zoltán',			'Takács',     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			66, 			NULL, 			'+yyyymmdd',			NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL									 	),
+/* 68 */ (	'Ferenc',			'Szalai',				NULL,	     	NULL,			44, 				43, 				NULL, 				NULL,			69, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL									 	),
+/* 69 */ (	'felesége',			'Szalai',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			68, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL									 	),
+/* 70 */ (	'Júlia',			'Salajan',				'Szalai',	   	NULL,			68, 				69, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL,	 		NULL									 	),
+/* 71 */ (	'László',			'Szalai',				NULL,	     	NULL,			44, 				43, 				NULL, 				NULL,			72, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL									 	),
+/* 72 */ (	'Irénke',			'Szalai',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			71, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL									 	),
+/* 73 */ (	'Laszló',			'Szalai',				NULL,	     	NULL,			71, 				72, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'dcf782a8-0199-4ae6-af58-43c58534aefb.png'	),
+/* 74 */ (	'Levente',			'Szalai',				NULL,	     	NULL,			71, 				72, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'260af449-9ea8-4232-b801-3017b2cfcfe2.png'	),
+/* 75 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			76, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'299e06b0-a8d1-440f-a738-22658a98a030.png'	),
+/* 76 */ (	'Judit',			'Csüdömné Szalai',		'Szalai',     	NULL,			71, 				72, 				NULL, 				NULL,			75, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'45c973cf-0cbd-4500-b237-07529ef6620f.png'	),
+/* 77 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			75, 				76, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			'71656d0a-d6e0-458d-899e-f18d9a4242a0.png'	),
+/* 78 */ (	'?',				'Csüdöm',				NULL,	     	NULL,			75, 				76, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			'0bc3e1d4-bdc9-4eaf-8e7e-32472dc3141f.png'	)
+
 
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_BiologicalFatherID
