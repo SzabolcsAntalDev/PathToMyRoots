@@ -43,7 +43,7 @@ VALUES
 /* 13 */ (	'Márton', 			'Korpos', 				NULL, 			'Rigó, Ács',	NULL, 				NULL, 				NULL,				NULL,			14, 			NULL,			NULL,					NULL, 						1, 		'+20190101', 	'+20190106',	NULL										),
 /* 14 */ (	'Katalin', 			'Korpos', 				'Albert',		'Kukó',	 		NULL, 				NULL, 				NULL,				NULL,			13, 			NULL,			NULL,					NULL, 						0, 		'+20191125', 	'+20191120', 	NULL										),
 /* 15 */ (	'Márton', 			'Gál-Máté', 			NULL, 			'Czondi', 		95, 				97, 				NULL,				NULL,			16, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
-/* 16 */ (	'Katalin',			'Gál-Máté', 			'Ambrus-Péter', 'Péter', 		NULL, 				NULL, 				NULL,				NULL,			15, 			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
+/* 16 */ (	'Katalin',			'Gál-Máté', 			'Ambrus-Péter', 'Péter', 		101, 				102, 				NULL,				NULL,			15, 			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
 /* 17 */ (	'Lóránd', 			'Silye', 				NULL,			NULL, 			NULL, 				NULL,				NULL,				NULL,			4, 				NULL,			NULL,					NULL, 						1, 		'+19800820', 	NULL, 			'd724e0c1-0b42-4d08-a1fe-43a01f4f1e95.png'	),
 /* 18 */ (	'Sámuel', 			'Silye', 				NULL,			NULL, 			17, 				4, 					NULL,				NULL,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+20200226', 	NULL, 			'db9ece57-8d28-456d-9d95-8f261398f4df.png'	),
 /* 19 */ (	'Albert', 			'Antal', 				NULL,			NULL, 			7, 					8, 					NULL,				NULL,			20, 			NULL,			NULL,					NULL, 						1, 		'+19660816', 	NULL,			'82d99b02-6436-4066-883f-4fedc76befee.png'	),
@@ -127,8 +127,17 @@ VALUES
 /* 97 */ (	'János m. felesége','Gál-Máté',				NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			95, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
 /* 98 */ (	'István',			'Gál-Máté',				NULL,	     	'Czondi',		95, 				97, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
 /* 99 */ (	'János',			'Ambrus',				NULL,	     	'Pál-Pista',	NULL, 				NULL, 				NULL, 				NULL,			100, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
-/* 100 */ (	'Erzsébet',			'Ambrus',				'Gál-Máté',	    'Czondi',		95, 				97, 				NULL, 				NULL,			99, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	)
-
+/* 100 */ (	'Erzsébet',			'Ambrus',				'Gál-Máté',	    'Czondi',		95, 				97, 				NULL, 				NULL,			99, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 101 */ (	'?',				'Ambrus-Péter',			NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			102, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 102 */ (	'?',				'Ambrus-Péter',			NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			101, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 103 */ (	'István',			'Ambrus-Péter',			NULL,	     	'Péter',		101, 				102, 				NULL, 				NULL,			104, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 104 */ (	'?',				'Ambrus-Péter',			NULL,	     	NULL,			NULL, 				NULL, 				NULL, 				NULL,			103, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	),
+/* 105 */ (	'István',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 106 */ (	'János',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 107 */ (	'Sándor',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 108 */ (	'Ferenc',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 109 */ (	'Márton',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		NULL,  			NULL, 			NULL	),
+/* 110 */ (	'Erzsébet',			'Ambrus-Péter',			NULL,	     	'Péter',		103, 				104, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		NULL,  			NULL, 			NULL	)
 
 
 ALTER TABLE Persons
