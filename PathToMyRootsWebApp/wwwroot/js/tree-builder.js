@@ -484,20 +484,24 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
         let childFemaleId = Number(childFemaleNode?.id);
         let added = false;
 
-        const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
-        if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-            sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-            firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-            added = true;
+        if (childMaleId) {
+            const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+            if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
+                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                added = true;
+            }
         }
 
-        const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
-        if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
-            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-            sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-            firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-            added = true;
+        if (childFemaleId) {
+            const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+            if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                added = true;
+            }
         }
 
         if (!added)
