@@ -490,7 +490,7 @@ table {
     flex: 1;
     display: flex;
     flex-direction: column;
-
+    margin-bottom: auto;
     fieldset {
         display: flex;
         flex-direction: column;
@@ -502,7 +502,7 @@ table {
     @extend %action-img;
 }
 
-#person-cropper-background-container {
+#cropper-background-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -515,14 +515,14 @@ table {
     z-index: 1000;
 }
 
-#person-cropper-image-and-button-container {
+#cropper-image-and-button-container {
     position: relative;
     background-color: var(--background-color);
     padding: $thickness-large;
     text-align: center;
 }
 
-#person-image-to-crop {
+#image-to-crop {
     max-width: 100%;
     max-height: 400px;
 }

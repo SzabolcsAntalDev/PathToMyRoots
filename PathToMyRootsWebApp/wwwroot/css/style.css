@@ -399,6 +399,7 @@ table tr:hover th {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: auto;
 }
 .person-bordered-section fieldset {
   display: flex;
@@ -406,7 +407,7 @@ table tr:hover th {
   margin: 8px 0px 0px 0px;
 }
 
-#person-cropper-background-container {
+#cropper-background-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -419,14 +420,14 @@ table tr:hover th {
   z-index: 1000;
 }
 
-#person-cropper-image-and-button-container {
+#cropper-image-and-button-container {
   position: relative;
   background-color: var(--background-color);
   padding: 20px;
   text-align: center;
 }
 
-#person-image-to-crop {
+#image-to-crop {
   max-width: 100%;
   max-height: 400px;
 }
