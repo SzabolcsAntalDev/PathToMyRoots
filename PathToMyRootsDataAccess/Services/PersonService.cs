@@ -51,21 +51,37 @@ namespace PathToMyRootsDataAccess.Services
             // Szabi: identity should be 0 cause sql insert fails otherwise
             person.Id = 0;
 
-            await _pathToMyRootsDbContext.Persons.AddAsync(person);
-            await _pathToMyRootsDbContext.SaveChangesAsync();
-
             if (person.FirstSpouseId.HasValue)
             {
                 var firstSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(person.FirstSpouseId.Value);
                 if (firstSpouse != null)
                 {
-                    // Szabi: have to think about this, it's not ok like this
-                    firstSpouse.FirstSpouseId = person.Id; // Szabi: is the person id given here after db save?
-                    firstSpouse.FirstMarriageStartDate = person.FirstMarriageStartDate;
-                    firstSpouse.FirstMarriageEndDate = person.FirstMarriageEndDate;
+                    if (firstSpouse.FirstSpouseId == null)
+                    {
+                        await _pathToMyRootsDbContext.Persons.AddAsync(person);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
 
-                    _pathToMyRootsDbContext.Persons.Update(firstSpouse);
-                    await _pathToMyRootsDbContext.SaveChangesAsync();
+                        firstSpouse.FirstSpouseId = person.Id;
+                        firstSpouse.FirstMarriageStartDate = person.FirstMarriageStartDate;
+                        firstSpouse.FirstMarriageEndDate = person.FirstMarriageEndDate;
+
+                        _pathToMyRootsDbContext.Persons.Update(firstSpouse);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
+                    }
+                    else if (firstSpouse.SecondSpouseId == null)
+                    {
+                        await _pathToMyRootsDbContext.Persons.AddAsync(person);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
+
+                        firstSpouse.SecondSpouseId = person.Id;
+                        firstSpouse.SecondMarriageStartDate = person.FirstMarriageStartDate;
+                        firstSpouse.SecondMarriageEndDate = person.FirstMarriageEndDate;
+
+                        _pathToMyRootsDbContext.Persons.Update(firstSpouse);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
+                    }
+                    else
+                        throw new Exception("first spouse already has two spouses");
                 }
             }
 
@@ -74,13 +90,47 @@ namespace PathToMyRootsDataAccess.Services
                 var secondSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(person.SecondSpouseId.Value);
                 if (secondSpouse != null)
                 {
-                    secondSpouse.SecondSpouseId = person.Id;
-                    secondSpouse.SecondMarriageStartDate = person.SecondMarriageStartDate;
-                    secondSpouse.SecondMarriageEndDate = person.SecondMarriageEndDate;
+                    if (secondSpouse.FirstSpouseId == null)
+                    {
+                        if (person.Id == 0)
+                        {
+                            await _pathToMyRootsDbContext.Persons.AddAsync(person);
+                            await _pathToMyRootsDbContext.SaveChangesAsync();
+                        }
 
-                    _pathToMyRootsDbContext.Persons.Update(secondSpouse);
-                    await _pathToMyRootsDbContext.SaveChangesAsync();
+                        secondSpouse.FirstSpouseId = person.Id;
+                        secondSpouse.FirstMarriageStartDate = person.FirstMarriageStartDate;
+                        secondSpouse.FirstMarriageEndDate = person.FirstMarriageEndDate;
+
+                        _pathToMyRootsDbContext.Persons.Update(secondSpouse);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
+                    }
+                    else if (secondSpouse.SecondSpouseId == null)
+                    {
+                        if (person.Id == 0)
+                        {
+                            await _pathToMyRootsDbContext.Persons.AddAsync(person);
+                            await _pathToMyRootsDbContext.SaveChangesAsync();
+                        }
+
+                        secondSpouse.SecondSpouseId = person.Id;
+                        secondSpouse.SecondMarriageStartDate = person.FirstMarriageStartDate;
+                        secondSpouse.SecondMarriageEndDate = person.FirstMarriageEndDate;
+
+                        _pathToMyRootsDbContext.Persons.Update(secondSpouse);
+                        await _pathToMyRootsDbContext.SaveChangesAsync();
+
+                        return person;
+                    }
+                    else
+                        throw new Exception("second spouse already has two spouses");
                 }
+            }
+
+            if (person.Id == 0)
+            {
+                await _pathToMyRootsDbContext.Persons.AddAsync(person);
+                await _pathToMyRootsDbContext.SaveChangesAsync();
             }
 
             return person;

@@ -1,21 +1,31 @@
-﻿function isMaleSelectChanged() {
-    const isMaleSelect = document.getElementById('is-male-select');
-    const isMale = isMaleSelect.value.toLowerCase();
+﻿function setupSpouseSelects() {
+    updateSpouseSelects('first');
+    updateSpouseSelects('second');
 
-    updateSpouseSelects('first', isMale);
-    updateSpouseSelects('second', isMale);
+    firstSpouseIdChanged();
+    secondSpouseIdChanged();
 }
 
-function updateSpouseSelects(name, isMale) {
+function isMaleSelectChanged() {
+    updateSpouseSelects('first').value = "";
+    updateSpouseSelects('second').value = "";
+
+    firstSpouseIdChanged();
+    secondSpouseIdChanged();
+}
+
+function updateSpouseSelects(name) {
+    const isMale = document.getElementById('is-male-select').value.toLowerCase();
     const spouseSelect = document.getElementById(name + '-spouse-select');
 
-    spouseSelect.value = "";
     document.querySelectorAll('#' + name + '-spouse-select option').forEach(option => {
         if (option.value === "")
             return;
 
         option.style.display = option.dataset.isMale.toLowerCase() !== isMale ? '' : 'none';
     });
+
+    return spouseSelect;
 }
 
 function firstSpouseIdChanged() {

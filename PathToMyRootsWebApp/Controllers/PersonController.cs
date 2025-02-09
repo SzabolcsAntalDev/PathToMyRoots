@@ -49,7 +49,7 @@ namespace PathToMyRootsWebApp.Controllers
 
         public async Task<IActionResult> AddPerson()
         {
-            await AddFathersMothersAndSpousesToViewBag();
+            await AddPersonsToViewBag();
             return View("AddEditPerson", new PersonModel());
         }
 
@@ -63,7 +63,7 @@ namespace PathToMyRootsWebApp.Controllers
                 return RedirectToAction("Persons");
             }
 
-            await AddFathersMothersAndSpousesToViewBag();
+            await AddPersonsToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -95,7 +95,7 @@ namespace PathToMyRootsWebApp.Controllers
                 }
             }
 
-            await AddFathersMothersAndSpousesToViewBag();
+            await AddPersonsToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -133,7 +133,7 @@ namespace PathToMyRootsWebApp.Controllers
                 }
             }
 
-            await AddFathersMothersAndSpousesToViewBag();
+            await AddPersonsToViewBag();
             return View("AddEditPerson", personModel);
         }
 
@@ -150,7 +150,7 @@ namespace PathToMyRootsWebApp.Controllers
             return RedirectToAction("Persons");
         }
 
-        private async Task AddFathersMothersAndSpousesToViewBag()
+        private async Task AddPersonsToViewBag()
         {
             var personsModels = await _personApiService.GetPersonsAsync();
             ViewBag.Persons = Sort(personsModels);
