@@ -156,11 +156,16 @@
                 <label for="first-spouse-select">First Spouse:</label>
             </div>
             <div class='person-inputs-container'>
-                <select id="first-spouse-select" name="FirstSpouseId" onchange="firstSpouseIdChanged()">
+                <select id="first-spouse-select" name="FirstSpouseId" data-person-id="@Model.Id" onchange="firstSpouseIdChanged()">
                     <option value="">-- Select First Spouse --</option>
                     @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
                     {
-                        <option value="@spouse.Id" data-is-male="@spouse.IsMale" selected=@(Model?.FirstSpouseId == spouse.Id)>
+                        <option
+                            value="@spouse.Id"
+                            data-is-male="@spouse.IsMale"
+                            data-first-spouse-id="@spouse.FirstSpouseId"
+                            data-second-spouse-id="@spouse.SecondSpouseId"
+                            selected=@(Model?.FirstSpouseId == spouse.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                         </option>
                     }
@@ -234,11 +239,16 @@
                 <label for="second-spouse-select">Second Spouse:</label>
             </div>
             <div class='person-inputs-container'>
-                <select id="second-spouse-select" name="SecondSpouseId" onchange="secondSpouseIdChanged()">
+                <select id="second-spouse-select" name="SecondSpouseId" data-person-id="@Model.Id" onchange="secondSpouseIdChanged()">
                     <option value="">-- Select Second Spouse --</option>
                     @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
                     {
-                        <option value="@spouse.Id" data-is-male="@spouse.IsMale" selected=@(Model?.SecondSpouseId == spouse.Id)>
+                        <option
+                            value="@spouse.Id"
+                            data-is-male="@spouse.IsMale"
+                            data-first-spouse-id="@spouse.FirstSpouseId"
+                            data-second-spouse-id="@spouse.SecondSpouseId"
+                            selected=@(Model?.SecondSpouseId == spouse.Id)>
                             @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                         </option>
                     }
