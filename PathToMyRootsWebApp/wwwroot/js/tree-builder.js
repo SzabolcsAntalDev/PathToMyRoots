@@ -607,7 +607,7 @@ function createNode(person) {
     spanPersonName.className = 'tree-node-main-name-text';
 
     const spanPersonLived = document.createElement('span');
-    const personLivedNodeText = personToPersonLivedNodeText(person);
+    const personLivedNodeText = datesToPeriodText(person.birthDate, person.deathDate);
     spanPersonLived.innerText = personLivedNodeText;
     spanPersonLived.className = 'tree-node-main-lived-text';
 
@@ -673,13 +673,9 @@ function personToPersonNameNodeText(person) {
     return details.filter(Boolean).join(' ');
 }
 
-function personToPersonLivedNodeText(person) {
-    return `(${dateToString(person.birthDate)} - ${dateToString(person.deathDate)})`;
-}
-
 function dateToString(date) {
     if (date == null)
-        return "";
+        return null;
 
     if (date === UnknownServerDate)
         return HumanReadableDateUnknownDate;
@@ -694,6 +690,9 @@ function createLineBreak() {
 
 function createNodeMarriage(person, spouse, isMainMarriage) {
 
+    const startDate = person.firstSpouseId == spouse.id ? person.firstMarriageStartDate : person.secondMarriageStartDate;
+    const endDate = person.firstSpouseId == spouse.id ? person.firstMarriageEndDate : person.secondMarriageEndDate;
+
     const node = document.createElement('div');
     node.classList.add('tree-node-marriage', isMainMarriage ? 'main-marriage' : 'left-marriage');
 
@@ -705,7 +704,7 @@ function createNodeMarriage(person, spouse, isMainMarriage) {
     spanMarriage.className = 'tree-node-marriage-text';
 
     const spanMarriageDate = document.createElement('span');
-    spanMarriageDate.innerText = personToPersonMarriageDateText(person);
+    spanMarriageDate.innerText = datesToPeriodText(startDate, endDate);
     spanMarriageDate.className = 'tree-node-marriage-date-text';
 
     textsContainer.appendChild(spanMarriage);
@@ -721,8 +720,14 @@ function createNodeMarriage(person, spouse, isMainMarriage) {
     return node;
 }
 
-function personToPersonMarriageDateText(person) {
-    return `${dateToString(person.marriageDate)}`;
+function datesToPeriodText(startDate, endDate) {
+    var startDateString = dateToString(startDate) ?? HumanReadableDateUnknownDate;
+    var endDateString = dateToString(endDate);
+
+    if (endDateString)
+        return `${startDateString} - ${endDateString}`;
+
+    return startDateString;
 }
 
 async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWithParentsOnRows) {

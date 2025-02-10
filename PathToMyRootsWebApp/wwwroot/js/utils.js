@@ -1,14 +1,23 @@
-﻿const humanReadableDateFormat = "{0}. {1}. {2}.";
+﻿function formatDateString(dateStr) {
+    const year = parseInt(dateStr.slice(1, 5), 10);
+    const month = parseInt(dateStr.slice(5, 7), 10);
+    const day = parseInt(dateStr.slice(7, 9), 10);
 
-function formatDateString(dateStr) {
-    const year = dateStr.slice(1, 5);
-    const month = dateStr.slice(5, 7);
-    const day = dateStr.slice(7, 9);
+    let parts = [];
 
-    return humanReadableDateFormat
-        .replace("{0}", year)
-        .replace("{1}", month)
-        .replace("{2}", day);
+    if (!isNaN(year)) {
+        parts.push(year + '.');
+
+        if (!isNaN(month)) {
+            parts.push(String(month).padStart(2, '0') + '.');
+
+            if (!isNaN(day)) {
+                parts.push(String(day).padStart(2, '0') + '.');
+            }
+        }
+    }
+
+    return parts.join(' ');
 }
 
 async function createOrGetLoadingTextContainer(parent) {
