@@ -244,13 +244,17 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
         }
     }
 
-    nodesGroupContainer.appendChild(nodesGroup);
+    // if not double married female
+    if (nodesGroup.childElementCount > 0) {
+        nodesGroupContainer.appendChild(nodesGroup);
+
+        if (levelIndexesToRowsDictionary[level] == null)
+            levelIndexesToRowsDictionary[level] = createRow();
+
+        levelIndexesToRowsDictionary[level].appendChild(nodesGroupContainer);
+    }
+
     processedPersonIds.add(personId);
-
-    if (levelIndexesToRowsDictionary[level] == null)
-        levelIndexesToRowsDictionary[level] = createRow();
-
-    levelIndexesToRowsDictionary[level].appendChild(nodesGroupContainer);
 
     await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
     await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
@@ -724,9 +728,9 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         let leftMarriageNode = parentsNodeGroupContainer.querySelector('.left-marriage');
         let mainMarriageNode = parentsNodeGroupContainer.querySelector('.main-marriage');
 
-        let oneTreeNodeMale =
-            parentsNodeGroupContainer.querySelector('.tree-node-male') ??
-            parentsNodeGroupContainer.querySelector('.tree-node-female');
+        let oneTreeNodeRect =
+            (parentsNodeGroupContainer.querySelector('.tree-node-male') ?? parentsNodeGroupContainer.querySelector('.tree-node-female'))
+                .getBoundingClientRect();
 
         let leftMarriageBiologicalChildrenIds;
         let leftMarriageAdoptiveChildrenIds;
@@ -864,7 +868,7 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
 
         let leftMarriageExtraOffset;
         if (leftMarriageRect) {
-            leftMarriageExtraOffset = (oneTreeNodeMale.top + oneTreeNodeMale.height) - leftMarriageRect.top;
+            leftMarriageExtraOffset = (oneTreeNodeRect.top + oneTreeNodeRect.height) - leftMarriageRect.top;
         }
 
         leftMarriageBiologicalChildrenOnLeft.forEach(child => {
