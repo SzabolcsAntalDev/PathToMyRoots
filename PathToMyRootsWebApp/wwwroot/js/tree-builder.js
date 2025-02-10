@@ -700,17 +700,20 @@ function createNodeMarriage(person, spouse, isMainMarriage) {
     textsContainer.className = "tree-node-texts";
 
     const spanMarriage = document.createElement('span');
-    spanMarriage.innerText = 'marriage';
+    const marriageText = 'marriage';
+    spanMarriage.innerText = marriageText;
     spanMarriage.className = 'tree-node-marriage-text';
 
     const spanMarriageDate = document.createElement('span');
-    spanMarriageDate.innerText = datesToPeriodText(startDate, endDate);
+    const marriageDateText = datesToPeriodText(startDate, endDate);
+    spanMarriageDate.innerText = marriageDateText;
     spanMarriageDate.className = 'tree-node-marriage-date-text';
 
     textsContainer.appendChild(spanMarriage);
     textsContainer.appendChild(spanMarriageDate);
 
     node.appendChild(textsContainer);
+    node.title = `${marriageText}\n${marriageDateText}`
 
     node.inverseBiologicalParents = getCommonBiologicalChildren(person, spouse);
     node.inverseAdoptiveParents = getCommonAdoptiveChildren(person, spouse);
