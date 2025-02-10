@@ -1,4 +1,4 @@
-﻿const linesVerticalOffset = 8;
+﻿const linesVerticalOffset = 10;
 
 const apiUrl = "https://localhost:7241/api/person/";
 const imageApiUrl = "https://localhost:7241/";
@@ -139,13 +139,21 @@ function sortGroupNodeContainersByBirthDates(nodeGroupContainers) {
 }
 
 function getNumberOfChildrenWithParents(row) {
-    return Array
-        .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
-        .filter(p =>
-            p.biologicalFatherId !== null ||
-            p.biologicalMotherId !== null ||
-            p.adoptiveFatherId !== null ||
-            p.adoptiveMotherId !== null).length;
+    let childrenWithBiologicalParents =
+        Array
+            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
+            .filter(p =>
+                p.biologicalFatherId !== null ||
+                p.biologicalMotherId !== null);
+
+    let childrenWithAdoptiveParents =
+        Array
+            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
+            .filter(p =>
+                p.adoptiveFatherId !== null ||
+                p.adoptiveMotherId !== null);
+
+    return childrenWithBiologicalParents.length + childrenWithAdoptiveParents.length;
 }
 
 function scrollToMiddle(container, element) {
@@ -720,7 +728,7 @@ function personToPersonMarriageDateText(person) {
 async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWithParentsOnRows) {
 
     const numOfChildrensWithParentOnRow = getNumberOfChildrenWithParents(childrenRow);
-    let offset = (((maxChildrenWithParentsOnRows - numOfChildrensWithParentOnRow) / 2) + 1) * linesVerticalOffset;
+    let offsetOnTop = (1 + ((maxChildrenWithParentsOnRows - numOfChildrensWithParentOnRow) * 0.5)) * linesVerticalOffset;
 
     let parentsNodesGroupContainers = parentsRow.querySelectorAll('.tree-nodes-group-container');
     for (let parentsNodeGroupContainer of parentsNodesGroupContainers) {
@@ -851,19 +859,19 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         });
 
         mainMarriageBiologicalChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, mainMarriageNode, child, offset += linesVerticalOffset, true);
+            drawChildLine(linesContainer, mainMarriageNode, child, offsetOnTop += linesVerticalOffset, true);
         });
 
         mainMarriageBiologicalChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, mainMarriageNode, child, offset += linesVerticalOffset, true);
+            drawChildLine(linesContainer, mainMarriageNode, child, offsetOnTop += linesVerticalOffset, true);
         });
 
         mainMarriageAdoptiveChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, mainMarriageNode, child, offset += linesVerticalOffset, false);
+            drawChildLine(linesContainer, mainMarriageNode, child, offsetOnTop += linesVerticalOffset, false);
         });
 
         mainMarriageAdoptiveChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, mainMarriageNode, child, offset += linesVerticalOffset, false);
+            drawChildLine(linesContainer, mainMarriageNode, child, offsetOnTop += linesVerticalOffset, false);
         });
 
         let leftMarriageExtraOffset;
@@ -872,19 +880,19 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         }
 
         leftMarriageBiologicalChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offset += linesVerticalOffset), true);
+            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
         });
 
         leftMarriageBiologicalChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offset += linesVerticalOffset), true);
+            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
         });
 
         leftMarriageAdoptiveChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offset += linesVerticalOffset), false);
+            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
         });
 
         leftMarriageAdoptiveChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offset += linesVerticalOffset), false);
+            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
         });
 
 
