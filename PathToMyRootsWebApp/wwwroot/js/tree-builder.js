@@ -1,5 +1,4 @@
 ﻿const linesVerticalOffset = 8;
-const sleepInterval = 0;
 
 const apiUrl = "https://localhost:7241/api/person/";
 const imageApiUrl = "https://localhost:7241/";
@@ -58,13 +57,9 @@ async function createTreeDiagram(personId) {
         .map(Number)
         .sort((a, b) => b - a);
 
-    const rootLevelIndex = descSortedLevelIndexes[0]
-    let parentsRow = levelIndexesToRowsDictionary[rootLevelIndex];
-    diagramContainer.appendChild(parentsRow);
-    await sleep(sleepInterval);
-
     // sort children
-    for (let i = 1; i < descSortedLevelIndexes.length; i++) {
+    let parentsRow = createRow();
+    for (let i = 0; i < descSortedLevelIndexes.length; i++) {
         const childrenLevelIndex = descSortedLevelIndexes[i];
         const childrenRow = levelIndexesToRowsDictionary[childrenLevelIndex];
 
@@ -182,6 +177,7 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
 
             nodesGroupContainer.appendChild(createNodeMarriage(person, firstSpouse, false));
             nodesGroupContainer.style.paddingLeft = "0px";
+            nodesGroupContainer.style.marginLeft = "0px";
             nodesGroup.appendChild(createNode(person));
             nodesGroup.appendChild(createNode(secondSpouse));
             nodesGroup.appendChild(createLineBreak());
@@ -201,12 +197,14 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
                     nodesGroup.appendChild(createNodeMarriage(person, spouse, true));
 
                     nodesGroupContainer.style.paddingRight = "0px";
+                    nodesGroupContainer.style.marginRight = "0px";
 
                     processedPersonIds.add(spouseId);
                 }
                 else {
                     nodesGroupContainer.appendChild(createNodeMarriage(person, spouse, false));
                     nodesGroupContainer.style.paddingLeft = "0px";
+                    nodesGroupContainer.style.marginLeft = "0px";
                     nodesGroup.appendChild(createNode(person));
                 }
             }
@@ -233,6 +231,7 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
             if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) { // double married man
                 nodesGroup.appendChild(createNode(person));
                 nodesGroupContainer.style.paddingRight = "0px";
+                nodesGroupContainer.style.marginRight = "0px";
             }
             else { // single married man
                 nodesGroup.appendChild(createNode(spouse));
@@ -954,8 +953,4 @@ function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBi
     path.setAttribute('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');
 
     linesContainer.appendChild(path);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
