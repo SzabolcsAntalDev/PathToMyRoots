@@ -173,69 +173,79 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     const nodesGroup = createNodesGroup();
 
     if (person.isMale) {
-
-        if (person.secondSpouse != null) {
+        if (person.firstSpouseId == null && person.secondSpouseId == null) { // single
+            nodesGroup.appendChild(createNode(person));
+        }
+        else if (person.firstSpouseId != null && person.secondSpouseId != null) { // double married
             const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
+            const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
+
             nodesGroupContainer.appendChild(createNodeMarriage(person, firstSpouse, false));
             nodesGroupContainer.style.paddingLeft = "0px";
             nodesGroup.appendChild(createNode(person));
-            const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
             nodesGroup.appendChild(createNode(secondSpouse));
-
             nodesGroup.appendChild(createLineBreak());
             nodesGroup.appendChild(createNodeMarriage(person, secondSpouse, true));
 
             processedPersonIds.add(person.secondSpouseId);
         }
-        else {
-            if (person.firstSpouse != null) {
-                nodesGroup.appendChild(createNode(person));
+        else { // single married
+            const spouseId = person.firstSpouseId ?? person.secondSpouseId;
+            const spouse = await (await fetch(`${apiUrl}${spouseId}`)).json();
 
-                const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
-                nodesGroup.appendChild(createNode(firstSpouse));
+            if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) {
+                if (spouse.secondSpouseId == personId) {
+                    nodesGroup.appendChild(createNode(person));
+                    nodesGroup.appendChild(createNode(spouse));
+                    nodesGroup.appendChild(createLineBreak());
+                    nodesGroup.appendChild(createNodeMarriage(person, spouse, true));
 
-                nodesGroup.appendChild(createLineBreak());
-                nodesGroup.appendChild(createNodeMarriage(person, firstSpouse, true));
+                    nodesGroupContainer.style.paddingRight = "0px";
 
-                processedPersonIds.add(person.firstSpouseId);
+                    processedPersonIds.add(spouseId);
+                }
+                else {
+                    nodesGroupContainer.appendChild(createNodeMarriage(person, spouse, false));
+                    nodesGroupContainer.style.paddingLeft = "0px";
+                    nodesGroup.appendChild(createNode(person));
+                }
             }
             else {
                 nodesGroup.appendChild(createNode(person));
+                nodesGroup.appendChild(createNode(spouse));
+                nodesGroup.appendChild(createLineBreak());
+                nodesGroup.appendChild(createNodeMarriage(person, spouse, true));
+
+                processedPersonIds.add(spouseId);
             }
         }
     }
     else {
-        if (person.secondSpouse != null) {
-            const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
-            nodesGroup.appendChild(createNode(secondSpouse));
+        if (person.firstSpouseId == null && person.secondSpouseId == null) { // single
             nodesGroup.appendChild(createNode(person));
-
-            nodesGroup.appendChild(createLineBreak());
-            nodesGroup.appendChild(createNodeMarriage(person, secondSpouse, true));
-
-            processedPersonIds.add(person.secondSpouseId);
-
-            nodesGroupContainer.style.paddingRight = "0px";
         }
-        else {
-            if (person.firstSpouse != null) {
-                const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
-                nodesGroup.appendChild(createNode(firstSpouse));
+        else if (person.firstSpouseId != null && person.secondSpouseId != null) { // double married
+        }
+        else { // single married
+            const spouseId = person.firstSpouseId ?? person.secondSpouseId;
+            const spouse = await (await fetch(`${apiUrl}${spouseId}`)).json();
+
+            if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) { // double married man
                 nodesGroup.appendChild(createNode(person));
-
-                nodesGroup.appendChild(createLineBreak());
-                nodesGroup.appendChild(createNodeMarriage(person, firstSpouse, true));
-
-                processedPersonIds.add(person.firstSpouseId);
+                nodesGroupContainer.style.paddingRight = "0px";
             }
-            else {
+            else { // single married man
+                nodesGroup.appendChild(createNode(spouse));
                 nodesGroup.appendChild(createNode(person));
+                nodesGroup.appendChild(createLineBreak());
+                nodesGroup.appendChild(createNodeMarriage(person, spouse, true));
+
+                processedPersonIds.add(spouseId);
             }
         }
     }
 
     nodesGroupContainer.appendChild(nodesGroup);
-
     processedPersonIds.add(personId);
 
     if (levelIndexesToRowsDictionary[level] == null)
@@ -304,40 +314,30 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
 
     for (let parentsNodeGroupContainer of parentsNodeGroupContainers) {
 
-        let mainMarriageNode;
-        let leftMarriageNode;
+        let leftMarriageNode = parentsNodeGroupContainer.querySelector('.left-marriage');
+        let mainMarriageNode = parentsNodeGroupContainer.querySelector('.main-marriage');
 
-        let mainMarriageBiologicalChildrenIds;
-        let mainMarriageAdoptiveChildrenIds;
         let leftMarriageBiologicalChildrenIds;
         let leftMarriageAdoptiveChildrenIds;
+        let mainMarriageBiologicalChildrenIds;
+        let mainMarriageAdoptiveChildrenIds;
 
-        let marriageNodes = parentsNodeGroupContainer.querySelectorAll('.tree-node-marriage');
-
-        if (marriageNodes.length == 2) {
-
-            leftMarriageNode = marriageNodes[0];
-            mainMarriageNode = marriageNodes[1];
-
+        if (leftMarriageNode) {
             leftMarriageBiologicalChildrenIds = leftMarriageNode.inverseBiologicalParents;
             leftMarriageAdoptiveChildrenIds = leftMarriageNode.inverseAdoptiveParents;
+        }
+
+        if (mainMarriageNode) {
             mainMarriageBiologicalChildrenIds = mainMarriageNode.inverseBiologicalParents;
             mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
         }
 
-        if (marriageNodes.length == 1) {
-            mainMarriageNode = marriageNodes[0];
-
-            mainMarriageBiologicalChildrenIds = mainMarriageNode.inverseBiologicalParents;
-            mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
-        }
-
-        const firstSpousesNodeGroupContainers = [];
+        const takenNodeGroupContainers = [];
         const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
 
         for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
 
-            if (firstSpousesNodeGroupContainers.includes(childrenNodeGroupContainer))
+            if (takenNodeGroupContainers.includes(childrenNodeGroupContainer))
                 continue;
 
             let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
@@ -350,26 +350,27 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 (leftMarriageBiologicalChildrenIds.includes(childMaleId) || leftMarriageBiologicalChildrenIds.includes(childFemaleId))) {
 
                 const isMale = leftMarriageBiologicalChildrenIds.includes(childMaleId);
-
                 if (isMale) {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
+                        getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
                         sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
 
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
                 }
                 else {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+                    const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
+                        getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
-                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                    if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
@@ -381,26 +382,27 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 (leftMarriageAdoptiveChildrenIds.includes(childMaleId) || leftMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
 
                 const isMale = leftMarriageAdoptiveChildrenIds.includes(childMaleId);
-
                 if (isMale) {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
+                        getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
                         sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
 
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
                 }
                 else {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+                    const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
+                        getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
-                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                    if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
@@ -412,25 +414,26 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 (mainMarriageBiologicalChildrenIds.includes(childMaleId) || mainMarriageBiologicalChildrenIds.includes(childFemaleId))) {
 
                 const isMale = mainMarriageBiologicalChildrenIds.includes(childMaleId);
-
                 if (isMale) {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
+                        getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
                         sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
                 }
                 else {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+                    const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
+                        getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
-                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                    if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
@@ -442,25 +445,26 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 (mainMarriageAdoptiveChildrenIds.includes(childMaleId) || mainMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
 
                 const isMale = mainMarriageAdoptiveChildrenIds.includes(childMaleId);
-
                 if (isMale) {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+                    const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
+                        getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
                         sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
                 }
                 else {
-                    const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+                    const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
+                        getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
-                    if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+                    if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-                        firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
                         sortedChildrenRow.appendChild(childrenNodeGroupContainer);
@@ -485,7 +489,9 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
         let added = false;
 
         if (childMaleId) {
-            const firstSpouseNodeGroupContainerOfDoubleMarriedMale = getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+            const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
+                getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
+
             if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
                 sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                 sortedChildrenRow.appendChild(childrenNodeGroupContainer);
@@ -495,11 +501,13 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
         }
 
         if (childFemaleId) {
-            const firstSpouseNodeGroupContainerOfDoubleMarriedFemale = getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
-            if (firstSpouseNodeGroupContainerOfDoubleMarriedFemale != null) {
+            const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
+                getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
+
+            if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
                 sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
-                firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedFemale);
+                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                 added = true;
             }
         }
@@ -529,10 +537,7 @@ function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(firstChildrenNodeGr
     return null;
 }
 
-function getFirstSpouseNodeGroupContainerOfDoubleMarriedFemale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, femaleNode) {
-    if (femaleNode.secondSpouseId == null)
-        return null;
-
+function getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, femaleNode) {
     for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
         if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
             continue;
@@ -676,10 +681,10 @@ function createLineBreak() {
     return lineBreak;
 }
 
-function createNodeMarriage(person, spouse, isLastMarriage) {
+function createNodeMarriage(person, spouse, isMainMarriage) {
 
     const node = document.createElement('div');
-    node.className = 'tree-node-marriage';
+    node.classList.add('tree-node-marriage', isMainMarriage ? 'main-marriage' : 'left-marriage');
 
     const textsContainer = document.createElement('div');
     textsContainer.className = "tree-node-texts";
@@ -701,7 +706,6 @@ function createNodeMarriage(person, spouse, isLastMarriage) {
     node.inverseAdoptiveParents = getCommonAdoptiveChildren(person, spouse);
     node.maleId = person.isMale ? person.id : spouse.id;
     node.femaleId = !person.isMale ? person.id : spouse.id;
-    node.isLastMarriage = isLastMarriage;
 
     return node;
 }
@@ -718,29 +722,24 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
     let parentsNodesGroupContainers = parentsRow.querySelectorAll('.tree-nodes-group-container');
     for (let parentsNodeGroupContainer of parentsNodesGroupContainers) {
 
-        let mainMarriageNode;
-        let leftMarriageNode;
+        let leftMarriageNode = parentsNodeGroupContainer.querySelector('.left-marriage');
+        let mainMarriageNode = parentsNodeGroupContainer.querySelector('.main-marriage');
 
-        let mainMarriageBiologicalChildrenIds;
-        let mainMarriageAdoptiveChildrenIds;
+        let oneTreeNodeMale =
+            parentsNodeGroupContainer.querySelector('.tree-node-male') ??
+            parentsNodeGroupContainer.querySelector('.tree-node-female');
+
         let leftMarriageBiologicalChildrenIds;
         let leftMarriageAdoptiveChildrenIds;
+        let mainMarriageBiologicalChildrenIds;
+        let mainMarriageAdoptiveChildrenIds;
 
-        let marriageNodes = parentsNodeGroupContainer.querySelectorAll('.tree-node-marriage');
-
-        if (marriageNodes.length == 2) {
-            leftMarriageNode = marriageNodes[0];
-            mainMarriageNode = marriageNodes[1];
-
+        if (leftMarriageNode) {
             leftMarriageBiologicalChildrenIds = leftMarriageNode.inverseBiologicalParents;
             leftMarriageAdoptiveChildrenIds = leftMarriageNode.inverseAdoptiveParents;
-            mainMarriageBiologicalChildrenIds = mainMarriageNode.inverseBiologicalParents;
-            mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
         }
 
-        if (marriageNodes.length == 1) {
-            mainMarriageNode = marriageNodes[0];
-
+        if (mainMarriageNode) {
             mainMarriageBiologicalChildrenIds = mainMarriageNode.inverseBiologicalParents;
             mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
         }
@@ -866,7 +865,7 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
 
         let leftMarriageExtraOffset;
         if (leftMarriageRect) {
-            leftMarriageExtraOffset = mainMarriageRect.top - leftMarriageRect.top;
+            leftMarriageExtraOffset = (oneTreeNodeMale.top + oneTreeNodeMale.height) - leftMarriageRect.top;
         }
 
         leftMarriageBiologicalChildrenOnLeft.forEach(child => {
