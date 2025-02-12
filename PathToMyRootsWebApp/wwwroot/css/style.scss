@@ -77,7 +77,7 @@ $border: 1px solid var(--foreground-color);
 
 $action-image-size: 20px;
 $distance-between-nodes: 15px;
-$person-node-width: 150px;
+$person-node-width: 200px;
 $marriage-node-width: 70px;
 
 $node-image-width: 45px;
@@ -492,6 +492,7 @@ table {
     display: flex;
     flex-direction: column;
     margin-bottom: auto;
+
     fieldset {
         display: flex;
         flex-direction: column;
@@ -560,6 +561,13 @@ table {
 
 .tree-level-row {
     display: flex;
+}
+
+.tree-siblings-container {
+    display: flex;
+    padding: 0px;
+    margin: 0px auto;
+    padding: 0px calc($distance-between-nodes * 2.5);
 }
 
 .tree-nodes-group-container {

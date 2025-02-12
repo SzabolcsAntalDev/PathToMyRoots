@@ -343,12 +343,14 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
             mainMarriageAdoptiveChildrenIds = mainMarriageNode.inverseAdoptiveParents;
         }
 
-        const takenNodeGroupContainers = [];
+        const takenSpouseNodeGroupContainers = [];
         const childrenNodeGroupContainers = childrenRow.querySelectorAll('.tree-nodes-group-container');
+
+        const siblings = [];
 
         for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
 
-            if (takenNodeGroupContainers.includes(childrenNodeGroupContainer))
+            if (takenSpouseNodeGroupContainers.includes(childrenNodeGroupContainer))
                 continue;
 
             let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
@@ -366,25 +368,25 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(childrenNodeGroupContainer);
 
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 else {
                     const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
                         getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
                     if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        siblings.push(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 continue;
             }
@@ -398,25 +400,25 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(childrenNodeGroupContainer);
 
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 else {
                     const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
                         getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
                     if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        siblings.push(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 continue;
             }
@@ -430,24 +432,24 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(childrenNodeGroupContainer);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 else {
                     const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
                         getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
                     if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        siblings.push(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 continue;
             }
@@ -461,28 +463,40 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
                     if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                        siblings.push(childrenNodeGroupContainer);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 else {
                     const firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale =
                         getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
                     if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                        sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
-                        takenNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        siblings.push(childrenNodeGroupContainer);
+                        siblings.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                        takenSpouseNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                     }
                     else
-                        sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+                        siblings.push(childrenNodeGroupContainer);
                 }
                 continue;
             }
         }
+
+        const treeSiblingsContainer = document.createElement('div')
+        treeSiblingsContainer.className = 'tree-siblings-container';
+
+        let added = false;
+        siblings.forEach((s, i) => {
+            treeSiblingsContainer.appendChild(s);
+            added = true;
+        });
+
+        if (added)
+        sortedChildrenRow.appendChild(treeSiblingsContainer);
     }
 
     // orphans
@@ -504,8 +518,14 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
 
             if (firstSpouseNodeGroupContainerOfDoubleMarriedMale != null) {
-                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+
+                const treeSiblingsContainer = document.createElement('div')
+                treeSiblingsContainer.className = 'tree-siblings-container';
+
+                treeSiblingsContainer.appendChild(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
+                treeSiblingsContainer.appendChild(childrenNodeGroupContainer);
+                sortedChildrenRow.appendChild(treeSiblingsContainer);
+
                 firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOfDoubleMarriedMale);
                 added = true;
             }
@@ -516,15 +536,27 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
                 getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(childrenNodeGroupContainer, childrenNodeGroupContainers, childFemaleNode);
 
             if (firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale != null) {
-                sortedChildrenRow.appendChild(childrenNodeGroupContainer);
-                sortedChildrenRow.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+
+                const treeSiblingsContainer = document.createElement('div')
+                treeSiblingsContainer.className = 'tree-siblings-container';
+
+                treeSiblingsContainer.appendChild(childrenNodeGroupContainer);
+                treeSiblingsContainer.appendChild(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
+                sortedChildrenRow.appendChild(treeSiblingsContainer);
+
                 firstSpousesNodeGroupContainers.push(firstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale);
                 added = true;
             }
         }
 
-        if (!added)
-            sortedChildrenRow.appendChild(childrenNodeGroupContainer);
+        if (!added) {
+            const treeSiblingsContainer = document.createElement('div')
+            treeSiblingsContainer.className = 'tree-siblings-container';
+
+            treeSiblingsContainer.appendChild(childrenNodeGroupContainer);
+
+            sortedChildrenRow.appendChild(treeSiblingsContainer);
+        }
     });
 
     return sortedChildrenRow;

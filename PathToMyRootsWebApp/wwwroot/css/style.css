@@ -467,6 +467,13 @@ table tr:hover th {
   display: flex;
 }
 
+.tree-siblings-container {
+  display: flex;
+  padding: 0px;
+  margin: 0px auto;
+  padding: 0px 37.5px;
+}
+
 .tree-nodes-group-container {
   display: flex;
   padding: 0px 15px;
@@ -483,7 +490,7 @@ table tr:hover th {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  width: 150px;
+  width: 200px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
   position: relative;
