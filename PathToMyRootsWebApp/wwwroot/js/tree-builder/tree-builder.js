@@ -134,24 +134,6 @@ function sortGroupNodeContainersByBirthDates(nodeGroupContainers) {
     });
 }
 
-function getNumberOfChildrenWithParents(row) {
-    let childrenWithBiologicalParents =
-        Array
-            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
-            .filter(p =>
-                p.biologicalFatherId !== null ||
-                p.biologicalMotherId !== null);
-
-    let childrenWithAdoptiveParents =
-        Array
-            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
-            .filter(p =>
-                p.adoptiveFatherId !== null ||
-                p.adoptiveMotherId !== null);
-
-    return childrenWithBiologicalParents.length + childrenWithAdoptiveParents.length;
-}
-
 function scrollToMiddle(container, element) {
     const containerRect = container.getBoundingClientRect();
     const elementRect = element.getBoundingClientRect();
@@ -290,30 +272,6 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     if (person.inverseAdoptiveFather != null)
         for (let child of person.inverseAdoptiveFather)
             await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
-}
-
-function getCommonBiologicalChildren(person, spouse) {
-    if (person.isMale) {
-        return person.inverseBiologicalFather
-            .filter(child => spouse.inverseBiologicalMother.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    } else {
-        return person.inverseBiologicalMother
-            .filter(child => spouse.inverseBiologicalFather.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    }
-}
-
-function getCommonAdoptiveChildren(person, spouse) {
-    if (person.isMale) {
-        return person.inverseAdoptiveFather
-            .filter(child => spouse.inverseAdoptiveMother.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    } else {
-        return person.inverseAdoptiveMother
-            .filter(child => spouse.inverseAdoptiveFather.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    }
 }
 
 async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
@@ -557,83 +515,6 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
 
     return sortedChildrenRow;
 }
-
-function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, maleNode) {
-    if (maleNode.secondSpouseId == null)
-        return null;
-
-    for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
-        if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
-            continue;
-
-        let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
-        let childFemaleId = Number(childFemaleNode?.id);
-
-        if (maleNode.firstSpouseId == childFemaleId)
-            return childrenNodeGroupContainer;
-    }
-
-    return null;
-}
-
-function getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, femaleNode) {
-    for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
-        if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
-            continue;
-
-        let childMaleNode = childrenNodeGroupContainer.querySelector('.tree-node-male');
-        let childMaleId = Number(childMaleNode?.id);
-
-        if (femaleNode.firstSpouseId == childMaleId)
-            return childrenNodeGroupContainer;
-    }
-
-    return null;
-}
-
-function personToPersonNameNodeText(person) {
-    let details = [];
-
-    details.push(person.id);
-
-    if (person.nobleTitle)
-        details.push(person.nobleTitle);
-
-    if (person.lastName)
-        details.push(person.lastName);
-
-    if (person.maidenName)
-        details.push(`(${person.maidenName})`);
-
-    if (person.firstName)
-        details.push(person.firstName);
-
-    if (person.otherNames)
-        details.push(person.otherNames);
-
-    return details.filter(Boolean).join(' ');
-}
-
-function dateToString(date) {
-    if (date == null)
-        return null;
-
-    if (date === UnknownServerDate)
-        return HumanReadableDateUnknownDate;
-
-    return formatDateString(date);
-}
-
-function datesToPeriodText(startDate, endDate) {
-    var startDateString = dateToString(startDate) ?? HumanReadableDateUnknownDate;
-    var endDateString = dateToString(endDate);
-
-    if (endDateString)
-        return `${startDateString} - ${endDateString}`;
-
-    return startDateString;
-}
-
 async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWithParentsOnRows) {
 
     const numOfChildrensWithParentOnRow = getNumberOfChildrenWithParents(childrenRow);
@@ -808,70 +689,4 @@ async function drawLines(linesContainer, parentsRow, childrenRow, maxChildrenWit
         if (leftMarriageNode)
             drawMarriageLines(linesContainer, leftMarriageNode);
     }
-}
-
-function drawMarriageLines(linesContainer, marriageNode) {
-    const marriageRect = marriageNode.getBoundingClientRect();
-    const linesContainerClientRect = linesContainer.getBoundingClientRect();
-
-    const computedStyle = window.getComputedStyle(marriageNode);
-    const marginLeft = parseFloat(computedStyle.marginLeft) || 0;
-    const marginRight = parseFloat(computedStyle.marginRight) || 0;
-
-    const y = marriageRect.top + marriageRect.height / 2 - linesContainerClientRect.top;
-
-    const x1 = marriageRect.left - marginLeft - linesContainerClientRect.left;
-    const x2 = x1 + marginLeft;
-
-    const x3 = marriageRect.left + marriageRect.width - linesContainerClientRect.left;
-    const x4 = x3 + marginRight;
-
-    const pathData = `
-        M ${x1},${y} L ${x2},${y}
-        M ${x3},${y} L ${x4},${y}
-    `;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', pathData);
-    path.setAttribute('class', 'tree-line-marriage-svg');
-
-    linesContainer.appendChild(path);
-}
-
-function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBiological) {
-    const marriageRect = marriageNode.getBoundingClientRect();
-    const childRect = child.getBoundingClientRect();
-
-    const linesContainerClientRect = linesContainer.getBoundingClientRect();
-
-    const hasBiologicalChildren = marriageNode.inverseBiologicalParents.length > 0;
-    const hasAdoptiveChildren = marriageNode.inverseAdoptiveParents.length > 0;
-
-    let marriageX = marriageRect.left + marriageRect.width / 2 - linesContainerClientRect.left;
-    const marriageY = marriageRect.top + marriageRect.height - linesContainerClientRect.top;
-    let childX = childRect.left + childRect.width / 2 - linesContainerClientRect.left;
-    const childY = childRect.top - linesContainerClientRect.top;
-    const middleY = marriageY + verticalOffset;
-
-    if (hasBiologicalChildren && hasAdoptiveChildren)
-        marriageX += isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
-
-    const hasBiologicalParents = child.biologicalFatherId != null && child.biologicalMotherId != null;
-    const hasAdoptiveParents = child.adoptiveFatherId != null && child.adoptiveMotherId != null;
-
-    if (hasBiologicalParents && hasAdoptiveParents)
-        childX += isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
-
-    const pathData = `
-        M ${marriageX},${marriageY}
-        L ${marriageX},${middleY}
-        L ${childX},${middleY}
-        L ${childX},${childY}
-    `;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', pathData);
-    path.setAttribute('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');
-
-    linesContainer.appendChild(path);
 }
