@@ -293,7 +293,7 @@ VALUES
 /* 248 */ (	'András',			'Márton',				NULL,	    	'Szűcs',		NULL, 				NULL, 				NULL, 				NULL,			249, 			NULL, 			'+18700706',			NULL, 						1, 		'+18460104',	'+19170118', 	NULL	),
 /* 249 */ (	'Anna',				'Márton',				'Kispál',    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			248, 			NULL, 			'+18700706',			NULL, 						0, 		'+18501215',	'+19200408', 	NULL	),
 /* 250 */ (	'Ferenc',			'Korpos',				NULL,	    	'Ferce',		NULL, 				NULL, 				NULL, 				NULL,			251, 			NULL, 			NULL,					NULL, 						1, 		'+18501210',	'+18990408', 	NULL	),
-/* 251 */ (	'Kata',				'Korpos',				'Máaton',    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			250, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+19360227', 	NULL	),
+/* 251 */ (	'Kata',				'Korpos',				'Márton',    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			250, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+19360227', 	NULL	),
 /* 252 */ (	'János',			'Márton',				NULL,	    	'Szűcs',		248, 				249, 				NULL, 				NULL,			253, 			NULL, 			'+18950622',			NULL, 						1, 		'+18711230',	'+yyyymmdd', 	NULL	),
 /* 253 */ (	'Kata',				'Márton',				'Péntek',    	'Bika',			NULL, 				NULL, 				NULL, 				NULL,			252, 			NULL, 			'+18950622',			NULL, 						0, 		'+18770328',	'+19360330', 	NULL	),
 /* 254 */ (	'Márton',			'Márton',				NULL,	    	'Szűcs Kűpál',	248, 				249, 				NULL, 				NULL,			255, 			NULL, 			'+19020927',			NULL, 						1, 		'+18781019',	'+19240325', 	NULL	),
@@ -318,8 +318,20 @@ VALUES
 /* 273 */ (	'István',			'Márton',				NULL,	    	'Kűpál',		254, 				255, 				NULL, 				NULL,			274, 			NULL, 			'+19371211',			NULL, 						1, 		'+19160127',	'+20030223', 	NULL	),
 /* 274 */ (	'Piroska',			'Márton',				'Kovács',    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			273, 			NULL, 			'+19371211',			NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	),
 /* 275 */ (	'András',			'Márton',				NULL,	    	'Kűpál',		254, 				255, 				NULL, 				NULL,			276, 			NULL, 			NULL,					NULL, 						1, 		'+19171230',	'+yyyymmdd', 	NULL	),
-/* 276 */ (	'Erzsébet',			'Márton',				'Albert',    	'Bigye',		NULL, 				NULL, 				NULL, 				NULL,			275, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	)
+/* 276 */ (	'Erzsébet',			'Márton',				'Albert',    	'Bigye',		NULL, 				NULL, 				NULL, 				NULL,			275, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	),
 
+/* 277 */ (	'János',			'Márton',				NULL,	    	'Kűpál',		273, 				274, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL, 			NULL	),
+/* 278 */ (	'Piroska',			'?',					'Márton',	    'Kűpál',		273, 				274, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			NULL	),
+/* 279 */ (	'Katalin',			'?',					'Márton',	    'Kűpál',		273, 				274, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+1944mmdd',	NULL, 			NULL	),
+/* 280 */ (	'Éva',				'?',					'Márton',	    'Kűpál',		273, 				274, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			NULL	),
+/* 281 */ (	'Erzsébet',			'?',					'Márton',	    'Kűpál',		273, 				274, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			NULL	),
+/* 282 */ (	'András',			'Márton',				NULL,	    	'Kűpál',		273, 				274, 				NULL, 				NULL,			283, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	),
+/* 283 */ (	'Erzsébet',			'Márton',				'Albert',	    'Bigye',		NULL, 				NULL, 				NULL, 				NULL,			282, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			NULL	),
+/* 284 */ (	'Zsolt',			'Márton',				NULL,	    	'Kűpál',		282, 				283, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL, 			'9badd01c-dea6-4aae-be51-72d5c93aff94.png'	),
+/* 285 */ (	'András',			'Márton',				NULL,	    	'Kűpál',		282, 				283, 				NULL, 				NULL,			286, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL, 			'c1c820eb-3524-45b7-a4e7-b18c7982d5dd.png'	),
+/* 286 */ (	'Kinga',			'Márton',				'András',	    NULL,			NULL, 				NULL, 				NULL, 				NULL,			285, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'a07c6cc1-7f21-4cca-bfac-c5fe871fd32d.png'	),
+/* 287 */ (	'Balázs',			'Márton',				NULL,	    	'Kűpál',		285, 				286, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL, 			'd2bf7dcd-0a77-427c-9a50-2bc94af056a4.png'	),
+/* 288 */ (	'Abigél',			'Márton',				NULL,	    	'Kűpál',		285, 				286, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'62920d28-5eb6-4550-b900-6cfbcde57d94.png'	)
 
 -- /* 264 */ (	'Dezső',			'Aaa',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	)
 
