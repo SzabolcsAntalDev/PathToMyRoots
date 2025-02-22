@@ -36,12 +36,12 @@ VALUES
 /* 4  */ (	'Orsolya', 			'Antal', 				NULL, 			'Púj', 			1, 					2, 					NULL,				NULL,			17, 			NULL,			NULL,					NULL, 						0, 		'+19830906', 	NULL, 			'38be15b0-386c-4527-a480-9f013f86487a.png'	),
 /* 5  */ (	'Katalin', 			'Korpos', 				'Gál-Máté',		'Czondi', 		15, 				16, 				NULL,				NULL,			6, 				NULL,			NULL,					NULL, 						0, 		'+19410104', 	'+20130710',	'1de14600-ffdb-41fd-9628-37b0ddc7e078.png'	),
 /* 6  */ (	'János', 			'Korpos', 				NULL, 			'Rigó, Ács', 	13, 				14, 				NULL,				NULL,			5, 				NULL,			NULL,					NULL, 						1, 		'+19320423', 	'+19960909',	'111e1d9c-9e72-42c9-9074-3ebdead96f48.png'	),
-/* 7  */ (	'András', 			'Antal', 				NULL,	 		'Púj', 			9, 					10, 				NULL,				NULL,			8, 				NULL,			NULL,					NULL, 						1, 		'+19370601', 	'+19880818',	'618db659-b641-498f-b3f0-d9eb3e710061.png'	),
-/* 8  */ (	'Ilona', 			'Antal', 				'Márton', 		'Kűpál',		11, 				12, 				NULL,				NULL,			7, 				NULL,			NULL,					NULL, 						0, 		'+19400925', 	NULL, 			'415ccbbc-16d9-4ec1-9622-2fc0e41000ec.png'	),
+/* 7  */ (	'András', 			'Antal', 				NULL,	 		'Púj', 			9, 					10, 				NULL,				NULL,			8, 				NULL,			'+19570928',			NULL, 						1, 		'+19370601', 	'+19880818',	'618db659-b641-498f-b3f0-d9eb3e710061.png'	),
+/* 8  */ (	'Ilona', 			'Antal', 				'Márton', 		'Kűpál',		11, 				12, 				NULL,				NULL,			7, 				NULL,			'+19570928',			NULL, 						0, 		'+19400925', 	NULL, 			'415ccbbc-16d9-4ec1-9622-2fc0e41000ec.png'	),
 /* 9  */ (	'János', 			'Antal', 				NULL, 			'Púj',		 	62, 				63, 				NULL,				NULL,			10, 			NULL,			NULL,					NULL, 						1, 		'+19100625', 	'+19990406',	'39cc7ae0-68be-4960-9358-44bc9e725962.png'	),
 /* 10 */ (	'Erzsébet',			'Antal', 				'Kovács',		'Baka', 		53, 				54, 				NULL,				NULL,			9, 				NULL,			NULL,					NULL, 						0, 		'+19140201', 	'+19930428',	'c35271dd-b992-4a6c-b101-cf0af9ea0625.png'	),
-/* 11 */ (	'János', 			'Márton', 				NULL, 			'Kűpál',		NULL, 				NULL, 				NULL,				NULL,			12, 			NULL,			NULL,					NULL, 						1, 		'+19090929', 	'+19690927',	'3b37e71c-ea22-49be-aafe-f8d67a30661d.png'	),
-/* 12 */ (	'Ilona', 			'Márton', 				'Mihály',		'Bori',		 	195, 				196, 				NULL,				NULL,			11, 			NULL,			NULL,					NULL, 						0, 		'+19101205', 	'+19840428',	'f7d28d6b-fad6-4b17-8460-c4400fce4222.png'	),
+/* 11 */ (	'János', 			'Márton', 				NULL, 			'Kűpál',		NULL, 				NULL, 				NULL,				NULL,			12, 			NULL,			'+19290831',			NULL, 						1, 		'+19090929', 	'+19690927',	'3b37e71c-ea22-49be-aafe-f8d67a30661d.png'	),
+/* 12 */ (	'Ilona', 			'Márton', 				'Mihály',		'Bori',		 	195, 				196, 				NULL,				NULL,			11, 			NULL,			'+19290831',			NULL, 						0, 		'+19101205', 	'+19840428',	'f7d28d6b-fad6-4b17-8460-c4400fce4222.png'	),
 /* 13 */ (	'Márton', 			'Korpos', 				NULL, 			'Rigó, Ács',	153, 				154, 				NULL,				NULL,			14, 			NULL,			'+19270924',			NULL, 						1, 		'+1902mmdd', 	'+19640106',	NULL										),
 /* 14 */ (	'Katalin', 			'Korpos', 				'Albert',		'Kukó',	 		111, 				113, 				NULL,				NULL,			13, 			NULL,			'+19270924',			NULL, 						0, 		'+19081125', 	'+19901120', 	NULL										),
 /* 15 */ (	'Márton', 			'Gál-Máté', 			NULL, 			'Czondi', 		95, 				97, 				NULL,				NULL,			16, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd', 	'+yyyymmdd', 	NULL										),
@@ -82,8 +82,8 @@ VALUES
 /* 50 */ (	'Rebeka',			'Gál',					NULL,			NULL,			49, 				48, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',  	NULL, 			'f8c61e5a-cc91-456b-89a5-ad7516e63404.png'	),
 /* 51 */ (	'Tamás',			'Gál',					NULL,			NULL,			49, 				48, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',  	NULL, 			'8dda7278-93eb-41d3-86e4-b2ca0607a9f5.png' 	),
 /* 52 */ (	'Erzsébet',			'Antal',				'Kovács',		'Baka',			9, 					10, 				55, 				56,				32, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',  	'+yyyymmdd', 	'30a1a445-3814-4f2f-bd7c-56b63c906898.png'	),
-/* 53 */ (	'György',			'Kovács',				NULL,			'Baka',			NULL, 				NULL, 				NULL, 				NULL,			54, 			NULL, 			NULL,					NULL, 						1, 		'+18720523', 	'+19161226', 	'014fde85-12c2-437f-b958-b27316ddc2f9.png'	),
-/* 54 */ (	'Ilona',			'Péntek',				'Kis',			NULL,			NULL, 				NULL, 				NULL, 				NULL,			53, 			NULL, 			NULL,					NULL, 						0, 		'+18770307', 	'+19190615', 	NULL 										),
+/* 53 */ (	'György',			'Kovács',				NULL,			'Baka',			NULL, 				NULL, 				NULL, 				NULL,			54, 			NULL, 			'+18981112',			NULL, 						1, 		'+18720523', 	'+19161226', 	'014fde85-12c2-437f-b958-b27316ddc2f9.png'	),
+/* 54 */ (	'Ilona',			'Péntek',				'Kis',			NULL,			NULL, 				NULL, 				NULL, 				NULL,			53, 			NULL, 			'+18981112',			NULL, 						0, 		'+18770307', 	'+19480121', 	NULL 										),
 /* 55 */ (	'György',			'Kovács',				NULL,			'Baka',			53, 				54, 				NULL, 				NULL,			56, 			NULL, 			NULL,					NULL, 						1, 		'+18990811', 	'+yyyymmdd', 	'7a57c3d8-fffe-43e7-8647-7f7d97572d68.png'	),
 /* 56 */ (	'Katalin',			'Kovács',				'Antal',		'Púj',			62, 				63, 				NULL, 				NULL,			55, 			NULL, 			NULL,					NULL, 						0, 		'+19001021', 	NULL,			'02bd4eeb-df2a-44ab-8f38-bd9c623a8f06.png'	),
 /* 57 */ (	'Anyja',			'Lindanak',				NULL,           NULL,			NULL, 				NULL, 				NULL, 				NULL,			58, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',  	NULL, 			NULL 										),
@@ -275,14 +275,22 @@ VALUES
 /* 232 */ (	'Elemér',			'Kovács',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			233, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	'+yyyymmdd', 	'1fffbc72-5b69-4f10-9888-342b2d20b1b0.png'	),
 /* 233 */ (	'Melinda',			'Kovács',				'Tamás',	    NULL,			226, 				227, 				NULL, 				NULL,			232, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	'd538d15b-8109-4935-84d2-d8ff1f246b65.png'	),
 /* 234 */ (	'Máté',				'Kovács',				NULL,	    	NULL,			232, 				233, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	'+yyyymmdd', 	'd23fdb4a-1fba-40eb-9842-bf5d31dcb4dd.png'	),
-/* 235 */ (	'Réka',				'Kovács',				NULL,	    	NULL,			232, 				233, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	'e7556150-7899-4509-9238-f8266c49efb5.png'	)
+/* 235 */ (	'Réka',				'Kovács',				NULL,	    	NULL,			232, 				233, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	'e7556150-7899-4509-9238-f8266c49efb5.png'	),
 
+/* 236 */ (	'István',			'Kovács',				NULL,	    	'Pendzsi',		NULL, 				NULL, 				NULL, 				NULL,			237, 			NULL, 			'+19571102',			NULL, 						1, 		'+19331205',	'+20100429', 	'ba9ece43-23bd-4c34-95b6-f09f01a67b8b.png'	),
+/* 237 */ (	'Erzsébet',			'Kovács',				'Márton',    	'Kűpál',		11, 				12, 				NULL, 				NULL,			236, 			NULL, 			'+19571102',			NULL, 						0, 		'+19350816',	'+20190603', 	'477bf0f2-6ad5-489d-b915-3378acb0c08b.png'	),
+/* 238 */ (	'Ferenc',			'Kovács',				NULL,	    	'Sátán',		NULL, 				NULL, 				NULL, 				NULL,			239, 			NULL, 			NULL,					NULL, 						1, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	),
+/* 239 */ (	'Éva',				'Kovács',				'?',	    	'Pendzsi',		236, 				237,				NULL,				NULL,			238, 			NULL, 			NULL,					NULL, 						0, 		'+1958mmdd',	'+yyyymmdd', 	'd1382c43-a1a8-49a7-aeb7-4f55d3fc614e.png'	),
+/* 240 */ (	'István',			'Kovács',				NULL,	    	'Pendzsi',		236, 				237,				NULL,				NULL,			241, 			NULL, 			NULL,					NULL, 						1, 		'+1962mmdd',	NULL, 			'f9cf8b75-516d-42e6-95ad-daea2f3a7d14.png'	),
+/* 241 */ (	'Tünde',			'Kovács',				'Mihály',    	'Pál',			NULL, 				NULL, 				NULL, 				NULL,			240, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'ed58ab5d-8842-4527-b72f-d145de337764.png'	),
+/* 242 */ (	'Áron',				'Kovács',				NULL,	    	NULL,			238, 				239,				NULL,				NULL,			243, 			NULL, 			'+19991009',			NULL, 						1, 		'+19771223',	NULL, 			'f25a6453-08ab-4b87-b02e-db92b713fb4a.png'	),
+/* 243 */ (	'Anna',				'Kovács',				'Péntek',    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			242, 			NULL, 			'+19991009',			NULL, 						0, 		'+19781113',	NULL, 			'66bf986a-8934-47f4-98ed-4f4e063dd518.png'	),
+/* 244 */ (	'Ferenc',			'Antal',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			245, 			NULL, 			'+20220618',			NULL, 						1, 		'+yyyymmdd',	NULL, 			'de5f88c9-b389-41a9-9b5c-85efc04ebdbc.png'	),
+/* 245 */ (	'Edina',			'Antal',				'Kovács',    	'Pendzsi',		240, 				241,				NULL,				NULL,			244, 			NULL, 			'+20220618',			NULL, 						0, 		'+yyyymmdd',	NULL, 			'4fbf7506-c7dc-42be-b8f9-96d09c5491b1.png'	),
+/* 246 */ (	'Nóra Anna',		'Kovács',				NULL,	    	NULL,			242, 				243,				NULL,				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+20041007',	NULL, 			'698543a4-07be-46ad-a96e-863b6b0a6edc.png'	),
+/* 247 */ (	'Áron Hunor',		'Kovács',				NULL,	    	NULL,			242, 				243,				NULL,				NULL,			NULL, 			NULL, 			NULL,					NULL, 						1, 		'+20100917',	NULL, 			'72dde241-dad8-4e3b-bc3a-1c59b0f5d146.png'	)
 
-
-
--- /* 150 */ (	'Dezső',			'Aaa',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	)
-
-
+-- /* 140 */ (	'Dezső',			'Aaa',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	)
 
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_BiologicalFatherID
