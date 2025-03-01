@@ -87,6 +87,7 @@ async function createTreeDiagram(personId) {
         await drawLines(linesContainer, parentsRowInner, childrenRowInner, maxChildrenWithParentsOnRows);
     }
 
+    // Szabi: this doesn't work
     scrollToMiddle(diagramAndLinesContainer, diagramContainer);
 
     fadeOutElement(loadingTextContainer);

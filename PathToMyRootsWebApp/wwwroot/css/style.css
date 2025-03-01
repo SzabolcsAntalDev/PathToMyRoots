@@ -38,15 +38,15 @@ html {
 }
 
 body {
-  height: 100%;
   margin: 0px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .nav-and-right-container {
-  display: flex;
   flex-grow: 1;
+  display: flex;
   background-color: var(--background-color);
   overflow: auto;
 }
@@ -61,7 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  width: 100%;
+  flex-grow: 1;
 }
 
 .top-container {
@@ -72,7 +72,6 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  position: relative;
   margin: 60px;
   margin-top: 0px;
   min-width: 800px;
@@ -438,21 +437,16 @@ table tr:hover th {
   position: relative;
   flex-grow: 1;
   overflow: auto;
-  width: 100%;
 }
 
 .tree-diagram-and-lines-container {
-  overflow-x: auto;
-  white-space: nowrap;
   position: relative;
-  margin: 0 auto;
 }
 
 .tree-diagram-container {
-  display: inline-block;
-  overflow-x: auto;
-  white-space: nowrap;
-  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .tree-lines-container {
@@ -465,6 +459,8 @@ table tr:hover th {
 
 .tree-level-row {
   display: flex;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .tree-siblings-container {
@@ -493,7 +489,6 @@ table tr:hover th {
   width: 200px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
-  position: relative;
 }
 
 .tree-node-male {
