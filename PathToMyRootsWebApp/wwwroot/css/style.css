@@ -166,6 +166,10 @@ a:hover {
   background-color: var(--background-color-highlight);
 }
 
+input {
+  outline: none;
+}
+
 select {
   padding: 8px;
   margin: 8px;

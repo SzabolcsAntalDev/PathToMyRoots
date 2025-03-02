@@ -226,6 +226,10 @@ a {
     }
 }
 
+input {
+    outline: none;
+}
+
 select {
     padding: $thickness-medium;
     margin: $thickness-medium;

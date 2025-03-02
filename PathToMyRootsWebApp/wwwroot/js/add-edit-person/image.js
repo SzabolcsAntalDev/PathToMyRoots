@@ -1,8 +1,8 @@
 ﻿const apiUrl = "https://localhost:7241/";
 
-const hiddenInputImageUrl = document.getElementById("hidden-input-image-url");
-const hiddenInputImage = document.getElementById("hidden-input-image");
-const uploadImageButton = document.getElementById("upload-image-button");
+const hiddenImageInputUrl = document.getElementById("hidden-image-input-url");
+const hiddenImageInput = document.getElementById("hidden-image-input");
+const selectImageButton = document.getElementById("select-image-button");
 
 const previewImageContainer = document.getElementById("preview-image");
 const previewImage = document.getElementById("preview-image");
@@ -11,15 +11,16 @@ const removeImageButton = document.getElementById("remove-image-button");
 const cropperBackgroundContainer = document.getElementById("cropper-background-container");
 const imageToCrop = document.getElementById("image-to-crop");
 const confirmCropButton = document.getElementById("confirm-crop-button");
+const cancelCropButton = document.getElementById("cancel-crop-button");
 
 let cropper;
 
-uploadImageButton.addEventListener("click", (event) => {
+selectImageButton.addEventListener("click", (event) => {
     event.preventDefault();
-    hiddenInputImage.click();
+    hiddenImageInput.click();
 });
 
-hiddenInputImage.addEventListener("change", (event) => {
+hiddenImageInput.addEventListener("change", (event) => {
     const imageFile = event.target.files[0];
     const fileReader = new FileReader();
 
@@ -50,7 +51,7 @@ confirmCropButton.addEventListener("click", async (event) => {
         const formData = new FormData();
         formData.append("image", blob, "cropped-image.png");
 
-        await deleteImage(hiddenInputImageUrl.value);
+        await deleteImage(hiddenImageInputUrl.value);
 
         const response = await fetch(apiUrl + "api/image/upload/", {
             method: 'POST',
@@ -59,16 +60,21 @@ confirmCropButton.addEventListener("click", async (event) => {
 
         const responseJson = await response.json();
 
-        hiddenInputImageUrl.value = responseJson.url;
+        hiddenImageInputUrl.value = responseJson.url;
         updatePreviewImageContainer();
 
         cropperBackgroundContainer.style.display = 'none';
-        hiddenInputImage.value = "";
+        hiddenImageInput.value = "";
     }, "image/png");
 });
 
+cancelCropButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    cropperBackgroundContainer.style.display = 'none';
+});
+
 function updatePreviewImageContainer() {
-    const imageUrl = hiddenInputImageUrl.value;
+    const imageUrl = hiddenImageInputUrl.value;
     if (!imageUrl) {
         previewImage.src = "";
         previewImageContainer.style.display = 'none';
@@ -82,9 +88,9 @@ function updatePreviewImageContainer() {
 removeImageButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    await deleteImage(hiddenInputImageUrl.value);
+    await deleteImage(hiddenImageInputUrl.value);
 
-    hiddenInputImageUrl.value = "";
+    hiddenImageInputUrl.value = "";
     updatePreviewImageContainer();
 });
 
