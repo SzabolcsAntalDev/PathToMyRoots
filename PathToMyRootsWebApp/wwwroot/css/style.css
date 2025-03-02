@@ -112,6 +112,10 @@ body {
   flex: 1;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 h1 {
   font-size: 21px;
   margin-top: 20px;
@@ -216,7 +220,7 @@ fieldset input[type=text] {
   margin-bottom: 0px;
 }
 
-.tree-action-img, .persons-action-img {
+.tree-action-img, table .td-shrink .persons-action-img {
   width: 20px;
   height: 20px;
   margin: 0px;
@@ -233,14 +237,32 @@ table tr {
 }
 table th, table td {
   flex: 1;
-  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-content: center;
   border: 1px solid var(--foreground-color);
   padding: 8px;
-  width: 1%;
+}
+table .td-shrink {
+  flex: 0;
+  display: flex;
+  overflow: unset;
+  padding: 4px;
   align-items: center;
-  white-space: nowrap;
-  overflow: clip;
-  text-overflow: ellipsis;
+}
+table .td-shrink .persons-img {
+  display: block;
+  width: 30px;
+}
+table .td-shrink .persons-action-button {
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  background-color: transparent;
+}
+table .td-shrink .persons-action-img {
+  margin: 0px 4px;
 }
 table td:not(:last-child) {
   border-top-color: transparent;
@@ -251,11 +273,6 @@ table td:last-child {
 }
 table th:not(:last-child) {
   border-right-color: transparent;
-}
-table .td-shrink {
-  flex: 0;
-  width: auto;
-  padding: 4px;
 }
 table tr:hover {
   background-color: var(--background-color-highlight);
@@ -381,31 +398,6 @@ table tr:hover th {
 }
 .persons-filter select {
   margin: auto 0;
-}
-
-.persons-img {
-  width: 30px;
-  height: 40px;
-}
-
-.persons-actions-container {
-  display: inline-flex;
-  align-items: center;
-}
-
-.persons-action-hyperlink {
-  display: inline-block;
-}
-
-.persons-action-button {
-  border: none;
-  margin: 0px;
-  padding: 0px;
-  background-color: transparent;
-}
-
-.persons-action-img {
-  margin: 0px 4px;
 }
 
 .action-button-on-image {

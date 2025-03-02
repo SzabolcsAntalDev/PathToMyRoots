@@ -165,6 +165,10 @@ body {
     flex: 1;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 h1 {
     font-size: $font-size-extra-large;
     margin-top: $thickness-large;
@@ -298,14 +302,37 @@ table {
 
     th, td {
         flex: 1;
-        display: flex;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        align-content: center;
         border: $border;
         padding: $thickness-medium;
-        width: 1%;
+    }
+
+    .td-shrink {
+        flex: 0;
+        display: flex;
+        overflow: unset;
+        padding: $thickness-small;
         align-items: center;
-        white-space: nowrap;
-        overflow: clip;
-        text-overflow: ellipsis;
+
+        .persons-img {
+            display: block;
+            width: 30px;
+        }
+
+        .persons-action-button {
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            background-color: transparent;
+        }
+
+        .persons-action-img {
+            @extend %action-img;
+            margin: 0px $thickness-small;
+        }
     }
 
     td:not(:last-child) {
@@ -319,12 +346,6 @@ table {
 
     th:not(:last-child) {
         border-right-color: transparent;
-    }
-
-    .td-shrink {
-        flex: 0;
-        width: auto;
-        padding: $thickness-small;
     }
 
     tr:hover {
@@ -467,32 +488,6 @@ table {
     select {
         margin: auto 0;
     }
-}
-
-.persons-img {
-    width: 30px;
-    height: 40px;
-}
-
-.persons-actions-container {
-    display: inline-flex;
-    align-items: center;
-}
-
-.persons-action-hyperlink {
-    display: inline-block;
-}
-
-.persons-action-button {
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    background-color: transparent;
-}
-
-.persons-action-img {
-    @extend %action-img;
-    margin: 0px $thickness-small;
 }
 
 .action-button-on-image {

@@ -25,26 +25,25 @@
             <th>First Marriage</th>
             <th>Second Spouse</th>
             <th>Second Marriage</th>
+
             <th class="td-shrink">
-                <div class="persons-actions-container" style="visibility: hidden">
-                    <a class="persons-action-hyperlink">
-                        <svg class="persons-action-img" title="View Tree">
-                            <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
+                <a class="hidden">
+                    <svg class="persons-action-img">
+                        <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
+                    </svg>
+                </a>
+                <a class="hidden">
+                    <svg class="persons-action-img">
+                        <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
+                    </svg>
+                </a>
+                <form class="hidden">
+                    <button class="persons-action-button">
+                        <svg class="persons-action-img">
+                            <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
                         </svg>
-                    </a>
-                    <a class="persons-action-hyperlink">
-                        <svg class="persons-action-img" title="Edit">
-                            <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
-                        </svg>
-                    </a>
-                    <form style="display: inline;">
-                        <button class="persons-action-button">
-                            <svg class="persons-action-img">
-                                <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+                    </button>
+                </form>
             </th>
         </tr>
     </thead>
@@ -155,26 +154,24 @@
                     }
                 </td>
                 <td class="td-shrink">
-                    <div class="persons-actions-container">
-                        <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                            <svg class="persons-action-img" title="View Tree">
-                                <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
+                    <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
+                        <svg class="persons-action-img" title="View Tree">
+                            <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
+                        </svg>
+                    </a>
+                    <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
+                        <svg class="persons-action-img" title="Edit">
+                            <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
+                        </svg>
+                    </a>
+                    <form asp-action="DeletePerson" asp-controller="Person" method="post">
+                        <input type="hidden" name="id" value="@person.Id" />
+                        <button type="submit" class="persons-action-button">
+                            <svg class="persons-action-img" title="Delete">
+                                <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
                             </svg>
-                        </a>
-                        <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id" class="persons-action-hyperlink">
-                            <svg class="persons-action-img" title="Edit">
-                                <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
-                            </svg>
-                        </a>
-                        <form asp-action="DeletePerson" asp-controller="Person" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="@person.Id" />
-                            <button type="submit" class="persons-action-button">
-                                <svg class="persons-action-img" title="Delete">
-                                    <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
+                        </button>
+                    </form>
                 </td>
             </tr>
         }
