@@ -78,11 +78,13 @@ function updatePreviewImageContainer() {
     if (!imageUrl) {
         previewImage.src = "";
         previewImageContainer.style.display = 'none';
+        removeImageButton.disabled = true;
         return;
     }
 
     previewImage.src = "https://localhost:7241/api/Image/get/" + imageUrl;
     previewImageContainer.style.display = 'inline-block';
+    removeImageButton.removeAttribute('disabled');
 }
 
 removeImageButton.addEventListener("click", async (event) => {
