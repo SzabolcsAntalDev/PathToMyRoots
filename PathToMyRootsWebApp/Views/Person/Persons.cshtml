@@ -15,8 +15,10 @@
     </select>
 </div>
 
-<div id="persons-container" class="persons-container">
-    @await Html.PartialAsync("_PersonsTablePartial")
+<div class="relative">
+    <div id="persons-container">
+        @await Html.PartialAsync("_PersonsTablePartial")
+    </div>
 </div>
 
 <div class="pagination-container">

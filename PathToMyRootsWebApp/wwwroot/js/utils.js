@@ -30,6 +30,7 @@ async function createOrGetLoadingTextContainer(parent) {
         hideElement(loadingTextContainer);
 
         const loadingText = document.createElement("label");
+        loadingText.style.margin = "0px";
         loadingText.textContent = "Loading...";
 
         loadingTextContainer.appendChild(loadingText);

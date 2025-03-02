@@ -169,6 +169,10 @@ body {
     visibility: hidden;
 }
 
+.relative {
+    position: relative;
+}
+
 h1 {
     font-size: $font-size-extra-large;
     margin-top: $thickness-large;
@@ -323,6 +327,7 @@ table {
 
         .persons-img {
             display: block;
+            height: 40px;
             width: 30px;
         }
 
@@ -460,22 +465,19 @@ table {
 
 
 .pagination-container {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $thickness-medium;
+    padding: $thickness-medium;
 
     button {
-        margin: $thickness-medium 0px;
+        margin: 0px;
     }
 
     span {
         margin: 0px $thickness-medium;
     }
-}
-
-
-.persons-container {
-    display: flex;
-    overflow: auto;
-    width: 100%;
 }
 
 .persons-filter {
