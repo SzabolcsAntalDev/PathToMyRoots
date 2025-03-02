@@ -14,7 +14,7 @@
         <nav class="nav-container">
             <a class="nav-logo-container-hyperlink" asp-controller="Home" asp-action="Home">
                 <img class="nav-logo-image" src="~/icons/path-to-my-roots.svg">
-                <span class="font-size-large" style="white-space: nowrap">Path To My Roots</span>
+                <h2 style="white-space: nowrap; margin-top: 0px; margin-bottom: 0px;">Path To My Roots</h2>
             </a>
             <ul class="nav-ul">
                 <li class="nav-li @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "Persons" ? "active" : "")">
@@ -53,7 +53,7 @@
     <div class="footer-container">
         <a class="footer-logo-container-hyperlink" asp-controller="Home" asp-action="Home">
             <img class="footer-logo-img" src="~/icons/path-to-my-roots.svg">
-            <span class="font-size-medium" style="margin-right: 10px;">Path To My Roots</span>
+            <h3 style="margin-right: 10px;">Path To My Roots</h3>
         </a>
     </div>
 

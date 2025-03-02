@@ -98,7 +98,7 @@ body {
 }
 
 .nav-and-right-container {
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     background-color: var(--background-color);
     overflow: auto;
@@ -114,17 +114,19 @@ body {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    flex-grow: 1;
+    flex: 1;
 }
 
 .top-container {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .page-data-container {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex: 1;
     margin: $thickness-super-large;
     margin-top: 0px;
     min-width: 800px;
@@ -136,20 +138,49 @@ body {
     background-color: var(--background-color-footer);
 }
 
+.grid-for-inputs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+.flex-row-with-gap {
+    display: flex;
+    flex-direction: row;
+    column-gap: $thickness-large;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.flex-one {
+    flex: 1;
+}
+
 h1 {
     font-size: $font-size-extra-large;
+    margin-top: $thickness-large;
+    margin-bottom: $thickness-large;
 }
 
 h2 {
     font-size: $font-size-large;
+    margin-top: $thickness-large;
+    margin-bottom: $thickness-medium;
 }
 
-.font-size-medium {
+h3 {
     font-size: $font-size-medium;
-}
-
-.font-size-large {
-    font-size: $font-size-large;
+    margin-top: $thickness-medium;
+    margin-bottom: $thickness-small;
 }
 
 %button {
@@ -178,6 +209,11 @@ button {
     @extend %button;
 }
 
+label {
+    margin-top: $thickness-medium;
+    margin-right: $thickness-medium;
+}
+
 a {
     color: inherit;
 
@@ -186,37 +222,62 @@ a {
     }
 }
 
-input[type="text"] {
-    padding: $thickness-medium;
-    margin: $thickness-medium;
-    border: $border;
-    color: inherit;
-    background-color: inherit;
-    font-size: inherit;
-
-    &:focus {
-        outline: none;
-    }
-}
-
-// Szabi
-input[type="radio"] {
-    accent-color: var(--background-color);
-    margin: $thickness-medium;
-}
-
 select {
     padding: $thickness-medium;
     margin: $thickness-medium;
+    margin-left: 0px;
     border: $border;
     color: inherit;
     background-color: inherit;
     font-size: inherit;
+    outline: none;
 }
 
 option {
     color: var(--foreground-color);
     background-color: var(--background-color);
+}
+
+input[type="text"] {
+    padding: $thickness-medium;
+    margin: $thickness-medium;
+    margin-left: 0px;
+    border: $border;
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
+}
+
+fieldset {
+    padding: 0px;
+    margin-bottom: $thickness-medium;
+    display: flex;
+    flex-direction: column;
+    border: none;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: $thickness-small;
+    }
+
+    input[type=radio] {
+        appearance: none;
+        margin: 0px;
+        width: $font-size-small;
+        height: $font-size-small;
+        border-radius: 50%;
+        background-color: var(--background-color);
+    }
+
+    input[type="radio"]:checked {
+        background-color: var(--foreground-color);
+        box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
+    }
+
+    input[type="text"] {
+        margin-bottom: 0px;
+    }
 }
 
 %action-img {
@@ -236,7 +297,7 @@ table {
     }
 
     th, td {
-        flex-grow: 1;
+        flex: 1;
         display: flex;
         border: $border;
         padding: $thickness-medium;
@@ -261,7 +322,7 @@ table {
     }
 
     .td-shrink {
-        flex-grow: 0;
+        flex: 0;
         width: auto;
         padding: $thickness-small;
     }
@@ -278,14 +339,12 @@ table {
 
 .theme-switcher-container {
     margin: $thickness-large;
-    margin-left: auto;
     display: flex;
     flex-direction: column;
 
     .switch-control {
         margin: $thickness-small auto;
         position: relative;
-        display: inline-block;
         width: 50px;
         height: 26px;
 
@@ -390,7 +449,6 @@ table {
 
 .persons-container {
     display: flex;
-    flex-grow: 1;
     overflow: auto;
     width: 100%;
 }
@@ -449,58 +507,20 @@ table {
 }
 
 
-.person-input-sections-container {
-    display: flex;
-    width: 450px;
-    margin: $thickness-medium 0px;
-
-    .person-input-labels-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    label {
-        margin: auto $thickness-medium auto 0px;
-        white-space: nowrap;
-    }
-
-    .person-inputs-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .person-preview-image-container {
-        max-width: 200px;
-        margin: 0px $thickness-medium 0px auto;
-        position: relative;
-    }
+.person-main-form {
+    max-width: 500px;
 }
 
-.person-input-bordered-sections-container {
-    display: flex;
-    flex-direction: row;
+.person-section {
+    background-color: var(--background-color-nav);
+    border-radius: $thickness-small;
+    padding: $thickness-medium;
+    padding-left: calc($thickness-medium * 2);
+    margin-bottom: $thickness-extra-large;
+}
+
+.person-preview-image {
     margin: $thickness-medium;
-    margin-left: 0px;
-    gap: $thickness-medium;
-    padding: $thickness-medium 0px;
-}
-
-.person-bordered-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: auto;
-
-    fieldset {
-        display: flex;
-        flex-direction: column;
-        margin: $thickness-medium 0px 0px 0px;
-    }
-}
-
-.person-action-img {
-    @extend %action-img;
 }
 
 #cropper-background-container {
@@ -531,7 +551,7 @@ table {
 .trees-container {
     display: flex;
     position: relative;
-    flex-grow: 1;
+    flex: 1;
     overflow: auto;
 }
 

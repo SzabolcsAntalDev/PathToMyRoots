@@ -4,7 +4,7 @@ const hiddenInputImageUrl = document.getElementById("hidden-input-image-url");
 const hiddenInputImage = document.getElementById("hidden-input-image");
 const uploadImageButton = document.getElementById("upload-image-button");
 
-const previewImageContainer = document.getElementById("person-preview-image-container");
+const previewImageContainer = document.getElementById("preview-image");
 const previewImage = document.getElementById("preview-image");
 const removeImageButton = document.getElementById("remove-image-button");
 
