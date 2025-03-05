@@ -81,6 +81,7 @@ $thickness-extra-large: 40px;
 $thickness-super-large: 60px;
 
 $border: 1px solid var(--foreground-color);
+$border-radius: $thickness-small;
 
 $action-image-size: 20px;
 $distance-between-nodes: 15px;
@@ -207,6 +208,7 @@ button, select, option, a, input[type="text"], input[type="radio"] {
     color: var(--foreground-color);
     background-color: var(--background-color);
     font-size: inherit;
+    font-family: inherit;
     cursor: pointer;
     outline: none;
     transition: color $transition, background-color $transition, border $transition;
@@ -220,6 +222,7 @@ button, select, option, a, input[type="text"], input[type="radio"] {
 
 button, select, input[type="text"] {
     border: $border;
+    border-radius: $border-radius;
 }
 
 label {
@@ -505,6 +508,7 @@ fieldset {
     width: $person-node-width;
     padding: $thickness-small;
     border: $border;
+    border-radius: $border-radius;
     transition: background-color $transition, border $transition;
 }
 
@@ -748,7 +752,7 @@ fieldset {
 .person-section {
     background-color: var(--background-color-nav);
     transition: background-color $transition;
-    border-radius: $thickness-small;
+    border-radius: $border-radius;
     padding: $thickness-medium;
     padding-left: calc($thickness-medium * 2);
     margin-bottom: $thickness-extra-large;

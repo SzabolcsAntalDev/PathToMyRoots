@@ -148,6 +148,7 @@ button, select, option, a, input[type=text], input[type=radio] {
   color: var(--foreground-color);
   background-color: var(--background-color);
   font-size: inherit;
+  font-family: inherit;
   cursor: pointer;
   outline: none;
   transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
@@ -160,6 +161,7 @@ button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, input
 
 button, select, input[type=text] {
   border: 1px solid var(--foreground-color);
+  border-radius: 4px;
 }
 
 label {
@@ -420,6 +422,7 @@ fieldset input[type=text] {
   width: 200px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
+  border-radius: 4px;
   transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
 
