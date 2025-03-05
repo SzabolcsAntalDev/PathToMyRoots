@@ -40,8 +40,6 @@ $male-color-dark: #4b5f6f;
 $female-color-dark: #8c849c;
 $marriage-color-dark: #5c6c7b;
 
-$transition: all 0.2s ease-in-out;
-
 %theme-dark {
     --foreground-color: #{$foreground-color-dark};
     --foreground-color-highlight: #{$foreground-color-highlight-dark};
@@ -55,18 +53,18 @@ $transition: all 0.2s ease-in-out;
     --marriage-color: #{$marriage-color-dark};
 }
 
-$fade-interval-in-seconds: 0.5s;
+$transition-interval: 0.3s;
+$transition: $transition-interval linear 0s;
 
 :root.theme-light {
     @extend %theme-light;
-    --fade-interval-in-seconds: #{$fade-interval-in-seconds};
+    --transition-interval: #{$transition-interval};
 }
 
 :root.theme-dark {
     @extend %theme-dark;
-    --fade-interval-in-seconds: #{$fade-interval-in-seconds};
+    --transition-interval: #{$transition-interval};
 }
-
 
 $font-size-small: 11px;
 $font-size-medium: 14px;
@@ -93,6 +91,7 @@ html {
     font-size: $font-size-small;
     font-family: $font-family-default;
     color: var(--foreground-color);
+    transition: color $transition;
     height: 100%;
 }
 
@@ -106,7 +105,6 @@ body {
 .nav-and-right-container {
     flex: 1;
     display: flex;
-    background-color: var(--background-color);
     overflow: auto;
 }
 
@@ -114,6 +112,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color-nav);
+    transition: background-color $transition;
 }
 
 .right-container {
@@ -121,6 +120,8 @@ body {
     flex-direction: column;
     overflow: auto;
     flex: 1;
+    background-color: var(--background-color);
+    transition: background-color $transition;
 }
 
 .top-container {
@@ -142,6 +143,7 @@ body {
 .footer-container {
     display: flex;
     background-color: var(--background-color-footer);
+    transition: background-color $transition;
 }
 
 .grid-for-inputs {
@@ -199,12 +201,12 @@ h3 {
 
 
 button, select, option, a, input[type="text"], input[type="radio"] {
-    transition: $transition;
-    color: inherit;
-    background-color: inherit;
+    color: var(--foreground-color);
+    background-color: var(--background-color);
     font-size: inherit;
     cursor: pointer;
     outline: none;
+    transition: color $transition, background-color $transition, border $transition;
 
     &:hover {
         color: var(--foreground-color-highlight);
@@ -223,10 +225,10 @@ label {
 }
 
 a {
-    background-color: inherit;
+    background-color: transparent;
 
     &:hover {
-        background-color: inherit;
+        background-color: transparent;
     }
 }
 
@@ -236,7 +238,6 @@ a {
     display: inline-block;
 
     &:disabled {
-        background-color: inherit;
         color: var(--foreground-color-disabled);
         border-color: var(--foreground-color-disabled);
         cursor: auto;
@@ -264,6 +265,19 @@ input[type="text"] {
     cursor: auto;
 }
 
+%action-img {
+    width: $action-image-size;
+    height: $action-image-size;
+    margin: 0px;
+    vertical-align: middle;
+    fill: var(--foreground-color);
+    transition: fill $transition;
+
+    &:hover {
+        fill: var(--foreground-color-highlight);
+    }
+}
+
 fieldset {
     padding: 0px;
     margin-bottom: $thickness-medium;
@@ -279,6 +293,7 @@ fieldset {
 
         &:hover {
             color: var(--foreground-color-highlight);
+            transition: color $transition;
         }
     }
 
@@ -289,145 +304,18 @@ fieldset {
         height: $font-size-small;
         border-radius: 50%;
         background-color: var(--background-color);
+        transition: background-color $transition;
         cursor: pointer;
     }
 
     input[type="radio"]:checked {
         background-color: var(--foreground-color);
         box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
+        transition: background-color $transition, box-shadow $transition;
     }
 
     input[type="text"] {
         margin-bottom: 0px;
-    }
-}
-
-%action-img {
-    width: $action-image-size;
-    height: $action-image-size;
-    margin: 0px;
-    vertical-align: middle;
-    fill: var(--foreground-color);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-
-    tr {
-        display: flex;
-    }
-
-    th, td {
-        flex: 1;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        align-content: center;
-        border: $border;
-        padding: $thickness-medium;
-    }
-
-    .td-shrink {
-        flex: 0;
-        display: flex;
-        overflow: unset;
-        padding: $thickness-small;
-        align-items: center;
-
-        .persons-img {
-            display: block;
-            height: 40px;
-            width: 30px;
-        }
-
-        .persons-action-button {
-            border: none;
-            margin: 0px;
-            padding: 0px;
-            background-color: transparent;
-        }
-
-        .persons-action-img {
-            @extend %action-img;
-            margin: 0px $thickness-small;
-        }
-    }
-
-    td:not(:last-child) {
-        border-top-color: transparent;
-        border-right-color: transparent;
-    }
-
-    td:last-child {
-        border-top-color: transparent;
-    }
-
-    th:not(:last-child) {
-        border-right-color: transparent;
-    }
-
-    tr:hover {
-        transition: $transition;
-        background-color: var(--background-color-highlight);
-
-        th {
-            background-color: var(--background-color);
-        }
-    }
-}
-
-
-.theme-switcher-container {
-    margin: $thickness-large;
-    display: flex;
-    flex-direction: column;
-
-    .switch-control {
-        margin: $thickness-small auto;
-        position: relative;
-        width: 50px;
-        height: 26px;
-
-        .slider-rectangle {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--background-color-footer);
-            transition: 0.4s;
-            border-radius: 13px;
-
-            &:hover {
-                background-color: var(--background-color-highlight);
-            }
-        }
-
-        .slider-rectangle:before {
-            position: absolute;
-            content: '';
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 3px;
-            background-color: var(--foreground-color);
-            transition: 0.3s;
-            border-radius: 50%;
-
-            &:hover {
-                color: var(--foreground-color-highlight);
-            }
-        }
-
-        input:checked + .slider-rectangle:before {
-            transform: translateX(22px);
-        }
-    }
-
-    #theme-label {
-        margin: $thickness-small;
     }
 }
 
@@ -461,6 +349,7 @@ table {
 
 .nav-li.active {
     background-color: var(--background-color);
+    transition: background-color $transition;
     font-weight: bold;
 }
 
@@ -495,91 +384,61 @@ table {
     margin: 0px $thickness-small 0px 0px;
 }
 
-
-.pagination-container {
+.theme-switcher-container {
+    margin: $thickness-large;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: $thickness-medium;
-    padding: $thickness-medium;
+    width: 65px;
 
-    button {
-        margin: 0px;
+    .switch-control {
+        margin: $thickness-small auto;
+        position: relative;
+        width: 50px;
+        height: 26px;
+
+        .slider-rectangle {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background-color-nav);
+            transition: background-color $transition, transform $transition-interval;
+            border-radius: 13px;
+
+            &:hover {
+                background-color: var(--background-color-highlight);
+            }
+
+            &:hover:before {
+                background-color: var(--foreground-color-highlight);
+            }
+        }
+
+        .slider-rectangle:before {
+            position: absolute;
+            content: '';
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            border-radius: 50%;
+            background-color: var(--foreground-color);
+            transition: background-color $transition, transform $transition-interval;
+        }
+
+        input:checked + .slider-rectangle:before {
+            transform: translateX(22px);
+        }
     }
 
-    span {
-        margin: 0px $thickness-medium;
+    #theme-label {
+        margin: $thickness-small;
     }
 }
 
-.persons-filter {
-    display: flex;
-
-    input, button {
-        margin: $thickness-medium 0px;
-    }
-
-    span {
-        margin: auto $thickness-small auto auto;
-    }
-
-    select {
-        margin: auto 0;
-    }
-}
-
-.action-button-on-image {
-    @extend %button;
-    position: absolute;
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    background-color: transparent;
-    top: $thickness-small;
-    right: $thickness-small;
-}
-
-
-.person-main-form {
-    max-width: 500px;
-}
-
-.person-section {
-    background-color: var(--background-color-nav);
-    border-radius: $thickness-small;
-    padding: $thickness-medium;
-    padding-left: calc($thickness-medium * 2);
-    margin-bottom: $thickness-extra-large;
-}
-
-.person-preview-image {
-    margin: $thickness-medium;
-}
-
-#cropper-background-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-#cropper-image-and-button-container {
-    position: relative;
-    background-color: var(--background-color);
-    padding: $thickness-large;
-    text-align: center;
-}
-
-#image-to-crop {
-    max-width: 100%;
-    max-height: 400px;
-}
 
 .trees-container {
     display: flex;
@@ -633,11 +492,13 @@ table {
 
 %tree-node {
     display: inline-flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     width: $person-node-width;
     padding: $thickness-small;
     border: $border;
+    transition: background-color $transition, border $transition;
 }
 
 .tree-node-male {
@@ -702,12 +563,27 @@ table {
     font-weight: bold;
 }
 
+.tree-action-button {
+    position: absolute;
+    margin: 3px;
+    padding: 3px;
+    border: none;
+    top: $thickness-small;
+    right: $thickness-small;
+    background-color: transparent;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
 .tree-action-img {
     @extend %action-img;
 }
 
 %tree-line-svg {
     stroke-width: 1px;
+    transition: stroke $transition;
     fill: transparent;
 }
 
@@ -744,6 +620,163 @@ table {
     }
 }
 
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $thickness-medium;
+    padding: $thickness-medium;
+
+    button {
+        margin: 0px;
+    }
+
+    span {
+        margin: 0px $thickness-medium;
+    }
+}
+
+
+.persons-filter {
+    display: flex;
+
+    input, button {
+        margin: $thickness-medium 0px;
+    }
+
+    span {
+        margin: auto $thickness-small auto auto;
+    }
+
+    select {
+        margin: auto 0;
+    }
+}
+
+#persons-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        display: flex;
+        color: var(--foreground-color);
+
+        a {
+            color: var(--foreground-color);
+        }
+
+        transition: color $transition, background-color $transition, border $transition;
+    }
+
+    th, td {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        align-content: center;
+        border: $border;
+        transition: border $transition;
+        padding: $thickness-medium;
+    }
+
+    th {
+        color: var(--foreground-color);
+        background-color: var(--background-color);
+        transition: color $transition, background-color $transition, border $transition;
+    }
+
+    tr:hover {
+        color: var(--foreground-color-highlight);
+        background-color: var(--background-color-highlight);
+
+        a {
+            color: var(--foreground-color-highlight);
+        }
+    }
+
+    .td-shrink {
+        flex: 0;
+        display: flex;
+        overflow: unset;
+        padding: $thickness-small;
+        align-items: center;
+
+        .persons-img {
+            display: block;
+            height: 40px;
+            width: 30px;
+        }
+
+        .persons-action-button {
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            background-color: transparent;
+        }
+
+        .persons-action-img {
+            @extend %action-img;
+            margin: 0px $thickness-small;
+        }
+    }
+
+    td:not(:last-child) {
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+
+    td:last-child {
+        border-top-color: transparent;
+    }
+
+    th:not(:last-child) {
+        border-right-color: transparent;
+    }
+}
+
+.person-main-form {
+    max-width: 500px;
+}
+
+.person-section {
+    background-color: var(--background-color-nav);
+    transition: background-color $transition;
+    border-radius: $thickness-small;
+    padding: $thickness-medium;
+    padding-left: calc($thickness-medium * 2);
+    margin-bottom: $thickness-extra-large;
+}
+
+.person-preview-image {
+    margin: $thickness-medium;
+}
+
+#cropper-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#cropper-image-and-button-container {
+    position: relative;
+    background-color: var(--background-color);
+    padding: $thickness-large;
+    text-align: center;
+}
+
+#image-to-crop {
+    max-width: 100%;
+    max-height: 400px;
+}
+
+
 .fade-hidden {
     opacity: 0;
     visibility: hidden;
@@ -752,11 +785,11 @@ table {
 .fade-in {
     opacity: 1;
     visibility: visible;
-    transition: opacity var(--fade-interval-in-seconds) ease-in-out;
+    transition: opacity var(--transition-interval) ease-in-out;
 }
 
 .fade-out {
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--fade-interval-in-seconds) ease-in-out, visibility 0s linear var(--fade-interval-in-seconds);
+    transition: opacity var(--transition-interval) ease-in-out, visibility 0s var(--transition-interval);
 }

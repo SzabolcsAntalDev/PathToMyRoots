@@ -47,7 +47,7 @@ async function createOrGetLoadingTextContainer(parent) {
 }
 
 function getFadeIntervalInSeconds() {
-    const fadeIntervalInSeconds = getComputedStyle(document.documentElement).getPropertyValue('--fade-interval-in-seconds');
+    const fadeIntervalInSeconds = getComputedStyle(document.documentElement).getPropertyValue('--transition-interval');
     return parseFloat(fadeIntervalInSeconds);
 }
 

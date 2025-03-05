@@ -25,17 +25,18 @@
 }
 
 :root.theme-light {
-  --fade-interval-in-seconds: 0.5s;
+  --transition-interval: 0.3s;
 }
 
 :root.theme-dark {
-  --fade-interval-in-seconds: 0.5s;
+  --transition-interval: 0.3s;
 }
 
 html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
   color: var(--foreground-color);
+  transition: color 0.3s linear 0s;
   height: 100%;
 }
 
@@ -49,7 +50,6 @@ body {
 .nav-and-right-container {
   flex: 1;
   display: flex;
-  background-color: var(--background-color);
   overflow: auto;
 }
 
@@ -57,6 +57,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--background-color-nav);
+  transition: background-color 0.3s linear 0s;
 }
 
 .right-container {
@@ -64,6 +65,8 @@ body {
   flex-direction: column;
   overflow: auto;
   flex: 1;
+  background-color: var(--background-color);
+  transition: background-color 0.3s linear 0s;
 }
 
 .top-container {
@@ -85,6 +88,7 @@ body {
 .footer-container {
   display: flex;
   background-color: var(--background-color-footer);
+  transition: background-color 0.3s linear 0s;
 }
 
 .grid-for-inputs {
@@ -141,12 +145,12 @@ h3 {
 }
 
 button, select, option, a, input[type=text], input[type=radio] {
-  transition: all 0.2s ease-in-out;
-  color: inherit;
-  background-color: inherit;
+  color: var(--foreground-color);
+  background-color: var(--background-color);
   font-size: inherit;
   cursor: pointer;
   outline: none;
+  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
 button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, input[type=radio]:hover {
   color: var(--foreground-color-highlight);
@@ -164,19 +168,18 @@ label {
 }
 
 a {
-  background-color: inherit;
+  background-color: transparent;
 }
 a:hover {
-  background-color: inherit;
+  background-color: transparent;
 }
 
-.action-button-on-image, button {
+button {
   padding: 8px;
   margin: 8px;
   display: inline-block;
 }
-.action-button-on-image:disabled, button:disabled {
-  background-color: inherit;
+button:disabled {
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
   cursor: auto;
@@ -199,6 +202,18 @@ input[type=text] {
   cursor: auto;
 }
 
+#persons-table .td-shrink .persons-action-img, .tree-action-img {
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  vertical-align: middle;
+  fill: var(--foreground-color);
+  transition: fill 0.3s linear 0s;
+}
+#persons-table .td-shrink .persons-action-img:hover, .tree-action-img:hover {
+  fill: var(--foreground-color-highlight);
+}
+
 fieldset {
   padding: 0px;
   margin-bottom: 8px;
@@ -214,6 +229,7 @@ fieldset label {
 }
 fieldset label:hover {
   color: var(--foreground-color-highlight);
+  transition: color 0.3s linear 0s;
 }
 fieldset input[type=radio] {
   appearance: none;
@@ -222,123 +238,16 @@ fieldset input[type=radio] {
   height: 11px;
   border-radius: 50%;
   background-color: var(--background-color);
+  transition: background-color 0.3s linear 0s;
   cursor: pointer;
 }
 fieldset input[type=radio]:checked {
   background-color: var(--foreground-color);
   box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
+  transition: background-color 0.3s linear 0s, box-shadow 0.3s linear 0s;
 }
 fieldset input[type=text] {
   margin-bottom: 0px;
-}
-
-.tree-action-img, table .td-shrink .persons-action-img {
-  width: 20px;
-  height: 20px;
-  margin: 0px;
-  vertical-align: middle;
-  fill: var(--foreground-color);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-table tr {
-  display: flex;
-}
-table th, table td {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  align-content: center;
-  border: 1px solid var(--foreground-color);
-  padding: 8px;
-}
-table .td-shrink {
-  flex: 0;
-  display: flex;
-  overflow: unset;
-  padding: 4px;
-  align-items: center;
-}
-table .td-shrink .persons-img {
-  display: block;
-  height: 40px;
-  width: 30px;
-}
-table .td-shrink .persons-action-button {
-  border: none;
-  margin: 0px;
-  padding: 0px;
-  background-color: transparent;
-}
-table .td-shrink .persons-action-img {
-  margin: 0px 4px;
-}
-table td:not(:last-child) {
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-table td:last-child {
-  border-top-color: transparent;
-}
-table th:not(:last-child) {
-  border-right-color: transparent;
-}
-table tr:hover {
-  transition: all 0.2s ease-in-out;
-  background-color: var(--background-color-highlight);
-}
-table tr:hover th {
-  background-color: var(--background-color);
-}
-
-.theme-switcher-container {
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.theme-switcher-container .switch-control {
-  margin: 4px auto;
-  position: relative;
-  width: 50px;
-  height: 26px;
-}
-.theme-switcher-container .switch-control .slider-rectangle {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--background-color-footer);
-  transition: 0.4s;
-  border-radius: 13px;
-}
-.theme-switcher-container .switch-control .slider-rectangle:hover {
-  background-color: var(--background-color-highlight);
-}
-.theme-switcher-container .switch-control .slider-rectangle:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 4px;
-  bottom: 3px;
-  background-color: var(--foreground-color);
-  transition: 0.3s;
-  border-radius: 50%;
-}
-.theme-switcher-container .switch-control .slider-rectangle:before:hover {
-  color: var(--foreground-color-highlight);
-}
-.theme-switcher-container .switch-control input:checked + .slider-rectangle:before {
-  transform: translateX(22px);
-}
-.theme-switcher-container #theme-label {
-  margin: 4px;
 }
 
 .nav-logo-container-hyperlink {
@@ -369,6 +278,7 @@ table tr:hover th {
 
 .nav-li.active {
   background-color: var(--background-color);
+  transition: background-color 0.3s linear 0s;
   font-weight: bold;
 }
 
@@ -401,82 +311,52 @@ table tr:hover th {
   margin: 0px 4px 0px 0px;
 }
 
-.pagination-container {
+.theme-switcher-container {
+  margin: 20px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 8px;
+  width: 65px;
 }
-.pagination-container button {
-  margin: 0px;
+.theme-switcher-container .switch-control {
+  margin: 4px auto;
+  position: relative;
+  width: 50px;
+  height: 26px;
 }
-.pagination-container span {
-  margin: 0px 8px;
-}
-
-.persons-filter {
-  display: flex;
-}
-.persons-filter input, .persons-filter button {
-  margin: 8px 0px;
-}
-.persons-filter span {
-  margin: auto 4px auto auto;
-}
-.persons-filter select {
-  margin: auto 0;
-}
-
-.action-button-on-image {
+.theme-switcher-container .switch-control .slider-rectangle {
   position: absolute;
-  margin: 0px;
-  padding: 0px;
-  border: none;
-  background-color: transparent;
-  top: 4px;
-  right: 4px;
-}
-
-.person-main-form {
-  max-width: 500px;
-}
-
-.person-section {
-  background-color: var(--background-color-nav);
-  border-radius: 4px;
-  padding: 8px;
-  padding-left: 16px;
-  margin-bottom: 40px;
-}
-
-.person-preview-image {
-  margin: 8px;
-}
-
-#cropper-background-container {
-  position: fixed;
+  cursor: pointer;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-color-nav);
+  transition: background-color 0.3s linear 0s, transform 0.3s;
+  border-radius: 13px;
 }
-
-#cropper-image-and-button-container {
-  position: relative;
-  background-color: var(--background-color);
-  padding: 20px;
-  text-align: center;
+.theme-switcher-container .switch-control .slider-rectangle:hover {
+  background-color: var(--background-color-highlight);
 }
-
-#image-to-crop {
-  max-width: 100%;
-  max-height: 400px;
+.theme-switcher-container .switch-control .slider-rectangle:hover:before {
+  background-color: var(--foreground-color-highlight);
+}
+.theme-switcher-container .switch-control .slider-rectangle:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 3px;
+  border-radius: 50%;
+  background-color: var(--foreground-color);
+  transition: background-color 0.3s linear 0s, transform 0.3s;
+}
+.theme-switcher-container .switch-control input:checked + .slider-rectangle:before {
+  transform: translateX(22px);
+}
+.theme-switcher-container #theme-label {
+  margin: 4px;
 }
 
 .trees-container {
@@ -531,11 +411,13 @@ table tr:hover th {
 
 .tree-node-marriage, .tree-node-female, .tree-node-male {
   display: inline-flex;
+  position: relative;
   flex-direction: row;
   align-items: center;
   width: 200px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
+  transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
 
 .tree-node-male {
@@ -587,8 +469,22 @@ table tr:hover th {
   font-weight: bold;
 }
 
+.tree-action-button {
+  position: absolute;
+  margin: 3px;
+  padding: 3px;
+  border: none;
+  top: 4px;
+  right: 4px;
+  background-color: transparent;
+}
+.tree-action-button:hover {
+  background-color: transparent;
+}
+
 .tree-line-marriage-svg, .tree-line-adoptive-svg, .tree-line-biological-svg {
   stroke-width: 1px;
+  transition: stroke 0.3s linear 0s;
   fill: transparent;
 }
 
@@ -621,6 +517,141 @@ table tr:hover th {
   font-weight: bold;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+.pagination-container button {
+  margin: 0px;
+}
+.pagination-container span {
+  margin: 0px 8px;
+}
+
+.persons-filter {
+  display: flex;
+}
+.persons-filter input, .persons-filter button {
+  margin: 8px 0px;
+}
+.persons-filter span {
+  margin: auto 4px auto auto;
+}
+.persons-filter select {
+  margin: auto 0;
+}
+
+#persons-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#persons-table tr {
+  display: flex;
+  color: var(--foreground-color);
+  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+}
+#persons-table tr a {
+  color: var(--foreground-color);
+}
+#persons-table th, #persons-table td {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-content: center;
+  border: 1px solid var(--foreground-color);
+  transition: border 0.3s linear 0s;
+  padding: 8px;
+}
+#persons-table th {
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+}
+#persons-table tr:hover {
+  color: var(--foreground-color-highlight);
+  background-color: var(--background-color-highlight);
+}
+#persons-table tr:hover a {
+  color: var(--foreground-color-highlight);
+}
+#persons-table .td-shrink {
+  flex: 0;
+  display: flex;
+  overflow: unset;
+  padding: 4px;
+  align-items: center;
+}
+#persons-table .td-shrink .persons-img {
+  display: block;
+  height: 40px;
+  width: 30px;
+}
+#persons-table .td-shrink .persons-action-button {
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  background-color: transparent;
+}
+#persons-table .td-shrink .persons-action-img {
+  margin: 0px 4px;
+}
+#persons-table td:not(:last-child) {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+#persons-table td:last-child {
+  border-top-color: transparent;
+}
+#persons-table th:not(:last-child) {
+  border-right-color: transparent;
+}
+
+.person-main-form {
+  max-width: 500px;
+}
+
+.person-section {
+  background-color: var(--background-color-nav);
+  transition: background-color 0.3s linear 0s;
+  border-radius: 4px;
+  padding: 8px;
+  padding-left: 16px;
+  margin-bottom: 40px;
+}
+
+.person-preview-image {
+  margin: 8px;
+}
+
+#cropper-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#cropper-image-and-button-container {
+  position: relative;
+  background-color: var(--background-color);
+  padding: 20px;
+  text-align: center;
+}
+
+#image-to-crop {
+  max-width: 100%;
+  max-height: 400px;
+}
+
 .fade-hidden {
   opacity: 0;
   visibility: hidden;
@@ -629,11 +660,11 @@ table tr:hover th {
 .fade-in {
   opacity: 1;
   visibility: visible;
-  transition: opacity var(--fade-interval-in-seconds) ease-in-out;
+  transition: opacity var(--transition-interval) ease-in-out;
 }
 
 .fade-out {
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--fade-interval-in-seconds) ease-in-out, visibility 0s linear var(--fade-interval-in-seconds);
+  transition: opacity var(--transition-interval) ease-in-out, visibility 0s var(--transition-interval);
 }

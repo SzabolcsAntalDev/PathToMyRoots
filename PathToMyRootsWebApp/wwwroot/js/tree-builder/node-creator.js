@@ -81,7 +81,7 @@ function createNode(person) {
 
     const buttonEditPerson = document.createElement('button');
     buttonEditPerson.appendChild(svgElement);
-    buttonEditPerson.className = "action-button-on-image";
+    buttonEditPerson.className = "tree-action-button";
     buttonEditPerson.style.visibility = 'hidden';
 
     buttonEditPerson.addEventListener('click', function () {
