@@ -4,7 +4,7 @@ const hiddenImageInputUrl = document.getElementById("hidden-image-input-url");
 const hiddenImageInput = document.getElementById("hidden-image-input");
 const selectImageButton = document.getElementById("select-image-button");
 
-const previewImageContainer = document.getElementById("preview-image");
+const toggleablePreviewImageContainer = document.getElementById("toggleable-preview-image-container");
 const previewImage = document.getElementById("preview-image");
 const removeImageButton = document.getElementById("remove-image-button");
 
@@ -61,7 +61,7 @@ confirmCropButton.addEventListener("click", async (event) => {
         const responseJson = await response.json();
 
         hiddenImageInputUrl.value = responseJson.url;
-        updatePreviewImageContainer();
+        updatePreviewImage();
 
         cropperBackgroundContainer.style.display = 'none';
         hiddenImageInput.value = "";
@@ -73,17 +73,16 @@ cancelCropButton.addEventListener("click", async (event) => {
     cropperBackgroundContainer.style.display = 'none';
 });
 
-function updatePreviewImageContainer() {
+function updatePreviewImage() {
     const imageUrl = hiddenImageInputUrl.value;
     if (!imageUrl) {
-        previewImage.src = "";
-        previewImageContainer.style.display = 'none';
+        toggleablePreviewImageContainer.classList.remove('toggleable-container-open');
         removeImageButton.disabled = true;
         return;
     }
 
+    toggleablePreviewImageContainer.classList.add('toggleable-container-open');
     previewImage.src = "https://localhost:7241/api/Image/get/" + imageUrl;
-    previewImageContainer.style.display = 'inline-block';
     removeImageButton.removeAttribute('disabled');
 }
 
@@ -93,7 +92,7 @@ removeImageButton.addEventListener("click", async (event) => {
     await deleteImage(hiddenImageInputUrl.value);
 
     hiddenImageInputUrl.value = "";
-    updatePreviewImageContainer();
+    updatePreviewImage();
 });
 
 

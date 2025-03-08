@@ -777,7 +777,8 @@ fieldset {
 }
 
 .person-preview-image {
-    margin: $thickness-medium;
+    width: 100%;
+    margin: $thickness-medium 0;
 }
 
 #cropper-background-container {

@@ -342,7 +342,11 @@
         <div class="flex-column person-section" style="align-items: center">
 
             <div class="flex-column" style="width: 50%">
-                <img id="preview-image" class="person-preview-image" />
+                <div id="toggleable-preview-image-container" class="toggleable-container">
+                    <div>
+                        <img id="preview-image" class="person-preview-image" />
+                    </div>
+                </div>
                 <div class="flex-row">
                     <input type="hidden" id="hidden-image-input-url" name="ImageUrl" value="@Model?.ImageUrl" />
                     <input type="file" id="hidden-image-input" accept="image/*" style="display: none" />

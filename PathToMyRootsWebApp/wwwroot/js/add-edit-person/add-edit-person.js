@@ -15,5 +15,5 @@
 
     isMaleSelectChanged();
     
-    updatePreviewImageContainer();
+    updatePreviewImage();
 });
