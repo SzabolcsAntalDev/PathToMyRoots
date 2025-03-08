@@ -82,7 +82,7 @@
                 <h3>Death Date</h3>
                 <fieldset>
                     <label>
-                        <input type="radio" name="input-radio-death-date" id="input-radio-death-date-alive" onclick="deathDateTypeChanged()"
+                        <input type="radio" name="input-radio-death-date" id="input-radio-death-date-ongoing" onclick="deathDateTypeChanged()"
                         @if (Model?.DeathDate == null)
                         {
                             @:checked
@@ -217,11 +217,11 @@
                         <h3>First Marriage End Date</h3>
                         <fieldset>
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-alive" onclick="firstMarriageEndDateTypeChanged()"
+                                <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-ongoing" onclick="firstMarriageEndDateTypeChanged()"
                                 @if (Model?.FirstMarriageEndDate == null)
                                 {
                                     @:checked
-                                } />Alive
+                                } />Still Married
                             </label>
                             <label>
                                 <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-unknown" onclick="firstMarriageEndDateTypeChanged()"
@@ -302,11 +302,11 @@
                         <h3>Second Marriage End Date</h3>
                         <fieldset>
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-alive" onclick="secondMarriageEndDateTypeChanged()"
+                                <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-ongoing" onclick="secondMarriageEndDateTypeChanged()"
                                 @if (Model?.SecondMarriageEndDate == null)
                                 {
                                     @:checked
-                                } />Alive
+                                } />Still Married
                             </label>
                             <label>
                                 <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-unknown" onclick="secondMarriageEndDateTypeChanged()"
