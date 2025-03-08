@@ -29,7 +29,7 @@ function secondMarriageEndDateTypeChanged() {
 }
 
 function dateTypeChanged(name) {
-    var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-alive");
+    var inputRadioAlive = document.getElementById("input-radio-" + name + "-date-ongoing");
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
     var inputRadioConcreteDate = document.getElementById("input-radio-" + name + "-date-concrete-date");
 
