@@ -1,0 +1,4 @@
+﻿/* 0fr in sass translates into 0 in css, which block the toggle animation */
+.toggleable-container {
+    grid-template-rows: 0fr;
+}

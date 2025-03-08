@@ -33,11 +33,12 @@ function dateTypeChanged(name) {
     var inputRadioUnknown = document.getElementById("input-radio-" + name + "-date-unknown");
     var inputRadioConcreteDate = document.getElementById("input-radio-" + name + "-date-concrete-date");
 
+    var toggleableContainer = document.getElementById("toggleable-input-" + name + "-date-container");
     var inputDate = document.getElementById("input-" + name + "-date");
     var inputHiddenDate = document.getElementById("input-hidden-" + name + "-date");
 
     if (inputRadioAlive != null && inputRadioAlive.checked) {
-        inputDate.style.display = "none";
+        toggleableContainer.classList.remove('toggleable-container-open');
         inputDate.removeAttribute("pattern");
         inputDate.removeAttribute("title");
 
@@ -45,7 +46,7 @@ function dateTypeChanged(name) {
     }
 
     if (inputRadioUnknown.checked) {
-        inputDate.style.display = "none";
+        toggleableContainer.classList.remove('toggleable-container-open');
         inputDate.removeAttribute("pattern");
         inputDate.removeAttribute("title");
         inputDate.removeAttribute("required");
@@ -54,7 +55,7 @@ function dateTypeChanged(name) {
     }
 
     if (inputRadioConcreteDate.checked) {
-        inputDate.style.display = "block";
+        toggleableContainer.classList.add('toggleable-container-open');
         inputDate.setAttribute("pattern", DateInputPattern);
         inputDate.setAttribute("title", "Date format should be " + DateInputFlatFormat);
         inputDate.setAttribute("required", "");

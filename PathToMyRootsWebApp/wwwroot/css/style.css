@@ -255,6 +255,19 @@ fieldset input[type=text] {
   margin-bottom: 0px;
 }
 
+.toggleable-container {
+  display: grid;
+  transition: grid-template-rows 0.3s linear;
+}
+
+.toggleable-container > div {
+  overflow: hidden;
+}
+
+.toggleable-container-open {
+  grid-template-rows: 1fr;
+}
+
 .nav-logo-container-hyperlink {
   height: auto;
   display: flex;

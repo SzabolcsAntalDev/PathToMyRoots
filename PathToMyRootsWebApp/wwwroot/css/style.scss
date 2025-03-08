@@ -56,6 +56,7 @@ $marriage-color-dark: $background-color-dark;
     --marriage-color: #{$marriage-color-dark};
 }
 
+$toggle-interval: 0.3s;
 $transition-interval: 0.3s;
 $transition: $transition-interval linear 0s;
 
@@ -329,6 +330,18 @@ fieldset {
     }
 }
 
+.toggleable-container {
+    display: grid;
+    transition: grid-template-rows $toggle-interval linear;
+}
+
+.toggleable-container > div {
+    overflow: hidden;
+}
+
+.toggleable-container-open {
+    grid-template-rows: 1fr;
+}
 
 .nav-logo-container-hyperlink {
     height: auto;

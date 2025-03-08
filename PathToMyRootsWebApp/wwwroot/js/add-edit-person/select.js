@@ -47,8 +47,10 @@ function updateSpouseSelects(idleSelectName, changedSelectName) {
     });
 
     const changedSpouseMarriageDatesContainer = document.getElementById(changedSelectName + '-spouse-marriage-dates-container');
-    changedSpouseMarriageDatesContainer.style.display =
-        changedSelect.value
-            ? 'flex'
-            : 'none';
+    if (changedSelect.value) {
+        changedSpouseMarriageDatesContainer.classList.add('toggleable-container-open');
+    }
+    else {
+        changedSpouseMarriageDatesContainer.classList.remove('toggleable-container-open');
+    }
 }
