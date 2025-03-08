@@ -56,7 +56,8 @@ $marriage-color-dark: $background-color-dark;
     --marriage-color: #{$marriage-color-dark};
 }
 
-$toggle-interval: 0.3s;
+$toggle-transition: ease-out 0.3s;
+
 $transition-interval: 0.3s;
 $transition: $transition-interval linear 0s;
 
@@ -155,6 +156,10 @@ body {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
+
+    label {
+        margin-top: 0px;
+    }
 }
 
 .flex-row-with-gap {
@@ -332,7 +337,7 @@ fieldset {
 
 .toggleable-container {
     display: grid;
-    transition: grid-template-rows $toggle-interval linear;
+    transition: grid-template-rows $toggle-transition;
 }
 
 .toggleable-container > div {

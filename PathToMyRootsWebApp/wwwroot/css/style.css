@@ -96,6 +96,9 @@ body {
   grid-template-columns: auto 1fr;
   align-items: center;
 }
+.grid-for-inputs label {
+  margin-top: 0px;
+}
 
 .flex-row-with-gap {
   display: flex;
@@ -257,7 +260,7 @@ fieldset input[type=text] {
 
 .toggleable-container {
   display: grid;
-  transition: grid-template-rows 0.3s linear;
+  transition: grid-template-rows ease-out 0.3s;
 }
 
 .toggleable-container > div {
