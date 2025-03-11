@@ -364,14 +364,9 @@
         </div>
 
         <div style="display: block; text-align: right;">
-            @if (Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue)
-            {
-                <button type="submit" class="person-save-button">Add</button>
-            }
-            else
-            {
-                <button type="submit">Update</button>
-            }
+            <button type="submit" class="person-save-button">
+                @(Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "Add" : "Update")
+            </button>
         </div>
     </form>
 </div>
