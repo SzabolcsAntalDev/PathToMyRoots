@@ -74,7 +74,7 @@ $transition: $transition-interval linear 0s;
 $font-size-small: 11px;
 $font-size-medium: 14px;
 $font-size-large: 18px;
-$font-size-extra-large: 21px;
+$font-size-extra-large: 28px;
 
 $thickness-small: 4px;
 $thickness-medium: 8px;
@@ -779,6 +779,12 @@ fieldset {
 .person-preview-image {
     width: 100%;
     margin: $thickness-medium 0;
+}
+
+.person-save-button {
+    margin-bottom: $thickness-large;
+    margin-right: 0px;
+    font-size: $font-size-medium;
 }
 
 #cropper-background-container {

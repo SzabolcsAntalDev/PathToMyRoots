@@ -51,7 +51,9 @@ confirmCropButton.addEventListener('click', async (event) => {
         const formData = new FormData();
         formData.append('image', blob, 'cropped-image.png');
 
-        await deleteImage(hiddenImageInputUrl.value);
+        if (hiddenImageInputUrl.value) {
+            await deleteImage(hiddenImageInputUrl.value);
+        }
 
         const response = await fetch(apiUrl + 'api/image/upload/', {
             method: 'POST',

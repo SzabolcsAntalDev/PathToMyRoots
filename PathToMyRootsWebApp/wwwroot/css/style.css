@@ -130,7 +130,7 @@ body {
 }
 
 h1 {
-  font-size: 21px;
+  font-size: 28px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -648,6 +648,12 @@ fieldset input[type=text] {
 .person-preview-image {
   width: 100%;
   margin: 8px 0;
+}
+
+.person-save-button {
+  margin-bottom: 20px;
+  margin-right: 0px;
+  font-size: 14px;
 }
 
 #cropper-background-container {
