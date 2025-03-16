@@ -18,40 +18,52 @@
     <form asp-action="@((Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="person-main-form">
         <h2>Personal Information</h2>
         <div class="grid-for-inputs person-section">
-        @if (Model?.Id > 0)
-        {
-            <input type="hidden" name="Id" value="@Model.Id" />
-        }
+            @if (Model?.Id > 0)
+            {
+                <input type="hidden" name="Id" value="@Model.Id" />
+            }
 
-        <label for="noble-title-input">Noble Title:</label>
-        <input type="text" id="noble-title-input" name="NobleTitle" value="@Model?.NobleTitle" />
+            <label for="noble-title-input">Noble Title:</label>
+            <input type="text" id="noble-title-input" name="NobleTitle" value="@Model?.NobleTitle" />
 
-        <label for="first-name-input">First Name:</label>
-        <input type="text" id="first-name-input" name="FirstName" value="@Model?.FirstName" />
+            <label for="first-name-input">First Name:</label>
+            <input type="text" id="first-name-input" name="FirstName" value="@Model?.FirstName" />
 
-        <label for="last-name-input">Last Name:</label>
-        <input type="text" id="last-name-input" name="LastName" value="@Model?.LastName" />
+            <label for="last-name-input">Last Name:</label>
+            <input type="text" id="last-name-input" name="LastName" value="@Model?.LastName" />
 
-        <label for="maiden-name-input">Maiden Name:</label>
-        <input type="text" id="maiden-name-input" name="MaidenName" value="@Model?.MaidenName" />
+            <label for="maiden-name-input">Maiden Name:</label>
+            <input type="text" id="maiden-name-input" name="MaidenName" value="@Model?.MaidenName" />
 
-        <label for="other-names-input">Other Names:</label>
-        <input type="text" id="other-names-input" name="OtherNames" value="@Model?.OtherNames" />
+            <label for="other-names-input">Other Names:</label>
+            <input type="text" id="other-names-input" name="OtherNames" value="@Model?.OtherNames" />
 
-        <label for="is-male-select">Gender:</label>
-        <select id="is-male-select" name="IsMale" onchange="isMaleSelectChanged()">
-            <option value="true" selected="@(Model?.IsMale == true)">Male</option>
-            <option value="false" selected="@(Model?.IsMale == false)">Female</option>
-        </select>
-    </div>
+            <label>Gender:</label>
+            <div class="dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input collapsed" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="true" class="@(Model?.IsMale == true ? "selected-option" : "")">Male</li>
+                            <li data-value="false" class="@(Model?.IsMale == false ? "selected-option" : "")">Female</li>
+                        </ul>
+                        <input type="hidden" id="is-male-dropdown-menu-hidden-input" name="IsMale" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <h2>Life Details (Birth and Death)</h2>
         <div class="flex-row-with-gap person-section">
             <div class="flex-column">
                 <h3>Birth Date</h3>
-                <fieldset>
+                <fieldset class="input-date-fieldset">
                     <label>
-                        <input type="radio" name="input-radio-birth-date" id="input-radio-birth-date-unknown" onclick="birthDateTypeChanged()"
+                        <input type="radio" class="input-radio-date-unknown" name="input-radio-birth-date"
                         @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
                         {
                             @:checked
@@ -59,58 +71,57 @@
                         Unknown
                     </label>
                     <label>
-                        <input type="radio" name="input-radio-birth-date" id="input-radio-birth-date-concrete-date" onclick="birthDateTypeChanged()"
+                        <input type="radio" class="input-radio-date-concrete-date" name="input-radio-birth-date"
                         @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                         {
                             @:checked
                         } />Date
                     </label>
-                    <div id="toggleable-input-birth-date-container" class="toggleable-container">
+                    <div class="toggleable-container">
                         <div>
-                            <input type="text" id="input-birth-date" placeholder="@DateHelper.InputDateFlatFormat"
+                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
                             @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
                             {
                                 @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
                             } />
                         </div>
                     </div>
-                    <input type="hidden" id="input-hidden-birth-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
+                    <input type="hidden" class="input-hidden-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
                 </fieldset>
             </div>
 
             <div class="flex-column">
                 <h3>Death Date</h3>
-                <fieldset>
+                <fieldset class="input-date-fieldset">
                     <label>
-                        <input type="radio" name="input-radio-death-date" id="input-radio-death-date-ongoing" onclick="deathDateTypeChanged()"
+                        <input type="radio" class="input-radio-date-ongoing" name="input-radio-death-date"
                         @if (Model?.DeathDate == null)
                         {
                             @:checked
                         } />Alive
                     </label>
                     <label>
-                        <input type="radio" name="input-radio-death-date" id="input-radio-death-date-unknown" onclick="deathDateTypeChanged()"
+                        <input type="radio" class="input-radio-date-unknown" name="input-radio-death-date"
                         @if (Model?.DeathDate == DateHelper.UnknownServerDate)
                         {
                             @:checked
                         } />Unknown
                     </label>
                     <label>
-                        <input type="radio" name="input-radio-death-date" id="input-radio-death-date-concrete-date" onclick="deathDateTypeChanged()"
+                        <input type="radio" class="input-radio-date-concrete-date" name="input-radio-death-date"
                         @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
                         {
                             @:checked
                         } />Date
                     </label>
-
-                    <div id="toggleable-input-death-date-container" class="toggleable-container">
+                    <div class="toggleable-container">
                         <div>
-                            <input type="text" id="input-death-date" placeholder="@DateHelper.InputDateFlatFormat"
+                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
                                 @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
                                 {
                                     @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
                                 } />
-                            <input type="hidden" id="input-hidden-death-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
+                            <input type="hidden" class="input-hidden-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
                         </div>
                     </div>
                 </fieldset>
@@ -119,74 +130,157 @@
 
         <h2>Parental Information</h2>
         <div class="grid-for-inputs person-section">
-            <label for="biological-father-select">Biological Father:</label>
-            <select id="biological-father-select" name="BiologicalFatherId">
-                <option value="">-- Select Biological Father --</option>
-                @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@father.Id" selected=@(Model?.BiologicalFatherId == father.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(father)
-                    </option>
-                }
-            </select>
+            <label>Biological Father:</label>
+            <div class="dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select Biological Father --</li>
+                            @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@father.Id" class="@(Model?.BiologicalFatherId == father.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(father.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(father)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="BiologicalFatherId"/>
+                    </div>
+                </div>
+            </div>
 
-            <label for="biological-mother-select">Biological Mother:</label>
-            <select id="biological-mother-select" name="BiologicalMotherId">
-                <option value="">-- Select Biological Mother --</option>
-                @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@mother.Id" selected=@(Model?.BiologicalMotherId == mother.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(mother)
-                    </option>
-                }
-            </select>
+            <label>Biological Mother:</label>
+            <div class="dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select Biological Mother --</li>
+                            @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@mother.Id" class="@(Model?.BiologicalMotherId == mother.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(mother.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(mother)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="BiologicalMotherId" />
+                    </div>
+                </div>
+            </div>
 
-            <label for="adoptive-father-select">Adoptive Father:</label>
-            <select id="adoptive-father-select" name="AdoptiveFatherId">
-                <option value="">-- Select Adoptive Father --</option>
-                @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@father.Id" selected=@(Model?.AdoptiveFatherId == father.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(father)
-                    </option>
-                }
-            </select>
+            <label>Adoptive Father:</label>
+            <div class="dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select Adoptive Father --</li>
+                            @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@father.Id" class="@(Model?.AdoptiveFatherId == father.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(father.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(father)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="AdoptiveFatherId" />
+                    </div>
+                </div>
+            </div>
 
-            <label for="adoptive-mother-select">Adoptive Mother:</label>
-            <select id="adoptive-mother-select" name="AdoptiveMotherId">
-                <option value="">-- Select Adoptive Mother --</option>
-                @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@mother.Id" selected=@(Model?.AdoptiveMotherId == mother.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(mother)
-                    </option>
-                }
-            </select>
+            <label>Adoptive Mother:</label>
+            <div class="dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select Adoptive Mother --</li>
+                            @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@mother.Id" class="@(Model?.AdoptiveMotherId == mother.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(mother.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(mother)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="AdoptiveMotherId" />
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h2>Marriage History</h2>
         <div class="flex-column person-section">
             <h3 for="first-spouse-select">First Spouse</h3>
-            <select id="first-spouse-select" name="FirstSpouseId" data-person-id="@Model.Id" onchange="firstSpouseIdChanged()">
-                <option value="">-- Select First Spouse --</option>
-                @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@spouse.Id"
-                            data-is-male="@spouse.IsMale"
-                            data-first-spouse-id="@spouse.FirstSpouseId"
-                            data-second-spouse-id="@spouse.SecondSpouseId"
-                            selected=@(Model?.FirstSpouseId == spouse.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
-                    </option>
-                }
-            </select>
+            <div class="dropdown" id="first-spouse-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select First Spouse --</li>
+                            @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@spouse.Id"
+                                    data-is-male="@spouse.IsMale"
+                                    class="@(Model?.FirstSpouseId == spouse.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(spouse.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="FirstSpouseId" />
+                    </div>
+                </div>
+            </div>
             <div id="first-spouse-marriage-dates-container" class="toggleable-container">
                 <div class="flex-row-with-gap">
                     <div class="flex-column">
                         <h3>First Marriage Start Date</h3>
-                        <fieldset>
+                        <fieldset class="input-date-fieldset">
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-start-date" id="input-radio-first-marriage-start-date-unknown" onclick="firstMarriageStartDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-unknown" name="input-radio-first-marriage-start-date"
                                 @if (Model?.FirstMarriageStartDate == null || Model?.FirstMarriageStartDate == DateHelper.UnknownServerDate)
                                 {
                                     @:checked
@@ -194,84 +288,99 @@
                                 Unknown
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-start-date" id="input-radio-first-marriage-start-date-concrete-date" onclick="firstMarriageStartDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-concrete-date" name="input-radio-first-marriage-start-date"
                                 @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Date
                             </label>
-                            <div id="toggleable-input-first-marriage-start-date-container" class="toggleable-container">
+                            <div class="toggleable-container">
                                 <div>
-                                    <input type="text" id="input-first-marriage-start-date" placeholder="@DateHelper.InputDateFlatFormat"
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
                                     @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
                                     {
                                         @:value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)"
                                     } />
                                 </div>
                             </div>
-                            <input type="hidden" id="input-hidden-first-marriage-start-date" name="FirstMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)" />
+                            <input type="hidden" class="input-hidden-date" name="FirstMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)" />
                         </fieldset>
                     </div>
 
                     <div class="flex-column">
                         <h3>First Marriage End Date</h3>
-                        <fieldset>
+                        <fieldset class="input-date-fieldset">
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-ongoing" onclick="firstMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-ongoing" name="input-radio-first-marriage-end-date"
                                 @if (Model?.FirstMarriageEndDate == null)
                                 {
                                     @:checked
                                 } />Still Married
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-unknown" onclick="firstMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-unknown" name="input-radio-first-marriage-end-date"
                                 @if (Model?.FirstMarriageEndDate == DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Unknown
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-first-marriage-end-date" id="input-radio-first-marriage-end-date-concrete-date" onclick="firstMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-concrete-date" name="input-radio-first-marriage-end-date"
                                 @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Date
                             </label>
-                            <div id="toggleable-input-first-marriage-end-date-container" class="toggleable-container">
+                            <div class="toggleable-container">
                                 <div>
-                                    <input type="text" id="input-first-marriage-end-date" placeholder="@DateHelper.InputDateFlatFormat"
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
                                     @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.UnknownServerDate)
                                     {
                                         @:value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageEndDate)"
                                     } />
                                 </div>
                             </div>
-                            <input type="hidden" id="input-hidden-first-marriage-end-date" name="FirstMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageEndDate)" />
+                            <input type="hidden" class="input-hidden-date" id="input-hidden-first-marriage-end-date" name="FirstMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageEndDate)" />
                         </fieldset>
                     </div>
                 </div>
             </div>
             <h3 for="second-spouse-select">Second Spouse</h3>
-            <select id="second-spouse-select" name="SecondSpouseId" data-person-id="@Model.Id" onchange="secondSpouseIdChanged()">
-                <option value="">-- Select Second Spouse --</option>
-                @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
-                {
-                    <option value="@spouse.Id"
-                            data-is-male="@spouse.IsMale"
-                            data-first-spouse-id="@spouse.FirstSpouseId"
-                            data-second-spouse-id="@spouse.SecondSpouseId"
-                            selected=@(Model?.SecondSpouseId == spouse.Id)>
-                        @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
-                    </option>
-                }
-            </select>
+            <div class="dropdown" id="second-spouse-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-header-selected-option"></div>
+                    <div class="dropdown-header-expand-button"></div>
+                </div>
+                <div class="dropdown-menu-invisible-parent">
+                    <div class="dropdown-menu">
+                        <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
+                        <ul>
+                            <li data-value="">-- Select Second Spouse --</li>
+                            @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model?.Id))
+                            {
+                                <li data-value="@spouse.Id"
+                                    data-is-male="@spouse.IsMale"
+                                    class="@(Model?.SecondSpouseId == spouse.Id ? "selected-option" : "")">
+                                    <div class="option-with-image">
+                                        <img class="persons-img" src="https://localhost:7241/api/Image/get/@(spouse.ImageUrl ?? "missingImage.png")" />
+                                        <span class="person-name-span">
+                                            @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <input type="hidden" name="SecondSpouseId" />
+                    </div>
+                </div>
+            </div>
             <div id="second-spouse-marriage-dates-container" class="toggleable-container">
                 <div class="flex-row-with-gap">
                     <div class="flex-column">
                         <h3>Second Marriage Start Date</h3>
-                        <fieldset>
+                        <fieldset class="input-date-fieldset">
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-start-date" id="input-radio-second-marriage-start-date-unknown" onclick="secondMarriageStartDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-unknown" name="input-radio-second-marriage-start-date"
                                 @if (Model?.SecondMarriageStartDate == null || Model?.SecondMarriageStartDate == DateHelper.UnknownServerDate)
                                 {
                                     @:checked
@@ -279,59 +388,59 @@
                                 Unknown
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-start-date" id="input-radio-second-marriage-start-date-concrete-date" onclick="secondMarriageStartDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-concrete-date" name="input-radio-second-marriage-start-date"
                                 @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Date
                             </label>
-                            <div id="toggleable-input-second-marriage-start-date-container" class="toggleable-container">
+                            <div class="toggleable-container">
                                 <div>
-                                    <input type="text" id="input-second-marriage-start-date" placeholder="@DateHelper.InputDateFlatFormat"
+                                    <input type="text" class="input-date-concrete-date" name="input-radio-second-marriage-start-date" placeholder="@DateHelper.InputDateFlatFormat"
                                     @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.UnknownServerDate)
                                     {
                                         @:value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageStartDate)"
                                     } />
                                 </div>
                             </div>
-                            <input type="hidden" id="input-hidden-second-marriage-start-date" name="SecondMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageStartDate)" />
+                            <input type="hidden" class="input-hidden-date" name="SecondMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageStartDate)" />
                         </fieldset>
                     </div>
                 
                     <div class="flex-column">
                         <h3>Second Marriage End Date</h3>
-                        <fieldset>
+                        <fieldset class="input-date-fieldset">
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-ongoing" onclick="secondMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-ongoing" name="input-radio-second-marriage-end-date"
                                 @if (Model?.SecondMarriageEndDate == null)
                                 {
                                     @:checked
                                 } />Still Married
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-unknown" onclick="secondMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-unknown" name="input-radio-second-marriage-end-date"
                                 @if (Model?.SecondMarriageEndDate == DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Unknown
                             </label>
                             <label>
-                                <input type="radio" name="input-radio-second-marriage-end-date" id="input-radio-second-marriage-end-date-concrete-date" onclick="secondMarriageEndDateTypeChanged()"
+                                <input type="radio" class="input-radio-date-concrete-date" name="input-radio-second-marriage-end-date"
                                 @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.UnknownServerDate)
                                 {
                                     @:checked
                                 } />Date
                             </label>
-                            <div id="toggleable-input-second-marriage-end-date-container" class="toggleable-container">
+                            <div class="toggleable-container">
                                 <div>
-                                    <input type="text" id="input-second-marriage-end-date" placeholder="@DateHelper.InputDateFlatFormat"
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
                                     @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.UnknownServerDate)
                                     {
                                         @:value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageEndDate)"
                                     } />
                                 </div>
                             </div>
-                            <input type="hidden" id="input-hidden-second-marriage-end-date" name="SecondMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageEndDate)" />
+                            <input type="hidden" class="input-hidden-date" name="SecondMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageEndDate)" />
                         </fieldset>
                     </div>
                 </div>
@@ -379,8 +488,9 @@
     </script>
 
     <script src="~/js/libs/cropper.js"></script>
-    <script src="~/js/add-edit-person/image.js"></script>
-    <script src="~/js/add-edit-person/date.js"></script>
-    <script src="~/js/add-edit-person/select.js"></script>
     <script src="~/js/add-edit-person/add-edit-person.js"></script>
+    <script src="~/js/add-edit-person/dropdown.js"></script>
+    <script src="~/js/add-edit-person/date-input.js"></script>
+    <script src="~/js/add-edit-person/image.js"></script>
+    
 }

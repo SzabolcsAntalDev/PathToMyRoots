@@ -8,7 +8,7 @@ CREATE TABLE Persons
 	LastName NVARCHAR (50),
 	MaidenName NVARCHAR (50),
 	OtherNames NVARCHAR (250),
-	IsMale BIT NOT NULL,
+	IsMale BIT NOT NULL DEFAULT 1,
 	BirthDate CHAR (9),
 	DeathDate CHAR (9),
 	BiologicalFatherID INT,

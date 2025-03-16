@@ -11,7 +11,7 @@ namespace PathToMyRootsWebApp.Models
         public string? LastName { get; set; }
         public string? MaidenName { get; set; }
         public string? OtherNames { get; set; }
-        public bool IsMale { get; set; }
+        public bool IsMale { get; set; } = true;
         public string? BirthDate { get; set; }
         public string? DeathDate { get; set; }
         public int? BiologicalFatherId { get; set; }

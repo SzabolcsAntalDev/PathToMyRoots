@@ -187,6 +187,10 @@ body {
     visibility: hidden;
 }
 
+.collapsed {
+    display: none;
+}
+
 .relative {
     position: relative;
 }
@@ -209,8 +213,7 @@ h3 {
     margin-bottom: $thickness-small;
 }
 
-
-button, select, option, a, input[type="text"], input[type="radio"] {
+button, select, option, a, input[type="text"], input[type="radio"], .dropdown-header, .dropdown-menu li {
     color: var(--foreground-color);
     background-color: var(--background-color);
     font-size: inherit;
@@ -226,7 +229,7 @@ button, select, option, a, input[type="text"], input[type="radio"] {
     }
 }
 
-button, select, input[type="text"] {
+button, select, input[type="text"], .dropdown-header, .dropdown-menu {
     border: $border;
     border-radius: $border-radius;
 }
@@ -270,7 +273,7 @@ option {
     background-color: var(--background-color);
 }
 
-input[type="text"] {
+input[type="text"], .dropdown-header {
     padding: $thickness-medium;
     margin: $thickness-medium;
     margin-left: 0px;
@@ -682,6 +685,12 @@ fieldset {
     }
 }
 
+.persons-img {
+    display: block;
+    height: 40px;
+    width: 30px;
+}
+
 #persons-table {
     width: 100%;
     border-collapse: collapse;
@@ -730,12 +739,6 @@ fieldset {
         padding: $thickness-small;
         align-items: center;
 
-        .persons-img {
-            display: block;
-            height: 40px;
-            width: 30px;
-        }
-
         .persons-action-button {
             border: none;
             margin: 0px;
@@ -774,6 +777,97 @@ fieldset {
     padding: $thickness-medium;
     padding-left: calc($thickness-medium * 2);
     margin-bottom: $thickness-extra-large;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $thickness-medium;
+
+    .dropdown-header {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+
+        .dropdown-header-selected-option {
+            flex-grow: 1;
+        }
+
+        .dropdown-header-expand-button {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid;
+            background-color: transparent;
+            transition: transform $transition;
+            align-self: center;
+        }
+
+        .dropdown-header-expand-button-opened {
+            transform: rotate(180deg);
+        }
+    }
+
+    .dropdown-header-opened {
+        color: var(--foreground-color-highlight);
+        background-color: var(--background-color-highlight);
+        border-color: var(--foreground-color-highlight);
+    }
+
+    .dropdown-menu-invisible-parent {
+        margin: -$thickness-medium $thickness-medium 0px 0px;
+        height: 0px;
+        position: relative;
+
+        .dropdown-menu {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: opacity $transition;
+            opacity: 0;
+            visibility: hidden;
+            background-color: var(--background-color);
+
+            .dropdown-menu-filter-input {
+                margin: 0px;
+                border: none;
+                border-bottom: $border;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0px;
+                margin: 1px;
+                max-height: 400px;
+                overflow: auto;
+
+                li {
+                    padding: $thickness-medium;
+                }
+
+                li.selected-option {
+                    background-color: var(--background-color-highlight);
+                }
+            }
+        }
+
+        .dropdown-menu-opened {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    .option-with-image {
+        display: flex;
+        flex-direction: row;
+
+        .person-name-span {
+            flex-grow: 1;
+            align-content: center;
+            text-align: center;
+        }
+    }
 }
 
 .person-preview-image {
