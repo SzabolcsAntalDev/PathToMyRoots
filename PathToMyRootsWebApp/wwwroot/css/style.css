@@ -264,7 +264,7 @@ fieldset input[type=text] {
 
 .toggleable-container {
   display: grid;
-  transition: grid-template-rows ease-out 0.3s;
+  transition: grid-template-rows 0.3s ease-out 0s;
 }
 
 .toggleable-container > div {
@@ -690,7 +690,8 @@ fieldset input[type=text] {
   flex-direction: column;
   transition: opacity 0.3s linear 0s;
   opacity: 0;
-  visibility: hidden;
+  height: 0;
+  visibility: collapse;
   background-color: var(--background-color);
 }
 .dropdown .dropdown-menu-invisible-parent .dropdown-menu .dropdown-menu-filter-input {
@@ -715,6 +716,7 @@ fieldset input[type=text] {
 }
 .dropdown .dropdown-menu-invisible-parent .dropdown-menu-opened {
   opacity: 1;
+  height: auto;
   visibility: visible;
 }
 .dropdown .option-with-image {

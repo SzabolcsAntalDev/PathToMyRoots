@@ -56,10 +56,10 @@ $marriage-color-dark: $background-color-dark;
     --marriage-color: #{$marriage-color-dark};
 }
 
-$toggle-transition: ease-out 0.3s;
-
 $transition-interval: 0.3s;
+
 $transition: $transition-interval linear 0s;
+$toggle-transition: $transition-interval ease-out 0s;
 
 :root.theme-light {
     @extend %theme-light;
@@ -824,7 +824,8 @@ fieldset {
             flex-direction: column;
             transition: opacity $transition;
             opacity: 0;
-            visibility: hidden;
+            height: 0;
+            visibility: collapse;
             background-color: var(--background-color);
 
             .dropdown-menu-filter-input {
@@ -854,6 +855,7 @@ fieldset {
 
         .dropdown-menu-opened {
             opacity: 1;
+            height: auto;
             visibility: visible;
         }
     }
