@@ -3,16 +3,18 @@
 
 <h1>Person Details</h1>
 
+<span class="error-span-medium">@ViewBag.ErrorMessage</span>
+
 <div>
-    <h3>Noble Title: @Model.NobleTitle</h3>
-    <h3>First Name: @Model.FirstName</h3>
-    <h3>Last Name: @Model.LastName</h3>
-    <h3>Maiden Name: @Model.MaidenName</h3>
-    <h3>Other Names: @Model.OtherNames</h3>
+    <h3>Noble Title: @Model?.NobleTitle</h3>
+    <h3>First Name: @Model?.FirstName</h3>
+    <h3>Last Name: @Model?.LastName</h3>
+    <h3>Maiden Name: @Model?.MaidenName</h3>
+    <h3>Other Names: @Model?.OtherNames</h3>
     <h3>Gender: @PersonModelFormatter.ToGender(Model)</h3>
-    <h3>Birth Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model.BirthDate)</h3>
-    <h3>Death Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model.DeathDate)</h3>
-    <h3>Mother: @PersonModelFormatter.ToFullNameAndBirthDate(Model.BiologicalMother)</h3>
-    <h3>Father: @PersonModelFormatter.ToFullNameAndBirthDate(Model.BiologicalFather)</h3>
-    <h3>Spouse: @PersonModelFormatter.ToFullNameAndBirthDate(Model.FirstSpouse)</h3>
+    <h3>Birth Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model?.BirthDate)</h3>
+    <h3>Death Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model?.DeathDate)</h3>
+    <h3>Mother: @PersonModelFormatter.ToFullNameAndBirthDate(Model?.BiologicalMother)</h3>
+    <h3>Father: @PersonModelFormatter.ToFullNameAndBirthDate(Model?.BiologicalFather)</h3>
+    <h3>Spouse: @PersonModelFormatter.ToFullNameAndBirthDate(Model?.FirstSpouse)</h3>
 </div>

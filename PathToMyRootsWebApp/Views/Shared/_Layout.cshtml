@@ -18,14 +18,14 @@
                 <h2 style="white-space: nowrap; margin-top: 0px; margin-bottom: 0px;">Path To My Roots</h2>
             </a>
             <ul class="nav-ul">
-                <li class="nav-li @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "Persons" ? "active" : "")">
-                    <h2 style="margin: 0px">
-                        <a class="nav-a" asp-controller="Person" asp-action="Persons">Persons</a>
-                    </h2>
-                </li>
                 <li class="nav-li @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "AddPerson" ? "active" : "")">
                     <h2 style="margin: 0px">
                         <a class="nav-a" asp-controller="Person" asp-action="AddPerson">Add Person</a>
+                    </h2>
+                </li>
+                <li class="nav-li @(ViewContext.RouteData.Values["controller"]?.ToString() == "Person" && ViewContext.RouteData.Values["action"]?.ToString() == "Persons" ? "active" : "")">
+                    <h2 style="margin: 0px">
+                        <a class="nav-a" asp-controller="Person" asp-action="Persons">Persons</a>
                     </h2>
                 </li>
             </ul>

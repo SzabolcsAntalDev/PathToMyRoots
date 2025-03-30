@@ -3,7 +3,7 @@
 }
 
 function collapseEmptyValidationErrorMessages() {
-    const validationErrorMessageSpans = document.querySelectorAll(".error-span-with-bottom-margin, .error-span-with-top-margin");
+    const validationErrorMessageSpans = document.querySelectorAll(".error-span-small-with-bottom-margin, .error-span-small-with-top-margin");
 
     validationErrorMessageSpans.forEach(span => {
         if (span.textContent == "") {

@@ -14,6 +14,7 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> AddPerson()
         {
             await AddPersonsToViewBag();
@@ -24,32 +25,45 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPerson(PersonModel personModel)
         {
-            // Szabi?
-            await AddPersonsToViewBag();
-
             if (!ModelState.IsValid)
+            {
+                await AddPersonsToViewBag();
                 return View("AddEditPerson", personModel);
+            }
 
-            var success = await _personApiService.AddPersonAsync(personModel);
-            if (success)
-                return RedirectToAction("Persons");
+            var addedPersonModel = await _personApiService.AddPersonAsync(personModel);
+            if (addedPersonModel == null)
+            {
+                ViewBag.ErrorMessage = "There was an error while adding the person.";
+                await AddPersonsToViewBag();
+                return View("AddEditPerson", personModel);
+            }
 
-            TempData["ErrorMessage"] = "There was an error adding the person.";
-            return View("AddEditPerson", personModel);
+            return RedirectToAction("PersonDetails", new { id = addedPersonModel.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PersonDetails(int id)
+        {
+            var personModel = await _personApiService.GetPersonAsync(id);
+            if (personModel == null)
+                ViewBag.ErrorMessage = "The person was not found.";
+
+            return View(personModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> EditPerson(int id)
         {
+            await AddPersonsToViewBag();
+
             var personModel = await _personApiService.GetPersonAsync(id);
             if (personModel == null)
             {
-                // Szabi
-                TempData["ErrorMessage"] = "Person not found.";
-                return RedirectToAction("Persons");
+                ViewBag.ErrorMessage = "The person was not found.";
+                return View("AddEditPerson", new PersonModel());
             }
-
-            await AddPersonsToViewBag();
+            
             return View("AddEditPerson", personModel);
         }
 
@@ -57,24 +71,23 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPerson(PersonModel personModel)
         {
-            await AddPersonsToViewBag();
-
             if (!ModelState.IsValid)
+            {
+                await AddPersonsToViewBag();
                 return View("AddEditPerson", personModel);
+            }
 
             var success = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
-            if (success)
-                return RedirectToAction("Persons");
-                
-            TempData["ErrorMessage"] = "There was an error updating the person.";
-            return View("AddEditPerson", personModel);
+            if (!success)
+            {
+                ViewBag.ErrorMessage = "There was an error while updating the person.";
+                await AddPersonsToViewBag();
+                return View("AddEditPerson", personModel);
+            }
+
+            return RedirectToAction("PersonDetails", new { id = personModel.Id });
         }
 
-        public async Task<IActionResult> PersonDetails(int id)
-        {
-            var person = await _personApiService.GetPersonAsync(id);
-            return View(person);
-        }
 
         [HttpPost]
         public async Task<IActionResult> DeletePerson(int id)

@@ -46,6 +46,7 @@ namespace PathToMyRootsApi.Mappings
             };
         }
 
+        // Szabi: make it non nullable?
         public static Person? PersonDtoToPerson(PersonDto personDto)
         {
             if (personDto == null)

@@ -250,14 +250,24 @@ label {
     color: var(--error-color);
 }
 
-.error-span-with-bottom-margin {
+%error-span-small {
     @extend %error-span;
+    font-size: $font-size-small;
+}
+
+.error-span-small-with-bottom-margin {
+    @extend %error-span-small;
     margin-bottom: $thickness-medium;
 }
 
-.error-span-with-top-margin {
-    @extend %error-span;
+.error-span-small-with-top-margin {
+    @extend %error-span-small;
     margin-top: $thickness-medium;
+}
+
+.error-span-medium {
+    @extend %error-span;
+    font-size: $font-size-medium;
 }
 
 a {
@@ -793,7 +803,7 @@ fieldset {
 }
 
 .person-main-form {
-    max-width: 500px;
+    width: 500px;
 }
 
 .person-section {
