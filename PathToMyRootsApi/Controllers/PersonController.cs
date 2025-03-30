@@ -21,7 +21,7 @@ namespace PathToMyRootsApi.Controllers
             if (personDto == null)
                 return BadRequest("Null person provided.");
 
-            var person = PersonDtoMapper.PersonDtoToPerson(personDto)!;
+            var person = PersonDtoMapper.PersonDtoToPerson(personDto);
             var personFromDb = await _personService.AddPersonAsync(person);
             return CreatedAtAction(nameof(GetPerson), new { id = personFromDb.Id }, personFromDb);
         }
@@ -43,12 +43,11 @@ namespace PathToMyRootsApi.Controllers
             if (personDto == null)
                 return BadRequest("Null person provided.");
 
-            var person = PersonDtoMapper.PersonDtoToPerson(personDto)!;
-            var personFromDb = await _personService.GetPersonAsync(id);
-            if (personFromDb == null)
-                return NotFound($"Person with id {id} not found in the database.");
-
+            var person = PersonDtoMapper.PersonDtoToPerson(personDto);
             var personFromDbEdited = await _personService.EditPersonAsync(person);
+
+            if (personFromDbEdited == null)
+                return NotFound($"Person with id {id} could not be updated in the database.");
 
             var personDtoFromDbEdited = PersonDtoMapper.PersonToPersonDto(personFromDbEdited);
             return Ok(personDtoFromDbEdited);

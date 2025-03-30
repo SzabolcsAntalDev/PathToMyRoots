@@ -856,13 +856,11 @@ fieldset {
 
         .dropdown-menu {
             position: relative;
-            display: flex;
+            display: none;
             flex-direction: column;
             transition: opacity $transition;
             opacity: 0;
             height: 0;
-            // Szabi: should this be display: none?
-            visibility: collapse;
             background-color: var(--background-color);
 
             .dropdown-menu-filter-input {
@@ -893,7 +891,7 @@ fieldset {
         .dropdown-menu-opened {
             opacity: 1;
             height: auto;
-            visibility: visible;
+            display: flex;
         }
     }
 

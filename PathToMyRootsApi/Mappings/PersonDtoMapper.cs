@@ -6,11 +6,8 @@ namespace PathToMyRootsApi.Mappings
 {
     public class PersonDtoMapper
     {
-        public static PersonDto? PersonToPersonDto(Person? person)
+        public static PersonDto PersonToPersonDto(Person person)
         {
-            if (person == null)
-                return null;
-
             return new PersonDto()
             {
                 Id = person.Id,
@@ -46,12 +43,8 @@ namespace PathToMyRootsApi.Mappings
             };
         }
 
-        // Szabi: make it non nullable?
-        public static Person? PersonDtoToPerson(PersonDto personDto)
+        public static Person PersonDtoToPerson(PersonDto personDto)
         {
-            if (personDto == null)
-                return null;
-
             return new Person
             {
                 Id = personDto.Id ?? PathToMyRootsApiConstants.UnsetIntValue,

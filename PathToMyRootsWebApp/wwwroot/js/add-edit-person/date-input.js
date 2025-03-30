@@ -84,13 +84,13 @@ function setupDateInputElements(
         inputDate.removeAttribute("pattern");
         inputDate.removeAttribute("title");
 
-        inputHiddenDate.value = UnknownInputDate;
+        inputHiddenDate.value = ServerDateUnknown;
     }
 
     if (inputRadioConcreteDate.checked) {
         toggleableContainer.classList.add('toggleable-container-open');
-        inputDate.setAttribute("pattern", DateInputPattern);
-        inputDate.setAttribute("title", "Date format should be " + DateInputFlatFormat);
+        inputDate.setAttribute("pattern", ServerDateInputValidationPattern);
+        inputDate.setAttribute("title", "Date format should be " + ServerDateUnknown);
         inputDate.setAttribute("required", "");
 
         inputHiddenDate.value = inputDate.value;

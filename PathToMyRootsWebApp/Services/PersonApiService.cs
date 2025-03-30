@@ -11,7 +11,6 @@ namespace PathToMyRootsWebApp.Services
         private const string BaseUrl = "https://localhost:7241/api/person";
 
         private readonly HttpClient _httpClient;
-        // Szabi: it is used in another place, extract it
         private readonly JsonSerializerOptions CaseInsensitiveJsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         public PersonApiService(HttpClient httpClient)
