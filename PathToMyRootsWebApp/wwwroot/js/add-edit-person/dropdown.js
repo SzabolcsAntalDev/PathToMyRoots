@@ -102,6 +102,7 @@ function addGenderAndSpouseSpecificListeners() {
         resetSpouseDropdowns();
     });
 
+    // Szabi: when spouse is set to null, reset marriage date inputs
     const firstSpouseDropdown = document.querySelector('#first-spouse-dropdown');
     const firstSpouseDropdownFilterInput = firstSpouseDropdown.querySelector('.dropdown-menu-filter-input');
     const firstSpouseDropdownMenuHiddenInput = firstSpouseDropdown.querySelector('input[type="hidden"]');

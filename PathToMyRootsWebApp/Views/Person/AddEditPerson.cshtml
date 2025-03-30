@@ -307,7 +307,7 @@
                     <fieldset class="input-date-fieldset">
                         <label>
                             <input type="radio" class="input-radio-date-unknown" name="input-radio-first-marriage-start-date"
-                            @if (Model?.FirstMarriageStartDate == null || Model?.FirstMarriageStartDate == DateHelper.ServerDateUnknown)
+                            @if (Model?.FirstMarriageStartDate == null || Model.FirstMarriageStartDate == DateHelper.ServerDateUnknown)
                             {
                                 @:checked
                             } />
@@ -411,7 +411,7 @@
                     <fieldset class="input-date-fieldset">
                         <label>
                             <input type="radio" class="input-radio-date-unknown" name="input-radio-second-marriage-start-date"
-                            @if (Model?.SecondMarriageStartDate == null || Model?.SecondMarriageStartDate == DateHelper.ServerDateUnknown)
+                            @if (Model?.SecondMarriageStartDate == null || Model.SecondMarriageStartDate == DateHelper.ServerDateUnknown)
                             {
                                 @:checked
                             } />

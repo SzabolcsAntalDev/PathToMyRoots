@@ -136,15 +136,15 @@ namespace PathToMyRootsWebApp.Utils
             return result += " " + int.Parse(dayString) + ".";
         }
 
-        public static string ConvertDatabaseDateToYearFormat(string? databaseDate)
+        public static string ConvertServerDateToYearFormat(string? serverDate)
         {
-            if (databaseDate == null)
+            if (serverDate == null)
                 return string.Empty;
 
-            if (databaseDate == DatabaseDateUnknown)
+            if (serverDate == ServerDateUnknown)
                 return HumanReadableDateUnknownDate;
 
-            return GetYearStringFromDatabaseDate(databaseDate);
+            return GetYearStringFromServerDate(serverDate);
         }
 
         #region Private methods
