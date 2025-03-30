@@ -14,6 +14,75 @@ namespace PathToMyRootsWebApp.Controllers
             _personApiService = personApiService;
         }
 
+        public async Task<IActionResult> AddPerson()
+        {
+            await AddPersonsToViewBag();
+            return View("AddEditPerson", new PersonModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPerson(PersonModel personModel)
+        {
+            // Szabi?
+            await AddPersonsToViewBag();
+
+            if (!ModelState.IsValid)
+                return View("AddEditPerson", personModel);
+
+            var success = await _personApiService.AddPersonAsync(personModel);
+            if (success)
+                return RedirectToAction("Persons");
+
+            TempData["ErrorMessage"] = "There was an error adding the person.";
+            return View("AddEditPerson", personModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditPerson(int id)
+        {
+            var personModel = await _personApiService.GetPersonAsync(id);
+            if (personModel == null)
+            {
+                // Szabi
+                TempData["ErrorMessage"] = "Person not found.";
+                return RedirectToAction("Persons");
+            }
+
+            await AddPersonsToViewBag();
+            return View("AddEditPerson", personModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPerson(PersonModel personModel)
+        {
+            await AddPersonsToViewBag();
+
+            if (!ModelState.IsValid)
+                return View("AddEditPerson", personModel);
+
+            var success = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
+            if (success)
+                return RedirectToAction("Persons");
+                
+            TempData["ErrorMessage"] = "There was an error updating the person.";
+            return View("AddEditPerson", personModel);
+        }
+
+        public async Task<IActionResult> PersonDetails(int id)
+        {
+            var person = await _personApiService.GetPersonAsync(id);
+            return View(person);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePerson(int id)
+        {
+            var success = await _personApiService.DeletePersonAsync(id);
+            return RedirectToAction("Persons");
+        }
+
         // Szabi: remove 10 from page size
         public async Task<IActionResult> Persons(string filterText, int currentPageNumber, int pageSize = 10)
         {
@@ -45,109 +114,6 @@ namespace PathToMyRootsWebApp.Controllers
                 return PartialView("_PersonsTablePartial", personsPageModel);
 
             return View(personsPageModel);
-        }
-
-        public async Task<IActionResult> AddPerson()
-        {
-            await AddPersonsToViewBag();
-            return View("AddEditPerson", new PersonModel());
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditPerson(int id)
-        {
-            var personModel = await _personApiService.GetPersonAsync(id);
-            if (personModel == null)
-            {
-                TempData["ErrorMessage"] = "Person not found.";
-                return RedirectToAction("Persons");
-            }
-
-            await AddPersonsToViewBag();
-            return View("AddEditPerson", personModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPerson(PersonModel personModel)
-        {
-            personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
-            personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
-            personModel.FirstMarriageStartDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageStartDate);
-            personModel.FirstMarriageEndDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageEndDate);
-            personModel.SecondMarriageStartDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageStartDate);
-            personModel.SecondMarriageEndDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageEndDate);
-
-            if (ModelState.IsValid)
-            {
-                if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
-                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2) &&
-                    DateHelper.IsServerDateValid(personModel.FirstMarriageStartDate, out string errorMessage3) &&
-                    DateHelper.IsServerDateValid(personModel.FirstMarriageEndDate, out string errorMessage4) &&
-                    DateHelper.IsServerDateValid(personModel.SecondMarriageStartDate, out string errorMessage5) &&
-                    DateHelper.IsServerDateValid(personModel.SecondMarriageEndDate, out string errorMessage6))
-                {
-                    var success = await _personApiService.AddPersonAsync(personModel);
-                    if (success)
-                        return RedirectToAction("Persons");
-                    else
-                        TempData["ErrorMessage"] = "There was an error adding the person.";
-                }
-            }
-
-            await AddPersonsToViewBag();
-            return View("AddEditPerson", personModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPerson(PersonModel personModel)
-        {
-            personModel.BirthDate = DateHelper.InputDateToServerDate(personModel.BirthDate);
-            personModel.DeathDate = DateHelper.InputDateToServerDate(personModel.DeathDate);
-            personModel.FirstMarriageStartDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageStartDate);
-            personModel.FirstMarriageEndDate = DateHelper.InputDateToServerDate(personModel.FirstMarriageEndDate);
-            personModel.SecondMarriageStartDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageStartDate);
-            personModel.SecondMarriageEndDate = DateHelper.InputDateToServerDate(personModel.SecondMarriageEndDate);
-
-            if (ModelState.IsValid)
-            {
-                if (DateHelper.IsServerDateValid(personModel.BirthDate, out string errorMessage1) &&
-                    DateHelper.IsServerDateValid(personModel.DeathDate, out string errorMessage2) &&
-                    DateHelper.IsServerDateValid(personModel.FirstMarriageStartDate, out string errorMessage3) &&
-                    DateHelper.IsServerDateValid(personModel.FirstMarriageEndDate, out string errorMessage4) &&
-                    DateHelper.IsServerDateValid(personModel.SecondMarriageStartDate, out string errorMessage5) &&
-                    DateHelper.IsServerDateValid(personModel.SecondMarriageEndDate, out string errorMessage6))
-                {
-
-                    var result = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
-
-                    if (result)
-                    {
-                        return RedirectToAction("Persons");
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "There was an error updating the person.";
-                    }
-                }
-            }
-
-            await AddPersonsToViewBag();
-            return View("AddEditPerson", personModel);
-        }
-
-        public async Task<IActionResult> PersonDetails(int id)
-        {
-            var person = await _personApiService.GetPersonAsync(id);
-            return View(person);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeletePerson(int id)
-        {
-            var success = await _personApiService.DeletePersonAsync(id);
-            return RedirectToAction("Persons");
         }
 
         private async Task AddPersonsToViewBag()

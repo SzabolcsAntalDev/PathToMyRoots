@@ -1,8 +1,8 @@
 ﻿function initDateInputs() {
-    initCommondDateInputsListeners();
+    initCommonDateInputsListeners();
 }
 
-function initCommondDateInputsListeners() {
+function initCommonDateInputsListeners() {
     const inputDateFieldSets = document.querySelectorAll('.input-date-fieldset');
 
     // when date is changed by user, update hidden input
@@ -74,6 +74,7 @@ function setupDateInputElements(
         toggleableContainer.classList.remove('toggleable-container-open');
         inputDate.removeAttribute("pattern");
         inputDate.removeAttribute("title");
+        inputDate.removeAttribute("required");
 
         inputHiddenDate.value = null;
     }
@@ -82,7 +83,6 @@ function setupDateInputElements(
         toggleableContainer.classList.remove('toggleable-container-open');
         inputDate.removeAttribute("pattern");
         inputDate.removeAttribute("title");
-        inputDate.removeAttribute("required");
 
         inputHiddenDate.value = UnknownInputDate;
     }

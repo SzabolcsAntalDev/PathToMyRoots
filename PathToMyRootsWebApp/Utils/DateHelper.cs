@@ -10,156 +10,186 @@ namespace PathToMyRootsWebApp.Utils
         public const string HumanReadableDateUnknownDate = "?";
         public const string HumanReadableDateMissingDate = "";
 
-        public const string InputDateFormat = "{0}-{1}-{2}";
-        public const string ServerDateFormatFormat = "+{0}{1}{2}";
-        public const string InputDateValidationPattern = "^\\\\d{4}-(\\\\d{2}|mm)-(\\\\d{2}|dd)$";
-        public const string InputDateFlatFormat = "yyyy-mm-dd";
+        public const string ServerDateFormat = "{0}-{1}-{2}";
+        public const string DatabaseDateFormat = "+{0}{1}{2}";
+
+        public const string ServerDateUnknown = "yyyy-mm-dd";
+        public const string DatabaseDateUnknown = "+yyyymmdd";
+
+        public const string ServerDateInputValidationPattern = "^\\\\d{4}-(\\\\d{2}|mm)-(\\\\d{2}|dd)$";
 
         private const string MonthNumberPlaceHolder = "mm";
         private const string DayNumberPlaceHolder = "dd";
-
-        public static readonly string UnknownInputDate = "yyyy-mm-dd";
-        public static readonly string UnknownServerDate = "+yyyymmdd";
         #endregion
 
-        public static string ServerDateToInputDate(string? date)
+        public static string? ConvertDatabaseDateToServerDate(string? datebaseDate)
         {
-            if (date == null)
-                return InputDateFlatFormat;
-
-            return string.Format(InputDateFormat, GetStringValuesFromServerDate(date));
-        }
-
-        public static string? InputDateToServerDate(string? date)
-        {
-            if (date == null)
+            if (datebaseDate == null)
                 return null;
 
-            return string.Format(ServerDateFormatFormat, GetStringValuesFromInputDate(date));
+            return string.Format(ServerDateFormat, GetStringValuesFromDatabaseDate(datebaseDate));
         }
 
-        public static bool IsServerDateValid(string? date, out string errorMessage)
+        public static string? ConvertServerDateToDatabaseDate(string? serverDate)
         {
-            errorMessage = string.Empty;
-            if (date == null || date == UnknownServerDate)
-                return true;
+            if (serverDate == null)
+                return null;
 
-            var yearNumber = int.Parse(GetYearStringFromServerDate(date));
+            return string.Format(DatabaseDateFormat, GetStringValuesFromServerDate(serverDate));
+        }
 
-            var monthString = GetMonthStringFromServerDate(date);
-            var dayString = GetDayStringFromServerDate(date);
+        public static string? GetServerDateValidationErrorMessage(string? serverDate)
+        {
+            if (serverDate == null || serverDate == ServerDateUnknown)
+                return null;
+
+            if (serverDate.Length != ServerDateUnknown.Length)
+                return $"The date does not match the format {ServerDateUnknown}.";
+
+            int yearNumber = 0;
+            try
+            {
+                yearNumber = int.Parse(GetYearStringFromServerDate(serverDate));
+            }
+            catch
+            {
+                return $"The year number does not match the format {ServerDateUnknown}.";
+            }
+
+            var monthString = GetMonthStringFromServerDate(serverDate);
+            var dayString = GetDayStringFromServerDate(serverDate);
 
             if (monthString == MonthNumberPlaceHolder)
             {
                 if (dayString != DayNumberPlaceHolder)
                 {
-                    errorMessage = "Invalid date format: if day is set then month should also be set.";
-                    return false;
+                    return "In case the day is set, the month must also be specified.";
                 }
 
-                return true;
+                return null;
             }
 
-            int monthNumber = int.Parse(monthString);
-            if (monthNumber > 12)
+            int monthNumber = 0;
+            try
             {
-                errorMessage = "Invalid date format: month number too big.";
-                return false;
+                monthNumber = int.Parse(monthString);
+            }
+            catch
+            {
+                return $"The month number does not match the format {ServerDateUnknown}.";
+            }
+
+            if (monthNumber < 1 || monthNumber > 12)
+            {
+                return "The month number should be a number between 1 and 12.";
             }
 
             if (dayString == DayNumberPlaceHolder)
-                return true;
+                return null;
 
-            int dayNumber = int.Parse(dayString);
+            int dayNumber = 0;
+            try
+            {
+                dayNumber = int.Parse(dayString);
+            }
+            catch
+            {
+                return $"The day number does not match the format {ServerDateUnknown}.";
+            }
+
+            if (dayNumber < 1 || dayNumber > 31)
+            {
+                return "The day number should be a number between 1 and 31.";
+            }
+
             try
             {
                 new LocalDate(yearNumber, monthNumber, dayNumber);
-                return true;
+                return null;
             }
-            catch (Exception ex)
+            catch
             {
-                errorMessage = $"Invalid date format: {ex.Message}";
-                return false;
+                return "The provided date is not valid.";
             }
         }
 
-        public static string ServerDateToHumanReadableDateFormat(string? date)
+        public static string ConvertDatabaseDateToHumanReadableDateFormat(string? databaseDate)
         {
-            if (date == null)
+            if (databaseDate == null)
                 return string.Empty;
 
-            if (date == UnknownServerDate)
+            if (databaseDate == DatabaseDateUnknown)
                 return HumanReadableDateUnknownDate;
 
-            var result = GetYearStringFromServerDate(date);
+            var result = GetYearStringFromDatabaseDate(databaseDate);
 
-            var monthString = GetMonthStringFromServerDate(date);
+            var monthString = GetMonthStringFromDatabaseDate(databaseDate);
             if (monthString == MonthNumberPlaceHolder)
                 return result;
 
             result += ". " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(monthString)).Substring(0, 3) + ".";
 
-            var dayString = GetDayStringFromServerDate(date);
+            var dayString = GetDayStringFromDatabaseDate(databaseDate);
             if (dayString == DayNumberPlaceHolder)
                 return result;
 
             return result += " " + int.Parse(dayString) + ".";
         }
 
-        public static string ServerDateToYearFormat(string? date)
+        public static string ConvertDatabaseDateToYearFormat(string? databaseDate)
         {
-            if (date == null)
+            if (databaseDate == null)
                 return string.Empty;
 
-            if (date == UnknownServerDate)
+            if (databaseDate == DatabaseDateUnknown)
                 return HumanReadableDateUnknownDate;
 
-            return GetYearStringFromServerDate(date);
+            return GetYearStringFromDatabaseDate(databaseDate);
         }
 
         #region Private methods
-        private static string[] GetStringValuesFromServerDate(string date)
+        private static string[] GetStringValuesFromDatabaseDate(string databaseDate)
         {
             return
             [
-                GetYearStringFromServerDate(date),
-                GetMonthStringFromServerDate(date),
-                GetDayStringFromServerDate(date),
+                GetYearStringFromDatabaseDate(databaseDate),
+                GetMonthStringFromDatabaseDate(databaseDate),
+                GetDayStringFromDatabaseDate(databaseDate),
             ];
         }
-        private static string GetYearStringFromServerDate(string date)
+        private static string GetYearStringFromDatabaseDate(string databaseDate)
         {
-            return date.AsSpan(1, 4).ToString();
+            return databaseDate.AsSpan(1, 4).ToString();
         }
-        private static string GetMonthStringFromServerDate(string date)
+        private static string GetMonthStringFromDatabaseDate(string databaseDate)
         {
-            return date.AsSpan(5, 2).ToString();
+            return databaseDate.AsSpan(5, 2).ToString();
         }
-        private static string GetDayStringFromServerDate(string date)
+        private static string GetDayStringFromDatabaseDate(string datebaseDate)
         {
-            return date.AsSpan(7, 2).ToString();
+            return datebaseDate.AsSpan(7, 2).ToString();
         }
 
-        private static string[] GetStringValuesFromInputDate(string date)
+        private static string[] GetStringValuesFromServerDate(string serverDate)
         {
             return
             [
-                GetYearStringFromInputDate(date),
-                GetMonthStringFromInputDate(date),
-                GetDayStringFromInputDate(date),
+                GetYearStringFromServerDate(serverDate),
+                GetMonthStringFromServerDate(serverDate),
+                GetDayStringFromServerDate(serverDate),
             ];
         }
-        private static string GetYearStringFromInputDate(string date)
+        private static string GetYearStringFromServerDate(string serverDate)
         {
-            return date.AsSpan(0, 4).ToString();
+            return serverDate.AsSpan(0, 4).ToString();
         }
-        private static string GetMonthStringFromInputDate(string date)
+        private static string GetMonthStringFromServerDate(string serverDate)
         {
-            return date.AsSpan(5, 2).ToString();
+            return serverDate.AsSpan(5, 2).ToString();
         }
-        private static string GetDayStringFromInputDate(string date)
+        private static string GetDayStringFromServerDate(string serverDate)
         {
-            return date.AsSpan(8, 2).ToString();
+            return serverDate.AsSpan(8, 2).ToString();
         }
         #endregion Private methods
     }

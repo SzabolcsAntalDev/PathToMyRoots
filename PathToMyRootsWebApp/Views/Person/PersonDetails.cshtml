@@ -10,8 +10,8 @@
     <h3>Maiden Name: @Model.MaidenName</h3>
     <h3>Other Names: @Model.OtherNames</h3>
     <h3>Gender: @PersonModelFormatter.ToGender(Model)</h3>
-    <h3>Birth Date: @DateHelper.ServerDateToHumanReadableDateFormat(Model.BirthDate)</h3>
-    <h3>Death Date: @DateHelper.ServerDateToHumanReadableDateFormat(Model.DeathDate)</h3>
+    <h3>Birth Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model.BirthDate)</h3>
+    <h3>Death Date: @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(Model.DeathDate)</h3>
     <h3>Mother: @PersonModelFormatter.ToFullNameAndBirthDate(Model.BiologicalMother)</h3>
     <h3>Father: @PersonModelFormatter.ToFullNameAndBirthDate(Model.BiologicalFather)</h3>
     <h3>Spouse: @PersonModelFormatter.ToFullNameAndBirthDate(Model.FirstSpouse)</h3>

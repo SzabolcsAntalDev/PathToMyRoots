@@ -24,19 +24,29 @@
             }
 
             <label for="noble-title-input">Noble Title:</label>
-            <input type="text" autocomplete="off" id="noble-title-input" name="NobleTitle" value="@Model?.NobleTitle" />
+            <input type="text" autocomplete="off" maxlength="50" placeholder="Noble Title" id="noble-title-input" name="NobleTitle" value="@Model?.NobleTitle" />
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="NobleTitle"></span>
 
             <label for="first-name-input">First Name:</label>
-            <input type="text" autocomplete="off" id="first-name-input" name="FirstName" value="@Model?.FirstName" />
+            <input type="text" autocomplete="off" maxlength="50" required placeholder="First Name" id="first-name-input" name="FirstName" value="@Model?.FirstName" />
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="FirstName"></span>
 
             <label for="last-name-input">Last Name:</label>
-            <input type="text" autocomplete="off" id="last-name-input" name="LastName" value="@Model?.LastName" />
+            <input type="text" autocomplete="off" maxlength="50" placeholder="Last Name" id="last-name-input" name="LastName" value="@Model?.LastName" />
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="LastName"></span>
 
             <label for="maiden-name-input">Maiden Name:</label>
-            <input type="text" autocomplete="off" id="maiden-name-input" name="MaidenName" value="@Model?.MaidenName" />
+            <input type="text" autocomplete="off" maxlength="50" placeholder="Maiden Name" id="maiden-name-input" name="MaidenName" value="@Model?.MaidenName" />
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="MaidenName"></span>
 
             <label for="other-names-input">Other Names:</label>
-            <input type="text" autocomplete="off" id="other-names-input" name="OtherNames" value="@Model?.OtherNames" />
+            <input type="text" autocomplete="off" maxlength="250" placeholder="Other Names" id="other-names-input" name="OtherNames" value="@Model?.OtherNames" />
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="OtherNames"></span>
 
             <label>Gender:</label>
             <div class="dropdown">
@@ -55,6 +65,8 @@
                     </div>
                 </div>
             </div>
+            <span></span>
+            <span class="error-span" asp-validation-for="IsMale"></span>
         </div>
 
         <h2>Life Details (Birth and Death)</h2>
@@ -64,7 +76,7 @@
                 <fieldset class="input-date-fieldset">
                     <label>
                         <input type="radio" class="input-radio-date-unknown" name="input-radio-birth-date"
-                        @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.UnknownServerDate)
+                        @if (Model?.BirthDate == null || Model?.BirthDate == DateHelper.ServerDateUnknown)
                         {
                             @:checked
                         } />
@@ -72,21 +84,22 @@
                     </label>
                     <label>
                         <input type="radio" class="input-radio-date-concrete-date" name="input-radio-birth-date"
-                        @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
+                        @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.ServerDateUnknown)
                         {
                             @:checked
                         } />Date
                     </label>
                     <div class="toggleable-container">
-                        <div>
-                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
-                            @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.UnknownServerDate)
+                        <div class="grid-for-input-with-error-span">
+                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                            @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.ServerDateUnknown)
                             {
-                                @:value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)"
+                                @:value="@Model.BirthDate"
                             } />
+                            <span class="error-span-with-top-margin" asp-validation-for="BirthDate"></span>
                         </div>
                     </div>
-                    <input type="hidden" class="input-hidden-date" name="BirthDate" value="@DateHelper.ServerDateToInputDate(@Model.BirthDate)" />
+                    <input type="hidden" class="input-hidden-date" name="BirthDate" value="@Model.BirthDate" />
                 </fieldset>
             </div>
 
@@ -102,28 +115,29 @@
                     </label>
                     <label>
                         <input type="radio" class="input-radio-date-unknown" name="input-radio-death-date"
-                        @if (Model?.DeathDate == DateHelper.UnknownServerDate)
+                        @if (Model?.DeathDate == DateHelper.ServerDateUnknown)
                         {
                             @:checked
                         } />Unknown
                     </label>
                     <label>
                         <input type="radio" class="input-radio-date-concrete-date" name="input-radio-death-date"
-                        @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
+                        @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.ServerDateUnknown)
                         {
                             @:checked
                         } />Date
                     </label>
                     <div class="toggleable-container">
-                        <div>
-                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
-                                @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.UnknownServerDate)
-                                {
-                                    @:value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)"
-                                } />
-                            <input type="hidden" class="input-hidden-date" name="DeathDate" value="@DateHelper.ServerDateToInputDate(@Model.DeathDate)" />
+                        <div class="grid-for-input-with-error-span">
+                            <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                            @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.ServerDateUnknown)
+                            {
+                                @:value="@Model.DeathDate"
+                            } />
+                            <span class="error-span-with-top-margin" asp-validation-for="DeathDate"></span>
                         </div>
                     </div>
+                    <input type="hidden" class="input-hidden-date" name="DeathDate" value="@Model.DeathDate" />
                 </fieldset>
             </div>
         </div>
@@ -153,10 +167,12 @@
                                 </li>
                             }
                         </ul>
-                        <input type="hidden" name="BiologicalFatherId"/>
+                        <input type="hidden" name="BiologicalFatherId" />
                     </div>
                 </div>
             </div>
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="BiologicalFatherId"></span>
 
             <label>Biological Mother:</label>
             <div class="dropdown">
@@ -185,6 +201,8 @@
                     </div>
                 </div>
             </div>
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="BiologicalMotherId"></span>
 
             <label>Adoptive Father:</label>
             <div class="dropdown">
@@ -213,6 +231,8 @@
                     </div>
                 </div>
             </div>
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="AdoptiveFatherId"></span>
 
             <label>Adoptive Mother:</label>
             <div class="dropdown">
@@ -241,6 +261,8 @@
                     </div>
                 </div>
             </div>
+            <span></span>
+            <span class="error-span-with-bottom-margin" asp-validation-for="AdoptiveMotherId"></span>
         </div>
 
         <h2>Marriage History</h2>
@@ -274,6 +296,8 @@
                     </div>
                 </div>
             </div>
+            <span class="error-span-with-bottom-margin" asp-validation-for="FirstSpouseId"></span>
+
             <div id="first-spouse-marriage-dates-container" class="toggleable-container">
                 <div class="flex-row-with-gap">
                     <div class="flex-column">
@@ -281,7 +305,7 @@
                         <fieldset class="input-date-fieldset">
                             <label>
                                 <input type="radio" class="input-radio-date-unknown" name="input-radio-first-marriage-start-date"
-                                @if (Model?.FirstMarriageStartDate == null || Model?.FirstMarriageStartDate == DateHelper.UnknownServerDate)
+                                @if (Model?.FirstMarriageStartDate == null || Model?.FirstMarriageStartDate == DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />
@@ -289,21 +313,22 @@
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-concrete-date" name="input-radio-first-marriage-start-date"
-                                @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
+                                @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Date
                             </label>
                             <div class="toggleable-container">
-                                <div>
-                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
-                                    @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.UnknownServerDate)
+                                <div class="grid-for-input-with-error-span">
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.ServerDateUnknown)
                                     {
-                                        @:value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)"
+                                        @:value="@Model.FirstMarriageStartDate"
                                     } />
+                                    <span class="error-span-with-top-margin" asp-validation-for="FirstMarriageStartDate"></span>
                                 </div>
                             </div>
-                            <input type="hidden" class="input-hidden-date" name="FirstMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageStartDate)" />
+                            <input type="hidden" class="input-hidden-date" name="FirstMarriageStartDate" value="@Model.FirstMarriageStartDate" />
                         </fieldset>
                     </div>
 
@@ -319,28 +344,29 @@
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-unknown" name="input-radio-first-marriage-end-date"
-                                @if (Model?.FirstMarriageEndDate == DateHelper.UnknownServerDate)
+                                @if (Model?.FirstMarriageEndDate == DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Unknown
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-concrete-date" name="input-radio-first-marriage-end-date"
-                                @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.UnknownServerDate)
+                                @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Date
                             </label>
                             <div class="toggleable-container">
-                                <div>
-                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
-                                    @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.UnknownServerDate)
+                                <div class="grid-for-input-with-error-span">
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.ServerDateUnknown)
                                     {
-                                        @:value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageEndDate)"
+                                        @:value="@Model.FirstMarriageEndDate"
                                     } />
+                                    <span class="error-span-with-top-margin" asp-validation-for="FirstMarriageEndDate"></span>
                                 </div>
                             </div>
-                            <input type="hidden" class="input-hidden-date" id="input-hidden-first-marriage-end-date" name="FirstMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.FirstMarriageEndDate)" />
+                            <input type="hidden" class="input-hidden-date" id="input-hidden-first-marriage-end-date" name="FirstMarriageEndDate" value="@Model.FirstMarriageEndDate" />
                         </fieldset>
                     </div>
                 </div>
@@ -374,6 +400,8 @@
                     </div>
                 </div>
             </div>
+            <span class="error-span-with-bottom-margin" asp-validation-for="SecondSpouseId"></span>
+
             <div id="second-spouse-marriage-dates-container" class="toggleable-container">
                 <div class="flex-row-with-gap">
                     <div class="flex-column">
@@ -381,7 +409,7 @@
                         <fieldset class="input-date-fieldset">
                             <label>
                                 <input type="radio" class="input-radio-date-unknown" name="input-radio-second-marriage-start-date"
-                                @if (Model?.SecondMarriageStartDate == null || Model?.SecondMarriageStartDate == DateHelper.UnknownServerDate)
+                                @if (Model?.SecondMarriageStartDate == null || Model?.SecondMarriageStartDate == DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />
@@ -389,24 +417,25 @@
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-concrete-date" name="input-radio-second-marriage-start-date"
-                                @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.UnknownServerDate)
+                                @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Date
                             </label>
                             <div class="toggleable-container">
-                                <div>
-                                    <input type="text" class="input-date-concrete-date" name="input-radio-second-marriage-start-date" placeholder="@DateHelper.InputDateFlatFormat"
-                                    @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.UnknownServerDate)
+                                <div class="grid-for-input-with-error-span">
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.ServerDateUnknown)
                                     {
-                                        @:value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageStartDate)"
+                                        @:value="@Model.SecondMarriageStartDate"
                                     } />
+                                    <span class="error-span-with-top-margin" asp-validation-for="SecondMarriageStartDate"></span>
                                 </div>
                             </div>
-                            <input type="hidden" class="input-hidden-date" name="SecondMarriageStartDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageStartDate)" />
+                            <input type="hidden" class="input-hidden-date" name="SecondMarriageStartDate" value="@Model.SecondMarriageStartDate" />
                         </fieldset>
                     </div>
-                
+
                     <div class="flex-column">
                         <h3>Second Marriage End Date</h3>
                         <fieldset class="input-date-fieldset">
@@ -419,28 +448,29 @@
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-unknown" name="input-radio-second-marriage-end-date"
-                                @if (Model?.SecondMarriageEndDate == DateHelper.UnknownServerDate)
+                                @if (Model?.SecondMarriageEndDate == DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Unknown
                             </label>
                             <label>
                                 <input type="radio" class="input-radio-date-concrete-date" name="input-radio-second-marriage-end-date"
-                                @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.UnknownServerDate)
+                                @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.ServerDateUnknown)
                                 {
                                     @:checked
                                 } />Date
                             </label>
                             <div class="toggleable-container">
-                                <div>
-                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.InputDateFlatFormat"
-                                    @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.UnknownServerDate)
+                                <div class="grid-for-input-with-error-span">
+                                    <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.ServerDateUnknown)
                                     {
-                                        @:value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageEndDate)"
+                                        @:value="@Model.SecondMarriageEndDate"
                                     } />
+                                    <span class="error-span-with-top-margin" asp-validation-for="SecondMarriageEndDate"></span>
                                 </div>
                             </div>
-                            <input type="hidden" class="input-hidden-date" name="SecondMarriageEndDate" value="@DateHelper.ServerDateToInputDate(@Model.SecondMarriageEndDate)" />
+                            <input type="hidden" class="input-hidden-date" name="SecondMarriageEndDate" value="@Model.SecondMarriageEndDate" />
                         </fieldset>
                     </div>
                 </div>
@@ -482,15 +512,16 @@
 
 @section Scripts {
     <script>
-        const DateInputPattern = '@Html.Raw(DateHelper.InputDateValidationPattern)';
-        const UnknownInputDate = '@Html.Raw(DateHelper.UnknownInputDate)';
-        const DateInputFlatFormat = '@Html.Raw(DateHelper.InputDateFlatFormat)';
+        // Szabi: rename these
+        const DateInputPattern = '@Html.Raw(DateHelper.ServerDateInputValidationPattern)';
+        const UnknownInputDate = '@Html.Raw(DateHelper.ServerDateUnknown)';
+        const DateInputFlatFormat = '@Html.Raw(DateHelper.ServerDateUnknown)';
     </script>
 
     <script src="~/js/libs/cropper.js"></script>
     <script src="~/js/add-edit-person/add-edit-person.js"></script>
+    <script src="~/js/add-edit-person/validation-error-messages.js"></script>
     <script src="~/js/add-edit-person/dropdown.js"></script>
     <script src="~/js/add-edit-person/date-input.js"></script>
     <script src="~/js/add-edit-person/image.js"></script>
-    
 }

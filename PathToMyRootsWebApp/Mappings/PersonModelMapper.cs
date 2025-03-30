@@ -1,5 +1,6 @@
 ﻿using PathToMyRootsSharedModels.Dtos;
 using PathToMyRootsWebApp.Models;
+using PathToMyRootsWebApp.Utils;
 
 namespace PathToMyRootsWebApp.Mappings
 {
@@ -19,18 +20,18 @@ namespace PathToMyRootsWebApp.Mappings
                 MaidenName = personDto.MaidenName,
                 OtherNames = personDto.OtherNames,
                 IsMale = personDto.IsMale,
-                BirthDate = personDto.BirthDate,
-                DeathDate = personDto.DeathDate,
+                BirthDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.BirthDate),
+                DeathDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.DeathDate),
                 BiologicalMotherId = personDto.BiologicalMotherId,
                 BiologicalFatherId = personDto.BiologicalFatherId,
                 AdoptiveMotherId = personDto.AdoptiveMotherId,
                 AdoptiveFatherId = personDto.AdoptiveFatherId,
                 FirstSpouseId = personDto.FirstSpouseId,
                 SecondSpouseId = personDto.SecondSpouseId,
-                FirstMarriageStartDate = personDto.FirstMarriageStartDate,
-                FirstMarriageEndDate = personDto.FirstMarriageEndDate,
-                SecondMarriageStartDate = personDto.SecondMarriageStartDate,
-                SecondMarriageEndDate = personDto.SecondMarriageEndDate,
+                FirstMarriageStartDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.FirstMarriageStartDate),
+                FirstMarriageEndDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.FirstMarriageEndDate),
+                SecondMarriageStartDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.SecondMarriageStartDate),
+                SecondMarriageEndDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.SecondMarriageEndDate),
                 BiologicalMother = ShallowPersonDtoToPersonModel(personDto.BiologicalMother),
                 BiologicalFather = ShallowPersonDtoToPersonModel(personDto.BiologicalFather),
                 AdoptiveMother = ShallowPersonDtoToPersonModel(personDto.AdoptiveMother),
@@ -55,18 +56,18 @@ namespace PathToMyRootsWebApp.Mappings
                 MaidenName = personModel.MaidenName,
                 OtherNames = personModel.OtherNames,
                 IsMale = personModel.IsMale,
-                BirthDate = personModel.BirthDate,
-                DeathDate = personModel.DeathDate,
+                BirthDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.BirthDate),
+                DeathDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.DeathDate),
                 BiologicalMotherId = personModel.BiologicalMotherId,
                 BiologicalFatherId = personModel.BiologicalFatherId,
                 AdoptiveMotherId = personModel.AdoptiveMotherId,
                 AdoptiveFatherId = personModel.AdoptiveFatherId,
                 FirstSpouseId = personModel.FirstSpouseId,
                 SecondSpouseId = personModel.SecondSpouseId,
-                FirstMarriageStartDate = personModel.FirstMarriageStartDate,
-                FirstMarriageEndDate = personModel.FirstMarriageEndDate,
-                SecondMarriageStartDate = personModel.SecondMarriageStartDate,
-                SecondMarriageEndDate = personModel.SecondMarriageEndDate,
+                FirstMarriageStartDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.FirstMarriageStartDate),
+                FirstMarriageEndDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.FirstMarriageEndDate),
+                SecondMarriageStartDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.SecondMarriageStartDate),
+                SecondMarriageEndDate = DateHelper.ConvertServerDateToDatabaseDate(personModel.SecondMarriageEndDate),
                 ImageUrl = personModel.ImageUrl
             };
         }
@@ -84,8 +85,8 @@ namespace PathToMyRootsWebApp.Mappings
                 LastName = personDto.LastName,
                 MaidenName = personDto.MaidenName,
                 OtherNames = personDto.OtherNames,
-                BirthDate = personDto.BirthDate,
-                DeathDate = personDto.DeathDate,
+                BirthDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.BirthDate),
+                DeathDate = DateHelper.ConvertDatabaseDateToServerDate(personDto.DeathDate),
             };
         }
     }

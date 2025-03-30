@@ -59,8 +59,8 @@
                 <td>@person.LastName</td>
                 <td>@person.MaidenName</td>
                 <td>@person.OtherNames</td>
-                <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.BirthDate)</td>
-                <td>@DateHelper.ServerDateToHumanReadableDateFormat(person.DeathDate)</td>
+                <td>@DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.BirthDate)</td>
+                <td>@DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.DeathDate)</td>
                 <td>
                     @if (person.BiologicalFather == null)
                     {
@@ -128,7 +128,7 @@
                     }
                     else
                     {
-                        <span>@DateHelper.ServerDateToHumanReadableDateFormat(person.FirstMarriageStartDate) - @DateHelper.ServerDateToHumanReadableDateFormat(person.FirstMarriageEndDate)</span>
+                        <span>@DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.FirstMarriageStartDate) - @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.FirstMarriageEndDate)</span>
                     }
                 </td>
                 <td>
@@ -149,7 +149,7 @@
                     else
                     {
                         <a asp-action="PersonDetails" asp-controller="Person" asp-route-id="@person.SecondSpouseId">
-                            @DateHelper.ServerDateToHumanReadableDateFormat(person.SecondMarriageStartDate) - @DateHelper.ServerDateToHumanReadableDateFormat(person.SecondMarriageEndDate)
+                            @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.SecondMarriageStartDate) - @DateHelper.ConvertDatabaseDateToHumanReadableDateFormat(person.SecondMarriageEndDate)
                         </a>
                     }
                 </td>

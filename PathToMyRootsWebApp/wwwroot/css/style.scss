@@ -14,6 +14,7 @@ $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
 $marriage-color-light: $background-color-light;
 
+$error-color-light: red;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
@@ -29,6 +30,7 @@ $male-color-dark: $background-color-footer-dark;
 $female-color-dark: $background-color-nav-dark;
 $marriage-color-dark: $background-color-dark;
 
+$error-color-dark: red;
 
 %theme-light {
     --foreground-color: #{$foreground-color-light};
@@ -41,6 +43,7 @@ $marriage-color-dark: $background-color-dark;
     --male-color: #{$male-color-light};
     --female-color: #{$female-color-light};
     --marriage-color: #{$marriage-color-light};
+    --error-color: #{$error-color-light};
 }
 
 %theme-dark {
@@ -54,10 +57,10 @@ $marriage-color-dark: $background-color-dark;
     --male-color: #{$male-color-dark};
     --female-color: #{$female-color-dark};
     --marriage-color: #{$marriage-color-dark};
+    --error-color: #{$error-color-dark};
 }
 
 $transition-interval: 0.3s;
-
 $transition: $transition-interval linear 0s;
 $toggle-transition: $transition-interval ease-out 0s;
 
@@ -162,6 +165,10 @@ body {
     }
 }
 
+.grid-for-input-with-error-span {
+    display: grid;
+}
+
 .flex-row-with-gap {
     display: flex;
     flex-direction: row;
@@ -239,6 +246,20 @@ label {
     margin-right: $thickness-medium;
 }
 
+%error-span {
+    color: var(--error-color);
+}
+
+.error-span-with-bottom-margin {
+    @extend %error-span;
+    margin-bottom: $thickness-medium;
+}
+
+.error-span-with-top-margin {
+    @extend %error-span;
+    margin-top: $thickness-medium;
+}
+
 a {
     background-color: transparent;
 
@@ -278,6 +299,11 @@ input[type="text"], .dropdown-header {
     margin: $thickness-medium;
     margin-left: 0px;
     cursor: auto;
+}
+
+input[type="text"]::placeholder {
+    color: var(--foreground-color-disabled);
+    font-style: italic;
 }
 
 %action-img {
@@ -825,6 +851,7 @@ fieldset {
             transition: opacity $transition;
             opacity: 0;
             height: 0;
+            // Szabi: should this be display: none?
             visibility: collapse;
             background-color: var(--background-color);
 

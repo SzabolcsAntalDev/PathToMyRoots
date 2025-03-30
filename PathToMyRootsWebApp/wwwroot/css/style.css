@@ -9,6 +9,7 @@
   --male-color: #DEE4EA;
   --female-color: #F1F2F4;
   --marriage-color: #F7F8F9;
+  --error-color: red;
 }
 
 :root.theme-dark {
@@ -22,6 +23,7 @@
   --male-color: #2C333A;
   --female-color: #22272B;
   --marriage-color: #161A1D;
+  --error-color: red;
 }
 
 :root.theme-light {
@@ -100,6 +102,10 @@ body {
   margin-top: 0px;
 }
 
+.grid-for-input-with-error-span {
+  display: grid;
+}
+
 .flex-row-with-gap {
   display: flex;
   flex-direction: row;
@@ -176,6 +182,18 @@ label {
   margin-right: 8px;
 }
 
+.error-span-with-top-margin, .error-span-with-bottom-margin {
+  color: var(--error-color);
+}
+
+.error-span-with-bottom-margin {
+  margin-bottom: 8px;
+}
+
+.error-span-with-top-margin {
+  margin-top: 8px;
+}
+
 a {
   background-color: transparent;
 }
@@ -209,6 +227,11 @@ input[type=text], .dropdown-header {
   margin: 8px;
   margin-left: 0px;
   cursor: auto;
+}
+
+input[type=text]::placeholder {
+  color: var(--foreground-color-disabled);
+  font-style: italic;
 }
 
 #persons-table .td-shrink .persons-action-img, .tree-action-img {
