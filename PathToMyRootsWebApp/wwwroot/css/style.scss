@@ -387,6 +387,10 @@ fieldset {
     overflow: hidden;
 }
 
+.toggleable-container > div.tooltip-container.overflowvisible {
+    overflow: visible;
+}
+
 .toggleable-container-open {
     grid-template-rows: 1fr;
 }
@@ -915,6 +919,32 @@ fieldset {
 .person-info-img {
     @extend %action-img;
     margin: $thickness-medium $thickness-medium 0 calc($thickness-small * -1);
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    background-color: var(--background-color);
+    color: var(--foreground-color-highlight);
+    padding: $thickness-medium;
+    border: $border;
+    border-radius: $border-radius;
+    white-space: nowrap;
+    position: absolute;
+    top: 110%;
+    left: 25%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity $transition;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
 }
 
 .person-preview-image {

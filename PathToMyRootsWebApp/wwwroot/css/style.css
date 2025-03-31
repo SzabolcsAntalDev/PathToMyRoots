@@ -306,6 +306,10 @@ fieldset input[type=text] {
   overflow: hidden;
 }
 
+.toggleable-container > div.tooltip-container.overflowvisible {
+  overflow: visible;
+}
+
 .toggleable-container-open {
   grid-template-rows: 1fr;
 }
@@ -766,6 +770,32 @@ fieldset input[type=text] {
 
 .person-info-img {
   margin: 8px 8px 0 -4px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  background-color: var(--background-color);
+  color: var(--foreground-color-highlight);
+  padding: 8px;
+  border: 1px solid var(--foreground-color);
+  border-radius: 4px;
+  white-space: nowrap;
+  position: absolute;
+  top: 110%;
+  left: 25%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s linear 0s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
 }
 
 .person-preview-image {

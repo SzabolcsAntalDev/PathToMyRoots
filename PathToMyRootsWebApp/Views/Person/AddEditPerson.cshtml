@@ -3,6 +3,20 @@
 @using PathToMyRootsWebApp.Models
 @model PathToMyRootsWebApp.Models.PersonModel
 
+@{
+    var ConcreteDateFormatTooltip = @"
+    Valid formats:<br>
+    - only year: <b>2003-mm-dd</b><br>
+    - year & month: <b>2003-03-dd</b><br>
+    - full date: <b>2003-03-25</b><br>
+    <br>
+    Invalid formats:<br>
+    - <b>2003-mm-25</b> (day present, but month missing)<br>
+    - <b>yyyy-03-25</b> (month & day present, but year missing)<br>
+    <br>
+    Month & day start from <b>1</b>. <br>
+    Example: <b>2003-03-25</b> → 25th of March, 2003.";
+}
 
 <h1>
     @if (Model?.Id > PathToMyRootsWebAppConstants.UnsetIntValue)
@@ -92,16 +106,21 @@
                     } />Date
                 </label>
                 <div class="toggleable-container">
-                    <div class="grid-for-input-with-error-span">
+                    <div class="grid-for-input-with-error-span tooltip-container">
                         <div class="flex-row flex-align-items-center">
                             <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                             @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.ServerDateUnknown)
                             {
                                 @:value="@Model.BirthDate"
                             } />
-                            <svg class="person-info-img">
-                                <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                            </svg>
+                            <div class="tooltip">
+                                <svg class="person-info-img">
+                                    <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                </svg>
+                                <span class="tooltip-text">
+                                    @Html.Raw(ConcreteDateFormatTooltip)
+                                </span>
+                            </div>
                         </div>
                         <span class="error-span-small-with-top-margin" asp-validation-for="BirthDate"></span>
                     </div>
@@ -135,18 +154,23 @@
                     } />Date
                 </label>
                 <div class="toggleable-container">
-                    <div class="grid-for-input-with-error-span">
+                    <div class="grid-for-input-with-error-span tooltip-container">
                         <div class="flex-row flex-align-items-center">
                             <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                             @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.ServerDateUnknown)
                             {
                                 @:value="@Model.DeathDate"
                             } />
-                            <svg class="person-info-img">
-                                <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                            </svg>
+                            <div class="tooltip">
+                                <svg class="person-info-img">
+                                    <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                </svg>
+                                <span class="tooltip-text">
+                                    @Html.Raw(ConcreteDateFormatTooltip)
+                                </span>
+                            </div>
                         </div>
-                        <span class="error-span-small-with-top-margin" asp-validation-for="DeathDate">Aaaa</span>
+                        <span class="error-span-small-with-top-margin" asp-validation-for="DeathDate"></span>
                     </div>
                 </div>
                 <input type="hidden" class="input-hidden-date" name="DeathDate" value="@Model?.DeathDate" />
@@ -311,7 +335,7 @@
         <span class="error-span-small-with-bottom-margin" asp-validation-for="FirstSpouseId"></span>
 
         <div id="first-spouse-marriage-dates-container" class="toggleable-container">
-            <div class="flex-row-with-gap">
+            <div class="flex-row-with-gap tooltip-container">
                 <div class="flex-column">
                     <h3>First Marriage Start Date</h3>
                     <fieldset class="input-date-fieldset">
@@ -331,16 +355,21 @@
                             } />Date
                         </label>
                         <div class="toggleable-container">
-                            <div class="grid-for-input-with-error-span">
+                            <div class="grid-for-input-with-error-span tooltip-container">
                                 <div class="flex-row flex-align-items-center">
                                     <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                                     @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.ServerDateUnknown)
                                     {
                                         @:value="@Model.FirstMarriageStartDate"
                                     } />
-                                    <svg class="person-info-img">
-                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                                    </svg>
+                                    <div class="tooltip">
+                                        <svg class="person-info-img">
+                                            <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                        </svg>
+                                        <span class="tooltip-text">
+                                            @Html.Raw(ConcreteDateFormatTooltip)
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="FirstMarriageStartDate"></span>
                             </div>
@@ -374,16 +403,21 @@
                             } />Date
                         </label>
                         <div class="toggleable-container">
-                            <div class="grid-for-input-with-error-span">
+                            <div class="grid-for-input-with-error-span tooltip-container">
                                 <div class="flex-row flex-align-items-center">
                                     <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                                     @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.ServerDateUnknown)
                                     {
                                         @:value="@Model.FirstMarriageEndDate"
                                     } />
-                                    <svg class="person-info-img">
-                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                                    </svg>
+                                    <div class="tooltip">
+                                        <svg class="person-info-img">
+                                            <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                        </svg>
+                                        <span class="tooltip-text">
+                                            @Html.Raw(ConcreteDateFormatTooltip)
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="FirstMarriageEndDate"></span>
                             </div>
@@ -425,7 +459,7 @@
         <span class="error-span-small-with-bottom-margin" asp-validation-for="SecondSpouseId"></span>
 
         <div id="second-spouse-marriage-dates-container" class="toggleable-container">
-            <div class="flex-row-with-gap">
+            <div class="flex-row-with-gap tooltip-container">
                 <div class="flex-column">
                     <h3>Second Marriage Start Date</h3>
                     <fieldset class="input-date-fieldset">
@@ -445,16 +479,21 @@
                             } />Date
                         </label>
                         <div class="toggleable-container">
-                            <div class="grid-for-input-with-error-span">
+                            <div class="grid-for-input-with-error-span tooltip-container">
                                 <div class="flex-row flex-align-items-center">
                                     <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                                     @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.ServerDateUnknown)
                                     {
                                         @:value="@Model.SecondMarriageStartDate"
                                     } />
-                                    <svg class="person-info-img">
-                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                                    </svg>
+                                    <div class="tooltip">
+                                        <svg class="person-info-img">
+                                            <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                        </svg>
+                                        <span class="tooltip-text">
+                                            @Html.Raw(ConcreteDateFormatTooltip)
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="SecondMarriageStartDate"></span>
                             </div>
@@ -488,16 +527,21 @@
                             } />Date
                         </label>
                         <div class="toggleable-container">
-                            <div class="grid-for-input-with-error-span">
+                            <div class="grid-for-input-with-error-span tooltip-container">
                                 <div class="flex-row flex-align-items-center">
                                     <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
                                     @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.ServerDateUnknown)
                                     {
                                         @:value="@Model.SecondMarriageEndDate"
                                     } />
-                                    <svg class="person-info-img">
-                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
-                                    </svg>
+                                    <div class="tooltip">
+                                        <svg class="person-info-img">
+                                            <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                        </svg>
+                                        <span class="tooltip-text">
+                                            @Html.Raw(ConcreteDateFormatTooltip)
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="SecondMarriageEndDate"></span>
                             </div>
