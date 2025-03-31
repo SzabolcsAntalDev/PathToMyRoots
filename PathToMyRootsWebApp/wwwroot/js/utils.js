@@ -71,3 +71,21 @@ async function fadeOutElement(element) {
         }, getFadeIntervalInSeconds() * 1000);
     });
 }
+
+function addAndTrackClass(element, className) {
+    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
+    element.dataset[className] = count + 1;
+
+    element.classList.add(className);
+}
+
+function removeAndTrackClass(element, className) {
+    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
+
+    if (count > 1) {
+        element.dataset[className] = count - 1;
+    } else {
+        element.classList.remove(className);
+        delete element.dataset[className];
+    }
+}

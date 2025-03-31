@@ -796,7 +796,6 @@ fieldset input[type=text] {
 .tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
-  z-index: 1;
 }
 
 .person-preview-image {

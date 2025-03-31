@@ -79,10 +79,10 @@ function setupForNonConcreteDate(
 
     toggleableContainer.classList.remove('toggleable-container-open');
 
-    removeClass(toggleableTooltipContainerChild, 'overflowvisible');
+    removeAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible');
 
     if (toggleableTooltipContainerParent) {
-        removeClass(toggleableTooltipContainerParent, 'overflowvisible');
+        removeAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
     }
 
     inputConcreteDate.removeAttribute("pattern");
@@ -98,31 +98,13 @@ function setupForConcreteDate(
 
     toggleableContainer.classList.add('toggleable-container-open');
 
-    setTimeout(() => { addClass(toggleableTooltipContainerChild, 'overflowvisible'); }, 300);
+    setTimeout(() => { addAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible'); }, getFadeIntervalInSeconds() * 1000);
 
     if (toggleableTooltipContainerParent) {
-        addClass(toggleableTooltipContainerParent, 'overflowvisible');
+        addAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
     }
 
     inputConcreteDate.setAttribute("pattern", ServerDateInputValidationPattern);
     inputConcreteDate.setAttribute("title", "Date format should be " + ServerDateUnknown);
     inputConcreteDate.setAttribute("required", "");
-}
-
-function addClass(element, className) {
-    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
-    element.dataset[className] = count + 1;
-
-    element.classList.add(className);
-}
-
-function removeClass(element, className) {
-    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
-
-    if (count > 1) {
-        element.dataset[className] = count - 1;
-    } else {
-        element.classList.remove(className);
-        delete element.dataset[className];
-    }
 }
