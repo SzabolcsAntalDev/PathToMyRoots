@@ -555,7 +555,6 @@
 
     <h2>Image Upload</h2>
     <div class="flex-column person-section" style="align-items: center">
-
         <div class="flex-column" style="width: 50%">
             <div id="toggleable-preview-image-container" class="toggleable-container">
                 <div>
@@ -563,8 +562,6 @@
                 </div>
             </div>
             <div class="flex-row">
-                <input type="hidden" id="hidden-image-input-url" name="ImageUrl" value="@Model?.ImageUrl" />
-                <input type="file" id="hidden-image-input" accept="image/*" style="display: none" />
                 <button id="select-image-button" class="flex-one">Select Image...</button>
                 <button id="remove-image-button" class="flex-one">Remove Image</button>
             </div>
@@ -576,6 +573,12 @@
                 <button id="cancel-crop-button">Cancel</button>
             </div>
         </div>
+
+        @* input for the PersonModel *@
+        <input type="hidden" id="hidden-image-input-url" name="ImageUrl" value="@Model?.ImageUrl" />
+
+        @* file uploader hidden input *@
+        <input type="file" id="hidden-image-input" accept="image/*" style="display: none" />
     </div>
 
     <div style="display: block; text-align: right;">
@@ -596,5 +599,5 @@
     <script src="~/js/add-edit-person/validation-error-messages.js"></script>
     <script src="~/js/add-edit-person/dropdown.js"></script>
     <script src="~/js/add-edit-person/date-input.js"></script>
-    <script src="~/js/add-edit-person/image.js"></script>
+    <script src="~/js/add-edit-person/image-upload.js"></script>
 }

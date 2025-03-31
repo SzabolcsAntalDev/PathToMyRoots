@@ -220,6 +220,7 @@ button {
 }
 button:disabled {
   color: var(--foreground-color-disabled);
+  background-color: var(--background-color);
   border-color: var(--foreground-color-disabled);
   cursor: auto;
 }

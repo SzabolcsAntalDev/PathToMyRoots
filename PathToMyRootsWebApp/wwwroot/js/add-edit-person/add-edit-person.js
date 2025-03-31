@@ -1,8 +1,9 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    initValidationErrorMessages();
     addSpousesDropDownValueToDatesContainerCollapseListener();
     initDateInputs();
     initDropdowns();
+    initImageUpload();
+    initValidationErrorMessages();
     updatePreviewImage();
 });
 
