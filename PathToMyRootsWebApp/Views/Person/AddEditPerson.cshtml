@@ -93,11 +93,16 @@
                 </label>
                 <div class="toggleable-container">
                     <div class="grid-for-input-with-error-span">
-                        <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                        @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.ServerDateUnknown)
-                        {
-                            @:value="@Model.BirthDate"
-                        } />
+                        <div class="flex-row flex-align-items-center">
+                            <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                            @if (Model?.BirthDate != null && Model.BirthDate != DateHelper.ServerDateUnknown)
+                            {
+                                @:value="@Model.BirthDate"
+                            } />
+                            <svg class="person-info-img">
+                                <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                            </svg>
+                        </div>
                         <span class="error-span-small-with-top-margin" asp-validation-for="BirthDate"></span>
                     </div>
                 </div>
@@ -131,12 +136,17 @@
                 </label>
                 <div class="toggleable-container">
                     <div class="grid-for-input-with-error-span">
-                        <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                        @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.ServerDateUnknown)
-                        {
-                            @:value="@Model.DeathDate"
-                        } />
-                        <span class="error-span-small-with-top-margin" asp-validation-for="DeathDate"></span>
+                        <div class="flex-row flex-align-items-center">
+                            <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                            @if (Model?.DeathDate != null && Model.DeathDate != DateHelper.ServerDateUnknown)
+                            {
+                                @:value="@Model.DeathDate"
+                            } />
+                            <svg class="person-info-img">
+                                <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                            </svg>
+                        </div>
+                        <span class="error-span-small-with-top-margin" asp-validation-for="DeathDate">Aaaa</span>
                     </div>
                 </div>
                 <input type="hidden" class="input-hidden-date" name="DeathDate" value="@Model?.DeathDate" />
@@ -322,11 +332,16 @@
                         </label>
                         <div class="toggleable-container">
                             <div class="grid-for-input-with-error-span">
-                                <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                                @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.ServerDateUnknown)
-                                {
-                                    @:value="@Model.FirstMarriageStartDate"
-                                } />
+                                <div class="flex-row flex-align-items-center">
+                                    <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.FirstMarriageStartDate != null && Model.FirstMarriageStartDate != DateHelper.ServerDateUnknown)
+                                    {
+                                        @:value="@Model.FirstMarriageStartDate"
+                                    } />
+                                    <svg class="person-info-img">
+                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                    </svg>
+                                </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="FirstMarriageStartDate"></span>
                             </div>
                         </div>
@@ -360,11 +375,16 @@
                         </label>
                         <div class="toggleable-container">
                             <div class="grid-for-input-with-error-span">
-                                <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                                @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.ServerDateUnknown)
-                                {
-                                    @:value="@Model.FirstMarriageEndDate"
-                                } />
+                                <div class="flex-row flex-align-items-center">
+                                    <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.FirstMarriageEndDate != null && Model.FirstMarriageEndDate != DateHelper.ServerDateUnknown)
+                                    {
+                                        @:value="@Model.FirstMarriageEndDate"
+                                    } />
+                                    <svg class="person-info-img">
+                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                    </svg>
+                                </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="FirstMarriageEndDate"></span>
                             </div>
                         </div>
@@ -426,11 +446,16 @@
                         </label>
                         <div class="toggleable-container">
                             <div class="grid-for-input-with-error-span">
-                                <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                                @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.ServerDateUnknown)
-                                {
-                                    @:value="@Model.SecondMarriageStartDate"
-                                } />
+                                <div class="flex-row flex-align-items-center">
+                                    <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.SecondMarriageStartDate != null && Model.SecondMarriageStartDate != DateHelper.ServerDateUnknown)
+                                    {
+                                        @:value="@Model.SecondMarriageStartDate"
+                                    } />
+                                    <svg class="person-info-img">
+                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                    </svg>
+                                </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="SecondMarriageStartDate"></span>
                             </div>
                         </div>
@@ -464,11 +489,16 @@
                         </label>
                         <div class="toggleable-container">
                             <div class="grid-for-input-with-error-span">
-                                <input type="text" class="input-date-concrete-date" placeholder="@DateHelper.ServerDateUnknown"
-                                @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.ServerDateUnknown)
-                                {
-                                    @:value="@Model.SecondMarriageEndDate"
-                                } />
+                                <div class="flex-row flex-align-items-center">
+                                    <input type="text" class="input-date-concrete-date flex-one" placeholder="@DateHelper.ServerDateUnknown"
+                                    @if (Model?.SecondMarriageEndDate != null && Model.SecondMarriageEndDate != DateHelper.ServerDateUnknown)
+                                    {
+                                        @:value="@Model.SecondMarriageEndDate"
+                                    } />
+                                    <svg class="person-info-img">
+                                        <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                    </svg>
+                                </div>
                                 <span class="error-span-small-with-top-margin" asp-validation-for="SecondMarriageEndDate"></span>
                             </div>
                         </div>

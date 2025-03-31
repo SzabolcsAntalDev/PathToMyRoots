@@ -117,6 +117,10 @@ body {
   flex-direction: row;
 }
 
+.flex-align-items-center {
+  align-items: center;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -242,7 +246,7 @@ input[type=text]::placeholder {
   font-style: italic;
 }
 
-#persons-table .td-shrink .persons-action-img, .tree-action-img {
+.person-info-img, #persons-table .td-shrink .persons-action-img, .tree-action-img {
   width: 20px;
   height: 20px;
   margin: 0px;
@@ -250,7 +254,7 @@ input[type=text]::placeholder {
   fill: var(--foreground-color);
   transition: fill 0.3s linear 0s;
 }
-#persons-table .td-shrink .persons-action-img:hover, .tree-action-img:hover {
+.person-info-img:hover, #persons-table .td-shrink .persons-action-img:hover, .tree-action-img:hover {
   fill: var(--foreground-color-highlight);
 }
 
@@ -717,11 +721,12 @@ fieldset input[type=text] {
 }
 .dropdown .dropdown-menu-invisible-parent .dropdown-menu {
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: column;
   transition: opacity 0.3s linear 0s;
   opacity: 0;
   height: 0;
+  visibility: collapse;
   background-color: var(--background-color);
 }
 .dropdown .dropdown-menu-invisible-parent .dropdown-menu .dropdown-menu-filter-input {
@@ -747,7 +752,7 @@ fieldset input[type=text] {
 .dropdown .dropdown-menu-invisible-parent .dropdown-menu-opened {
   opacity: 1;
   height: auto;
-  display: flex;
+  visibility: visible;
 }
 .dropdown .option-with-image {
   display: flex;
@@ -757,6 +762,10 @@ fieldset input[type=text] {
   flex-grow: 1;
   align-content: center;
   text-align: center;
+}
+
+.person-info-img {
+  margin: 8px 8px 0 -4px;
 }
 
 .person-preview-image {

@@ -180,6 +180,10 @@ body {
     flex-direction: row;
 }
 
+.flex-align-items-center {
+    align-items: center;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -856,11 +860,12 @@ fieldset {
 
         .dropdown-menu {
             position: relative;
-            display: none;
+            display: flex;
             flex-direction: column;
             transition: opacity $transition;
             opacity: 0;
             height: 0;
+            visibility: collapse;
             background-color: var(--background-color);
 
             .dropdown-menu-filter-input {
@@ -891,7 +896,7 @@ fieldset {
         .dropdown-menu-opened {
             opacity: 1;
             height: auto;
-            display: flex;
+            visibility: visible;
         }
     }
 
@@ -905,6 +910,11 @@ fieldset {
             text-align: center;
         }
     }
+}
+
+.person-info-img {
+    @extend %action-img;
+    margin: $thickness-medium $thickness-medium 0 calc($thickness-small * -1);
 }
 
 .person-preview-image {
