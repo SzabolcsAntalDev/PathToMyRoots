@@ -952,10 +952,20 @@ fieldset {
     margin: $thickness-medium 0;
 }
 
-.person-save-button {
+.person-action-button {
     margin-bottom: $thickness-large;
     margin-right: 0px;
     font-size: $font-size-medium;
+}
+
+.person-delete-person-button {
+    color: var(--error-color);
+    border-color: var(--error-color);
+
+    &:hover {
+        color: var(--error-color);
+        border-color: var(--error-color);
+    }
 }
 
 #cropper-background-container {

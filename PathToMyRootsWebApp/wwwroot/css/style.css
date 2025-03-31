@@ -803,10 +803,19 @@ fieldset input[type=text] {
   margin: 8px 0;
 }
 
-.person-save-button {
+.person-action-button {
   margin-bottom: 20px;
   margin-right: 0px;
   font-size: 14px;
+}
+
+.person-delete-person-button {
+  color: var(--error-color);
+  border-color: var(--error-color);
+}
+.person-delete-person-button:hover {
+  color: var(--error-color);
+  border-color: var(--error-color);
 }
 
 #cropper-background-container {
