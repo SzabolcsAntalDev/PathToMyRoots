@@ -5,94 +5,124 @@
 function initCommonDateInputsListeners() {
     const inputDateFieldSets = document.querySelectorAll('.input-date-fieldset');
 
-    // when date is changed by user, update hidden input
-    inputDateFieldSets.forEach(fieldSet => {
-        fieldSet.querySelector('.input-date-concrete-date').addEventListener('change', function () {
-            fieldSet.querySelector('.input-hidden-date').value = this.value;
-        });
-    });
-
     // setup elements on radio buttons changed
     inputDateFieldSets.forEach(fieldSet => {
-        var inputRadioAlive = fieldSet.querySelector(".input-radio-date-ongoing");
+        var toggleableContainer = fieldSet.querySelector(".toggleable-container");
+
+        var inputRadioOngoing = fieldSet.querySelector(".input-radio-date-ongoing");
         var inputRadioUnknown = fieldSet.querySelector(".input-radio-date-unknown");
         var inputRadioConcreteDate = fieldSet.querySelector(".input-radio-date-concrete-date");
 
-        var toggleableContainer = fieldSet.querySelector(".toggleable-container");
-        var inputDate = fieldSet.querySelector(".input-date-concrete-date");
+        var inputConcreteDate = fieldSet.querySelector(".input-date-concrete-date");
         var inputHiddenDate = fieldSet.querySelector(".input-hidden-date");
 
-        if (inputRadioAlive) {
-            inputRadioAlive.addEventListener('change', () => {
+        [inputRadioOngoing, inputRadioUnknown, inputRadioConcreteDate].forEach((radio) => {
+            radio?.addEventListener('change', () => {
                 setupDateInputElements(
-                    inputRadioAlive,
+                    toggleableContainer,
+                    inputRadioOngoing,
                     inputRadioUnknown,
                     inputRadioConcreteDate,
-                    toggleableContainer,
-                    inputDate,
+                    inputConcreteDate,
                     inputHiddenDate);
             });
-        }
+        })
 
-        inputRadioUnknown.addEventListener('change', () => {
-            setupDateInputElements(
-                inputRadioAlive,
-                inputRadioUnknown,
-                inputRadioConcreteDate,
-                toggleableContainer,
-                inputDate,
-                inputHiddenDate);
-        });
-
-        inputRadioConcreteDate.addEventListener('change', () => {
-            setupDateInputElements(
-                inputRadioAlive,
-                inputRadioUnknown,
-                inputRadioConcreteDate,
-                toggleableContainer,
-                inputDate,
-                inputHiddenDate);
+        inputConcreteDate.addEventListener('change', function () {
+            inputHiddenDate.value = this.value;
         });
 
         setupDateInputElements(
-            inputRadioAlive,
+            toggleableContainer,
+            inputRadioOngoing,
             inputRadioUnknown,
             inputRadioConcreteDate,
-            toggleableContainer,
-            inputDate,
+            inputConcreteDate,
             inputHiddenDate);
     });
 }
 function setupDateInputElements(
-    inputRadioAlive,
+    toggleableContainer,
+    inputRadioOngoing,
     inputRadioUnknown,
     inputRadioConcreteDate,
-    toggleableContainer,
-    inputDate,
+    inputConcreteDate,
     inputHiddenDate) {
-    if (inputRadioAlive != null && inputRadioAlive.checked) {
-        toggleableContainer.classList.remove('toggleable-container-open');
-        inputDate.removeAttribute("pattern");
-        inputDate.removeAttribute("title");
-        inputDate.removeAttribute("required");
 
+    // needed for simple toggleable fieldsets
+    const toggleableTooltipContainerChild = toggleableContainer.querySelector('.tooltip-container');
+
+    // needed for toggleable fieldsets that have toggleable parent - spouses section
+    const toggleableTooltipContainerParent = toggleableContainer.parentElement?.closest('.tooltip-container');
+
+    if (inputRadioOngoing?.checked) {
+        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate);
         inputHiddenDate.value = null;
     }
 
     if (inputRadioUnknown.checked) {
-        toggleableContainer.classList.remove('toggleable-container-open');
-        inputDate.removeAttribute("pattern");
-        inputDate.removeAttribute("title");
-
+        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate);
         inputHiddenDate.value = ServerDateUnknown;
     }
 
     if (inputRadioConcreteDate.checked) {
-        toggleableContainer.classList.add('toggleable-container-open');
-        inputDate.setAttribute("pattern", ServerDateInputValidationPattern);
-        inputDate.setAttribute("title", "Date format should be " + ServerDateUnknown);
-        inputDate.setAttribute("required", "");
+        setupForConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate);
+        inputHiddenDate.value = inputConcreteDate.value;
+    }
+}
 
-        inputHiddenDate.value = inputDate.value;
+function setupForNonConcreteDate(
+    toggleableContainer,
+    toggleableTooltipContainerChild,
+    toggleableTooltipContainerParent,
+    inputConcreteDate) {
+
+    toggleableContainer.classList.remove('toggleable-container-open');
+
+    removeClass(toggleableTooltipContainerChild, 'overflowvisible');
+
+    if (toggleableTooltipContainerParent) {
+        removeClass(toggleableTooltipContainerParent, 'overflowvisible');
+    }
+
+    inputConcreteDate.removeAttribute("pattern");
+    inputConcreteDate.removeAttribute("title");
+    inputConcreteDate.removeAttribute("required");
+}
+
+function setupForConcreteDate(
+    toggleableContainer,
+    toggleableTooltipContainerChild,
+    toggleableTooltipContainerParent,
+    inputConcreteDate) {
+
+    toggleableContainer.classList.add('toggleable-container-open');
+
+    setTimeout(() => { addClass(toggleableTooltipContainerChild, 'overflowvisible'); }, 300);
+
+    if (toggleableTooltipContainerParent) {
+        addClass(toggleableTooltipContainerParent, 'overflowvisible');
+    }
+
+    inputConcreteDate.setAttribute("pattern", ServerDateInputValidationPattern);
+    inputConcreteDate.setAttribute("title", "Date format should be " + ServerDateUnknown);
+    inputConcreteDate.setAttribute("required", "");
+}
+
+function addClass(element, className) {
+    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
+    element.dataset[className] = count + 1;
+
+    element.classList.add(className);
+}
+
+function removeClass(element, className) {
+    let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
+
+    if (count > 1) {
+        element.dataset[className] = count - 1;
+    } else {
+        element.classList.remove(className);
+        delete element.dataset[className];
     }
 }
