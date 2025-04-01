@@ -7,14 +7,14 @@ function initCommonDateInputsListeners() {
 
     // setup elements on radio buttons changed
     inputDateFieldSets.forEach(fieldSet => {
-        var toggleableContainer = fieldSet.querySelector(".toggleable-container");
+        var toggleableContainer = fieldSet.querySelector('.toggleable-container');
 
-        var inputRadioOngoing = fieldSet.querySelector(".input-radio-date-ongoing");
-        var inputRadioUnknown = fieldSet.querySelector(".input-radio-date-unknown");
-        var inputRadioConcreteDate = fieldSet.querySelector(".input-radio-date-concrete-date");
+        var inputRadioOngoing = fieldSet.querySelector('.input-radio-date-ongoing');
+        var inputRadioUnknown = fieldSet.querySelector('.input-radio-date-unknown');
+        var inputRadioConcreteDate = fieldSet.querySelector('.input-radio-date-concrete-date');
 
-        var inputConcreteDate = fieldSet.querySelector(".input-date-concrete-date");
-        var inputHiddenDate = fieldSet.querySelector(".input-hidden-date");
+        var inputConcreteDate = fieldSet.querySelector('.input-date-concrete-date');
+        var inputHiddenDate = fieldSet.querySelector('.input-hidden-date');
 
         [inputRadioOngoing, inputRadioUnknown, inputRadioConcreteDate].forEach((radio) => {
             radio?.addEventListener('change', () => {
@@ -85,9 +85,9 @@ function setupForNonConcreteDate(
         removeAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
     }
 
-    inputConcreteDate.removeAttribute("pattern");
-    inputConcreteDate.removeAttribute("title");
-    inputConcreteDate.removeAttribute("required");
+    inputConcreteDate.removeAttribute('pattern');
+    inputConcreteDate.removeAttribute('title');
+    inputConcreteDate.removeAttribute('required');
 }
 
 function setupForConcreteDate(
@@ -104,7 +104,7 @@ function setupForConcreteDate(
         addAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
     }
 
-    inputConcreteDate.setAttribute("pattern", ServerDateInputValidationPattern);
-    inputConcreteDate.setAttribute("title", "Date format should be " + ServerDateUnknown);
-    inputConcreteDate.setAttribute("required", "");
+    inputConcreteDate.setAttribute('pattern', ServerDateInputValidationPattern);
+    inputConcreteDate.setAttribute('title', 'Date format should be ' + ServerDateUnknown);
+    inputConcreteDate.setAttribute('required', '');
 }
