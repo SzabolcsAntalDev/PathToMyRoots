@@ -1,13 +1,16 @@
 ﻿function initDropdowns() {
 
-    addCommonDropdownsListeners();
     addGenderAndSpouseSpecificListeners();
-
-    resetSpouseDropdowns();
+    addCommonDropdownsListeners();
 }
 
+// open and close menu
+// filtering by filter input
+// selecting option
+// setting default values
 function addCommonDropdownsListeners() {
-    const dropdowns = document.querySelectorAll(".dropdown");
+    const dropdowns = document.querySelectorAll('.dropdown');
+
     dropdowns.forEach(dropdown => {
         // init consts
         const dropdownHeader = dropdown.querySelector('.dropdown-header');
@@ -20,24 +23,54 @@ function addCommonDropdownsListeners() {
 
         // open menu on header click
         dropdownHeader.addEventListener('click', () => {
+            dropdownMenuFilterInput.value = '';
+            dropdownMenuFilterInput.dispatchEvent(new Event('input'));
             dropdownHeader.classList.toggle('dropdown-header-opened');
             dropdownHeaderExpandButton.classList.toggle('dropdown-header-expand-button-opened');
             dropdownMenu.classList.toggle('dropdown-menu-opened');
         });
 
-        // filtering
-        dropdownMenuFilterInput.addEventListener('input', () => {
-            dropdownMenuOptions.forEach(option => {
-                const personNameSpan = option.querySelector('.person-name-span');
-                if (personNameSpan) {
-                    const personName = personNameSpan.textContent.toLowerCase();
+        // close menu when user clicks out from dropdown
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target) && dropdownMenu.classList.contains('dropdown-menu-opened')) {
+                dropdownHeader.classList.remove('dropdown-header-opened');
+                dropdownHeaderExpandButton.classList.remove('dropdown-header-expand-button-opened');
+                dropdownMenu.classList.remove('dropdown-menu-opened');
+            }
+        });
 
-                    if (personName.includes(dropdownMenuFilterInput.value.toLowerCase())) {
-                        option.classList.remove('collapsed');
-                    }
-                    else {
-                        option.classList.add('collapsed');
-                    }
+        // filter items on filter input and gender in case of spouses
+        dropdownMenuFilterInput.addEventListener('input', () => {
+            const filterString = dropdownMenuFilterInput.value.toLowerCase()
+            dropdownMenuOptions.forEach(option => {
+                option.classList.remove('collapsed');
+
+                const optionValue = option.getAttribute('data-value');
+
+                // skip default options
+                if (!optionValue) {
+                    return;
+                }
+
+                const optionPersonName = option.querySelector('.person-name-span')?.textContent?.toLowerCase();
+
+                // skip gender options
+                if (!optionPersonName) {
+                    return;
+                }
+
+                const currentPersonIsMale = document.querySelector('#is-male-dropdown-menu-hidden-input').value;
+                const optionIsMale = option.getAttribute('data-is-male')?.toLowerCase();
+
+                // parental dropdowns do not have isMale data, they are already filtered in the cshtml
+                const isParentalDropDown = optionIsMale === undefined;
+                const spouseIsOppositeGender = optionIsMale != currentPersonIsMale;
+                const showOption =
+                    (isParentalDropDown || spouseIsOppositeGender) &&
+                    optionPersonName.includes(filterString);
+
+                if (!showOption) {
+                    option.classList.add('collapsed');
                 }
             });
         });
@@ -55,12 +88,12 @@ function addCommonDropdownsListeners() {
                 // select current option
                 option.classList.add('selected-option');
 
-                // set header content
-                dropdownHeaderSelectedOption.innerHTML = option.innerHTML;
-
                 // set hidden input value
                 dropdownMenuHiddenInput.value = option.getAttribute('data-value');
-                dropdownMenuHiddenInput.dispatchEvent(new Event("change"));
+                dropdownMenuHiddenInput.dispatchEvent(new Event('change'));
+
+                // set header content
+                dropdownHeaderSelectedOption.innerHTML = option.innerHTML;
 
                 // close menu
                 dropdownHeader.classList.remove('dropdown-header-opened');
@@ -69,109 +102,63 @@ function addCommonDropdownsListeners() {
             });
         });
 
-        // select default option if nothing is selected
+        // set default option and header
         let selectedOption = dropdown.querySelector('.selected-option');
         if (!selectedOption) {
+            // Szabi
             selectedOption = dropdown.querySelector('li[data-value=""]');
             selectedOption.classList.add('selected-option');
         }
 
-        // set selected option into header by default
         dropdownHeaderSelectedOption.innerHTML = selectedOption.innerHTML;
-
         dropdownMenuHiddenInput.value = selectedOption.getAttribute('data-value');
-        dropdownMenuHiddenInput.dispatchEvent(new Event("change"));
-
-        // close menu if user clicks out from dropdown
-        document.addEventListener("click", (event) => {
-            if (!dropdown.contains(event.target) && dropdownMenu.classList.contains('dropdown-menu-opened')) {
-                dropdownMenuFilterInput.value = '';
-                resetSpouseDropdowns();
-                dropdownHeader.classList.remove('dropdown-header-opened');
-                dropdownHeaderExpandButton.classList.remove('dropdown-header-expand-button-opened');
-                dropdownMenu.classList.remove('dropdown-menu-opened');
-            }
-        });
+        dropdownMenuHiddenInput.dispatchEvent(new Event('change'));
     });
 }
 
 function addGenderAndSpouseSpecificListeners() {
-    // add gender and spouse dropdown listeners
+    // if gender changed reset spouse dropdowns
     const isMaleDropdownMenuHiddenInput = document.querySelector('#is-male-dropdown-menu-hidden-input');
-    isMaleDropdownMenuHiddenInput.addEventListener('change', (event) => {
-        resetSpouseDropdowns();
+    isMaleDropdownMenuHiddenInput.addEventListener('change', () => {
+        setDefaultSpouse('first');
+        setDefaultSpouse('second');
     });
 
-    // Szabi: when spouse is set to null, reset marriage date inputs
+    // if spouse changed to default then reset marriage date inputs
     const firstSpouseDropdown = document.querySelector('#first-spouse-dropdown');
-    const firstSpouseDropdownFilterInput = firstSpouseDropdown.querySelector('.dropdown-menu-filter-input');
     const firstSpouseDropdownMenuHiddenInput = firstSpouseDropdown.querySelector('input[type="hidden"]');
-    firstSpouseDropdownFilterInput.addEventListener('input', (event) => {
-        resetSpouseDropdowns();
-    });
-    firstSpouseDropdownMenuHiddenInput.addEventListener('change', (event) => {
-        resetSpouseDropdowns();
+    firstSpouseDropdownMenuHiddenInput.addEventListener('change', () => {
+        toggleMarriageDatesContainer('first');
     });
 
     const secondSpouseDropdown = document.querySelector('#second-spouse-dropdown');
-    const secondSpouseDropdownFilterInput = secondSpouseDropdown.querySelector('.dropdown-menu-filter-input');
     const secondSpouseDropdownMenuHiddenInput = secondSpouseDropdown.querySelector('input[type="hidden"]');
-    secondSpouseDropdownFilterInput.addEventListener('input', (event) => {
-        resetSpouseDropdowns();
-    });
-    secondSpouseDropdownMenuHiddenInput.addEventListener('change', (event) => {
-        resetSpouseDropdowns();
+    secondSpouseDropdownMenuHiddenInput.addEventListener('change', () => {
+        toggleMarriageDatesContainer('second');
     });
 }
 
-function resetSpouseDropdowns() {
-
-    resetSpouseDropdown('first');
-    resetSpouseDropdown('second');
-}
-
-function resetSpouseDropdown(spousePrefix) {
-    const isMale = document.querySelector('#is-male-dropdown-menu-hidden-input').value;
-
+function setDefaultSpouse(spousePrefix) {
     const spouseDropdown = document.querySelector(`#${spousePrefix}-spouse-dropdown`);
-    const spouseDropdownHeaderSelectedOption = spouseDropdown.querySelector('.dropdown-header-selected-option');
-    const spouseDropdownMenuHiddenInput = spouseDropdown.querySelector('input[type="hidden"]');
+    const dropdownMenuOptions = spouseDropdown.querySelectorAll('.dropdown-menu li');
+    dropdownMenuOptions[0].click();
+}
 
-    const spouseDropdownMenuFilterInputValue = spouseDropdown.querySelector('.dropdown-menu-filter-input').value.toLowerCase();
+function toggleMarriageDatesContainer(spousePrefix) {
+    const spouseHiddenInput = document.querySelector(`#${spousePrefix}-spouse-dropdown input[type='hidden']`);
+    const spouseMarriageDatesContainer = document.querySelector(`#${spousePrefix}-spouse-marriage-dates-container`);
 
-    // show/hide elements
-    const dropdownMenuOptions = spouseDropdown.querySelectorAll('li');
-    dropdownMenuOptions.forEach(option => {
-        option.classList.remove('collapsed');
-        option.classList.remove('selected-option');
+    var personIsSelected = spouseHiddenInput.value != '';
 
-        const optionIsMale = option.getAttribute('data-is-male')?.toLowerCase();
-        const optionPersonNameSpan = option.querySelector('.person-name-span');
-        const optionValue = option.getAttribute('data-value');
-
-        const showOption =
-            (optionIsMale == null) ||
-            (
-                optionIsMale != isMale &&
-                optionPersonNameSpan.textContent.toLowerCase().includes(spouseDropdownMenuFilterInputValue)
-            );
-
-        if (!showOption) {
-            option.classList.add('collapsed');
-        }
-    });
-
-    // select element
-    const optionToSelect =
-        spouseDropdown.querySelector(`li[data-value='${spouseDropdownMenuHiddenInput.value}']:not(.collapsed)`) ??
-        spouseDropdown.querySelector(`li[data-value='']`);
-
-    optionToSelect.classList.add('selected-option');
-    spouseDropdownHeaderSelectedOption.innerHTML = optionToSelect.innerHTML;
-
-    // set hidden input value
-    if (spouseDropdownMenuHiddenInput.value != optionToSelect.getAttribute('data-value')) {
-        spouseDropdownMenuHiddenInput.value = optionToSelect.getAttribute('data-value');
-        spouseDropdownMenuHiddenInput.dispatchEvent(new Event("change"));
+    if (personIsSelected) {
+        spouseMarriageDatesContainer.classList.add('toggleable-container-open');
+    } else {
+        spouseMarriageDatesContainer.classList.remove('toggleable-container-open');
+        const fieldSets = spouseMarriageDatesContainer.querySelectorAll('.input-date-fieldset');
+        fieldSets.forEach(fs => {
+            const defaultRadio = fs.querySelector('input[type="radio"]');
+            defaultRadio.checked = true;
+            defaultRadio.dispatchEvent(new Event('change'));
+        });
     }
 }
