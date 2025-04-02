@@ -150,15 +150,23 @@ function toggleMarriageDatesContainer(spousePrefix) {
 
     var personIsSelected = spouseHiddenInput.value != '';
 
+    // if any person is selected expand it
     if (personIsSelected) {
         spouseMarriageDatesContainer.classList.add('toggleable-container-open');
-    } else {
+    }
+    else {
         spouseMarriageDatesContainer.classList.remove('toggleable-container-open');
+
+        // select the default radio button
         const fieldSets = spouseMarriageDatesContainer.querySelectorAll('.input-date-fieldset');
-        fieldSets.forEach(fs => {
-            const defaultRadio = fs.querySelector('input[type="radio"]');
-            defaultRadio.checked = true;
-            defaultRadio.dispatchEvent(new Event('change'));
+        fieldSets.forEach(fieldSet => {
+            const defaultRadio = fieldSet.querySelector('input[type="radio"]');
+
+            // dispatch the change to update the hidden input of the fieldset
+            if (!defaultRadio.checked) {
+                defaultRadio.checked = true;
+                defaultRadio.dispatchEvent(new Event('change'));
+            }
         });
     }
 }

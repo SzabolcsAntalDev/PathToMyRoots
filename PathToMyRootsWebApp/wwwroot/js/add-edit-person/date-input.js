@@ -7,14 +7,14 @@ function initCommonDateInputsListeners() {
 
     // setup elements on radio buttons changed
     inputDateFieldSets.forEach(fieldSet => {
-        var toggleableContainer = fieldSet.querySelector('.toggleable-container');
+        const toggleableContainer = fieldSet.querySelector('.toggleable-container');
 
-        var inputRadioOngoing = fieldSet.querySelector('.input-radio-date-ongoing');
-        var inputRadioUnknown = fieldSet.querySelector('.input-radio-date-unknown');
-        var inputRadioConcreteDate = fieldSet.querySelector('.input-radio-date-concrete-date');
+        const inputRadioOngoing = fieldSet.querySelector('.input-radio-date-ongoing');
+        const inputRadioUnknown = fieldSet.querySelector('.input-radio-date-unknown');
+        const inputRadioConcreteDate = fieldSet.querySelector('.input-radio-date-concrete-date');
 
-        var inputConcreteDate = fieldSet.querySelector('.input-date-concrete-date');
-        var inputHiddenDate = fieldSet.querySelector('.input-hidden-date');
+        const inputConcreteDate = fieldSet.querySelector('.input-date-concrete-date');
+        const inputHiddenDate = fieldSet.querySelector('.input-hidden-date');
 
         [inputRadioOngoing, inputRadioUnknown, inputRadioConcreteDate].forEach((radio) => {
             radio?.addEventListener('change', () => {
@@ -24,7 +24,8 @@ function initCommonDateInputsListeners() {
                     inputRadioUnknown,
                     inputRadioConcreteDate,
                     inputConcreteDate,
-                    inputHiddenDate);
+                    inputHiddenDate,
+                    false);
             });
         })
 
@@ -38,16 +39,19 @@ function initCommonDateInputsListeners() {
             inputRadioUnknown,
             inputRadioConcreteDate,
             inputConcreteDate,
-            inputHiddenDate);
+            inputHiddenDate,
+            true);
     });
 }
+
 function setupDateInputElements(
     toggleableContainer,
     inputRadioOngoing,
     inputRadioUnknown,
     inputRadioConcreteDate,
     inputConcreteDate,
-    inputHiddenDate) {
+    inputHiddenDate,
+    isInitialSetup) {
 
     // needed for simple toggleable fieldsets
     const toggleableTooltipContainerChild = toggleableContainer.querySelector('.tooltip-container');
@@ -56,12 +60,12 @@ function setupDateInputElements(
     const toggleableTooltipContainerParent = toggleableContainer.parentElement?.closest('.tooltip-container');
 
     if (inputRadioOngoing?.checked) {
-        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate);
+        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate, isInitialSetup);
         inputHiddenDate.value = null;
     }
 
     if (inputRadioUnknown.checked) {
-        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate);
+        setupForNonConcreteDate(toggleableContainer, toggleableTooltipContainerChild, toggleableTooltipContainerParent, inputConcreteDate, isInitialSetup);
         inputHiddenDate.value = ServerDateUnknown;
     }
 
@@ -75,14 +79,21 @@ function setupForNonConcreteDate(
     toggleableContainer,
     toggleableTooltipContainerChild,
     toggleableTooltipContainerParent,
-    inputConcreteDate) {
+    inputConcreteDate,
+    isInitialSetup) {
 
     toggleableContainer.classList.remove('toggleable-container-open');
 
-    removeAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible');
+    // in the initial setup in case of a spouse if the start date is a concrete date
+    // and the end date is not a concrete date then removing the class in the case of
+    // the end date would remove the class that was added by the start date thus the
+    // tool tip becoming not entirely visible
+    if (!isInitialSetup) {
+        removeAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible');
 
-    if (toggleableTooltipContainerParent) {
-        removeAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
+        if (toggleableTooltipContainerParent) {
+            removeAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');
+        }
     }
 
     inputConcreteDate.removeAttribute('pattern');
