@@ -1,10 +1,11 @@
 ﻿@using PathToMyRootsSharedModels.Utils
+@using PathToMyRootsWebApp.Constants
 @using PathToMyRootsWebApp.Utils
 @model PathToMyRootsWebApp.Models.PersonModel
 
 <h1>Person Details</h1>
 
-<span class="error-span-medium">@ViewBag.ErrorMessage</span>
+<span class="success-span-medium">@ViewData[PageDataKeys.SuccessMessage]</span>
 
 <div>
     <h3>Noble Title: @Model?.NobleTitle</h3>

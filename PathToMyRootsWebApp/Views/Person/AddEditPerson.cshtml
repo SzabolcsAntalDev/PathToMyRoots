@@ -30,7 +30,7 @@
     }
 </h1>
 
-<span class="error-span-medium">@ViewBag.ErrorMessage</span>
+<span class="error-span-medium">@ViewData[PageDataKeys.ErrorMessage]</span>
 
 <form asp-action="@((Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="person-main-form">
     <h2>Personal Information</h2>
@@ -192,7 +192,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select Biological Father --</li>
-                        @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model.Id))
+                        @foreach (var father in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => p.IsMale).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@father.Id" class="@(Model.BiologicalFatherId == father.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
@@ -222,7 +222,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select Biological Mother --</li>
-                        @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model.Id))
+                        @foreach (var mother in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => !p.IsMale).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@mother.Id" class="@(Model.BiologicalMotherId == mother.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
@@ -252,7 +252,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select Adoptive Father --</li>
-                        @foreach (var father in ((List<PersonModel>)ViewBag.Persons).Where(p => p.IsMale).Where(p => p.Id != Model.Id))
+                        @foreach (var father in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => p.IsMale).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@father.Id" class="@(Model.AdoptiveFatherId == father.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
@@ -282,7 +282,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select Adoptive Mother --</li>
-                        @foreach (var mother in ((List<PersonModel>)ViewBag.Persons).Where(p => !p.IsMale).Where(p => p.Id != Model.Id))
+                        @foreach (var mother in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => !p.IsMale).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@mother.Id" class="@(Model.AdoptiveMotherId == mother.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
@@ -315,7 +315,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select First Spouse --</li>
-                        @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model.Id))
+                        @foreach (var spouse in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@spouse.Id"
                                 data-is-male="@spouse.IsMale"
@@ -439,7 +439,7 @@
                     <input type="text" class="dropdown-menu-filter-input" placeholder="Filter..." />
                     <ul>
                         <li data-value="">-- Select Second Spouse --</li>
-                        @foreach (var spouse in ((List<PersonModel>)ViewBag.Persons).Where(p => p.Id != Model.Id))
+                        @foreach (var spouse in ((ViewData[PageDataKeys.Persons] as List<PersonModel>) ?? new List<PersonModel>()).Where(p => p.Id != Model.Id))
                         {
                             <li data-value="@spouse.Id"
                                 data-is-male="@spouse.IsMale"

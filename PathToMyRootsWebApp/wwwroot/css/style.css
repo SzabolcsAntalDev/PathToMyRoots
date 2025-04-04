@@ -9,6 +9,7 @@
   --male-color: #DEE4EA;
   --female-color: #F1F2F4;
   --marriage-color: #F7F8F9;
+  --success-color: green;
   --error-color: red;
 }
 
@@ -23,6 +24,7 @@
   --male-color: #2C333A;
   --female-color: #22272B;
   --marriage-color: #161A1D;
+  --success-color: green;
   --error-color: red;
 }
 
@@ -186,6 +188,10 @@ label {
   margin-right: 8px;
 }
 
+.success-span-medium {
+  color: var(--success-color);
+}
+
 .error-span-medium, .error-span-small-with-top-margin, .error-span-small-with-bottom-margin {
   color: var(--error-color);
 }
@@ -200,6 +206,10 @@ label {
 
 .error-span-small-with-top-margin {
   margin-top: 8px;
+}
+
+.success-span-medium {
+  font-size: 14px;
 }
 
 .error-span-medium {

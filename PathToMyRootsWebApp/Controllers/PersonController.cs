@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PathToMyRootsWebApp.Constants;
 using PathToMyRootsWebApp.Models;
 using PathToMyRootsWebApp.Services;
 using PathToMyRootsWebApp.Utils;
@@ -17,7 +18,7 @@ namespace PathToMyRootsWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPerson()
         {
-            await AddPersonsToViewBag();
+            await AddPersonsToViewData();
             return View("AddEditPerson", new PersonModel());
         }
 
@@ -27,27 +28,30 @@ namespace PathToMyRootsWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await AddPersonsToViewBag();
+                await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
             var addedPersonModel = await _personApiService.AddPersonAsync(personModel);
             if (addedPersonModel == null)
             {
-                ViewBag.ErrorMessage = "There was an error while adding the person.";
-                await AddPersonsToViewBag();
+                ViewData[PageDataKeys.ErrorMessage] = "There was an error while adding the person.";
+                await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
+            TempData[PageDataKeys.SuccessMessage] = "Person added successfully.";
             return RedirectToAction("PersonDetails", new { id = addedPersonModel.Id });
         }
 
         [HttpGet]
         public async Task<IActionResult> PersonDetails(int id)
         {
+            ViewData[PageDataKeys.SuccessMessage] = TempData[PageDataKeys.SuccessMessage];
+
             var personModel = await _personApiService.GetPersonAsync(id);
             if (personModel == null)
-                ViewBag.ErrorMessage = "The person was not found.";
+                ViewData[PageDataKeys.ErrorMessage] = "The person was not found.";
 
             return View(personModel);
         }
@@ -55,15 +59,15 @@ namespace PathToMyRootsWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> EditPerson(int id)
         {
-            await AddPersonsToViewBag();
+            await AddPersonsToViewData();
 
             var personModel = await _personApiService.GetPersonAsync(id);
             if (personModel == null)
             {
-                ViewBag.ErrorMessage = "The person was not found.";
+                ViewData[PageDataKeys.ErrorMessage] = "The person was not found.";
                 return View("AddEditPerson", new PersonModel());
             }
-            
+
             return View("AddEditPerson", personModel);
         }
 
@@ -73,18 +77,19 @@ namespace PathToMyRootsWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await AddPersonsToViewBag();
+                await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
             var success = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
             if (!success)
             {
-                ViewBag.ErrorMessage = "There was an error while updating the person.";
-                await AddPersonsToViewBag();
+                ViewData[PageDataKeys.ErrorMessage] = "There was an error while updating the person.";
+                await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
+            TempData[PageDataKeys.SuccessMessage] = "Person updated successfully.";
             return RedirectToAction("PersonDetails", new { id = personModel.Id });
         }
 
@@ -95,17 +100,20 @@ namespace PathToMyRootsWebApp.Controllers
             var success = await _personApiService.DeletePersonAsync(id);
             if (!success)
             {
-                ViewBag.ErrorMessage = "There was an error while deleting the person.";
-                await AddPersonsToViewBag();
+                ViewData[PageDataKeys.ErrorMessage] = "There was an error while deleting the person.";
+                await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
+            TempData[PageDataKeys.SuccessMessage] = "Person deleted successfully.";
             return RedirectToAction("Persons");
         }
 
         // Szabi: remove 10 from page size
         public async Task<IActionResult> Persons(string filterText, int currentPageNumber, int pageSize = 10)
         {
+            ViewData[PageDataKeys.SuccessMessage] = TempData[PageDataKeys.SuccessMessage];
+
             var personsModels = await _personApiService.GetPersonsAsync();
             var filteredPersonModels = string.IsNullOrEmpty(filterText)
                 ? personsModels
@@ -136,10 +144,10 @@ namespace PathToMyRootsWebApp.Controllers
             return View(personsPageModel);
         }
 
-        private async Task AddPersonsToViewBag()
+        private async Task AddPersonsToViewData()
         {
             var personsModels = await _personApiService.GetPersonsAsync();
-            ViewBag.Persons = Sort(personsModels);
+            ViewData[PageDataKeys.Persons] = Sort(personsModels);
         }
 
         private IList<PersonModel?> Sort(IEnumerable<PersonModel?> personModels)

@@ -14,6 +14,7 @@ $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
 $marriage-color-light: $background-color-light;
 
+$success-color-light: green;
 $error-color-light: red;
 
 $foreground-color-dark: #C7D1DB;
@@ -30,6 +31,7 @@ $male-color-dark: $background-color-footer-dark;
 $female-color-dark: $background-color-nav-dark;
 $marriage-color-dark: $background-color-dark;
 
+$success-color-dark: green;
 $error-color-dark: red;
 
 %theme-light {
@@ -43,6 +45,7 @@ $error-color-dark: red;
     --male-color: #{$male-color-light};
     --female-color: #{$female-color-light};
     --marriage-color: #{$marriage-color-light};
+    --success-color: #{$success-color-light};
     --error-color: #{$error-color-light};
 }
 
@@ -57,6 +60,7 @@ $error-color-dark: red;
     --male-color: #{$male-color-dark};
     --female-color: #{$female-color-dark};
     --marriage-color: #{$marriage-color-dark};
+    --success-color: #{$success-color-dark};
     --error-color: #{$error-color-dark};
 }
 
@@ -250,6 +254,10 @@ label {
     margin-right: $thickness-medium;
 }
 
+%success-span {
+    color: var(--success-color);
+}
+
 %error-span {
     color: var(--error-color);
 }
@@ -267,6 +275,11 @@ label {
 .error-span-small-with-top-margin {
     @extend %error-span-small;
     margin-top: $thickness-medium;
+}
+
+.success-span-medium {
+    @extend %success-span;
+    font-size: $font-size-medium;
 }
 
 .error-span-medium {
