@@ -65,6 +65,15 @@ namespace PathToMyRootsApi.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePerson(int id)
+        {
+            var success = await _personService.DeletePersonAsync(id);
+            return success
+                ? NoContent()
+                : NotFound($"Person with id {id} not found.");
+        }
+
         [HttpGet("getpersons")]
         public async Task<ActionResult<List<PersonDto>>> GetPersons()
         {
@@ -72,19 +81,6 @@ namespace PathToMyRootsApi.Controllers
             var personsDtos = persons.Select(PersonDtoMapper.PersonToPersonDto).ToList();
 
             return Ok(personsDtos);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeletePerson(int id)
-        {
-            var personFromDb = await _personService.GetPersonAsync(id);
-            if (personFromDb == null)
-                return NotFound($"Person with id {id} not found.");
-
-            var success = await _personService.DeletePersonAsync(id);
-            return success
-                ? NoContent()
-                : NotFound($"Person with id {id} not found.");
         }
     }
 }

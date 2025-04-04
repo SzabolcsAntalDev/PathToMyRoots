@@ -89,9 +89,17 @@ namespace PathToMyRootsWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePerson(int id)
+        public async Task<IActionResult> DeletePerson(int id, PersonModel personModel)
         {
+            // personModel is sent so in case of a delete error the same page can be displayed again
             var success = await _personApiService.DeletePersonAsync(id);
+            if (!success)
+            {
+                ViewBag.ErrorMessage = "There was an error while deleting the person.";
+                await AddPersonsToViewBag();
+                return View("AddEditPerson", personModel);
+            }
+
             return RedirectToAction("Persons");
         }
 

@@ -585,12 +585,24 @@
     <div style="display: block; text-align: right;">
         @if (Model.Id != PathToMyRootsWebAppConstants.UnsetIntValue)
         {
-            <button type="submit" class="person-action-button person-delete-person-button">
+            <button
+                type="submit"
+                class="person-action-button person-delete-person-button"
+                asp-action="DeletePerson"
+                asp-controller="Person"
+                asp-route-id="@Model.Id"
+                formmethod="post">
                 Delete Person
             </button>
         }
-        <button type="submit" class="person-action-button">
-            @(Model?.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "Add" : "Update")
+        <button
+            type="submit"
+            class="person-action-button"
+            asp-action="@(Model.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "AddPerson" : "EditPerson")"
+            asp-controller="Person"
+            asp-route-id="@Model.Id"
+            formmethod="post">
+            @(Model.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "Add" : "Update")
         </button>
     </div>
 </form>
