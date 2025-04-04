@@ -13,40 +13,6 @@ namespace PathToMyRootsDataAccess.Services
             _pathToMyRootsDbContext = pathToMyRootsDbContext;
         }
 
-        public async Task<List<Person>> GetPersonsAsync()
-        {
-            var persons = await
-                _pathToMyRootsDbContext.Persons
-                    .Include(p => p.BiologicalFather)
-                    .Include(p => p.BiologicalMother)
-                    .Include(p => p.AdoptiveFather)
-                    .Include(p => p.AdoptiveMother)
-                    .Include(p => p.FirstSpouse)
-                    .Include(p => p.SecondSpouse)
-                    .ToListAsync();
-
-            return persons;
-        }
-
-        public async Task<Person?> GetPersonAsync(int id)
-        {
-            var person = await
-                _pathToMyRootsDbContext.Persons
-                    .Include(p => p.BiologicalFather)
-                    .Include(p => p.BiologicalMother)
-                    .Include(p => p.AdoptiveFather)
-                    .Include(p => p.AdoptiveMother)
-                    .Include(p => p.FirstSpouse)
-                    .Include(p => p.SecondSpouse)
-                    .Include(p => p.InverseBiologicalMother)
-                    .Include(p => p.InverseBiologicalFather)
-                    .Include(p => p.InverseAdoptiveMother)
-                    .Include(p => p.InverseAdoptiveFather)
-                    .FirstOrDefaultAsync(p => p.Id == id);
-
-            return person;
-        }
-
         public async Task<Person> AddPersonAsync(Person personFromServer)
         {
             // identity should be 0, otherwise sql insert fails
@@ -146,7 +112,43 @@ namespace PathToMyRootsDataAccess.Services
             return personFromServer;
         }
 
-        public async Task<Person?> EditPersonAsync(Person personFromServer)
+        public async Task<List<Person>> GetPersonsAsync()
+        {
+            var persons = await
+                _pathToMyRootsDbContext.Persons
+                    .Include(p => p.BiologicalFather)
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.AdoptiveFather)
+                    .Include(p => p.AdoptiveMother)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
+                    .ToListAsync();
+
+            return persons;
+        }
+
+        public async Task<Person?> GetPersonAsync(int id)
+        {
+            var person = await
+                _pathToMyRootsDbContext.Persons
+                    .Include(p => p.BiologicalFather)
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.AdoptiveFather)
+                    .Include(p => p.AdoptiveMother)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
+                    .Include(p => p.InverseBiologicalMother)
+                    .Include(p => p.InverseBiologicalFather)
+                    .Include(p => p.InverseAdoptiveMother)
+                    .Include(p => p.InverseAdoptiveFather)
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+            return person;
+        }
+
+        
+
+        public async Task<Person> EditPersonAsync(Person personFromServer)
         {
             var personFromDb = await _pathToMyRootsDbContext.Persons
                 .FirstOrDefaultAsync(p => p.Id == personFromServer.Id);

@@ -49,7 +49,7 @@ namespace PathToMyRootsWebApp.Services
             var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
             var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"{BaseUrl}/{id}", requestBody);
+            var response = await _httpClient.PutAsync($"{BaseUrl}", requestBody);
             return response.IsSuccessStatusCode;
         }
 

@@ -1,6 +1,6 @@
 ﻿using PathToMyRootsSharedModels.Dtos;
+using PathToMyRootsSharedModels.Utils;
 using PathToMyRootsWebApp.Models;
-using PathToMyRootsWebApp.Utils;
 
 namespace PathToMyRootsWebApp.Mappings
 {

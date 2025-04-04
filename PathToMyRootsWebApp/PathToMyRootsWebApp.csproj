@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NodaTime" Version="3.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj" />
   </ItemGroup>
 

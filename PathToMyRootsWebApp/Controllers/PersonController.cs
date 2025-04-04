@@ -88,7 +88,6 @@ namespace PathToMyRootsWebApp.Controllers
             return RedirectToAction("PersonDetails", new { id = personModel.Id });
         }
 
-
         [HttpPost]
         public async Task<IActionResult> DeletePerson(int id)
         {

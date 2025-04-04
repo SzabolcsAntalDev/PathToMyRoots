@@ -1,4 +1,4 @@
-﻿using PathToMyRootsWebApp.Utils;
+﻿using PathToMyRootsSharedModels.Utils;
 using System.ComponentModel.DataAnnotations;
 
 namespace PathToMyRootsWebApp.Validation

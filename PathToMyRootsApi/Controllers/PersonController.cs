@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PathToMyRootsApi.Mappings;
+using PathToMyRootsApi.Validators;
 using PathToMyRootsDataAccess.Services;
 using PathToMyRootsSharedModels.Dtos;
 
@@ -18,12 +19,20 @@ namespace PathToMyRootsApi.Controllers
 
         public async Task<ActionResult<PersonDto>> AddPerson([FromBody] PersonDto personDto)
         {
-            if (personDto == null)
-                return BadRequest("Null person provided.");
+            if (!PersonDtoValidator.IsValidNotNullable(personDto))
+                return BadRequest("Invalid person data provided.");
 
             var person = PersonDtoMapper.PersonDtoToPerson(personDto);
-            var personFromDb = await _personService.AddPersonAsync(person);
-            return CreatedAtAction(nameof(GetPerson), new { id = personFromDb.Id }, personFromDb);
+
+            try
+            {
+                var addedPerson = await _personService.AddPersonAsync(person);
+                return CreatedAtAction(nameof(GetPerson), new { id = addedPerson.Id }, addedPerson);
+            }
+            catch
+            {
+                return BadRequest("Failed to add person: invalid person data provided.");
+            }
         }
 
         [HttpGet("{id}")]
@@ -37,20 +46,23 @@ namespace PathToMyRootsApi.Controllers
             return Ok(personDto);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<PersonDto>> EditPerson(int id, [FromBody] PersonDto personDto)
+        [HttpPut]
+        public async Task<ActionResult<PersonDto>> EditPerson([FromBody] PersonDto personDto)
         {
-            if (personDto == null)
-                return BadRequest("Null person provided.");
+            if (!PersonDtoValidator.IsValidNotNullable(personDto))
+                return BadRequest("Invalid person data provided.");
 
             var person = PersonDtoMapper.PersonDtoToPerson(personDto);
-            var personFromDbEdited = await _personService.EditPersonAsync(person);
 
-            if (personFromDbEdited == null)
-                return NotFound($"Person with id {id} could not be updated in the database.");
-
-            var personDtoFromDbEdited = PersonDtoMapper.PersonToPersonDto(personFromDbEdited);
-            return Ok(personDtoFromDbEdited);
+            try
+            {
+                var editedPerson = await _personService.EditPersonAsync(person);
+                return Ok(editedPerson);
+            }
+            catch
+            {
+                return BadRequest("Failed to update person: invalid person data provided.");
+            }
         }
 
         [HttpGet("getpersons")]

@@ -7,6 +7,7 @@ namespace PathToMyRootsWebApp.Models
     public class PersonModel
     {
         private const int NamesMaxNumberOfCharacters = 50;
+        private const int OhterNamesMaxNumberOfCharacters = 250;
 
         public int? Id { get; set; } = PathToMyRootsWebAppConstants.UnsetIntValue;
 
@@ -23,7 +24,7 @@ namespace PathToMyRootsWebApp.Models
         [StringLength(NamesMaxNumberOfCharacters, ErrorMessage = "Maiden Name must be maximum 50 characters long.")]
         public string? MaidenName { get; set; }
 
-        [StringLength(250, ErrorMessage = "Other Names must be maximum 250 characters long.")]
+        [StringLength(OhterNamesMaxNumberOfCharacters, ErrorMessage = "Other Names must be maximum 250 characters long.")]
         public string? OtherNames { get; set; }
 
         public bool IsMale { get; set; } = true;
