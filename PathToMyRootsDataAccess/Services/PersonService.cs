@@ -13,249 +13,210 @@ namespace PathToMyRootsDataAccess.Services
             _pathToMyRootsDbContext = pathToMyRootsDbContext;
         }
 
-        public async Task<Person> AddPersonAsync(Person personFromServer)
+        public async Task<Person> AddPersonAsync(Person person)
         {
             // identity should be 0, otherwise sql insert fails
-            personFromServer.Id = 0;
-
-            bool isValid = personFromServer.FirstSpouseId == null && personFromServer.SecondSpouseId == null;
+            person.Id = 0;
 
             Person? firstSpouse = null;
             Person? secondSpouse = null;
 
-            if (personFromServer.FirstSpouseId != null)
+            if (person.FirstSpouseId != null)
             {
-                firstSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromServer.FirstSpouseId.Value);
+                firstSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(person.FirstSpouseId.Value);
+                if (firstSpouse == null)
+                    throw new Exception($"First spouse with id {person.FirstSpouseId} not found.");
 
-                // invalid if first spouse already has two spouses
-                isValid =
-                    firstSpouse != null &&
-                    (firstSpouse.FirstSpouseId == null || firstSpouse.SecondSpouseId == null);
+                // if first spouse already has two spouses
+                if (firstSpouse.FirstSpouseId != null && firstSpouse.SecondSpouseId != null)
+                    throw new Exception($"First spouse with id {person.FirstSpouseId} already has two spouses.");
             }
 
-            if (isValid && personFromServer.SecondSpouseId != null)
+            if (person.SecondSpouseId != null)
             {
-                secondSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromServer.SecondSpouseId.Value);
+                secondSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(person.SecondSpouseId.Value);
+                if (secondSpouse == null)
+                    throw new Exception($"Second spouse with id {person.SecondSpouseId} not found.");
 
-                // invalid if second spouse already has two spouses
-                isValid =
-                    secondSpouse != null &&
-                    (secondSpouse.FirstSpouseId == null || secondSpouse.SecondSpouseId == null);
+                // if second spouse already has two spouses
+                if (secondSpouse.FirstSpouseId != null && secondSpouse.SecondSpouseId != null)
+                    throw new Exception($"Second spouse with id {person.SecondSpouseId} already has two spouses.");
             }
 
-            if (!isValid)
-                throw new Exception("Invalid spouse data");
+            await _pathToMyRootsDbContext.Persons.AddAsync(person);
+            await _pathToMyRootsDbContext.SaveChangesAsync();
 
             if (firstSpouse != null)
             {
+                // add the current person to the first available spouse spot of its first spouse
                 if (firstSpouse.FirstSpouseId == null)
                 {
-                    await _pathToMyRootsDbContext.Persons.AddAsync(personFromServer);
-                    await _pathToMyRootsDbContext.SaveChangesAsync();
-
-                    firstSpouse.FirstSpouseId = personFromServer.Id;
-                    firstSpouse.FirstMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    firstSpouse.FirstMarriageEndDate = personFromServer.FirstMarriageEndDate;
-
-                    _pathToMyRootsDbContext.Persons.Update(firstSpouse);
+                    firstSpouse.FirstSpouseId = person.Id;
+                    firstSpouse.FirstMarriageStartDate = person.FirstMarriageStartDate;
+                    firstSpouse.FirstMarriageEndDate = person.FirstMarriageEndDate;
                 }
-                else if (firstSpouse.SecondSpouseId == null)
+                // add the current person to the second available spouse spot of its first spouse
+                else
                 {
-                    await _pathToMyRootsDbContext.Persons.AddAsync(personFromServer);
-                    await _pathToMyRootsDbContext.SaveChangesAsync();
-
-                    firstSpouse.SecondSpouseId = personFromServer.Id;
-                    firstSpouse.SecondMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    firstSpouse.SecondMarriageEndDate = personFromServer.FirstMarriageEndDate;
-
-                    _pathToMyRootsDbContext.Persons.Update(firstSpouse);
+                    firstSpouse.SecondSpouseId = person.Id;
+                    firstSpouse.SecondMarriageStartDate = person.FirstMarriageStartDate;
+                    firstSpouse.SecondMarriageEndDate = person.FirstMarriageEndDate;
                 }
+
+                _pathToMyRootsDbContext.Persons.Update(firstSpouse);
             }
 
             if (secondSpouse != null)
             {
+                // add the current person to the first available spouse spot of its second spouse
                 if (secondSpouse.FirstSpouseId == null)
                 {
-                    if (personFromServer.Id == 0)
-                    {
-                        await _pathToMyRootsDbContext.Persons.AddAsync(personFromServer);
-                        await _pathToMyRootsDbContext.SaveChangesAsync();
-                    }
-
-                    secondSpouse.FirstSpouseId = personFromServer.Id;
-                    secondSpouse.FirstMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    secondSpouse.FirstMarriageEndDate = personFromServer.FirstMarriageEndDate;
-
-                    _pathToMyRootsDbContext.Persons.Update(secondSpouse);
+                    secondSpouse.FirstSpouseId = person.Id;
+                    secondSpouse.FirstMarriageStartDate = person.SecondMarriageStartDate;
+                    secondSpouse.FirstMarriageEndDate = person.SecondMarriageEndDate;
                 }
-                else if (secondSpouse.SecondSpouseId == null)
+                // add the current person to the second available spouse spot of its second spouse
+                else
                 {
-                    if (personFromServer.Id == 0)
-                    {
-                        await _pathToMyRootsDbContext.Persons.AddAsync(personFromServer);
-                        await _pathToMyRootsDbContext.SaveChangesAsync();
-                    }
-
-                    secondSpouse.SecondSpouseId = personFromServer.Id;
-                    secondSpouse.SecondMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    secondSpouse.SecondMarriageEndDate = personFromServer.FirstMarriageEndDate;
-
-                    _pathToMyRootsDbContext.Persons.Update(secondSpouse);
+                    secondSpouse.SecondSpouseId = person.Id;
+                    secondSpouse.SecondMarriageStartDate = person.SecondMarriageStartDate;
+                    secondSpouse.SecondMarriageEndDate = person.SecondMarriageEndDate;
                 }
+
+                _pathToMyRootsDbContext.Persons.Update(secondSpouse);
             }
 
-            if (personFromServer.Id == 0)
-                await _pathToMyRootsDbContext.Persons.AddAsync(personFromServer);
-
             await _pathToMyRootsDbContext.SaveChangesAsync();
-
-            return personFromServer;
-        }
-
-        public async Task<List<Person>> GetPersonsAsync()
-        {
-            var persons = await
-                _pathToMyRootsDbContext.Persons
-                    .Include(p => p.BiologicalFather)
-                    .Include(p => p.BiologicalMother)
-                    .Include(p => p.AdoptiveFather)
-                    .Include(p => p.AdoptiveMother)
-                    .Include(p => p.FirstSpouse)
-                    .Include(p => p.SecondSpouse)
-                    .ToListAsync();
-
-            return persons;
-        }
-
-        public async Task<Person?> GetPersonAsync(int id)
-        {
-            var person = await
-                _pathToMyRootsDbContext.Persons
-                    .Include(p => p.BiologicalFather)
-                    .Include(p => p.BiologicalMother)
-                    .Include(p => p.AdoptiveFather)
-                    .Include(p => p.AdoptiveMother)
-                    .Include(p => p.FirstSpouse)
-                    .Include(p => p.SecondSpouse)
-                    .Include(p => p.InverseBiologicalMother)
-                    .Include(p => p.InverseBiologicalFather)
-                    .Include(p => p.InverseAdoptiveMother)
-                    .Include(p => p.InverseAdoptiveFather)
-                    .FirstOrDefaultAsync(p => p.Id == id);
 
             return person;
         }
 
-        
+        public async Task<Person?> GetPersonAsync(int id)
+        {
+            var person = await _pathToMyRootsDbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
+            if (person == null)
+                return null;
+
+            var entityEntry = _pathToMyRootsDbContext.Entry(person);
+
+            await entityEntry.Reference(p => p.BiologicalFather).LoadAsync();
+            await entityEntry.Reference(p => p.BiologicalMother).LoadAsync();
+            await entityEntry.Reference(p => p.AdoptiveFather).LoadAsync();
+            await entityEntry.Reference(p => p.AdoptiveMother).LoadAsync();
+            await entityEntry.Reference(p => p.FirstSpouse).LoadAsync();
+            await entityEntry.Reference(p => p.SecondSpouse).LoadAsync();
+
+            await entityEntry.Collection(p => p.InverseBiologicalMother).LoadAsync();
+            await entityEntry.Collection(p => p.InverseBiologicalFather).LoadAsync();
+            await entityEntry.Collection(p => p.InverseAdoptiveMother).LoadAsync();
+            await entityEntry.Collection(p => p.InverseAdoptiveFather).LoadAsync();
+
+            return person;
+        }
 
         public async Task<Person> EditPersonAsync(Person personFromServer)
         {
-            var personFromDb = await _pathToMyRootsDbContext.Persons
-                .FirstOrDefaultAsync(p => p.Id == personFromServer.Id);
+            var personFromDb = await _pathToMyRootsDbContext.Persons.FirstOrDefaultAsync(p => p.Id == personFromServer.Id);
 
             if (personFromDb == null)
-                return null;
-
-            bool isValid = personFromServer.FirstSpouseId == null && personFromServer.SecondSpouseId == null;
+                throw new Exception($"Person with id {personFromServer.Id} not found.");
 
             Person? firstSpouse = null;
             Person? secondSpouse = null;
 
-            if (personFromServer.FirstSpouseId.HasValue)
+            // first spouse does not have two spouses and none being the current person
+            if (personFromServer.FirstSpouseId != null)
             {
                 firstSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromServer.FirstSpouseId.Value);
+                if (firstSpouse == null)
+                    throw new Exception($"First spouse with id {personFromServer.FirstSpouseId} not found.");
 
-                // invalid if first spouse already has two spouses and none of them is the actual one
-                isValid =
-                    firstSpouse != null &&
-                    ((firstSpouse.FirstSpouseId == null || firstSpouse.SecondSpouseId == null) ||
-                    (firstSpouse.FirstSpouseId == personFromServer.Id || firstSpouse.SecondSpouseId == personFromServer.Id));
+                // if first spouse already has two spouses and none of them is the actual one
+                if (firstSpouse.FirstSpouseId != null &&
+                    firstSpouse.SecondSpouseId != null &&
+                    firstSpouse.FirstSpouseId != personFromServer.Id &&
+                    firstSpouse.SecondSpouseId != personFromServer.Id)
+                    throw new Exception($"First spouse with id {personFromServer.FirstSpouseId} already has two spouses and none of them is the current person.");
             }
 
-            if (isValid && personFromServer.SecondSpouseId.HasValue)
+            // second spouse does not have two spouses and none being the current person
+            if (personFromServer.SecondSpouseId != null)
             {
                 secondSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromServer.SecondSpouseId.Value);
+                if (secondSpouse == null)
+                    throw new Exception($"Second spouse with id {personFromServer.SecondSpouseId} not found.");
 
-                // invalid if second spouse already has two spouses and none of them is the actual one
-                isValid =
-                    secondSpouse != null &&
-                    ((secondSpouse.FirstSpouseId == null || secondSpouse.SecondSpouseId == null) ||
-                    (secondSpouse.FirstSpouseId == personFromServer.Id || secondSpouse.SecondSpouseId == personFromServer.Id));
+                // if second spouse already has two spouses and none of them is the actual one
+                if (secondSpouse.FirstSpouseId != null &&
+                    secondSpouse.SecondSpouseId != null &&
+                    secondSpouse.FirstSpouseId != personFromServer.Id &&
+                    secondSpouse.SecondSpouseId != personFromServer.Id)
+                    throw new Exception($"Second spouse with id {personFromServer.SecondSpouseId} already has two spouses and none of them is the current person.");
             }
 
-            if (!isValid)
-                throw new Exception("Invalid spouse data");
+            Person? oldFirstSpouse = null;
+            Person? oldSecondSpouse = null;
 
-            // delete current from old first spouse if necessary
-            if (personFromServer.FirstSpouseId != personFromDb.FirstSpouseId && personFromDb.FirstSpouseId != null)
+            if (personFromDb.FirstSpouseId != null)
+                oldFirstSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromDb.FirstSpouseId.Value);
+
+            if (personFromDb.SecondSpouseId != null)
+                oldSecondSpouse = await _pathToMyRootsDbContext.Persons.FindAsync(personFromDb.SecondSpouseId.Value);
+
+            // delete current person from old first spouse
+            if (oldFirstSpouse != null)
             {
-                var firstSpouseFromDb = await _pathToMyRootsDbContext.Persons.FindAsync(personFromDb.FirstSpouseId.Value);
-                if (firstSpouseFromDb == null)
+                // if current person was old pouse's first spouse
+                if (oldFirstSpouse.FirstSpouseId == personFromDb.Id)
                 {
-                    // should not happen
-                    return null;
+                    oldFirstSpouse.FirstSpouseId = null;
+                    oldFirstSpouse.FirstMarriageStartDate = null;
+                    oldFirstSpouse.FirstMarriageEndDate = null;
                 }
-                if (firstSpouseFromDb.FirstSpouseId == personFromDb.Id)
+                // if current person was old pouse's second spouse
+                else
                 {
-                    firstSpouseFromDb.FirstSpouseId = null;
-                    firstSpouseFromDb.FirstMarriageStartDate = null;
-                    firstSpouseFromDb.FirstMarriageEndDate = null;
-                }
-                if (firstSpouseFromDb.SecondSpouseId == personFromDb.Id)
-                {
-                    firstSpouseFromDb.SecondSpouseId = null;
-                    firstSpouseFromDb.SecondMarriageStartDate = null;
-                    firstSpouseFromDb.SecondMarriageEndDate = null;
+                    oldFirstSpouse.SecondSpouseId = null;
+                    oldFirstSpouse.SecondMarriageStartDate = null;
+                    oldFirstSpouse.SecondMarriageEndDate = null;
                 }
 
-                _pathToMyRootsDbContext.Persons.Update(firstSpouseFromDb);
+                _pathToMyRootsDbContext.Persons.Update(oldFirstSpouse);
             }
 
-            // delete current from old second spouse if necessary
-            if (personFromServer.SecondSpouseId != personFromDb.SecondSpouseId && personFromDb.SecondSpouseId != null)
+            // delete current person from old second spouse
+            if (oldSecondSpouse != null)
             {
-                var secondSpouseFromDb = await _pathToMyRootsDbContext.Persons.FindAsync(personFromDb.SecondSpouseId.Value);
-                if (secondSpouseFromDb == null)
+                // if current person was old pouse's first spouse
+                if (oldSecondSpouse.FirstSpouseId == personFromDb.Id)
                 {
-                    // should not happen
-                    return null;
+                    oldSecondSpouse.FirstSpouseId = null;
+                    oldSecondSpouse.FirstMarriageStartDate = null;
+                    oldSecondSpouse.FirstMarriageEndDate = null;
                 }
-                if (secondSpouseFromDb.FirstSpouseId == personFromDb.Id)
+                // if current person was old pouse's second spouse
+                else
                 {
-                    secondSpouseFromDb.FirstSpouseId = null;
-                    secondSpouseFromDb.FirstMarriageStartDate = null;
-                    secondSpouseFromDb.FirstMarriageEndDate = null;
-                }
-                if (secondSpouseFromDb.SecondSpouseId == personFromDb.Id)
-                {
-                    secondSpouseFromDb.SecondSpouseId = null;
-                    secondSpouseFromDb.SecondMarriageStartDate = null;
-                    secondSpouseFromDb.SecondMarriageEndDate = null;
+                    oldSecondSpouse.SecondSpouseId = null;
+                    oldSecondSpouse.SecondMarriageStartDate = null;
+                    oldSecondSpouse.SecondMarriageEndDate = null;
                 }
 
-                _pathToMyRootsDbContext.Persons.Update(secondSpouseFromDb);
+                _pathToMyRootsDbContext.Persons.Update(oldSecondSpouse);
             }
 
             // update data of first spouse
             if (firstSpouse != null)
             {
-                if (firstSpouse.FirstSpouseId == personFromServer.Id)
-                {
-                    firstSpouse.FirstMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    firstSpouse.FirstMarriageEndDate = personFromServer.FirstMarriageEndDate;
-                }
-                else if (firstSpouse.SecondSpouseId == personFromServer.Id)
-                {
-                    firstSpouse.SecondMarriageStartDate = personFromServer.FirstMarriageStartDate;
-                    firstSpouse.SecondMarriageEndDate = personFromServer.FirstMarriageEndDate;
-                }
-                else if (firstSpouse.FirstSpouseId == null)
+                // if first spouse spot is free
+                if (firstSpouse.FirstSpouseId == null)
                 {
                     firstSpouse.FirstSpouseId = personFromServer.Id;
                     firstSpouse.FirstMarriageStartDate = personFromServer.FirstMarriageStartDate;
                     firstSpouse.FirstMarriageEndDate = personFromServer.FirstMarriageEndDate;
                 }
-                else if (firstSpouse.SecondSpouseId == null)
+                // if second spouse spot is free
+                else
                 {
                     firstSpouse.SecondSpouseId = personFromServer.Id;
                     firstSpouse.SecondMarriageStartDate = personFromServer.FirstMarriageStartDate;
@@ -268,23 +229,15 @@ namespace PathToMyRootsDataAccess.Services
             // update data of second spouse
             if (secondSpouse != null)
             {
-                if (secondSpouse.FirstSpouseId == personFromServer.Id)
-                {
-                    secondSpouse.FirstMarriageStartDate = personFromServer.SecondMarriageStartDate;
-                    secondSpouse.FirstMarriageEndDate = personFromServer.SecondMarriageEndDate;
-                }
-                else if (secondSpouse.SecondSpouseId == personFromServer.Id)
-                {
-                    secondSpouse.SecondMarriageStartDate = personFromServer.SecondMarriageStartDate;
-                    secondSpouse.SecondMarriageEndDate = personFromServer.SecondMarriageEndDate;
-                }
-                else if (secondSpouse.FirstSpouseId == null)
+                // if first spouse spot is free
+                if (secondSpouse.FirstSpouseId == null)
                 {
                     secondSpouse.FirstSpouseId = personFromServer.Id;
                     secondSpouse.FirstMarriageStartDate = personFromServer.SecondMarriageStartDate;
                     secondSpouse.FirstMarriageEndDate = personFromServer.SecondMarriageEndDate;
                 }
-                else if (secondSpouse.SecondSpouseId == null)
+                // if second spouse spot is free
+                else
                 {
                     secondSpouse.SecondSpouseId = personFromServer.Id;
                     secondSpouse.SecondMarriageStartDate = personFromServer.SecondMarriageStartDate;
@@ -332,6 +285,21 @@ namespace PathToMyRootsDataAccess.Services
             await _pathToMyRootsDbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<List<Person>> GetPersonsAsync()
+        {
+            var persons = await
+                _pathToMyRootsDbContext.Persons
+                    .Include(p => p.BiologicalFather)
+                    .Include(p => p.BiologicalMother)
+                    .Include(p => p.AdoptiveFather)
+                    .Include(p => p.AdoptiveMother)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
+                    .ToListAsync();
+
+            return persons;
         }
     }
 }

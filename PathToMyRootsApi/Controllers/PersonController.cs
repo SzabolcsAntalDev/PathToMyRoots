@@ -27,23 +27,31 @@ namespace PathToMyRootsApi.Controllers
             try
             {
                 var addedPerson = await _personService.AddPersonAsync(person);
-                return CreatedAtAction(nameof(GetPerson), new { id = addedPerson.Id }, addedPerson);
+                var addedPersonDto = PersonDtoMapper.PersonToPersonDto(addedPerson);
+                return CreatedAtAction(nameof(GetPerson), new { id = addedPersonDto.Id }, addedPersonDto);
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest("Failed to add person: invalid person data provided.");
+                return BadRequest($"Failed to add person: {e.Message}.");
             }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PersonDto>> GetPerson(int id)
         {
-            var person = await _personService.GetPersonAsync(id);
-            if (person == null)
-                return NotFound($"Person with id {id} not found in the database.");
+            try
+            {
+                var person = await _personService.GetPersonAsync(id);
+                if (person == null)
+                    return NotFound($"Person with id {id} not found in the database.");
 
-            var personDto = PersonDtoMapper.PersonToPersonDto(person);
-            return Ok(personDto);
+                var personDto = PersonDtoMapper.PersonToPersonDto(person);
+                return Ok(personDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Failed to get person: {e.Message}.");
+            }
         }
 
         [HttpPut]
@@ -57,11 +65,12 @@ namespace PathToMyRootsApi.Controllers
             try
             {
                 var editedPerson = await _personService.EditPersonAsync(person);
-                return Ok(editedPerson);
+                var editedPersonDto = PersonDtoMapper.PersonToPersonDto(editedPerson);
+                return Ok(editedPersonDto);
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest("Failed to update person: invalid person data provided.");
+                return BadRequest($"Failed to edit person: {e.Message}.");
             }
         }
 

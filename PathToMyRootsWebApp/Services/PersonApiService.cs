@@ -44,7 +44,7 @@ namespace PathToMyRootsWebApp.Services
             return PersonModelMapper.PersonDtoToPersonModel(personDto);
         }
 
-        public async Task<bool> EditPersonAsync(int id, PersonModel personModel)
+        public async Task<bool> EditPersonAsync(PersonModel personModel)
         {
             var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
             var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");

@@ -81,7 +81,7 @@ namespace PathToMyRootsWebApp.Controllers
                 return View("AddEditPerson", personModel);
             }
 
-            var success = await _personApiService.EditPersonAsync(personModel.Id!.Value, personModel);
+            var success = await _personApiService.EditPersonAsync(personModel);
             if (!success)
             {
                 ViewData[PageDataKeys.ErrorMessage] = "There was an error while updating the person.";
