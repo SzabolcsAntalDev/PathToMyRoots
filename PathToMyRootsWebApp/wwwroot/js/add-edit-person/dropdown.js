@@ -2,6 +2,7 @@
 
     addGenderAndSpouseSpecificListeners();
     addCommonDropdownsListeners();
+    loadPersonImages();
 }
 
 // open and close menu
@@ -169,4 +170,25 @@ function toggleMarriageDatesContainer(spousePrefix) {
             }
         });
     }
+}
+
+function loadPersonImages() {
+    const phantomPersonSymbolPath = "/icons/icons.svg#phantom-person";
+    const personImages = document.querySelectorAll('.person-image');
+
+    personImages.forEach(image => {
+        image.onerror = function () {
+            const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+            use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", phantomPersonSymbolPath);
+
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("class", "person-svg");
+
+            svg.appendChild(use);
+            image.replaceWith(svg);
+        };
+
+        const url = image.getAttribute('data-image-url');
+        image.src = url;
+    });
 }

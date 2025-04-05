@@ -51,7 +51,7 @@ function createNode(person) {
     node.className = person.isMale ? 'tree-node-male' : 'tree-node-female';
 
     const imgPerson = document.createElement('img');
-    imgPerson.src = 'https://localhost:7241/api/Image/get/' + (person.imageUrl ?? "missingImage.png");
+    imgPerson.src = 'https://localhost:7241/api/Image/get/' + person.imageUrl;
     imgPerson.className = 'tree-node-image';
 
     const textsContainer = document.createElement('div');
@@ -71,7 +71,7 @@ function createNode(person) {
     textsContainer.appendChild(spanPersonLived);
 
     const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgElement.setAttribute('class', 'tree-action-img');
+    svgElement.setAttribute('class', 'small-svg');
     svgElement.setAttribute('width', '20');
     svgElement.setAttribute('height', '20');
 

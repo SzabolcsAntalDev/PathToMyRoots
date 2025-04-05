@@ -92,13 +92,16 @@ $thickness-super-large: 60px;
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
-$action-image-size: 20px;
-$distance-between-nodes: 15px;
 $person-node-width: 200px;
-$marriage-node-width: 70px;
-
+$distance-between-nodes: 15px;
 $node-image-width: 45px;
 $node-image-height: 60px;
+$marriage-node-width: 70px;
+
+$persons-and-dropdown-image-width: 30px;
+$persons-and-dropdown-image-height: 40px;
+
+$small-svg-size: 20px;
 
 html {
     font-size: $font-size-small;
@@ -334,17 +337,21 @@ input[type="text"]::placeholder {
     font-style: italic;
 }
 
-%action-img {
-    width: $action-image-size;
-    height: $action-image-size;
-    margin: 0px;
-    vertical-align: middle;
+%hoverable-svg {
     fill: var(--foreground-color);
     transition: fill $transition;
 
     &:hover {
         fill: var(--foreground-color-highlight);
     }
+}
+
+.small-svg {
+    @extend %hoverable-svg;
+    width: $small-svg-size;
+    height: $small-svg-size;
+    margin: 0px;
+    vertical-align: middle;
 }
 
 fieldset {
@@ -667,10 +674,6 @@ fieldset {
     }
 }
 
-.tree-action-img {
-    @extend %action-img;
-}
-
 %tree-line-svg {
     stroke-width: 1px;
     transition: stroke $transition;
@@ -743,11 +746,7 @@ fieldset {
     }
 }
 
-.persons-img {
-    display: block;
-    height: 40px;
-    width: 30px;
-}
+
 
 #persons-table {
     width: 100%;
@@ -804,8 +803,8 @@ fieldset {
             background-color: transparent;
         }
 
-        .persons-action-img {
-            @extend %action-img;
+        .persons-action-svg {
+            @extend .small-svg;
             margin: 0px $thickness-small;
         }
     }
@@ -821,6 +820,11 @@ fieldset {
 
     th:not(:last-child) {
         border-right-color: transparent;
+    }
+
+    .persons-image {
+        width: $persons-and-dropdown-image-width;
+        height: $persons-and-dropdown-image-height;
     }
 }
 
@@ -922,6 +926,23 @@ fieldset {
         display: flex;
         flex-direction: row;
 
+        .person-image {
+            width: $persons-and-dropdown-image-width;
+            height: $persons-and-dropdown-image-height;
+        }
+
+        .person-svg {
+            @extend %hoverable-svg;
+            width: $persons-and-dropdown-image-width;
+            height: $persons-and-dropdown-image-height;
+        }
+
+        &:hover {
+            .person-svg {
+                fill: var(--foreground-color-highlight);
+            }
+        }
+
         .person-name-span {
             flex-grow: 1;
             align-content: center;
@@ -930,8 +951,8 @@ fieldset {
     }
 }
 
-.person-info-img {
-    @extend %action-img;
+.person-info-image {
+    @extend .small-svg;
     margin: $thickness-medium $thickness-medium 0 calc($thickness-small * -1);
 }
 

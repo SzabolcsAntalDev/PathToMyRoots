@@ -6,25 +6,7 @@ namespace PathToMyRootsApi.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-        private const string MissingImageName = "missingImage.png";
-
         private string UploadsFolder => Path.Combine(_hostEnvironment.WebRootPath, "uploads");
-
-        private byte[]? _missingImage;
-        private byte[] MissingImage
-        {
-            get
-            {
-                if (_missingImage == null)
-                {
-                    var filePath = Path.Combine(UploadsFolder, MissingImageName);
-                    _missingImage = System.IO.File.ReadAllBytes(filePath);
-                }
-
-                return _missingImage;
-            }
-        }
-
         private readonly IWebHostEnvironment _hostEnvironment;
 
         public ImageController(IWebHostEnvironment hostEnvironment)
@@ -39,9 +21,8 @@ namespace PathToMyRootsApi.Controllers
                 return BadRequest("Image name is required.");
 
             var filePath = Path.Combine(UploadsFolder, imageName);
-
             if (!System.IO.File.Exists(filePath))
-                return File(MissingImage, "image/png", MissingImageName);
+                return NotFound();
 
             var fileBytes = System.IO.File.ReadAllBytes(filePath);
             return File(fileBytes, "image/png", imageName);

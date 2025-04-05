@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th class="td-shrink">
-                <img class="persons-img" style="height: 0" src="https://localhost:7241/api/Image/get/missingImage.png" />
+                <img class="persons-image" style="height: 0" />
             </th>
             <th>Noble Title</th>
             <th>First Name</th>
@@ -29,18 +29,18 @@
 
             <th class="td-shrink">
                 <a class="hidden">
-                    <svg class="persons-action-img">
+                    <svg class="persons-action-svg">
                         <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
                     </svg>
                 </a>
                 <a class="hidden">
-                    <svg class="persons-action-img">
+                    <svg class="persons-action-svg">
                         <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
                     </svg>
                 </a>
                 <form class="hidden">
                     <button class="persons-action-button">
-                        <svg class="persons-action-img">
+                        <svg class="persons-action-svg">
                             <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
                         </svg>
                     </button>
@@ -53,7 +53,7 @@
         {
             <tr>
                 <td class="td-shrink">
-                    <img class="persons-img" src="https://localhost:7241/api/Image/get/@(person.ImageUrl ?? "missingImage.png")" />
+                    <img class="persons-image" src="https://localhost:7241/api/Image/get/@(person.ImageUrl)" />
                 </td>
                 <td>@person.NobleTitle</td>
                 <td>@person.FirstName</td>
@@ -156,19 +156,19 @@
                 </td>
                 <td class="td-shrink">
                     <a asp-action="Tree" asp-controller="Tree" asp-route-id="@person.Id">
-                        <svg class="persons-action-img" title="View Tree">
+                        <svg class="persons-action-svg" title="View Tree">
                             <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
                         </svg>
                     </a>
                     <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
-                        <svg class="persons-action-img" title="Edit">
+                        <svg class="persons-action-svg" title="Edit">
                             <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
                         </svg>
                     </a>
                     <form asp-action="DeletePerson" asp-controller="Person" method="post">
                         <input type="hidden" name="id" value="@person.Id" />
                         <button type="submit" class="persons-action-button">
-                            <svg class="persons-action-img" title="Delete">
+                            <svg class="persons-action-svg" title="Delete">
                                 <use xlink:href="@Url.Content("~/icons/icons.svg#delete")"></use>
                             </svg>
                         </button>

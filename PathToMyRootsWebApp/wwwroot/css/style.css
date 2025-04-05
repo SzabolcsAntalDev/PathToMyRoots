@@ -257,16 +257,19 @@ input[type=text]::placeholder {
   font-style: italic;
 }
 
-.person-info-img, #persons-table .td-shrink .persons-action-img, .tree-action-img {
+.dropdown .option-with-image .person-svg, .small-svg, .person-info-image, #persons-table .td-shrink .persons-action-svg {
+  fill: var(--foreground-color);
+  transition: fill 0.3s linear 0s;
+}
+.dropdown .option-with-image .person-svg:hover, .small-svg:hover, .person-info-image:hover, #persons-table .td-shrink .persons-action-svg:hover {
+  fill: var(--foreground-color-highlight);
+}
+
+.small-svg, .person-info-image, #persons-table .td-shrink .persons-action-svg {
   width: 20px;
   height: 20px;
   margin: 0px;
   vertical-align: middle;
-  fill: var(--foreground-color);
-  transition: fill 0.3s linear 0s;
-}
-.person-info-img:hover, #persons-table .td-shrink .persons-action-img:hover, .tree-action-img:hover {
-  fill: var(--foreground-color-highlight);
 }
 
 fieldset {
@@ -620,12 +623,6 @@ fieldset input[type=text] {
   margin: auto 0;
 }
 
-.persons-img {
-  display: block;
-  height: 40px;
-  width: 30px;
-}
-
 #persons-table {
   width: 100%;
   border-collapse: collapse;
@@ -673,7 +670,7 @@ fieldset input[type=text] {
   padding: 0px;
   background-color: transparent;
 }
-#persons-table .td-shrink .persons-action-img {
+#persons-table .td-shrink .persons-action-svg {
   margin: 0px 4px;
 }
 #persons-table td:not(:last-child) {
@@ -685,6 +682,10 @@ fieldset input[type=text] {
 }
 #persons-table th:not(:last-child) {
   border-right-color: transparent;
+}
+#persons-table .persons-image {
+  width: 30px;
+  height: 40px;
 }
 
 .person-main-form {
@@ -773,13 +774,24 @@ fieldset input[type=text] {
   display: flex;
   flex-direction: row;
 }
+.dropdown .option-with-image .person-image {
+  width: 30px;
+  height: 40px;
+}
+.dropdown .option-with-image .person-svg {
+  width: 30px;
+  height: 40px;
+}
+.dropdown .option-with-image:hover .person-svg {
+  fill: var(--foreground-color-highlight);
+}
 .dropdown .option-with-image .person-name-span {
   flex-grow: 1;
   align-content: center;
   text-align: center;
 }
 
-.person-info-img {
+.person-info-image {
   margin: 8px 8px 0 -4px;
 }
 
