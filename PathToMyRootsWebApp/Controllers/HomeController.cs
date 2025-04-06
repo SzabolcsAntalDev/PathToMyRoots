@@ -14,8 +14,8 @@ namespace PathToMyRootsWebApp.Controllers
 
         public async Task<IActionResult> Home()
         {
-            var person = await _personApiService.GetPersonAsync(1);
-            return View(person);
+            var personResult = await _personApiService.GetPersonAsync(1);
+            return View(personResult.PersonModel);
         }
     }
 }

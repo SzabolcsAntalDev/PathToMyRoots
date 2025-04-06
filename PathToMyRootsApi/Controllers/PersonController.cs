@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PathToMyRootsApi.Mappings;
+using PathToMyRootsApi.Utils;
 using PathToMyRootsApi.Validators;
 using PathToMyRootsDataAccess.Services;
 using PathToMyRootsSharedModels.Dtos;
+using PathToMyRootsSharedModels.Enums;
 
 namespace PathToMyRootsApi.Controllers
 {
@@ -20,7 +22,10 @@ namespace PathToMyRootsApi.Controllers
         public async Task<ActionResult<PersonDto>> AddPerson([FromBody] PersonDto personDto)
         {
             if (!PersonDtoValidator.IsValidNotNullable(personDto))
-                return BadRequest("Invalid person data provided.");
+            {
+                // logger: invalid person data of person {personDto}.
+                return BadRequest(ErrorCode.InvalidPersonData);
+            }
 
             var person = PersonDtoMapper.PersonDtoToPerson(personDto);
 
@@ -30,9 +35,10 @@ namespace PathToMyRootsApi.Controllers
                 var addedPersonDto = PersonDtoMapper.PersonToPersonDto(addedPerson);
                 return CreatedAtAction(nameof(GetPerson), new { id = addedPersonDto.Id }, addedPersonDto);
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest($"Failed to add person: {e.Message}.");
+                // logger: Failed to add person: {e.Message}.
+                return new InternalServerError(ErrorCode.OperationFailed);
             }
         }
 
@@ -43,14 +49,18 @@ namespace PathToMyRootsApi.Controllers
             {
                 var person = await _personService.GetPersonAsync(id);
                 if (person == null)
-                    return NotFound($"Person with id {id} not found in the database.");
+                {
+                    // logger: return NotFound($"Person with id {id} not found in the database.");
+                    return NotFound(ErrorCode.PersonNotFound);
+                }
 
                 var personDto = PersonDtoMapper.PersonToPersonDto(person);
                 return Ok(personDto);
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest($"Failed to get person: {e.Message}.");
+                return new InternalServerError(ErrorCode.OperationFailed);
+                // logger: return BadRequest($"Failed to get person: {e.Message}.");
             }
         }
 
@@ -58,7 +68,10 @@ namespace PathToMyRootsApi.Controllers
         public async Task<ActionResult<PersonDto>> EditPerson([FromBody] PersonDto personDto)
         {
             if (!PersonDtoValidator.IsValidNotNullable(personDto))
-                return BadRequest("Invalid person data provided.");
+            {
+                // logger: invalid person data of person {personDto}.
+                return BadRequest(ErrorCode.InvalidPersonData);
+            }
 
             var person = PersonDtoMapper.PersonDtoToPerson(personDto);
 
@@ -68,9 +81,10 @@ namespace PathToMyRootsApi.Controllers
                 var editedPersonDto = PersonDtoMapper.PersonToPersonDto(editedPerson);
                 return Ok(editedPersonDto);
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest($"Failed to edit person: {e.Message}.");
+                //logger: BadRequest($"Failed to edit person: {e.Message}.");
+                return new InternalServerError(ErrorCode.OperationFailed);
             }
         }
 
@@ -82,9 +96,10 @@ namespace PathToMyRootsApi.Controllers
                 await _personService.DeletePersonAsync(id);
                 return NoContent();
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest($"Failed to delete person with id {id}: {e.Message}");
+                // return BadRequest($"Failed to delete person with id {id}: {e.Message}");
+                return new InternalServerError(ErrorCode.OperationFailed);
             }
         }
 

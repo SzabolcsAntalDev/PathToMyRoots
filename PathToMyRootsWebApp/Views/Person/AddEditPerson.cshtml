@@ -30,7 +30,7 @@
     }
 </h1>
 
-<span class="error-span-medium">@ViewData[PageDataKeys.ErrorMessage]</span>
+<span class="error-span-medium">@ViewData[PageDataKeys.ErrorCode]</span>
 
 <form asp-action="@((Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="person-main-form">
     <h2>Personal Information</h2>

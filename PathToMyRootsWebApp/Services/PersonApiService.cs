@@ -18,45 +18,65 @@ namespace PathToMyRootsWebApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<PersonModel?> AddPersonAsync(PersonModel personModel)
+        public async Task<PersonResult> AddPersonAsync(PersonModel personModel)
         {
             var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
             var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync($"{BaseUrl}", requestBody);
             if (!response.IsSuccessStatusCode)
-                return null;
+            {
+                var errorCodeString = await response.Content.ReadAsStringAsync();
+                return new PersonResult(errorCodeString);
+            }
 
             var responseContent = await response.Content.ReadAsStringAsync();
+            // Szabi: deserialization can fail?
             var personDto = JsonSerializer.Deserialize<PersonDto>(responseContent, CaseInsensitiveJsonSerializerOptions);
 
-            return PersonModelMapper.PersonDtoToPersonModel(personDto);
+            return new PersonResult(PersonModelMapper.PersonDtoToPersonModel(personDto)!);
         }
 
-        public async Task<PersonModel?> GetPersonAsync(int id)
+        public async Task<PersonResult> GetPersonAsync(int id)
         {
             var response = await _httpClient.GetAsync($"{BaseUrl}/{id}");
             if (!response.IsSuccessStatusCode)
-                return null;
+            {
+                var errorCodeString = await response.Content.ReadAsStringAsync();
+                return new PersonResult(errorCodeString);
+            }
 
             var responseContentJson = await response.Content.ReadAsStringAsync();
             var personDto = JsonSerializer.Deserialize<PersonDto>(responseContentJson, CaseInsensitiveJsonSerializerOptions);
-            return PersonModelMapper.PersonDtoToPersonModel(personDto);
+
+            return new PersonResult(PersonModelMapper.PersonDtoToPersonModel(personDto)!);
         }
 
-        public async Task<bool> EditPersonAsync(PersonModel personModel)
+        public async Task<PersonResult> EditPersonAsync(PersonModel personModel)
         {
             var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
             var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"{BaseUrl}", requestBody);
-            return response.IsSuccessStatusCode;
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorCodeString = await response.Content.ReadAsStringAsync();
+                return new PersonResult(personModel, errorCodeString);
+            }
+
+            return new PersonResult(personModel);
         }
 
-        public async Task<bool> DeletePersonAsync(int id)
+        public async Task<PersonResult> DeletePersonAsync(int id, PersonModel personModel)
         {
             var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
-            return response.IsSuccessStatusCode;
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorCodeString = await response.Content.ReadAsStringAsync();
+                return new PersonResult(personModel, errorCodeString);
+            }
+
+            return new PersonResult(personModel);
         }
 
         public async Task<List<PersonModel?>> GetPersonsAsync()
