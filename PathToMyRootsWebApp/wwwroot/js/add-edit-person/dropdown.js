@@ -106,7 +106,6 @@ function addCommonDropdownsListeners() {
         // set default option and header
         let selectedOption = dropdown.querySelector('.selected-option');
         if (!selectedOption) {
-            // Szabi
             selectedOption = dropdown.querySelector('li[data-value=""]');
             selectedOption.classList.add('selected-option');
         }
@@ -146,6 +145,7 @@ function setDefaultSpouse(spousePrefix) {
 }
 
 function toggleMarriageDatesContainer(spousePrefix) {
+    // Szabi: this can match also date hidden input, this is wrong
     const spouseHiddenInput = document.querySelector(`#${spousePrefix}-spouse-dropdown input[type='hidden']`);
     const spouseMarriageDatesContainer = document.querySelector(`#${spousePrefix}-spouse-marriage-dates-container`);
 

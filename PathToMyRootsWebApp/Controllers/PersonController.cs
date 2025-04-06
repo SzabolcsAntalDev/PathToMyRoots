@@ -26,6 +26,15 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPerson(PersonModel personModel)
         {
+            // if no spouse is selected the Unknown marriage start date
+            // is still selected as the default radio button
+            // its effect is reset here
+            if (personModel.FirstSpouseId == null)
+                personModel.FirstMarriageStartDate = null;
+
+            if (personModel.SecondSpouseId == null)
+                personModel.SecondMarriageStartDate = null;
+
             if (!ModelState.IsValid)
             {
                 await AddPersonsToViewData();
@@ -75,6 +84,15 @@ namespace PathToMyRootsWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPerson(PersonModel personModel)
         {
+            // if no spouse is selected the Unknown marriage start date
+            // is still selected as the default radio button
+            // its effect is reset here
+            if (personModel.FirstSpouseId == null)
+                personModel.FirstMarriageStartDate = null;
+
+            if (personModel.SecondSpouseId == null)
+                personModel.SecondMarriageStartDate = null;
+
             if (!ModelState.IsValid)
             {
                 await AddPersonsToViewData();
