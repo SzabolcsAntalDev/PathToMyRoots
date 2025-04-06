@@ -99,6 +99,7 @@ namespace PathToMyRootsDataAccess.Services
 
             var entityEntry = _pathToMyRootsDbContext.Entry(person);
 
+            // Szabi: I think this can be optimized, or at least written with Include
             await entityEntry.Reference(p => p.BiologicalFather).LoadAsync();
             await entityEntry.Reference(p => p.BiologicalMother).LoadAsync();
             await entityEntry.Reference(p => p.AdoptiveFather).LoadAsync();
@@ -166,14 +167,14 @@ namespace PathToMyRootsDataAccess.Services
             // delete current person from old first spouse
             if (oldFirstSpouse != null)
             {
-                // if current person was old pouse's first spouse
+                // if current person was old spouse's first spouse
                 if (oldFirstSpouse.FirstSpouseId == personFromDb.Id)
                 {
                     oldFirstSpouse.FirstSpouseId = null;
                     oldFirstSpouse.FirstMarriageStartDate = null;
                     oldFirstSpouse.FirstMarriageEndDate = null;
                 }
-                // if current person was old pouse's second spouse
+                // if current person was old spouse's second spouse
                 else
                 {
                     oldFirstSpouse.SecondSpouseId = null;
@@ -187,14 +188,14 @@ namespace PathToMyRootsDataAccess.Services
             // delete current person from old second spouse
             if (oldSecondSpouse != null)
             {
-                // if current person was old pouse's first spouse
+                // if current person was old spouse's first spouse
                 if (oldSecondSpouse.FirstSpouseId == personFromDb.Id)
                 {
                     oldSecondSpouse.FirstSpouseId = null;
                     oldSecondSpouse.FirstMarriageStartDate = null;
                     oldSecondSpouse.FirstMarriageEndDate = null;
                 }
-                // if current person was old pouse's second spouse
+                // if current person was old spouse's second spouse
                 else
                 {
                     oldSecondSpouse.SecondSpouseId = null;
@@ -247,6 +248,38 @@ namespace PathToMyRootsDataAccess.Services
                 _pathToMyRootsDbContext.Persons.Update(secondSpouse);
             }
 
+            // move first old spouse's second spouse into the first spouse if available
+            // in order to not have first spouse noull and second spouse not null
+            if (oldFirstSpouse != null)
+            {
+                if (oldFirstSpouse.FirstSpouseId == null && oldFirstSpouse.SecondSpouseId != null)
+                {
+                    oldFirstSpouse.FirstSpouseId = oldFirstSpouse.SecondSpouseId;
+                    oldFirstSpouse.FirstMarriageStartDate = oldFirstSpouse.SecondMarriageStartDate;
+                    oldFirstSpouse.FirstMarriageEndDate = oldFirstSpouse.SecondMarriageEndDate;
+
+                    oldFirstSpouse.SecondSpouseId = null;
+                    oldFirstSpouse.SecondMarriageStartDate = null;
+                    oldFirstSpouse.SecondMarriageEndDate = null;
+                }
+            }
+
+            // move second old spouse's second spouse into the first spouse if available
+            // in order to not have first spouse noull and second spouse not null
+            if (oldSecondSpouse != null)
+            {
+                if (oldSecondSpouse.FirstSpouseId == null && oldSecondSpouse.SecondSpouseId != null)
+                {
+                    oldSecondSpouse.FirstSpouseId = oldSecondSpouse.SecondSpouseId;
+                    oldSecondSpouse.FirstMarriageStartDate = oldSecondSpouse.SecondMarriageStartDate;
+                    oldSecondSpouse.FirstMarriageEndDate = oldSecondSpouse.SecondMarriageEndDate;
+
+                    oldSecondSpouse.SecondSpouseId = null;
+                    oldSecondSpouse.SecondMarriageStartDate = null;
+                    oldSecondSpouse.SecondMarriageEndDate = null;
+                }
+            }
+
             personFromDb.NobleTitle = personFromServer.NobleTitle;
             personFromDb.FirstName = personFromServer.FirstName;
             personFromDb.LastName = personFromServer.LastName;
@@ -275,11 +308,99 @@ namespace PathToMyRootsDataAccess.Services
 
         public async Task<bool> DeletePersonAsync(int id)
         {
-            var person = await _pathToMyRootsDbContext.Persons
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var person =
+                await _pathToMyRootsDbContext.Persons
+                    .Include(p => p.InverseBiologicalMother)
+                    .Include(p => p.InverseBiologicalFather)
+                    .Include(p => p.InverseAdoptiveMother)
+                    .Include(p => p.InverseAdoptiveFather)
+                    .Include(p => p.FirstSpouse)
+                    .Include(p => p.SecondSpouse)
+                    .FirstOrDefaultAsync(p => p.Id == id);
 
             if (person == null)
-                return false;
+                throw new Exception($"Person with id {id} not found.");
+
+            // remove the actual person as parent from its children
+            var children =
+                person.InverseBiologicalFather.Concat(
+                person.InverseBiologicalMother).Concat(
+                person.InverseAdoptiveFather).Concat(
+                person.InverseAdoptiveMother);
+            
+            foreach (var child in children)
+            {
+                if (child.BiologicalFatherId == id)
+                    child.BiologicalFatherId = null;
+                if (child.BiologicalMotherId == id)
+                    child.BiologicalMotherId = null;
+                if (child.AdoptiveFatherId == id)
+                    child.AdoptiveFatherId = null;
+                if (child.AdoptiveMotherId == id)
+                    child.AdoptiveMotherId = null;
+            }
+
+            // remove the actual person from its first spouse
+            var firstSpouse = person.FirstSpouse;
+            if (firstSpouse != null)
+            {
+                if (firstSpouse.FirstSpouseId == id)
+                {
+                    firstSpouse.FirstSpouseId = null;
+                    firstSpouse.FirstMarriageStartDate = null;
+                    firstSpouse.FirstMarriageEndDate = null;
+                }
+                else
+                {
+                    firstSpouse.SecondSpouseId = null;
+                    firstSpouse.SecondMarriageStartDate = null;
+                    firstSpouse.SecondMarriageEndDate = null;
+                }
+
+                // move first spouse's second spouse into the first spouse if available
+                // in order to not have first spouse noull and second spouse not null
+                if (firstSpouse.FirstSpouseId == null && firstSpouse.SecondSpouseId != null)
+                {
+                    firstSpouse.FirstSpouseId = firstSpouse.SecondSpouseId;
+                    firstSpouse.FirstMarriageStartDate = firstSpouse.SecondMarriageStartDate;
+                    firstSpouse.FirstMarriageEndDate = firstSpouse.SecondMarriageEndDate;
+
+                    firstSpouse.SecondSpouseId = null;
+                    firstSpouse.SecondMarriageStartDate = null;
+                    firstSpouse.SecondMarriageEndDate = null;
+                }
+            }
+
+            // remove the actual person from its second spouse
+            var secondSpouse = person.SecondSpouse;
+            if (secondSpouse != null)
+            {
+                if (secondSpouse.FirstSpouseId == id)
+                {
+                    secondSpouse.FirstSpouseId = null;
+                    secondSpouse.FirstMarriageStartDate = null;
+                    secondSpouse.FirstMarriageEndDate = null;
+                }
+                else
+                {
+                    secondSpouse.SecondSpouseId = null;
+                    secondSpouse.SecondMarriageStartDate = null;
+                    secondSpouse.SecondMarriageEndDate = null;
+                }
+
+                // move first spouse's second spouse into the first spouse if available
+                // in order to not have first spouse noull and second spouse not null
+                if (secondSpouse.FirstSpouseId == null && secondSpouse.SecondSpouseId != null)
+                {
+                    secondSpouse.FirstSpouseId = secondSpouse.SecondSpouseId;
+                    secondSpouse.FirstMarriageStartDate = secondSpouse.SecondMarriageStartDate;
+                    secondSpouse.FirstMarriageEndDate = secondSpouse.SecondMarriageEndDate;
+
+                    secondSpouse.SecondSpouseId = null;
+                    secondSpouse.SecondMarriageStartDate = null;
+                    secondSpouse.SecondMarriageEndDate = null;
+                }
+            }
 
             _pathToMyRootsDbContext.Persons.Remove(person);
             await _pathToMyRootsDbContext.SaveChangesAsync();
@@ -289,8 +410,8 @@ namespace PathToMyRootsDataAccess.Services
 
         public async Task<List<Person>> GetPersonsAsync()
         {
-            var persons = await
-                _pathToMyRootsDbContext.Persons
+            var persons =
+                await _pathToMyRootsDbContext.Persons
                     .Include(p => p.BiologicalFather)
                     .Include(p => p.BiologicalMother)
                     .Include(p => p.AdoptiveFather)

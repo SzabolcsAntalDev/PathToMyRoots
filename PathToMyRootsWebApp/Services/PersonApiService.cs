@@ -53,6 +53,12 @@ namespace PathToMyRootsWebApp.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> DeletePersonAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<List<PersonModel?>> GetPersonsAsync()
         {
             var response = await _httpClient.GetAsync($"{BaseUrl}/getpersons");
@@ -66,12 +72,6 @@ namespace PathToMyRootsWebApp.Services
             {
                 return new List<PersonModel?>();
             }
-        }
-
-        public async Task<bool> DeletePersonAsync(int id)
-        {
-            var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
-            return response.IsSuccessStatusCode;
         }
     }
 }

@@ -77,10 +77,15 @@ namespace PathToMyRootsApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePerson(int id)
         {
-            var success = await _personService.DeletePersonAsync(id);
-            return success
-                ? NoContent()
-                : NotFound($"Person with id {id} not found.");
+            try
+            {
+                await _personService.DeletePersonAsync(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Failed to delete person with id {id}: {e.Message}");
+            }
         }
 
         [HttpGet("getpersons")]
