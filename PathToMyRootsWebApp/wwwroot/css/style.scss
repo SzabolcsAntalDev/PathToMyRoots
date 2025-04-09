@@ -1,5 +1,8 @@
 ﻿$font-family-default: 'Fira Sans', sans-serif;
 
+$success-color-default: forestgreen;
+$error-color-default: red;
+
 $foreground-color-light: #22272B;
 $foreground-color-highlight-light: black;
 $foreground-color-disabled-light: gray;
@@ -7,15 +10,19 @@ $foreground-color-disabled-light: gray;
 $background-color-light: #F7F8F9;
 $background-color-nav-light: #F1F2F4;
 $background-color-footer-light: #DEE4EA;
-
 $background-color-highlight-light: #DCDFE4;
 
 $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
 $marriage-color-light: $background-color-light;
 
-$success-color-light: green;
-$error-color-light: red;
+$success-color-light: $success-color-default;
+$error-color-light: $error-color-default;
+
+$success-popup-foreground-color-light: white;
+$success-popup-background-color-light: $success-color-light;
+$error-popup-foreground-color-light: white;
+$error-popup-background-color-light: $error-color-light;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
@@ -24,15 +31,19 @@ $foreground-color-disabled-dark: gray;
 $background-color-dark: #161A1D;
 $background-color-nav-dark: #22272B;
 $background-color-footer-dark: #2C333A;
-
 $background-color-highlight-dark: #454F59;
 
 $male-color-dark: $background-color-footer-dark;
 $female-color-dark: $background-color-nav-dark;
 $marriage-color-dark: $background-color-dark;
 
-$success-color-dark: green;
-$error-color-dark: red;
+$success-color-dark: $success-color-default;
+$error-color-dark: $error-color-default;
+
+$success-popup-foreground-color-dark: white;
+$success-popup-background-color-dark: $success-color-dark;
+$error-popup-foreground-color-dark: white;
+$error-popup-background-color-dark: $error-color-dark;
 
 %theme-light {
     --foreground-color: #{$foreground-color-light};
@@ -47,6 +58,10 @@ $error-color-dark: red;
     --marriage-color: #{$marriage-color-light};
     --success-color: #{$success-color-light};
     --error-color: #{$error-color-light};
+    --success-popup-foreground-color: #{$success-popup-foreground-color-light};
+    --success-popup-background-color: #{$success-popup-background-color-light};
+    --error-popup-foreground-color: #{$error-popup-foreground-color-light};
+    --error-popup-background-color: #{$error-popup-background-color-light};
 }
 
 %theme-dark {
@@ -62,20 +77,36 @@ $error-color-dark: red;
     --marriage-color: #{$marriage-color-dark};
     --success-color: #{$success-color-dark};
     --error-color: #{$error-color-dark};
+    --success-popup-foreground-color: #{$success-popup-foreground-color-dark};
+    --success-popup-background-color: #{$success-popup-background-color-dark};
+    --error-popup-foreground-color: #{$error-popup-foreground-color-dark};
+    --error-popup-background-color: #{$error-popup-background-color-dark};
 }
 
-$transition-interval: 0.3s;
-$transition: $transition-interval linear 0s;
-$toggle-transition: $transition-interval ease-out 0s;
+$default-transition-interval: 0.3s;
+$default-transition-function: linear;
+$default-transition: $default-transition-interval $default-transition-function 0s;
+
+$toggle-transition-interval: $default-transition-interval;
+$toggle-transition-function: ease-out;
+$toggle-transition: $toggle-transition-interval $toggle-transition-function 0s;
+
+$popup-loading-bar-transition-interval: 3s;
+$popup-loading-bar-transition-function: $default-transition-function;
+$popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
 
 :root.theme-light {
     @extend %theme-light;
-    --transition-interval: #{$transition-interval};
+    --default-transition-interval: #{$default-transition-interval};
+    --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
+    --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
 }
 
 :root.theme-dark {
     @extend %theme-dark;
-    --transition-interval: #{$transition-interval};
+    --default-transition-interval: #{$default-transition-interval};
+    --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
+    --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
 }
 
 $font-size-small: 11px;
@@ -83,11 +114,12 @@ $font-size-medium: 14px;
 $font-size-large: 18px;
 $font-size-extra-large: 28px;
 
+$thickness-extra-small: 2px;
 $thickness-small: 4px;
 $thickness-medium: 8px;
-$thickness-large: 20px;
-$thickness-extra-large: 40px;
-$thickness-super-large: 60px;
+$thickness-large: 16px;
+$thickness-extra-large: 32px;
+$thickness-super-large: 64px;
 
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
@@ -107,7 +139,7 @@ html {
     font-size: $font-size-small;
     font-family: $font-family-default;
     color: var(--foreground-color);
-    transition: color $transition;
+    transition: color $default-transition;
     height: 100%;
 }
 
@@ -128,7 +160,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color-nav);
-    transition: background-color $transition;
+    transition: background-color $default-transition;
 }
 
 .right-container {
@@ -137,7 +169,7 @@ body {
     overflow: auto;
     flex: 1;
     background-color: var(--background-color);
-    transition: background-color $transition;
+    transition: background-color $default-transition;
 }
 
 .top-container {
@@ -159,7 +191,7 @@ body {
 .footer-container {
     display: flex;
     background-color: var(--background-color-footer);
-    transition: background-color $transition;
+    transition: background-color $default-transition;
 }
 
 .grid-for-inputs {
@@ -238,7 +270,7 @@ button, select, option, a, input[type="text"], input[type="radio"], .dropdown-he
     font-family: inherit;
     cursor: pointer;
     outline: none;
-    transition: color $transition, background-color $transition, border $transition;
+    transition: color $default-transition, background-color $default-transition, border $default-transition;
 
     &:hover {
         color: var(--foreground-color-highlight);
@@ -257,37 +289,19 @@ label {
     margin-right: $thickness-medium;
 }
 
-%success-span {
-    color: var(--success-color);
-}
-
-%error-span {
-    color: var(--error-color);
-}
-
 %error-span-small {
-    @extend %error-span;
+    color: var(--error-color);
     font-size: $font-size-small;
 }
 
 .error-span-small-with-bottom-margin {
-    @extend %error-span-small;
+    color: var(--error-color);
     margin-bottom: $thickness-medium;
 }
 
 .error-span-small-with-top-margin {
     @extend %error-span-small;
     margin-top: $thickness-medium;
-}
-
-.success-span-medium {
-    @extend %success-span;
-    font-size: $font-size-medium;
-}
-
-.error-span-medium {
-    @extend %error-span;
-    font-size: $font-size-medium;
 }
 
 a {
@@ -339,7 +353,7 @@ input[type="text"]::placeholder {
 
 %hoverable-svg {
     fill: var(--foreground-color);
-    transition: fill $transition;
+    transition: fill $default-transition;
 
     &:hover {
         fill: var(--foreground-color-highlight);
@@ -369,7 +383,7 @@ fieldset {
 
         &:hover {
             color: var(--foreground-color-highlight);
-            transition: color $transition;
+            transition: color $default-transition;
         }
     }
 
@@ -380,14 +394,14 @@ fieldset {
         height: $font-size-small;
         border-radius: 50%;
         background-color: var(--background-color);
-        transition: background-color $transition;
+        transition: background-color $default-transition;
         cursor: pointer;
     }
 
     input[type="radio"]:checked {
         background-color: var(--foreground-color);
         box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
-        transition: background-color $transition, box-shadow $transition;
+        transition: background-color $default-transition, box-shadow $default-transition;
 
         &:hover {
             background-color: var(--foreground-color-highlight);
@@ -445,7 +459,7 @@ fieldset {
 
 .nav-li.active {
     background-color: var(--background-color);
-    transition: background-color $transition;
+    transition: background-color $default-transition;
     font-weight: bold;
 }
 
@@ -501,7 +515,7 @@ fieldset {
             right: 0;
             bottom: 0;
             background-color: var(--background-color-nav);
-            transition: background-color $transition, transform $transition-interval;
+            transition: background-color $default-transition, transform $default-transition-interval;
             border-radius: 13px;
 
             &:hover {
@@ -522,7 +536,7 @@ fieldset {
             bottom: 3px;
             border-radius: 50%;
             background-color: var(--foreground-color);
-            transition: background-color $transition, transform $transition-interval;
+            transition: background-color $default-transition, transform $default-transition-interval;
         }
 
         input:checked + .slider-rectangle:before {
@@ -595,7 +609,7 @@ fieldset {
     padding: $thickness-small;
     border: $border;
     border-radius: $border-radius;
-    transition: background-color $transition, border $transition;
+    transition: background-color $default-transition, border $default-transition;
 }
 
 .tree-node-male {
@@ -676,7 +690,7 @@ fieldset {
 
 %tree-line-svg {
     stroke-width: 1px;
-    transition: stroke $transition;
+    transition: stroke $default-transition;
     fill: transparent;
 }
 
@@ -760,7 +774,7 @@ fieldset {
             color: var(--foreground-color);
         }
 
-        transition: color $transition, background-color $transition, border $transition;
+        transition: color $default-transition, background-color $default-transition, border $default-transition;
     }
 
     th, td {
@@ -770,14 +784,14 @@ fieldset {
         text-overflow: ellipsis;
         align-content: center;
         border: $border;
-        transition: border $transition;
+        transition: border $default-transition;
         padding: $thickness-medium;
     }
 
     th {
         color: var(--foreground-color);
         background-color: var(--background-color);
-        transition: color $transition, background-color $transition, border $transition;
+        transition: color $default-transition, background-color $default-transition, border $default-transition;
     }
 
     tr:hover {
@@ -834,7 +848,7 @@ fieldset {
 
 .person-section {
     background-color: var(--background-color-nav);
-    transition: background-color $transition;
+    transition: background-color $default-transition;
     border-radius: $border-radius;
     padding: $thickness-medium;
     padding-left: calc($thickness-medium * 2);
@@ -860,7 +874,7 @@ fieldset {
             border-right: 6px solid transparent;
             border-top: 6px solid;
             background-color: transparent;
-            transition: transform $transition;
+            transition: transform $default-transition;
             align-self: center;
         }
 
@@ -884,7 +898,7 @@ fieldset {
             position: relative;
             display: flex;
             flex-direction: column;
-            transition: opacity $transition;
+            transition: opacity $default-transition;
             opacity: 0;
             height: 0;
             visibility: collapse;
@@ -973,7 +987,7 @@ fieldset {
     left: 25%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity $transition;
+    transition: opacity $default-transition;
 }
 
 .tooltip:hover .tooltip-text {
@@ -1028,6 +1042,84 @@ fieldset {
 }
 
 
+.success-popup-container, .error-popup-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: $thickness-large;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.popup-message-and-close-button-container {
+    color: var(--error-popup-foreground-color);
+    background-color: var(--error-popup-background-color);
+    border-radius: $border-radius $border-radius 0 0;
+    padding: $thickness-medium $thickness-large;
+    display: flex;
+}
+
+.popup-message {
+    align-content: center;
+    font-size: $font-size-large;
+    margin-right: $thickness-medium;
+}
+
+.popup-close-button {
+    color: var(--error-popup-foreground-color);
+    background-color: var(--error-popup-background-color);
+    padding: 0px;
+    margin: 0px;
+    font-size: $font-size-extra-large;
+    border: none;
+
+    &:hover {
+        color: var(--error-popup-foreground-color);
+        background-color: var(--error-popup-background-color);
+    }
+}
+
+.popup-loading-bar {
+    width: 100%;
+    height: $thickness-extra-small;
+    background-color: var(--foreground-color-highlight);
+    transition: width $popup-loading-bar-transition;
+}
+
+.success-popup-container {
+    .popup-message-and-close-button-container {
+        color: var(--success-popup-foreground-color);
+        background-color: var(--success-popup-background-color);
+    }
+
+    .popup-close-button {
+        color: var(--success-popup-foreground-color);
+        background-color: var(--success-popup-background-color);
+
+        &:hover {
+            color: var(--success-popup-foreground-color);
+            background-color: var(--success-popup-background-color);
+        }
+    }
+}
+
+.error-popup-container {
+    .popup-message-and-close-button-container {
+        color: var(--error-popup-foreground-color);
+        background-color: var(--error-popup-background-color);
+    }
+
+    .popup-close-button {
+        color: var(--error-popup-foreground-color);
+        background-color: var(--error-popup-background-color);
+
+        &:hover {
+            color: var(--error-popup-foreground-color);
+            background-color: var(--error-popup-background-color);
+        }
+    }
+}
+
 .fade-hidden {
     opacity: 0;
     visibility: hidden;
@@ -1036,11 +1128,11 @@ fieldset {
 .fade-in {
     opacity: 1;
     visibility: visible;
-    transition: opacity var(--transition-interval) ease-in-out;
+    transition: opacity $default-transition;
 }
 
 .fade-out {
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-interval) ease-in-out, visibility 0s var(--transition-interval);
+    transition: opacity $default-transition, visibility 0s var(--default-transition-interval);
 }

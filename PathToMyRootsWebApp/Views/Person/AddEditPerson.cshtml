@@ -30,8 +30,6 @@
     }
 </h1>
 
-<span class="error-span-medium">@ViewData[PageDataKeys.ErrorCode]</span>
-
 <form asp-action="@((Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="person-main-form">
     <h2>Personal Information</h2>
     <div class="grid-for-inputs person-section">
@@ -619,5 +617,4 @@
     <script src="~/js/add-edit-person/date-input.js"></script>
     <script src="~/js/add-edit-person/image-upload.js"></script>
     <script src="~/js/add-edit-person/validation-error-messages.js"></script>
-    <script src="~/js/utils.js"></script>
 }

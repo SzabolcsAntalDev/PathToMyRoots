@@ -13,6 +13,20 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
+    <div class="success-popup-container fade-hidden">
+        <div class="popup-message-and-close-button-container">
+            <span class="popup-message"></span>
+            <button class="popup-close-button">×</button>
+        </div>
+        <div class="popup-loading-bar"></div>
+    </div>
+    <div class="error-popup-container fade-hidden">
+        <div class="popup-message-and-close-button-container">
+            <span class="popup-message"></span>
+            <button class="popup-close-button">×</button>
+        </div>
+        <div class="popup-loading-bar"></div>
+    </div>
     <div class="nav-and-right-container">
         <nav class="nav-container">
             <a class="nav-logo-container-hyperlink" asp-controller="Home" asp-action="Home">
@@ -60,9 +74,26 @@
         </a>
     </div>
 
+    <script src="~/js/utils.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/date-fns@latest"></script>
     <script src="~/js/layout.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Szabi: see why view data and temp data have the same values even if only temp data is set, just add a person
+        console.log('ViewData Success:', '@ViewData[PageDataKeys.SuccessCode]');
+        console.log('ViewData Error:', '@ViewData[PageDataKeys.ErrorCode]');
+        console.log('TempData Success:', '@TempData[PageDataKeys.SuccessCode]');
+        console.log('TempData Error:', '@TempData[PageDataKeys.ErrorCode]');
+
+        showSuccessPopup('@ViewData[PageDataKeys.SuccessCode]');
+        showErrorPopup('@ViewData[PageDataKeys.ErrorCode]');
+        showSuccessPopup('@TempData[PageDataKeys.SuccessCode]');
+        showErrorPopup('@TempData[PageDataKeys.ErrorCode]');
+    });
+</script>

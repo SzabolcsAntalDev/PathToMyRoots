@@ -45,7 +45,8 @@ namespace PathToMyRootsWebApp.Controllers
             var personResult = await _personApiService.AddPersonAsync(personModel);
             if (!personResult.IsValid)
             {
-                ViewData[PageDataKeys.ErrorCode] = personResult.ErrorCode;
+                // Szabi: all error code must be converted to int here or in the layout.cshtml
+                ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }

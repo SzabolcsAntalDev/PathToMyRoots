@@ -2,8 +2,6 @@
 
 <h1>Persons</h1>
 
-<span class="success-span-medium">@ViewData[PageDataKeys.SuccessCode]</span>
-
 <div class="persons-filter">
     <input id="filter-input" type="text" style="width: 200px" placeholder="Filter..." />
     <button id="filter-button">Filter</button>
@@ -31,7 +29,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/utils.js"></script>
     <script src="~/js/persons.js"></script>
     <script>
         setupPaginationButtons('', @Model.TotalNumberOfPages);
