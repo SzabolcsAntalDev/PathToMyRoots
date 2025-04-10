@@ -3,27 +3,6 @@
 $success-color-default: forestgreen;
 $error-color-default: red;
 
-$foreground-color-light: #22272B;
-$foreground-color-highlight-light: black;
-$foreground-color-disabled-light: gray;
-
-$background-color-light: #F7F8F9;
-$background-color-nav-light: #F1F2F4;
-$background-color-footer-light: #DEE4EA;
-$background-color-highlight-light: #DCDFE4;
-
-$male-color-light: $background-color-footer-light;
-$female-color-light: $background-color-nav-light;
-$marriage-color-light: $background-color-light;
-
-$success-color-light: $success-color-default;
-$error-color-light: $error-color-default;
-
-$success-popup-foreground-color-light: white;
-$success-popup-background-color-light: $success-color-light;
-$error-popup-foreground-color-light: white;
-$error-popup-background-color-light: $error-color-light;
-
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
 $foreground-color-disabled-dark: gray;
@@ -40,29 +19,35 @@ $marriage-color-dark: $background-color-dark;
 $success-color-dark: $success-color-default;
 $error-color-dark: $error-color-default;
 
-$success-popup-foreground-color-dark: white;
+$success-popup-foreground-color-dark: $foreground-color-dark;
+$success-popup-foreground-color-highlight-dark: $foreground-color-highlight-dark;
 $success-popup-background-color-dark: $success-color-dark;
-$error-popup-foreground-color-dark: white;
+$error-popup-foreground-color-dark: $foreground-color-dark;
+$error-popup-foreground-color-highlight-dark: $foreground-color-highlight-dark;
 $error-popup-background-color-dark: $error-color-dark;
 
-%theme-light {
-    --foreground-color: #{$foreground-color-light};
-    --foreground-color-highlight: #{$foreground-color-highlight-light};
-    --foreground-color-disabled: #{$foreground-color-disabled-light};
-    --background-color: #{$background-color-light};
-    --background-color-nav: #{$background-color-nav-light};
-    --background-color-footer: #{$background-color-footer-light};
-    --background-color-highlight: #{$background-color-highlight-light};
-    --male-color: #{$male-color-light};
-    --female-color: #{$female-color-light};
-    --marriage-color: #{$marriage-color-light};
-    --success-color: #{$success-color-light};
-    --error-color: #{$error-color-light};
-    --success-popup-foreground-color: #{$success-popup-foreground-color-light};
-    --success-popup-background-color: #{$success-popup-background-color-light};
-    --error-popup-foreground-color: #{$error-popup-foreground-color-light};
-    --error-popup-background-color: #{$error-popup-background-color-light};
-}
+$foreground-color-light: #22272B;
+$foreground-color-highlight-light: black;
+$foreground-color-disabled-light: gray;
+
+$background-color-light: #F7F8F9;
+$background-color-nav-light: #F1F2F4;
+$background-color-footer-light: #DEE4EA;
+$background-color-highlight-light: #DCDFE4;
+
+$male-color-light: $background-color-footer-light;
+$female-color-light: $background-color-nav-light;
+$marriage-color-light: $background-color-light;
+
+$success-color-light: $success-color-default;
+$error-color-light: $error-color-default;
+
+$success-popup-foreground-color-light: $foreground-color-dark;
+$success-popup-foreground-color-highlight-light: $foreground-color-highlight-dark;
+$success-popup-background-color-light: $success-color-light;
+$error-popup-foreground-color-light: $foreground-color-dark;
+$error-popup-foreground-color-highlight-light: $foreground-color-highlight-dark;
+$error-popup-background-color-light: $error-color-light;
 
 %theme-dark {
     --foreground-color: #{$foreground-color-dark};
@@ -78,9 +63,32 @@ $error-popup-background-color-dark: $error-color-dark;
     --success-color: #{$success-color-dark};
     --error-color: #{$error-color-dark};
     --success-popup-foreground-color: #{$success-popup-foreground-color-dark};
+    --success-popup-foreground-color-highlight: #{$success-popup-foreground-color-highlight-dark};
     --success-popup-background-color: #{$success-popup-background-color-dark};
     --error-popup-foreground-color: #{$error-popup-foreground-color-dark};
+    --error-popup-foreground-color-highlight: #{$error-popup-foreground-color-highlight-dark};
     --error-popup-background-color: #{$error-popup-background-color-dark};
+}
+
+%theme-light {
+    --foreground-color: #{$foreground-color-light};
+    --foreground-color-highlight: #{$foreground-color-highlight-light};
+    --foreground-color-disabled: #{$foreground-color-disabled-light};
+    --background-color: #{$background-color-light};
+    --background-color-nav: #{$background-color-nav-light};
+    --background-color-footer: #{$background-color-footer-light};
+    --background-color-highlight: #{$background-color-highlight-light};
+    --male-color: #{$male-color-light};
+    --female-color: #{$female-color-light};
+    --marriage-color: #{$marriage-color-light};
+    --success-color: #{$success-color-light};
+    --error-color: #{$error-color-light};
+    --success-popup-foreground-color: #{$success-popup-foreground-color-light};
+    --success-popup-foreground-color-highlight: #{$success-popup-foreground-color-highlight-light};
+    --success-popup-background-color: #{$success-popup-background-color-light};
+    --error-popup-foreground-color: #{$error-popup-foreground-color-light};
+    --error-popup-foreground-color-highlight: #{$error-popup-foreground-color-highlight-light};
+    --error-popup-background-color: #{$error-popup-background-color-light};
 }
 
 $default-transition-interval: 0.3s;
@@ -1063,6 +1071,11 @@ fieldset {
     align-content: center;
     font-size: $font-size-large;
     margin-right: $thickness-medium;
+    transition: color $default-transition;
+
+    &:hover {
+        color: var(--error-popup-foreground-color-highlight);
+    }
 }
 
 .popup-close-button {
@@ -1074,7 +1087,7 @@ fieldset {
     border: none;
 
     &:hover {
-        color: var(--error-popup-foreground-color);
+        color: var(--error-popup-foreground-color-highlight);
         background-color: var(--error-popup-background-color);
     }
 }
@@ -1082,8 +1095,17 @@ fieldset {
 .popup-loading-bar {
     width: 100%;
     height: $thickness-extra-small;
-    background-color: var(--foreground-color-highlight);
     transition: width $popup-loading-bar-transition;
+}
+
+// div used to set the background-color transition
+// this way we're able to edit the width transition on the parent
+// without needing to carry the background-color transition as well
+.popup-loading-bar-inner-div {
+    width: 100%;
+    height: 100%;
+    background-color: var(--foreground-color-highlight);
+    transition: background-color $default-transition;
 }
 
 .success-popup-container {
@@ -1097,7 +1119,7 @@ fieldset {
         background-color: var(--success-popup-background-color);
 
         &:hover {
-            color: var(--success-popup-foreground-color);
+            color: var(--success-popup-foreground-color-highlight);
             background-color: var(--success-popup-background-color);
         }
     }
@@ -1114,7 +1136,7 @@ fieldset {
         background-color: var(--error-popup-background-color);
 
         &:hover {
-            color: var(--error-popup-foreground-color);
+            color: var(--error-popup-foreground-color-highlight);
             background-color: var(--error-popup-background-color);
         }
     }

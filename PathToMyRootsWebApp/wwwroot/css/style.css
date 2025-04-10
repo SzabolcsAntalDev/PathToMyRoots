@@ -1,23 +1,4 @@
-﻿:root.theme-light {
-  --foreground-color: #22272B;
-  --foreground-color-highlight: black;
-  --foreground-color-disabled: gray;
-  --background-color: #F7F8F9;
-  --background-color-nav: #F1F2F4;
-  --background-color-footer: #DEE4EA;
-  --background-color-highlight: #DCDFE4;
-  --male-color: #DEE4EA;
-  --female-color: #F1F2F4;
-  --marriage-color: #F7F8F9;
-  --success-color: forestgreen;
-  --error-color: red;
-  --success-popup-foreground-color: white;
-  --success-popup-background-color: forestgreen;
-  --error-popup-foreground-color: white;
-  --error-popup-background-color: red;
-}
-
-:root.theme-dark {
+﻿:root.theme-dark {
   --foreground-color: #C7D1DB;
   --foreground-color-highlight: white;
   --foreground-color-disabled: gray;
@@ -30,9 +11,32 @@
   --marriage-color: #161A1D;
   --success-color: forestgreen;
   --error-color: red;
-  --success-popup-foreground-color: white;
+  --success-popup-foreground-color: #C7D1DB;
+  --success-popup-foreground-color-highlight: white;
   --success-popup-background-color: forestgreen;
-  --error-popup-foreground-color: white;
+  --error-popup-foreground-color: #C7D1DB;
+  --error-popup-foreground-color-highlight: white;
+  --error-popup-background-color: red;
+}
+
+:root.theme-light {
+  --foreground-color: #22272B;
+  --foreground-color-highlight: black;
+  --foreground-color-disabled: gray;
+  --background-color: #F7F8F9;
+  --background-color-nav: #F1F2F4;
+  --background-color-footer: #DEE4EA;
+  --background-color-highlight: #DCDFE4;
+  --male-color: #DEE4EA;
+  --female-color: #F1F2F4;
+  --marriage-color: #F7F8F9;
+  --success-color: forestgreen;
+  --error-color: red;
+  --success-popup-foreground-color: #C7D1DB;
+  --success-popup-foreground-color-highlight: white;
+  --success-popup-background-color: forestgreen;
+  --error-popup-foreground-color: #C7D1DB;
+  --error-popup-foreground-color-highlight: white;
   --error-popup-background-color: red;
 }
 
@@ -884,6 +888,10 @@ fieldset input[type=text] {
   align-content: center;
   font-size: 18px;
   margin-right: 8px;
+  transition: color 0.3s linear 0s;
+}
+.popup-message:hover {
+  color: var(--error-popup-foreground-color-highlight);
 }
 
 .popup-close-button {
@@ -895,15 +903,21 @@ fieldset input[type=text] {
   border: none;
 }
 .popup-close-button:hover {
-  color: var(--error-popup-foreground-color);
+  color: var(--error-popup-foreground-color-highlight);
   background-color: var(--error-popup-background-color);
 }
 
 .popup-loading-bar {
   width: 100%;
   height: 2px;
-  background-color: var(--foreground-color-highlight);
   transition: width 8s linear 0s;
+}
+
+.popup-loading-bar-inner-div {
+  width: 100%;
+  height: 100%;
+  background-color: var(--foreground-color-highlight);
+  transition: background-color 0.3s linear 0s;
 }
 
 .success-popup-container .popup-message-and-close-button-container {
@@ -915,7 +929,7 @@ fieldset input[type=text] {
   background-color: var(--success-popup-background-color);
 }
 .success-popup-container .popup-close-button:hover {
-  color: var(--success-popup-foreground-color);
+  color: var(--success-popup-foreground-color-highlight);
   background-color: var(--success-popup-background-color);
 }
 
@@ -928,7 +942,7 @@ fieldset input[type=text] {
   background-color: var(--error-popup-background-color);
 }
 .error-popup-container .popup-close-button:hover {
-  color: var(--error-popup-foreground-color);
+  color: var(--error-popup-foreground-color-highlight);
   background-color: var(--error-popup-background-color);
 }
 
