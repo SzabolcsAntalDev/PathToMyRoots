@@ -3,8 +3,8 @@ using PathToMyRootsApi.Mappings;
 using PathToMyRootsApi.Utils;
 using PathToMyRootsApi.Validators;
 using PathToMyRootsDataAccess.Services;
-using PathToMyRootsSharedModels.Dtos;
-using PathToMyRootsSharedModels.Enums;
+using PathToMyRootsCommon.Dtos;
+using PathToMyRootsCommon.Enums;
 
 namespace PathToMyRootsApi.Controllers
 {

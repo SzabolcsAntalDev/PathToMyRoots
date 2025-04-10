@@ -1,5 +1,5 @@
-﻿using PathToMyRootsSharedModels.Dtos;
-using PathToMyRootsSharedModels.Utils;
+﻿using PathToMyRootsCommon.Dtos;
+using PathToMyRootsCommon.Utils;
 using PathToMyRootsWebApp.Models;
 
 namespace PathToMyRootsWebApp.Mappings

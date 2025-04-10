@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
 
-namespace PathToMyRootsSharedModels.Utils
+namespace PathToMyRootsCommon.Utils
 {
     public static class DateHelper
     {

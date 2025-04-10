@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathToMyRootsApi", "PathToM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathToMyRootsDataAccess", "PathToMyRootsDataAccess\PathToMyRootsDataAccess.csproj", "{CB082E68-3A54-4CCE-8EA3-87C783C01A20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToMyRootsWebApp", "PathToMyRootsWebApp\PathToMyRootsWebApp.csproj", "{85C7FF60-6AD9-40B5-84DD-78FA6DA27DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathToMyRootsWebApp", "PathToMyRootsWebApp\PathToMyRootsWebApp.csproj", "{85C7FF60-6AD9-40B5-84DD-78FA6DA27DCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToMyRootsSharedModels", "PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj", "{CBE687A7-1BEB-4870-8DAD-E630A7056108}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathToMyRootsCommon", "PathToMyRootsCommon\PathToMyRootsCommon.csproj", "{CBE687A7-1BEB-4870-8DAD-E630A7056108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

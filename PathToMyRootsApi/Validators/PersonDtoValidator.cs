@@ -1,4 +1,4 @@
-﻿using PathToMyRootsSharedModels.Dtos;
+﻿using PathToMyRootsCommon.Dtos;
 
 namespace PathToMyRootsApi.Validators
 {

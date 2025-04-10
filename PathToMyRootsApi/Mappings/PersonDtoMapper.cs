@@ -1,6 +1,6 @@
 ﻿using PathToMyRootsApi.Constants;
 using PathToMyRootsDataAccess.Models;
-using PathToMyRootsSharedModels.Dtos;
+using PathToMyRootsCommon.Dtos;
 
 namespace PathToMyRootsApi.Mappings
 {

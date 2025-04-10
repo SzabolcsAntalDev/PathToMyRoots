@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PathToMyRootsDataAccess\PathToMyRootsDataAccess.csproj" />
-    <ProjectReference Include="..\PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj" />
+    <ProjectReference Include="..\PathToMyRootsCommon\PathToMyRootsCommon.csproj" />
   </ItemGroup>
 
 </Project>

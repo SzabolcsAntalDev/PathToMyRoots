@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PathToMyRootsSharedModels\PathToMyRootsSharedModels.csproj" />
+    <ProjectReference Include="..\PathToMyRootsCommon\PathToMyRootsCommon.csproj" />
   </ItemGroup>
 
 </Project>

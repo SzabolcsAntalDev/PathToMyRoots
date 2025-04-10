@@ -1,4 +1,4 @@
-﻿namespace PathToMyRootsSharedModels.Enums
+﻿namespace PathToMyRootsCommon.Enums
 {
     public enum ErrorCode
     {

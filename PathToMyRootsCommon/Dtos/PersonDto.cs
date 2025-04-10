@@ -1,4 +1,4 @@
-﻿namespace PathToMyRootsSharedModels.Dtos
+﻿namespace PathToMyRootsCommon.Dtos
 {
     public class PersonDto
     {

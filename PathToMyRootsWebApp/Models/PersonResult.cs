@@ -1,4 +1,4 @@
-﻿using PathToMyRootsSharedModels.Enums;
+﻿using PathToMyRootsCommon.Enums;
 
 namespace PathToMyRootsWebApp.Models
 {
