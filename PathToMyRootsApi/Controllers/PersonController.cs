@@ -65,7 +65,7 @@ namespace PathToMyRootsApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<PersonDto>> EditPerson([FromBody] PersonDto personDto)
+        public async Task<ActionResult<PersonDto>> UpdatePerson([FromBody] PersonDto personDto)
         {
             if (!PersonDtoValidator.IsValidNotNullable(personDto))
             {
@@ -77,13 +77,13 @@ namespace PathToMyRootsApi.Controllers
 
             try
             {
-                var editedPerson = await _personService.EditPersonAsync(person);
-                var editedPersonDto = PersonDtoMapper.PersonToPersonDto(editedPerson);
-                return Ok(editedPersonDto);
+                var updateedPerson = await _personService.UpdatePersonAsync(person);
+                var updateedPersonDto = PersonDtoMapper.PersonToPersonDto(updateedPerson);
+                return Ok(updateedPersonDto);
             }
             catch
             {
-                //logger: BadRequest($"Failed to edit person: {e.Message}.");
+                //logger: BadRequest($"Failed to update person: {e.Message}.");
                 return new InternalServerError(ErrorCode.UpdatingPersonFailed);
             }
         }

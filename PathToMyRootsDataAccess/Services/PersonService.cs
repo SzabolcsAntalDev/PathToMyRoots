@@ -115,7 +115,7 @@ namespace PathToMyRootsDataAccess.Services
             return person;
         }
 
-        public async Task<Person> EditPersonAsync(Person personFromServer)
+        public async Task<Person> UpdatePersonAsync(Person personFromServer)
         {
             var personFromDb = await _pathToMyRootsDbContext.Persons.FirstOrDefaultAsync(p => p.Id == personFromServer.Id);
 

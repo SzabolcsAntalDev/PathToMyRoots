@@ -35,7 +35,7 @@
                 </a>
                 <a class="hidden">
                     <svg class="persons-action-svg">
-                        <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
+                        <use xlink:href="@Url.Content("~/icons/icons.svg#update")"></use>
                     </svg>
                 </a>
                 <form class="hidden">
@@ -160,9 +160,9 @@
                             <use xlink:href="@Url.Content("~/icons/icons.svg#tree")"></use>
                         </svg>
                     </a>
-                    <a asp-action="EditPerson" asp-controller="Person" asp-route-id="@person.Id">
-                        <svg class="persons-action-svg" title="Edit">
-                            <use xlink:href="@Url.Content("~/icons/icons.svg#edit")"></use>
+                    <a asp-action="UpdatePerson" asp-controller="Person" asp-route-id="@person.Id">
+                        <svg class="persons-action-svg" title="Update">
+                            <use xlink:href="@Url.Content("~/icons/icons.svg#update")"></use>
                         </svg>
                     </a>
                     <form asp-action="DeletePerson" asp-controller="Person" method="post">

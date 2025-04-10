@@ -76,31 +76,31 @@ function createNode(person) {
     svgElement.setAttribute('height', '20');
 
     const useElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    useElement.setAttribute('href', '/icons/icons.svg#edit');
+    useElement.setAttribute('href', '/icons/icons.svg#update');
     svgElement.appendChild(useElement);
 
-    const buttonEditPerson = document.createElement('button');
-    buttonEditPerson.appendChild(svgElement);
-    buttonEditPerson.className = "tree-action-button";
-    buttonEditPerson.style.visibility = 'hidden';
+    const buttonUpdatePerson = document.createElement('button');
+    buttonUpdatePerson.appendChild(svgElement);
+    buttonUpdatePerson.className = "tree-action-button";
+    buttonUpdatePerson.style.visibility = 'hidden';
 
-    buttonEditPerson.addEventListener('click', function () {
+    buttonUpdatePerson.addEventListener('click', function () {
         const personId = person.id;
-        const url = `/Person/EditPerson?id=${personId}`;
+        const url = `/Person/UpdatePerson?id=${personId}`;
         window.location.href = url;
     });
 
     node.appendChild(imgPerson);
     node.appendChild(textsContainer);
-    node.appendChild(buttonEditPerson);
+    node.appendChild(buttonUpdatePerson);
     node.title = `${personNameNodeText}\n${personLivedNodeText}`
 
     node.addEventListener("mouseenter", () => {
-        buttonEditPerson.style.visibility = 'visible';
+        buttonUpdatePerson.style.visibility = 'visible';
     });
 
     node.addEventListener("mouseleave", () => {
-        buttonEditPerson.style.visibility = 'hidden';
+        buttonUpdatePerson.style.visibility = 'hidden';
     });
 
     return node;

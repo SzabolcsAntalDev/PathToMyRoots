@@ -22,7 +22,7 @@
 <h1>
     @if (Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue)
     {
-        @:Edit Person
+        @:Update Person
     }
     else
     {
@@ -30,7 +30,7 @@
     }
 </h1>
 
-<form asp-action="@((Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "EditPerson" : "AddPerson")" method="post" class="person-main-form">
+<form asp-action="@((Model.Id > PathToMyRootsWebAppConstants.UnsetIntValue) ? "UpdatePerson" : "AddPerson")" method="post" class="person-main-form">
     <h2>Personal Information</h2>
     <div class="grid-for-inputs person-section">
         @if (Model.Id > 0)
@@ -596,7 +596,7 @@
         <button
             type="submit"
             class="person-action-button"
-            asp-action="@(Model.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "AddPerson" : "EditPerson")"
+            asp-action="@(Model.Id == PathToMyRootsWebAppConstants.UnsetIntValue ? "AddPerson" : "UpdatePerson")"
             asp-controller="Person"
             asp-route-id="@Model.Id"
             formmethod="post">
@@ -612,9 +612,9 @@
     </script>
 
     <script src="~/js/libs/cropper.js"></script>
-    <script src="~/js/add-edit-person/add-edit-person.js"></script>
-    <script src="~/js/add-edit-person/dropdown.js"></script>
-    <script src="~/js/add-edit-person/date-input.js"></script>
-    <script src="~/js/add-edit-person/image-upload.js"></script>
-    <script src="~/js/add-edit-person/validation-error-messages.js"></script>
+    <script src="~/js/add-update-person/add-update-person.js"></script>
+    <script src="~/js/add-update-person/dropdown.js"></script>
+    <script src="~/js/add-update-person/date-input.js"></script>
+    <script src="~/js/add-update-person/image-upload.js"></script>
+    <script src="~/js/add-update-person/validation-error-messages.js"></script>
 }

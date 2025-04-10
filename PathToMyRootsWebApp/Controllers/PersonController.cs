@@ -20,7 +20,7 @@ namespace PathToMyRootsWebApp.Controllers
         public async Task<IActionResult> AddPerson()
         {
             await AddPersonsToViewData();
-            return View("AddEditPerson", new PersonModel());
+            return View("AddUpdatePerson", new PersonModel());
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace PathToMyRootsWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 await AddPersonsToViewData();
-                return View("AddEditPerson", personModel);
+                return View("AddUpdatePerson", personModel);
             }
 
             var personResult = await _personApiService.AddPersonAsync(personModel);
@@ -47,7 +47,7 @@ namespace PathToMyRootsWebApp.Controllers
             {
                 ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
-                return View("AddEditPerson", personModel);
+                return View("AddUpdatePerson", personModel);
             }
 
             TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonAddedSuccessfully;
@@ -67,7 +67,7 @@ namespace PathToMyRootsWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditPerson(int id)
+        public async Task<IActionResult> UpdatePerson(int id)
         {
             await AddPersonsToViewData();
 
@@ -75,16 +75,15 @@ namespace PathToMyRootsWebApp.Controllers
             if (!personResult.IsValid)
             {
                 ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
-                return View("AddEditPerson", personResult.PersonModel);
+                return View("AddUpdatePerson", personResult.PersonModel);
             }
 
-            return View("AddEditPerson", personResult.PersonModel);
+            return View("AddUpdatePerson", personResult.PersonModel);
         }
 
-        // Szabi: rename all edit to update
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPerson(PersonModel personModel)
+        public async Task<IActionResult> UpdatePerson(PersonModel personModel)
         {
             // if no spouse is selected the Unknown marriage start date
             // is still selected as the default radio button
@@ -98,15 +97,15 @@ namespace PathToMyRootsWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 await AddPersonsToViewData();
-                return View("AddEditPerson", personModel);
+                return View("AddUpdatePerson", personModel);
             }
 
-            var personResult = await _personApiService.EditPersonAsync(personModel);
+            var personResult = await _personApiService.UpdatePersonAsync(personModel);
             if (!personResult.IsValid)
             {
                 ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
-                return View("AddEditPerson", personResult.PersonModel);
+                return View("AddUpdatePerson", personResult.PersonModel);
             }
 
             TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonUpdatedSuccessfully;
@@ -122,7 +121,7 @@ namespace PathToMyRootsWebApp.Controllers
             {
                 ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
-                return View("AddEditPerson", personResult.PersonModel);
+                return View("AddUpdatePerson", personResult.PersonModel);
             }
 
             TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonDeletedSuccessfully;

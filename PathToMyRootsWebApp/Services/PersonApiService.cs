@@ -52,7 +52,7 @@ namespace PathToMyRootsWebApp.Services
             return new PersonResult(PersonModelMapper.PersonDtoToPersonModel(personDto)!);
         }
 
-        public async Task<PersonResult> EditPersonAsync(PersonModel personModel)
+        public async Task<PersonResult> UpdatePersonAsync(PersonModel personModel)
         {
             var personModelJson = JsonSerializer.Serialize(PersonModelMapper.PersonModelToPersonDto(personModel));
             var requestBody = new StringContent(personModelJson, Encoding.UTF8, "application/json");
