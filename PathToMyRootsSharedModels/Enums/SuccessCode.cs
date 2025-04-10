@@ -2,7 +2,6 @@
 {
     public enum SuccessCode
     {
-        NoSuccess,
         PersonAddedSuccessfully,
         PersonUpdatedSuccessfully,
         PersonDeletedSuccessfully,

@@ -38,13 +38,13 @@
 
 :root.theme-light {
   --default-transition-interval: 0.3s;
-  --popup-loading-bar-transition-interval: 3s;
+  --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
 }
 
 :root.theme-dark {
   --default-transition-interval: 0.3s;
-  --popup-loading-bar-transition-interval: 3s;
+  --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
 }
 
@@ -903,7 +903,7 @@ fieldset input[type=text] {
   width: 100%;
   height: 2px;
   background-color: var(--foreground-color-highlight);
-  transition: width 3s linear 0s;
+  transition: width 8s linear 0s;
 }
 
 .success-popup-container .popup-message-and-close-button-container {

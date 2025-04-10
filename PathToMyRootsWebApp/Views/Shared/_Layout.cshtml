@@ -74,6 +74,7 @@
         </a>
     </div>
 
+    <script src="~/js/messages/codes.js"></script>
     <script src="~/js/utils.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/date-fns@latest"></script>
@@ -84,13 +85,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
-        // Szabi: see why view data and temp data have the same values even if only temp data is set, just add a person
-        console.log('ViewData Success:', '@ViewData[PageDataKeys.SuccessCode]');
-        console.log('ViewData Error:', '@ViewData[PageDataKeys.ErrorCode]');
-        console.log('TempData Success:', '@TempData[PageDataKeys.SuccessCode]');
-        console.log('TempData Error:', '@TempData[PageDataKeys.ErrorCode]');
-
         showSuccessPopup('@ViewData[PageDataKeys.SuccessCode]');
         showErrorPopup('@ViewData[PageDataKeys.ErrorCode]');
         showSuccessPopup('@TempData[PageDataKeys.SuccessCode]');

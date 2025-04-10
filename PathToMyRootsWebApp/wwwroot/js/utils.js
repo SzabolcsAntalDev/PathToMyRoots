@@ -129,12 +129,19 @@ function showPopup(popupPrefix, message) {
     }, getTransitionIntervalInSeconds() * 1000);
 }
 
-function showSuccessPopup(message) {
-    showPopup('success', message);
+function showSuccessPopup(successCode) {
+    if (!successCode)
+        return;
+
+    showPopup('success', successMessages[successCode]);
 }
 
-function showErrorPopup(message) {
-    showPopup('error', message);
+function showErrorPopup(errorCode) {
+    if (!errorCode)
+        return;
+
+    showPopup('error', errorMessages[errorCode]);
+
 }
 
 function addAndTrackClass(element, className) {

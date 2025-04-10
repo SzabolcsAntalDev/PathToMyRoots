@@ -45,25 +45,22 @@ namespace PathToMyRootsWebApp.Controllers
             var personResult = await _personApiService.AddPersonAsync(personModel);
             if (!personResult.IsValid)
             {
-                // Szabi: all error code must be converted to int here or in the layout.cshtml
                 ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
                 return View("AddEditPerson", personModel);
             }
 
-            TempData[PageDataKeys.SuccessCode] = SuccessCode.PersonAddedSuccessfully;
+            TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonAddedSuccessfully;
             return RedirectToAction("PersonDetails", new { id = personResult.PersonModel!.Id });
         }
 
         [HttpGet]
         public async Task<IActionResult> PersonDetails(int id)
         {
-            ViewData[PageDataKeys.SuccessCode] = TempData[PageDataKeys.SuccessCode];
-
             var personResult = await _personApiService.GetPersonAsync(id);
             if (!personResult.IsValid)
             {
-                ViewData[PageDataKeys.ErrorCode] = personResult.ErrorCode;
+                ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
             }
 
             return View(personResult.PersonModel);
@@ -77,7 +74,7 @@ namespace PathToMyRootsWebApp.Controllers
             var personResult = await _personApiService.GetPersonAsync(id);
             if (!personResult.IsValid)
             {
-                ViewData[PageDataKeys.ErrorCode] = personResult.ErrorCode;
+                ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 return View("AddEditPerson", personResult.PersonModel);
             }
 
@@ -107,12 +104,12 @@ namespace PathToMyRootsWebApp.Controllers
             var personResult = await _personApiService.EditPersonAsync(personModel);
             if (!personResult.IsValid)
             {
-                ViewData[PageDataKeys.ErrorCode] = personResult.ErrorCode;
+                ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
                 return View("AddEditPerson", personResult.PersonModel);
             }
 
-            TempData[PageDataKeys.SuccessCode] = SuccessCode.PersonUpdatedSuccessfully;
+            TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonUpdatedSuccessfully;
             return RedirectToAction("PersonDetails", new { id = personResult.PersonModel.Id });
         }
 
@@ -123,20 +120,18 @@ namespace PathToMyRootsWebApp.Controllers
             var personResult = await _personApiService.DeletePersonAsync(id, personModel);
             if (!personResult.IsValid)
             {
-                ViewData[PageDataKeys.ErrorCode] = personResult.ErrorCode;
+                ViewData[PageDataKeys.ErrorCode] = (int)personResult.ErrorCode;
                 await AddPersonsToViewData();
                 return View("AddEditPerson", personResult.PersonModel);
             }
 
-            TempData[PageDataKeys.SuccessCode] = SuccessCode.PersonDeletedSuccessfully;
+            TempData[PageDataKeys.SuccessCode] = (int)SuccessCode.PersonDeletedSuccessfully;
             return RedirectToAction("Persons");
         }
 
         // Szabi: remove 10 from page size
         public async Task<IActionResult> Persons(string filterText, int currentPageNumber, int pageSize = 10)
         {
-            ViewData[PageDataKeys.SuccessCode] = TempData[PageDataKeys.SuccessCode];
-
             var personsModels = await _personApiService.GetPersonsAsync();
             var filteredPersonModels = string.IsNullOrEmpty(filterText)
                 ? personsModels

@@ -91,7 +91,7 @@ $toggle-transition-interval: $default-transition-interval;
 $toggle-transition-function: ease-out;
 $toggle-transition: $toggle-transition-interval $toggle-transition-function 0s;
 
-$popup-loading-bar-transition-interval: 3s;
+$popup-loading-bar-transition-interval: 8s;
 $popup-loading-bar-transition-function: $default-transition-function;
 $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
 

@@ -6,6 +6,9 @@
         UnknownError,
         PersonNotFound,
         InvalidPersonData,
-        OperationFailed
+        AddingPersonFailed,
+        GettingPersonFailed,
+        UpdatingPersonFailed,
+        DeletingPersonFailed
     }
 }

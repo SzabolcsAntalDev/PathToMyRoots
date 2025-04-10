@@ -38,7 +38,7 @@ namespace PathToMyRootsApi.Controllers
             catch
             {
                 // logger: Failed to add person: {e.Message}.
-                return new InternalServerError(ErrorCode.OperationFailed);
+                return new InternalServerError(ErrorCode.AddingPersonFailed);
             }
         }
 
@@ -59,7 +59,7 @@ namespace PathToMyRootsApi.Controllers
             }
             catch
             {
-                return new InternalServerError(ErrorCode.OperationFailed);
+                return new InternalServerError(ErrorCode.GettingPersonFailed);
                 // logger: return BadRequest($"Failed to get person: {e.Message}.");
             }
         }
@@ -84,7 +84,7 @@ namespace PathToMyRootsApi.Controllers
             catch
             {
                 //logger: BadRequest($"Failed to edit person: {e.Message}.");
-                return new InternalServerError(ErrorCode.OperationFailed);
+                return new InternalServerError(ErrorCode.UpdatingPersonFailed);
             }
         }
 
@@ -99,7 +99,7 @@ namespace PathToMyRootsApi.Controllers
             catch
             {
                 // return BadRequest($"Failed to delete person with id {id}: {e.Message}");
-                return new InternalServerError(ErrorCode.OperationFailed);
+                return new InternalServerError(ErrorCode.DeletingPersonFailed);
             }
         }
 
