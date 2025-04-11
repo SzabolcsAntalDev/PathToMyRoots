@@ -80,7 +80,7 @@ function setupPaginationButtons(currentPageNumber, totalNumberOfPages) {
 async function fetchData(filterText, currenPageNumber, pageSize) {
     const personsContainer = document.getElementById("persons-container");
 
-    const loadingTextContainer = await createOrGetLoadingTextContainer(personsContainer.parentElement);
+    const loadingTextContainer = await getOrCreateLoadingTextContainer(personsContainer.parentElement);
     fadeInElement(loadingTextContainer);
 
     await fadeOutElement(personsContainer);

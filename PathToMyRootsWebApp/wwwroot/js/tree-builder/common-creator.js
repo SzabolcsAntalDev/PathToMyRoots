@@ -1,20 +1,17 @@
 ﻿function createNodesAndLinesContainer() {
-    const nodesAndLinesContainer = document.createElement('div');
-    nodesAndLinesContainer.className = 'tree-diagram-and-lines-container';
-
-    return nodesAndLinesContainer;
+    return $('<div>', {
+        class: 'tree-diagram-and-lines-container'
+    });
 }
 
 function createNodesContainer() {
-    const nodesContainer = document.createElement('div');
-    nodesContainer.setAttribute('class', 'tree-diagram-container');
-
-    return nodesContainer;
+    return $('<div>', {
+        class: 'tree-diagram-container'
+    });
 }
 
 function createLinesContainer() {
+    // no jquery creational method for this
     const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    linesContainer.setAttribute('class', 'tree-lines-container');
-
-    return linesContainer;
+    return $(linesContainer).addClass('tree-lines-container');
 }

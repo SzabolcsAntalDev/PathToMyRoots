@@ -1,6 +1,6 @@
 ﻿function drawMarriageLines(linesContainer, marriageNode) {
     const marriageRect = marriageNode.getBoundingClientRect();
-    const linesContainerClientRect = linesContainer.getBoundingClientRect();
+    const linesContainerClientRect = linesContainer.get(0).getBoundingClientRect();
 
     const computedStyle = window.getComputedStyle(marriageNode);
     const marginLeft = parseFloat(computedStyle.marginLeft) || 0;
@@ -23,14 +23,14 @@
     path.setAttribute('d', pathData);
     path.setAttribute('class', 'tree-line-marriage-svg');
 
-    linesContainer.appendChild(path);
+    linesContainer.append(path);
 }
 
 function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBiological) {
     const marriageRect = marriageNode.getBoundingClientRect();
     const childRect = child.getBoundingClientRect();
 
-    const linesContainerClientRect = linesContainer.getBoundingClientRect();
+    const linesContainerClientRect = linesContainer.get(0).getBoundingClientRect();
 
     const hasBiologicalChildren = marriageNode.inverseBiologicalParents.length > 0;
     const hasAdoptiveChildren = marriageNode.inverseAdoptiveParents.length > 0;
@@ -61,5 +61,5 @@ function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBi
     path.setAttribute('d', pathData);
     path.setAttribute('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');
 
-    linesContainer.appendChild(path);
+    linesContainer.append(path);
 }

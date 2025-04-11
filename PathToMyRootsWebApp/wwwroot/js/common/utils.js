@@ -38,18 +38,18 @@ function formatDateString(dateStr) {
 }
 
 function hideElement(element) {
-    element.classList.add('fade-hidden');
+    $(element).addClass('fade-hidden');
 }
 
 function fadeInElement(element) {
-    element.classList.remove('fade-hidden');
-    element.classList.remove('fade-out');
-    element.classList.add('fade-in');
+    $(element).removeClass('fade-hidden');
+    $(element).removeClass('fade-out');
+    $(element).addClass('fade-in');
 }
 
 async function fadeOutElement(element) {
-    element.classList.remove('fade-in');
-    element.classList.add('fade-out');
+    $(element).removeClass('fade-in');
+    $(element).addClass('fade-out');
 
     await new Promise(resolve => {
         setTimeout(() => {

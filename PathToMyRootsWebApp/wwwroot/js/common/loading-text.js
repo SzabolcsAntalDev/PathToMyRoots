@@ -1,25 +1,23 @@
-﻿async function createOrGetLoadingTextContainer(parent) {
-    var loadingTextContainer = document.getElementById("loading-text-container");
-    if (!loadingTextContainer) {
-        loadingTextContainer = document.createElement("div");
+﻿// gets the loading text container from the parent
+// or creates one and adds it to the parent
+// then returns it
+function getOrCreateLoadingTextContainer(parent) {
+    let loadingTextContainer = $('#loading-text-container');
+    if (loadingTextContainer.length === 0) {
+        loadingTextContainer = $('<div>', {
+            id: 'loading-text-container',
+            class: 'loading-text-container'
+        });
 
-        loadingTextContainer.id = "loading-text-container";
-        loadingTextContainer.className = "loading-text-container";
         hideElement(loadingTextContainer);
 
-        const loadingText = document.createElement("label");
-        loadingText.style.margin = "0px";
-        loadingText.textContent = "Loading...";
+        const loadingText = $('<label>')
+            .css('margin', '0px')
+            .text('Loading...');
 
-        loadingTextContainer.appendChild(loadingText);
-        parent.appendChild(loadingTextContainer);
+        loadingTextContainer.append(loadingText);
+        parent.append(loadingTextContainer);
     }
-
-    await new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, 1);
-    });
 
     return loadingTextContainer;
 }

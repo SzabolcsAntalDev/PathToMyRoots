@@ -15,25 +15,25 @@ async function removeTreeDiagram(personId) {
     }
 }
 
-async function createTreeDiagram(personId) {
+async function createAndDisplayTreeDiagram(personId) {
 
     // create container with nodes and lines containers
-    const treesContainer = document.getElementById('trees-container');
+    const treesContainer = $('#trees-container');
 
-    const loadingTextContainer = await createOrGetLoadingTextContainer(treesContainer);
+    const loadingTextContainer = getOrCreateLoadingTextContainer(treesContainer);
     fadeInElement(loadingTextContainer);
 
     const nodesAndLinesContainer = createNodesAndLinesContainer();
     hideElement(nodesAndLinesContainer);
-    nodesAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
+    nodesAndLinesContainer.attr('id', 'tree-diagram-and-lines-container' + personId);
 
     const nodesContainer = createNodesContainer();
     const linesContainer = createLinesContainer();
 
-    nodesAndLinesContainer.appendChild(nodesContainer);
-    nodesAndLinesContainer.appendChild(linesContainer);
+    nodesAndLinesContainer.append(nodesContainer);
+    nodesAndLinesContainer.append(linesContainer);
 
-    treesContainer.appendChild(nodesAndLinesContainer);
+    treesContainer.append(nodesAndLinesContainer);
 
     const processedPersonIds = new Set();
     processedPersonIds.add(null);
@@ -62,25 +62,28 @@ async function createTreeDiagram(personId) {
         const childrenRow = levelIndexesToRowsMap.get(childrenLevelIndex);
 
         let sortedChildrenRow = createRow();
-        nodesContainer.appendChild(sortedChildrenRow);
+        nodesContainer.append(sortedChildrenRow);
         parentsRow = await fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
     }
 
     // set bottom padding to each child except the last one
-    const rows = nodesContainer.querySelectorAll(".tree-level-row");
+    // Szabi: should be without get, but it fails at runtime
+    const rows = nodesContainer.find(".tree-level-row").get();
     rows.forEach((row, index) => {
         if (index !== rows.length - 1) {
             row.style.padding = "0px 0px " + ((maxChildrenWithParentsOnRows + 3) * linesVerticalOffset) + "px 0px";
         }
     });
 
-    // draw lines
-    const treenodesContainerStyle = window.getComputedStyle(nodesContainer);
-    const treenodesContainerWidth = nodesContainer.offsetWidth || parseFloat(treenodesContainerStyle.width);
-    const treenodesContainerHeight = nodesContainer.offsetHeight || parseFloat(treenodesContainerStyle.height);
+    const nodesContainerDom = nodesContainer.get(0);
 
-    linesContainer.style.width = `${treenodesContainerWidth}px`;
-    linesContainer.style.height = `${treenodesContainerHeight}px`;
+    // draw lines
+    const treeNodesContainerStyle = window.getComputedStyle(nodesContainerDom);
+    const treeNodesContainerWidth = nodesContainerDom.offsetWidth || parseFloat(treeNodesContainerStyle.width);
+    const treeNodesContainerHeight = nodesContainerDom.offsetHeight || parseFloat(treeNodesContainerStyle.height);
+
+    linesContainer.css('width', `${treeNodesContainerWidth}px`);
+    linesContainer.css('height', `${treeNodesContainerHeight}px`);
 
     for (let i = 1; i < rows.length; i++) {
         const parentsRowInner = rows[i - 1];
@@ -90,7 +93,7 @@ async function createTreeDiagram(personId) {
     }
 
     // Szabi: this doesn't work
-    scrollToMiddle(nodesAndLinesContainer, nodesContainer);
+    //scrollToMiddle(nodesAndLinesContainer, nodesContainerDom);
 
     fadeOutElement(loadingTextContainer);
     fadeInElement(nodesAndLinesContainer);
@@ -238,7 +241,7 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsMa
         nodesGroupContainer.appendChild(nodesGroup);
 
         if (!levelIndexesToRowsMap.has(level))
-            levelIndexesToRowsMap.set(level,createRow());
+            levelIndexesToRowsMap.set(level, createRow());
 
         levelIndexesToRowsMap.get(level).appendChild(nodesGroupContainer);
     }
