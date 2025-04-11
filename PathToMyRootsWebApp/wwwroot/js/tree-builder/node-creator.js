@@ -1,25 +1,4 @@
-﻿function createDiagramAndLinesContainer() {
-    const diagramAndLinesContainer = document.createElement('div');
-    diagramAndLinesContainer.className = 'tree-diagram-and-lines-container';
-
-    return diagramAndLinesContainer;
-}
-
-function createTreeDiagramContainer() {
-    const diagramContainer = document.createElement('div');
-    diagramContainer.setAttribute('class', 'tree-diagram-container');
-
-    return diagramContainer;
-}
-
-function createTreeLinesContainer() {
-    const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    linesContainer.setAttribute('class', 'tree-lines-container');
-
-    return linesContainer;
-}
-
-function createRow() {
+﻿function createRow() {
     const row = document.createElement('div');
     row.className = 'tree-level-row';
     return row;

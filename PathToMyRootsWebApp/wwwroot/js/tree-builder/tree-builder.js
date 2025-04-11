@@ -8,48 +8,50 @@ async function removeTreeDiagram(personId) {
     if (loadingTextContainer)
         fadeInElement(loadingTextContainer);
 
-    const diagramAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
-    if (diagramAndLinesContainer) {
-        await fadeOutElement(diagramAndLinesContainer)
-        diagramAndLinesContainer.remove();
+    const nodesAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
+    if (nodesAndLinesContainer) {
+        await fadeOutElement(nodesAndLinesContainer)
+        nodesAndLinesContainer.remove();
     }
 }
 
 async function createTreeDiagram(personId) {
-    const treesContainer = document.getElementById("trees-container");
+
+    // create container with nodes and lines containers
+    const treesContainer = document.getElementById('trees-container');
 
     const loadingTextContainer = await createOrGetLoadingTextContainer(treesContainer);
     fadeInElement(loadingTextContainer);
 
-    const diagramAndLinesContainer = createDiagramAndLinesContainer();
-    hideElement(diagramAndLinesContainer);
-    diagramAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
+    const nodesAndLinesContainer = createNodesAndLinesContainer();
+    hideElement(nodesAndLinesContainer);
+    nodesAndLinesContainer.id = 'tree-diagram-and-lines-container' + personId;
 
-    const diagramContainer = createTreeDiagramContainer();
-    const linesContainer = createTreeLinesContainer();
+    const nodesContainer = createNodesContainer();
+    const linesContainer = createLinesContainer();
 
-    diagramAndLinesContainer.appendChild(diagramContainer);
-    diagramAndLinesContainer.appendChild(linesContainer);
+    nodesAndLinesContainer.appendChild(nodesContainer);
+    nodesAndLinesContainer.appendChild(linesContainer);
 
-    treesContainer.appendChild(diagramAndLinesContainer);
+    treesContainer.appendChild(nodesAndLinesContainer);
 
     const processedPersonIds = new Set();
     processedPersonIds.add(null);
 
-    let levelIndexesToRowsDictionary = {};
+    const levelIndexesToRowsMap = new Map();
     let baseLevelIndex = 0;
-    await createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, baseLevelIndex);
+    await createRowsFrom(personId, processedPersonIds, levelIndexesToRowsMap, baseLevelIndex);
 
-    Object.values(levelIndexesToRowsDictionary).forEach(row => {
-        sortGroupNodeContainers(row);
-    })
-
-    let maxChildrenWithParentsOnRows = 0;
-    Object.values(levelIndexesToRowsDictionary).forEach(row => {
-        maxChildrenWithParentsOnRows = Math.max(maxChildrenWithParentsOnRows, getNumberOfChildrenWithParents(row));
+    levelIndexesToRowsMap.forEach((value, _) => {
+        sortGroupNodeContainers(value);
     });
 
-    const descSortedLevelIndexes = Object.keys(levelIndexesToRowsDictionary)
+    let maxChildrenWithParentsOnRows = 0;
+    levelIndexesToRowsMap.forEach((value, _) => {
+        maxChildrenWithParentsOnRows = Math.max(maxChildrenWithParentsOnRows, getNumberOfChildrenWithParents(value));
+    });
+
+    const descSortedLevelIndexes = [...levelIndexesToRowsMap.keys()]
         .map(Number)
         .sort((a, b) => b - a);
 
@@ -57,15 +59,15 @@ async function createTreeDiagram(personId) {
     let parentsRow = createRow();
     for (let i = 0; i < descSortedLevelIndexes.length; i++) {
         const childrenLevelIndex = descSortedLevelIndexes[i];
-        const childrenRow = levelIndexesToRowsDictionary[childrenLevelIndex];
+        const childrenRow = levelIndexesToRowsMap.get(childrenLevelIndex);
 
         let sortedChildrenRow = createRow();
-        diagramContainer.appendChild(sortedChildrenRow);
+        nodesContainer.appendChild(sortedChildrenRow);
         parentsRow = await fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
     }
 
     // set bottom padding to each child except the last one
-    const rows = diagramContainer.querySelectorAll(".tree-level-row");
+    const rows = nodesContainer.querySelectorAll(".tree-level-row");
     rows.forEach((row, index) => {
         if (index !== rows.length - 1) {
             row.style.padding = "0px 0px " + ((maxChildrenWithParentsOnRows + 3) * linesVerticalOffset) + "px 0px";
@@ -73,12 +75,12 @@ async function createTreeDiagram(personId) {
     });
 
     // draw lines
-    const treeDiagramContainerStyle = window.getComputedStyle(diagramContainer);
-    const treeDiagramContainerWidth = diagramContainer.offsetWidth || parseFloat(treeDiagramContainerStyle.width);
-    const treeDiagramContainerHeight = diagramContainer.offsetHeight || parseFloat(treeDiagramContainerStyle.height);
+    const treenodesContainerStyle = window.getComputedStyle(nodesContainer);
+    const treenodesContainerWidth = nodesContainer.offsetWidth || parseFloat(treenodesContainerStyle.width);
+    const treenodesContainerHeight = nodesContainer.offsetHeight || parseFloat(treenodesContainerStyle.height);
 
-    linesContainer.style.width = `${treeDiagramContainerWidth}px`;
-    linesContainer.style.height = `${treeDiagramContainerHeight}px`;
+    linesContainer.style.width = `${treenodesContainerWidth}px`;
+    linesContainer.style.height = `${treenodesContainerHeight}px`;
 
     for (let i = 1; i < rows.length; i++) {
         const parentsRowInner = rows[i - 1];
@@ -88,10 +90,10 @@ async function createTreeDiagram(personId) {
     }
 
     // Szabi: this doesn't work
-    scrollToMiddle(diagramAndLinesContainer, diagramContainer);
+    scrollToMiddle(nodesAndLinesContainer, nodesContainer);
 
     fadeOutElement(loadingTextContainer);
-    fadeInElement(diagramAndLinesContainer);
+    fadeInElement(nodesAndLinesContainer);
 }
 
 function sortGroupNodeContainers(row) {
@@ -146,7 +148,7 @@ function scrollToMiddle(container, element) {
     container.scrollLeft += horizontalOffset;
 }
 
-async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDictionary, level) {
+async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsMap, level) {
     if (personId == null || processedPersonIds.has(personId))
         return;
 
@@ -235,44 +237,44 @@ async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsDi
     if (nodesGroup.childElementCount > 0) {
         nodesGroupContainer.appendChild(nodesGroup);
 
-        if (levelIndexesToRowsDictionary[level] == null)
-            levelIndexesToRowsDictionary[level] = createRow();
+        if (!levelIndexesToRowsMap.has(level))
+            levelIndexesToRowsMap.set(level,createRow());
 
-        levelIndexesToRowsDictionary[level].appendChild(nodesGroupContainer);
+        levelIndexesToRowsMap.get(level).appendChild(nodesGroupContainer);
     }
 
     processedPersonIds.add(personId);
 
-    await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
-    await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+    await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+    await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
 
     if (person.firstSpouse != null) {
-        await createRowsFrom(person.firstSpouse.id, processedPersonIds, levelIndexesToRowsDictionary, level);
-        await createRowsFrom(person.firstSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
-        await createRowsFrom(person.firstSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+        await createRowsFrom(person.firstSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
+        await createRowsFrom(person.firstSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createRowsFrom(person.firstSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
     }
 
     if (person.secondSpouse != null) {
-        await createRowsFrom(person.secondSpouse.id, processedPersonIds, levelIndexesToRowsDictionary, level);
-        await createRowsFrom(person.secondSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
-        await createRowsFrom(person.secondSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsDictionary, level + 1);
+        await createRowsFrom(person.secondSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
+        await createRowsFrom(person.secondSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createRowsFrom(person.secondSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
     }
 
     if (person.inverseBiologicalMother != null)
         for (let child of person.inverseBiologicalMother)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseBiologicalFather != null)
         for (let child of person.inverseBiologicalFather)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseAdoptiveMother != null)
         for (let child of person.inverseAdoptiveMother)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseAdoptiveFather != null)
         for (let child of person.inverseAdoptiveFather)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsDictionary, level - 1);
+            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 }
 
 async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
@@ -451,7 +453,7 @@ async function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, children
         });
 
         if (added)
-        sortedChildrenRow.appendChild(treeSiblingsContainer);
+            sortedChildrenRow.appendChild(treeSiblingsContainer);
     }
 
     // orphans
