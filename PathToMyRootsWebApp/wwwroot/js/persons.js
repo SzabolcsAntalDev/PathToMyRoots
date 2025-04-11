@@ -17,6 +17,7 @@ async function addListeners() {
     const filterInput = document.getElementById("filter-input");
     const filterButton = document.getElementById("filter-button");
     const pageSizeSelect = document.getElementById("page-size-select");
+    const paginationContainer = document.querySelector('.pagination-container');
 
     filterInput.addEventListener("keypress", async event => {
         if (event.key === "Enter") {
@@ -32,7 +33,8 @@ async function addListeners() {
         await fetchData(getFilterText(), 0, getPageSize());
     });
 
-    document.querySelectorAll("button").forEach(button => {
+    
+    paginationContainer.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", async event => {
             event.preventDefault();
 
