@@ -1057,60 +1057,49 @@ fieldset {
     top: $thickness-large;
     left: 50%;
     transform: translateX(-50%);
-}
-
-.popup-message-and-close-button-container {
-    color: var(--error-popup-foreground-color);
-    background-color: var(--error-popup-background-color);
     border-radius: $border-radius $border-radius 0 0;
-    padding: $thickness-medium $thickness-large;
-    display: flex;
-}
 
-.popup-message {
-    align-content: center;
-    font-size: $font-size-large;
-    margin-right: $thickness-medium;
-    transition: color $default-transition;
+    .popup-message-and-close-button-container {
+        padding: $thickness-medium $thickness-large;
+        display: flex;
 
-    &:hover {
-        color: var(--error-popup-foreground-color-highlight);
+        .popup-message {
+            align-content: center;
+            font-size: $font-size-large;
+            margin-right: $thickness-medium;
+            transition: color $default-transition;
+        }
+
+        .popup-close-button {
+            padding: 0px;
+            margin: 0px;
+            font-size: $font-size-extra-large;
+            border: none;
+        }
     }
-}
 
-.popup-close-button {
-    color: var(--error-popup-foreground-color);
-    background-color: var(--error-popup-background-color);
-    padding: 0px;
-    margin: 0px;
-    font-size: $font-size-extra-large;
-    border: none;
-
-    &:hover {
-        color: var(--error-popup-foreground-color-highlight);
-        background-color: var(--error-popup-background-color);
+    .popup-loading-bar {
+        width: 100%;
+        height: $thickness-extra-small;
+        transition: width $popup-loading-bar-transition;
+        // div used to set the background-color transition
+        // this way we're able to edit the width transition on the parent
+        // without needing to carry the background-color transition as well
+        .popup-loading-bar-inner-div {
+            width: 100%;
+            height: 100%;
+            background-color: var(--foreground-color-highlight);
+            transition: background-color $default-transition;
+        }
     }
-}
-
-.popup-loading-bar {
-    width: 100%;
-    height: $thickness-extra-small;
-    transition: width $popup-loading-bar-transition;
-}
-
-// div used to set the background-color transition
-// this way we're able to edit the width transition on the parent
-// without needing to carry the background-color transition as well
-.popup-loading-bar-inner-div {
-    width: 100%;
-    height: 100%;
-    background-color: var(--foreground-color-highlight);
-    transition: background-color $default-transition;
 }
 
 .success-popup-container {
-    .popup-message-and-close-button-container {
-        color: var(--success-popup-foreground-color);
+    color: var(--success-popup-foreground-color);
+    background-color: var(--success-popup-background-color);
+
+    &:hover {
+        color: var(--success-popup-foreground-color-highlight);
         background-color: var(--success-popup-background-color);
     }
 
@@ -1126,8 +1115,11 @@ fieldset {
 }
 
 .error-popup-container {
-    .popup-message-and-close-button-container {
-        color: var(--error-popup-foreground-color);
+    color: var(--error-popup-foreground-color);
+    background-color: var(--error-popup-background-color);
+
+    &:hover {
+        color: var(--error-popup-foreground-color-highlight);
         background-color: var(--error-popup-background-color);
     }
 

@@ -1,4 +1,5 @@
-﻿:root.theme-dark {
+﻿@charset "UTF-8";
+:root.theme-dark {
   --foreground-color: #C7D1DB;
   --foreground-color-highlight: white;
   --foreground-color-disabled: gray;
@@ -867,6 +868,18 @@ fieldset input[type=text] {
   max-height: 400px;
 }
 
+/*
+<div class="success-popup-container fade-hidden" >
+    <div class="popup-message-and-close-button-container" >
+        <span class="popup-message" > </span >
+        <button class="popup-close-button" > ×</button >
+    </div>
+    <div class="popup-loading-bar">
+    <div class="popup-loading-bar-inner-div" > </div >
+    </div>
+</div >
+
+*/
 .success-popup-container, .error-popup-container {
   display: flex;
   flex-direction: column;
@@ -874,54 +887,42 @@ fieldset input[type=text] {
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-}
-
-.popup-message-and-close-button-container {
-  color: var(--error-popup-foreground-color);
-  background-color: var(--error-popup-background-color);
   border-radius: 4px 4px 0 0;
+}
+.success-popup-container .popup-message-and-close-button-container, .error-popup-container .popup-message-and-close-button-container {
   padding: 8px 16px;
   display: flex;
 }
-
-.popup-message {
+.success-popup-container .popup-message-and-close-button-container .popup-message, .error-popup-container .popup-message-and-close-button-container .popup-message {
   align-content: center;
   font-size: 18px;
   margin-right: 8px;
   transition: color 0.3s linear 0s;
 }
-.popup-message:hover {
-  color: var(--error-popup-foreground-color-highlight);
-}
-
-.popup-close-button {
-  color: var(--error-popup-foreground-color);
-  background-color: var(--error-popup-background-color);
+.success-popup-container .popup-message-and-close-button-container .popup-close-button, .error-popup-container .popup-message-and-close-button-container .popup-close-button {
   padding: 0px;
   margin: 0px;
   font-size: 28px;
   border: none;
 }
-.popup-close-button:hover {
-  color: var(--error-popup-foreground-color-highlight);
-  background-color: var(--error-popup-background-color);
-}
-
-.popup-loading-bar {
+.success-popup-container .popup-loading-bar, .error-popup-container .popup-loading-bar {
   width: 100%;
   height: 2px;
   transition: width 8s linear 0s;
 }
-
-.popup-loading-bar-inner-div {
+.success-popup-container .popup-loading-bar .popup-loading-bar-inner-div, .error-popup-container .popup-loading-bar .popup-loading-bar-inner-div {
   width: 100%;
   height: 100%;
   background-color: var(--foreground-color-highlight);
   transition: background-color 0.3s linear 0s;
 }
 
-.success-popup-container .popup-message-and-close-button-container {
+.success-popup-container {
   color: var(--success-popup-foreground-color);
+  background-color: var(--success-popup-background-color);
+}
+.success-popup-container:hover {
+  color: var(--success-popup-foreground-color-highlight);
   background-color: var(--success-popup-background-color);
 }
 .success-popup-container .popup-close-button {
@@ -933,8 +934,12 @@ fieldset input[type=text] {
   background-color: var(--success-popup-background-color);
 }
 
-.error-popup-container .popup-message-and-close-button-container {
+.error-popup-container {
   color: var(--error-popup-foreground-color);
+  background-color: var(--error-popup-background-color);
+}
+.error-popup-container:hover {
+  color: var(--error-popup-foreground-color-highlight);
   background-color: var(--error-popup-background-color);
 }
 .error-popup-container .popup-close-button {
