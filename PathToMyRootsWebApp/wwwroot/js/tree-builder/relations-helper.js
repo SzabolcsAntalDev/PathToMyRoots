@@ -56,19 +56,23 @@ function getFirstSpouseNodeGroupContainerOtherThanActualOfMarriedFemale(firstChi
 }
 
 function getNumberOfChildrenWithParents(row) {
+
+    // biological and adoptive parents should not be merged into one filter here
+    // a child with both biological and adoptive parents will have 2 lines
+    // Szabi: null or undefined?
     let childrenWithBiologicalParents =
         Array
-            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
+            .from(row.find('.tree-node-male, .tree-node-female'))
             .filter(p =>
-                p.biologicalFatherId !== null ||
-                p.biologicalMotherId !== null);
+                $(p).data('biologicalFatherId') != null ||
+                $(p).data('biologicalMotherId') != null);
 
     let childrenWithAdoptiveParents =
         Array
-            .from(row.querySelectorAll('.tree-node-male, .tree-node-female'))
+            .from(row.find('.tree-node-male, .tree-node-female'))
             .filter(p =>
-                p.adoptiveFatherId !== null ||
-                p.adoptiveMotherId !== null);
+                $(p).data('adoptiveFatherId') != null ||
+                $(p).data('adoptiveMotherId') != null);
 
     return childrenWithBiologicalParents.length + childrenWithAdoptiveParents.length;
 }

@@ -1,5 +1,5 @@
 ﻿function drawMarriageLines(linesContainer, marriageNode) {
-    const marriageRect = marriageNode.getBoundingClientRect();
+    const marriageRect = marriageNode.get(0).getBoundingClientRect();
     const linesContainerClientRect = linesContainer.get(0).getBoundingClientRect();
 
     const computedStyle = window.getComputedStyle(marriageNode);
@@ -27,13 +27,14 @@
 }
 
 function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBiological) {
-    const marriageRect = marriageNode.getBoundingClientRect();
+    const marriageRect = marriageNode.get(0).getBoundingClientRect();
+    // Szabi: child should be query object here
     const childRect = child.getBoundingClientRect();
 
     const linesContainerClientRect = linesContainer.get(0).getBoundingClientRect();
 
-    const hasBiologicalChildren = marriageNode.inverseBiologicalParents.length > 0;
-    const hasAdoptiveChildren = marriageNode.inverseAdoptiveParents.length > 0;
+    const hasBiologicalChildren = marriageNode.data('inverseBiologicalParents').length > 0;
+    const hasAdoptiveChildren = marriageNode.data('inverseAdoptiveParents').length > 0;
 
     let marriageX = marriageRect.left + marriageRect.width / 2 - linesContainerClientRect.left;
     const marriageY = marriageRect.top + marriageRect.height - linesContainerClientRect.top;
@@ -57,6 +58,7 @@ function drawChildLine(linesContainer, marriageNode, child, verticalOffset, isBi
         L ${childX},${childY}
     `;
 
+    // Szabi: jquery
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', pathData);
     path.setAttribute('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');

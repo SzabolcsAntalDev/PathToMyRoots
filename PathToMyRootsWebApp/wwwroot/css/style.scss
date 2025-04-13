@@ -91,7 +91,7 @@ $error-popup-background-color-light: $error-color-light;
     --error-popup-background-color: #{$error-popup-background-color-light};
 }
 
-$default-transition-interval: 0.3s;
+$default-transition-interval: 3s;
 $default-transition-function: linear;
 $default-transition: $default-transition-interval $default-transition-function 0s;
 
@@ -558,7 +558,7 @@ fieldset {
 }
 
 
-.trees-container {
+#tree-container {
     display: flex;
     position: relative;
     flex: 1;
@@ -719,7 +719,7 @@ fieldset {
     stroke: forestgreen;
 }
 
-.loading-text-container {
+#loading-text-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1135,13 +1135,13 @@ fieldset {
 }
 
 .fade-hidden {
-    opacity: 0;
     visibility: hidden;
+    opacity: 0;
 }
 
 .fade-in {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
     transition: opacity $default-transition;
 }
 

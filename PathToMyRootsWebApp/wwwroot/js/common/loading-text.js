@@ -4,16 +4,16 @@
 function getOrCreateLoadingTextContainer(parent) {
     let loadingTextContainer = $('#loading-text-container');
     if (loadingTextContainer.length === 0) {
-        loadingTextContainer = $('<div>', {
-            id: 'loading-text-container',
-            class: 'loading-text-container'
-        });
+        loadingTextContainer =
+            $('<div>')
+                .attr('id', 'loading-text-container');
 
         hideElement(loadingTextContainer);
 
-        const loadingText = $('<label>')
-            .css('margin', '0px')
-            .text('Loading...');
+        const loadingText =
+            $('<label>')
+                .css('margin', '0px')
+                .text('Loading...');
 
         loadingTextContainer.append(loadingText);
         parent.append(loadingTextContainer);
