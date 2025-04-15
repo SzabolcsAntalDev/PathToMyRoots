@@ -1,15 +1,15 @@
 ﻿async function buildTree(nodesContainer, linesContainer, personId) {
-    const levelIndexesToRowsMap = new Map();
+    const levelsToRows = new Map();
+    await createLevelsToRowsRecursive(personId, new Set([null]), levelsToRows, 0);
 
-    await createRowsFrom(personId, new Set([null]), levelIndexesToRowsMap, 0);
-    sortByBirthdates(levelIndexesToRowsMap);
+    // sort rows descending by level index
+    const sortedlevelsToRows = new Map(Array.from(levelsToRows.entries()).sort((a, b) => b[0] - a[0]));
 
-    let maxNumberOfChildrenWithParentsOnRows = getMaxNumberOfChildrenWithParentsOnRows(levelIndexesToRowsMap);
-    const descSortedLevelIndexes = [...levelIndexesToRowsMap.keys()]
-        .map(Number)
-        .sort((a, b) => b - a);
+    sortRowItemsByBirtDates(sortedlevelsToRows.values());
 
-    sortByParents(nodesContainer, levelIndexesToRowsMap, descSortedLevelIndexes);
+    let maxNumberOfChildrenWithParentsOnRows = getMaxNumberOfChildrenWithParentsOnRows(sortedlevelsToRows);
+
+    sortByParents(nodesContainer, sortedlevelsToRows);
 
     // set bottom padding to each child except the last one
     // Szabi: delete all unused indexes from the js files

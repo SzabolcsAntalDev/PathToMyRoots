@@ -1,13 +1,10 @@
-﻿function sortByParents(nodesContainer, levelIndexesToRowsMap, descSortedLevelIndexes) {
+﻿function sortByParents(nodesContainer, levelIndexesToRowsMap) {
     let parentsRow = createRow();
-    for (let i = 0; i < descSortedLevelIndexes.length; i++) {
-        const childrenLevelIndex = descSortedLevelIndexes[i];
-        const childrenRow = levelIndexesToRowsMap.get(childrenLevelIndex);
-
+    levelIndexesToRowsMap.forEach((value, _) => {
         let sortedChildrenRow = createRow();
         nodesContainer.append(sortedChildrenRow);
-        parentsRow = fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow);
-    }
+        parentsRow = fillRowWithSortedChildren(sortedChildrenRow, parentsRow, value);
+    });
 }
 
 function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {

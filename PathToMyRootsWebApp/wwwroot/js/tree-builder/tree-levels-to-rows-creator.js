@@ -1,4 +1,4 @@
-﻿async function createRowsFrom(personId, processedPersonIds, levelIndexesToRowsMap, level) {
+﻿async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIndexesToRowsMap, level) {
     if (personId == null || processedPersonIds.has(personId))
         return;
 
@@ -95,34 +95,34 @@
 
     processedPersonIds.add(personId);
 
-    await createRowsFrom(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
-    await createRowsFrom(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+    await createLevelsToRowsRecursive(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+    await createLevelsToRowsRecursive(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
 
     if (person.firstSpouse != null) {
-        await createRowsFrom(person.firstSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
-        await createRowsFrom(person.firstSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
-        await createRowsFrom(person.firstSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createLevelsToRowsRecursive(person.firstSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
+        await createLevelsToRowsRecursive(person.firstSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createLevelsToRowsRecursive(person.firstSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
     }
 
     if (person.secondSpouse != null) {
-        await createRowsFrom(person.secondSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
-        await createRowsFrom(person.secondSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
-        await createRowsFrom(person.secondSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createLevelsToRowsRecursive(person.secondSpouse.id, processedPersonIds, levelIndexesToRowsMap, level);
+        await createLevelsToRowsRecursive(person.secondSpouse.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
+        await createLevelsToRowsRecursive(person.secondSpouse.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
     }
 
     if (person.inverseBiologicalMother != null)
         for (let child of person.inverseBiologicalMother)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
+            await createLevelsToRowsRecursive(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseBiologicalFather != null)
         for (let child of person.inverseBiologicalFather)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
+            await createLevelsToRowsRecursive(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseAdoptiveMother != null)
         for (let child of person.inverseAdoptiveMother)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
+            await createLevelsToRowsRecursive(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 
     if (person.inverseAdoptiveFather != null)
         for (let child of person.inverseAdoptiveFather)
-            await createRowsFrom(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
+            await createLevelsToRowsRecursive(child.id, processedPersonIds, levelIndexesToRowsMap, level - 1);
 }
