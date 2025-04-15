@@ -22,13 +22,13 @@ function sortNodesGroupContainers(nodesGroupContainers) {
             let birtDate1 = getBirthDateNumberFromNodeGroup(nodesGroupContainer1)
             let birtDate2 = getBirthDateNumberFromNodeGroup(nodesGroupContainer2);
 
-            return nodeGroup1BirthDate - nodeGroup2BirthDate;
+            return birtDate1 - birtDate2;
         });
 }
 
-function getBirthDateNumberFromNodeGroup(nodeGroup) {
-    let maleA = nodeGroup.find('.tree-node-male').get(0);
-    let femaleA = nodeGroup.find('.tree-node-female').get(0);
+function getBirthDateNumberFromNodeGroup(nodeGroupContainer) {
+    let maleA = $(nodeGroupContainer).find('.tree-node-male');
+    let femaleA = $(nodeGroupContainer).find('.tree-node-female');
     const birthDate =
         maleA != undefined
             ? maleA.data('birthDate')
