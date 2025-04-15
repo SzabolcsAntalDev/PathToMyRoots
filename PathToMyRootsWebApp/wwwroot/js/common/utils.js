@@ -37,27 +37,6 @@ function formatDateString(dateStr) {
     return parts.join(' ');
 }
 
-function hideElement(element) {
-    $(element).addClass('fade-hidden');
-}
-
-function fadeInElement(element) {
-    $(element).removeClass('fade-hidden');
-    $(element).removeClass('fade-out');
-    $(element).addClass('fade-in');
-}
-
-async function fadeOutElement(element) {
-    $(element).removeClass('fade-in');
-    $(element).addClass('fade-out');
-
-    await new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, getTransitionIntervalInSeconds() * 1000);
-    });
-}
-
 function showPopup(popupPrefix, message) {
     if (!message) {
         return;
@@ -134,4 +113,15 @@ function removeAndTrackClass(element, className) {
         element.classList.remove(className);
         delete element.dataset[className];
     }
+}
+
+function scrollToMiddle(container, element) {
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+
+    const verticalOffset = elementRect.top - containerRect.top - (container.clientHeight / 2) + (element.clientHeight / 2);
+    const horizontalOffset = elementRect.left - containerRect.left - (container.clientWidth / 2) + (element.clientWidth / 2);
+
+    container.scrollTop += verticalOffset;
+    container.scrollLeft += horizontalOffset;
 }

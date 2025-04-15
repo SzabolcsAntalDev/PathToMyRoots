@@ -1,45 +1,4 @@
-﻿const linesVerticalOffset = 10;
-
-const apiUrl = "https://localhost:7241/api/person/";
-const imageApiUrl = "https://localhost:7241/";
-
-async function removeTreeDiagram(personId) {
-    const loadingTextContainer = document.getElementById("loading-text-container");
-    if (loadingTextContainer)
-        fadeInElement(loadingTextContainer);
-
-    const nodesAndLinesContainer = document.getElementById('tree-diagram-and-lines-container' + personId);
-    if (nodesAndLinesContainer) {
-        await fadeOutElement(nodesAndLinesContainer)
-        nodesAndLinesContainer.remove();
-    }
-}
-
-async function createAndDisplayTreeDiagram(personId) {
-    // create container with nodes and lines containers
-    const treeContainer = $('#tree-container');
-    const loadingTextContainer = getOrCreateLoadingTextContainer(treeContainer);
-    fadeInElement(loadingTextContainer);
-
-    const nodesContainer = createNodesContainer();
-    const linesContainer = createLinesContainer();
-    const nodesAndLinesContainer = createHiddenNodesAndLinesContainer(personId);
-
-    nodesAndLinesContainer.append(nodesContainer);
-    nodesAndLinesContainer.append(linesContainer);
-
-    treeContainer.append(nodesAndLinesContainer);
-
-    await buildTree(nodesContainer, linesContainer);
-
-    // Szabi: this doesn't work
-    //scrollToMiddle(nodesAndLinesContainer, nodesContainerDom);
-
-    fadeOutElement(loadingTextContainer);
-    fadeInElement(nodesAndLinesContainer);
-}
-
-async function buildTree(nodesContainer, linesContainer) {
+﻿async function buildTree(nodesContainer, linesContainer, personId) {
     const levelIndexesToRowsMap = new Map();
 
     await createRowsFrom(personId, new Set([null]), levelIndexesToRowsMap, 0);
@@ -77,15 +36,4 @@ async function buildTree(nodesContainer, linesContainer) {
 
         await drawLines(linesContainer, parentsRowInner, childrenRowInner, maxNumberOfChildrenWithParentsOnRows);
     }
-}
-
-function scrollToMiddle(container, element) {
-    const containerRect = container.getBoundingClientRect();
-    const elementRect = element.getBoundingClientRect();
-
-    const verticalOffset = elementRect.top - containerRect.top - (container.clientHeight / 2) + (element.clientHeight / 2);
-    const horizontalOffset = elementRect.left - containerRect.left - (container.clientWidth / 2) + (element.clientWidth / 2);
-
-    container.scrollTop += verticalOffset;
-    container.scrollLeft += horizontalOffset;
 }

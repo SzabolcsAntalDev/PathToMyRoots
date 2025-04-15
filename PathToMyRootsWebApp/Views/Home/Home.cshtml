@@ -1,7 +1,7 @@
 ﻿@using PathToMyRootsCommon.Utils
 <h1>Welcome</h1>
 
-<div id="tree-container">
+<div id="tree-diagrams-container">
 </div>
 
 <div class="pagination-container">
@@ -10,24 +10,24 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/tree-builder/common-creator.js"></script>
-    <script src="~/js/tree-builder/formatter.js"></script>
+    <script src="~/js/common/fading.js"></script>
+
+    <script src="~/js/tree-builder/tree-builder.js"></script>
+    <script src="~/js/tree-builder/tree-common-creator.js"></script>
     <script src="~/js/tree-builder/tree-lines-drawer.js"></script>
-    <script src="~/js/tree-builder/node-creator.js"></script>
-    <script src="~/js/tree-builder/relations-helper.js"></script>
+    <script src="~/js/tree-builder/tree-node-creator.js"></script>
+    <script src="~/js/tree-builder/tree-number-of-children-calculator.js"></script>
+    <script src="~/js/tree-builder/tree-relations-helper.js"></script>
     <script src="~/js/tree-builder/tree-rows-creator.js"></script>
     <script src="~/js/tree-builder/tree-rows-sorter-by-birthdates.js"></script>
     <script src="~/js/tree-builder/tree-rows-sorter-by-parents.js"></script>
-    <script src="~/js/tree-builder/tree-number-of-children-calculator.js"></script>
+    <script src="~/js/tree-builder/tree-texts-formatter.js"></script>
+    <script src="~/js/tree-builder/tree.js"></script>
 
-    <script src="~/js/tree-builder/tree-builder.js"></script>
     <script src="~/js/home.js"></script>
 
     <script>
         const UnknownServerDate = '@Html.Raw(DateHelper.DatabaseDateUnknown)';
         const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
-
-        const personId = @Model.Id;
-        showTree(personId);
     </script>
 }

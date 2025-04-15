@@ -439,14 +439,14 @@ fieldset input[type=text] {
   margin: 4px;
 }
 
-#tree-container {
+#tree-diagrams-container {
   display: flex;
   position: relative;
   flex: 1;
   overflow: auto;
 }
 
-.tree-diagram-and-lines-container {
+.tree-diagram-container {
   position: relative;
 }
 

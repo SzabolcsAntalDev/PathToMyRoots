@@ -1,27 +1,35 @@
-﻿const treeIds = [13, 71];
-let currentIndex = 1;
+﻿let treeDiagramsContainer;
 
-document.getElementById('prevTree').addEventListener('click', function () {
-    showTree(-1);
-});
+const personIds = [1, 2, 3];
+let currentPersonIndex = -1;
 
-document.getElementById('nextTree').addEventListener('click', function () {
-    showTree(1);
+$(() => {
+    treeDiagramsContainer = $('#tree-diagrams-container');
+
+    $('#prevTree').on('click', function () {
+        showTree(-1);
+    })
+
+    $('#nextTree').on('click', function () {
+        showTree(1);
+    })
+
+    showTree(1)
 });
 
 async function showTree(direction) {
-    const currentTreeNumber = treeIds[currentIndex];
+    const currentPersonId = personIds[currentPersonIndex];
 
-    await removeTreeDiagram(currentTreeNumber);
-    currentIndex += direction;
+    await removeTreeDiagram(treeDiagramsContainer, currentPersonId);
+    currentPersonIndex += direction;
 
-    if (currentIndex < 0) {
-        currentIndex = treeIds.length - 1;
+    if (currentPersonIndex < 0) {
+        currentPersonIndex = personIds.length - 1;
     }
-    else if (currentIndex >= treeIds.length) {
-        currentIndex = 0;
+    else if (currentPersonIndex >= personIds.length) {
+        currentPersonIndex = 0;
     }
 
-    const nextTreeNumber = treeIds[currentIndex];
-    createAndDisplayTreeDiagram(nextTreeNumber);
+    const nextPersonId = personIds[currentPersonIndex];
+    createAndDisplayTreeDiagram(treeDiagramsContainer, nextPersonId);
 }
