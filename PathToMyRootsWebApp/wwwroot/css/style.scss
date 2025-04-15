@@ -91,7 +91,7 @@ $error-popup-background-color-light: $error-color-light;
     --error-popup-background-color: #{$error-popup-background-color-light};
 }
 
-$default-transition-interval: 3s;
+$default-transition-interval: 1s;
 $default-transition-function: linear;
 $default-transition: $default-transition-interval $default-transition-function 0s;
 

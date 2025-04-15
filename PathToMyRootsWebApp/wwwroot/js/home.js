@@ -1,6 +1,6 @@
 ﻿let treeDiagramsContainer;
 
-const personIds = [1, 2, 3];
+const personIds = [1, 4];
 let currentPersonIndex = -1;
 
 $(() => {
