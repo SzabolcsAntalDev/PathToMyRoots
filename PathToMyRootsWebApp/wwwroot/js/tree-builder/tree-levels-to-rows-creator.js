@@ -20,9 +20,10 @@ async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIn
             const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
             const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
 
-            nodesGroupContainer.appendChild(createNodeMarriage(person, firstSpouse, false));
-            nodesGroupContainer.style.paddingLeft = "0px";
-            nodesGroupContainer.style.marginLeft = "0px";
+            nodesGroupContainer.append(createNodeMarriage(person, firstSpouse, false));
+            //// Szabi: add this back
+            //nodesGroupContainer.style.paddingLeft = "0px";
+            //nodesGroupContainer.style.marginLeft = "0px";
             nodesGroup.append(createNode(person));
             nodesGroup.append(createNode(secondSpouse));
             nodesGroup.append(createLineBreak());
@@ -41,15 +42,18 @@ async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIn
                     nodesGroup.append(createLineBreak());
                     nodesGroup.append(createNodeMarriage(person, spouse, true));
 
-                    nodesGroupContainer.style.paddingRight = "0px";
-                    nodesGroupContainer.style.marginRight = "0px";
+                    //// Szabi: add this back
+                    //nodesGroupContainer.style.paddingRight = "0px";
+                    //nodesGroupContainer.style.marginRight = "0px";
 
                     processedPersonIds.add(spouseId);
                 }
                 else {
-                    nodesGroupContainer.appendChild(createNodeMarriage(person, spouse, false));
-                    nodesGroupContainer.style.paddingLeft = "0px";
-                    nodesGroupContainer.style.marginLeft = "0px";
+                    nodesGroupContainer.append(createNodeMarriage(person, spouse, false));
+
+                    //// Szabi: add this back
+                    //nodesGroupContainer.style.paddingLeft = "0px";
+                    //nodesGroupContainer.style.marginLeft = "0px";
                     nodesGroup.append(createNode(person));
                 }
             }
@@ -75,8 +79,9 @@ async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIn
 
             if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) { // double married man
                 nodesGroup.append(createNode(person));
-                nodesGroupContainer.style.paddingRight = "0px";
-                nodesGroupContainer.style.marginRight = "0px";
+                //// Szabi: add this back
+                //nodesGroupContainer.style.paddingRight = "0px";
+                //nodesGroupContainer.style.marginRight = "0px";
             }
             else { // single married man
                 nodesGroup.append(createNode(spouse));
@@ -100,6 +105,8 @@ async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIn
     }
 
     processedPersonIds.add(personId);
+
+    setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
 
     await createLevelsToRowsRecursive(person.biologicalFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);
     await createLevelsToRowsRecursive(person.adoptiveFatherId, processedPersonIds, levelIndexesToRowsMap, level + 1);

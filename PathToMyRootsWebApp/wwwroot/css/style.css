@@ -585,6 +585,7 @@ fieldset input[type=text] {
 
 #loading-text-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -593,8 +594,16 @@ fieldset input[type=text] {
   width: 100%;
   height: 100%;
 }
-#loading-text-container label {
+#loading-text-container #loading-text-label {
+  margin: 0px;
+  margin-bottom: 16px;
   font-size: 18px;
+  font-weight: bold;
+}
+#loading-text-container #loading-progress-text-label {
+  margin: 0px;
+  text-align: center;
+  font-size: 14px;
   font-weight: bold;
 }
 

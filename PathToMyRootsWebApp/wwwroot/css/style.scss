@@ -721,6 +721,7 @@ fieldset {
 
 #loading-text-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -729,8 +730,17 @@ fieldset {
     width: 100%;
     height: 100%;
 
-    label {
+    #loading-text-label {
+        margin: 0px;
+        margin-bottom: $thickness-large;
         font-size: $font-size-large;
+        font-weight: bold;
+    }
+
+    #loading-progress-text-label {
+        margin: 0px;
+        text-align: center;
+        font-size: $font-size-medium;
         font-weight: bold;
     }
 }

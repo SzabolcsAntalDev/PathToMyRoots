@@ -178,7 +178,7 @@ function drawMarriageLines(linesContainer, marriageNode) {
     const marriageRect = marriageNode.get(0).getBoundingClientRect();
     const linesContainerClientRect = linesContainer.get(0).getBoundingClientRect();
 
-    const computedStyle = window.getComputedStyle(marriageNode);
+    const computedStyle = window.getComputedStyle(marriageNode.get(0));
     const marginLeft = parseFloat(computedStyle.marginLeft) || 0;
     const marginRight = parseFloat(computedStyle.marginRight) || 0;
 
