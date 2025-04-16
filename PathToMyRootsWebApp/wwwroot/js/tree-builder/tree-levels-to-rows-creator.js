@@ -1,4 +1,10 @@
-﻿async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIndexesToRowsMap, level) {
+﻿async function createLevelsToRows(personId) {
+    const levelsToRows = new Map();
+    await createLevelsToRowsRecursive(personId, new Set([null]), levelsToRows, 0);
+    return levelsToRows;
+}
+
+async function createLevelsToRowsRecursive(personId, processedPersonIds, levelIndexesToRowsMap, level) {
     if (personId == null || processedPersonIds.has(personId))
         return;
 

@@ -1,11 +1,10 @@
 ﻿async function buildTree(nodesContainer, linesContainer, personId) {
-    const levelsToRows = new Map();
-    await createLevelsToRowsRecursive(personId, new Set([null]), levelsToRows, 0);
+    const levelsToRows = await createLevelsToRows(personId);
 
     // sort rows descending by level index
     const sortedlevelsToRows = new Map(Array.from(levelsToRows.entries()).sort((a, b) => b[0] - a[0]));
 
-    sortRowItemsByBirtDates(sortedlevelsToRows.values());
+    sortRowItemsByBirthDates(sortedlevelsToRows.values());
 
     let maxNumberOfChildrenWithParentsOnRows = getMaxNumberOfChildrenWithParentsOnRows(sortedlevelsToRows);
 

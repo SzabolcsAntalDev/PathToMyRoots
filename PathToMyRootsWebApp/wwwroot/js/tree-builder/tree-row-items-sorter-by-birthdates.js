@@ -1,4 +1,4 @@
-﻿function sortRowItemsByBirtDates(rows) {
+﻿function sortRowItemsByBirthDates(rows) {
     rows.forEach(r => {
         sortRowItems(r);
     });
@@ -19,10 +19,10 @@ function sortNodesGroupContainers(nodesGroupContainers) {
     return Array
         .from(nodesGroupContainers)
         .sort((nodesGroupContainer1, nodesGroupContainer2) => {
-            let birtDate1 = getBirthDateNumberFromNodeGroup(nodesGroupContainer1)
-            let birtDate2 = getBirthDateNumberFromNodeGroup(nodesGroupContainer2);
+            let birthDate1 = getBirthDateNumberFromNodeGroup(nodesGroupContainer1)
+            let birthDate2 = getBirthDateNumberFromNodeGroup(nodesGroupContainer2);
 
-            return birtDate1 - birtDate2;
+            return birthDate1 - birthDate2;
         });
 }
 
