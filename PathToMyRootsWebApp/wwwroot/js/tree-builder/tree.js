@@ -26,10 +26,9 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
 
     treeDiagramContainer.append(nodesContainer);
     treeDiagramContainer.append(linesContainer);
+    treeDiagramsContainer.append(treeDiagramContainer);
 
     await buildTree(nodesContainer, linesContainer, personId);
-
-    treeDiagramsContainer.append(treeDiagramContainer);
 
     await fadeOutElement(loadingTextContainer);
     await fadeInElement(treeDiagramContainer);
