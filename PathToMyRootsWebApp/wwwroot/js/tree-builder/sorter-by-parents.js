@@ -1,6 +1,7 @@
-﻿function sortByParents(nodesContainer, levelIndexesToRowsMap) {
-    let parentsRow = createRow();
-    levelIndexesToRowsMap.forEach((value, _) => {
+﻿// Szabi: should do this later
+function sortByParents(generations) {
+    let parentGeneration = {};
+    generations.forEach(g => {
         let sortedChildrenRow = createRow();
         nodesContainer.append(sortedChildrenRow);
         parentsRow = fillRowWithSortedChildren(sortedChildrenRow, parentsRow, value);
@@ -8,7 +9,7 @@
 }
 
 function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
-    const parentsNodeGroupContainers = parentsRow.find('.tree-nodes-group-container');
+    const parentsNodeGroupContainers = parentsRow.find('.tree-extended-marriage');
 
     parentsNodeGroupContainers.each((_, parentsNodeGroupContainer) => {
         let leftMarriageNode = $(parentsNodeGroupContainer).find('.left-marriage');
@@ -30,7 +31,7 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
         }
 
         const takenSpouseNodeGroupContainers = [];
-        const childrenNodeGroupContainers = childrenRow.find('.tree-nodes-group-container');
+        const childrenNodeGroupContainers = childrenRow.find('.tree-extended-marriage');
         const siblings = [];
 
         // Szabi: continue here
@@ -190,7 +191,7 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
     });
 
     // orphans
-    const childrenNodeGroupContainers = childrenRow.find('.tree-nodes-group-container');
+    const childrenNodeGroupContainers = childrenRow.find('.tree-extended-marriage');
     const firstSpousesNodeGroupContainers = [];
     childrenNodeGroupContainers.each((_, element) => {
         const childrenNodeGroupContainer = $(element);

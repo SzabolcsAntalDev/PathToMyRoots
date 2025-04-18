@@ -1,19 +1,74 @@
-﻿function createRow() {
-    return $('<div>')
-        .attr('class', 'tree-level-row');
+﻿function createNodesContainerHtml(generations) {
+    const nodesContainerHtml = createNodesContainerHtmlInner();
+
+    generations.forEach(generation => {
+        nodesContainerHtml.append(createGenerationHtml(generation));
+    });
+
+    return nodesContainerHtml;
 }
 
-function createNodesGroupContainer() {
-    return $('<div>')
-        .attr('class', 'tree-nodes-group-container');
+function createGenerationHtml(generation) {
+    const generationHtml = createGenerationHtmlInner();
+
+    generation.forEach(nondesGroupContainer => {
+        generationHtml.append(createExtendedMarriageHtml(nondesGroupContainer));
+    })
+
+    return generationHtml;
 }
 
-function createNodesGroup() {
-    return $('<div>')
-        .attr('class', 'tree-nodes-group');
+function createExtendedMarriageHtml(extendedMarriage) {
+    const extendedMarriageHtml = createExtendedMarriageHtmlInner();
+
+    if (extendedMarriage.leftMarriage != null) {
+        extendedMarriageHtml.append(createNodeMarriageHtml(extendedMarriage.leftMarriage));
+    }
+
+    if (extendedMarriage.simpleMarriage != null) {
+        extendedMarriageHtml.append(createSimpleMarriageHtml(extendedMarriage.simpleMarriage));
+    }
+
+    return extendedMarriageHtml;
 }
 
-function createNode(person) {
+function createSimpleMarriageHtml(simpleMarriage) {
+    const simpleMarriageHtml = createSimpleMarriageHtmlInner();
+
+    if (simpleMarriage.person != null) {
+        simpleMarriageHtml.append(createNodeHtml(simpleMarriage.person))
+    }
+
+    if (simpleMarriage.spouse != null) {
+        simpleMarriageHtml.append(createNodeHtml(simpleMarriage.spouse))
+        simpleMarriageHtml.append(createLineBreakHtml());
+        simpleMarriageHtml.append(createNodeMarriageHtml(simpleMarriage.mainMarriage));
+    }
+
+    return simpleMarriageHtml;
+}
+
+function createNodesContainerHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-nodes-container');
+}
+
+function createGenerationHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-generation');
+}
+
+function createExtendedMarriageHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-extended-marriage');
+}
+
+function createSimpleMarriageHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-simple-marriage');
+}
+
+function createNodeHtml(person) {
     const imgPerson =
         $('<img>')
             .attr('class', 'tree-node-image')
@@ -60,13 +115,6 @@ function createNode(person) {
 
     return $('<div>')
         .attr('id', person.id)
-        .data('birthDate', person.birthDate)
-        .data('biologicalMotherId', person.biologicalMotherId)
-        .data('biologicalFatherId', person.biologicalFatherId)
-        .data('adoptiveMotherId', person.adoptiveMotherId)
-        .data('adoptiveFatherId', person.adoptiveFatherId)
-        .data('firstSpouseId', person.firstSpouseId)
-        .data('secondSpouseId', person.secondSpouseId)
         .attr('class', person.isMale ? 'tree-node-male' : 'tree-node-female')
         .attr('title', `${personNameNodeText}\n${personLivedNodeText}`)
         .append(imgPerson)
@@ -82,13 +130,11 @@ function createNode(person) {
         });
 }
 
-function createLineBreak() {
+function createLineBreakHtml() {
     return $('<br>');
 }
 
-function createNodeMarriage(person, spouse, isMainMarriage) {
-    const startDate = person.firstSpouseId == spouse.id ? person.firstMarriageStartDate : person.secondMarriageStartDate;
-    const endDate = person.firstSpouseId == spouse.id ? person.firstMarriageEndDate : person.secondMarriageEndDate;
+function createNodeMarriageHtml(marriage) {
 
     const marriageText = 'marriage';
     const spanMarriage =
@@ -96,7 +142,7 @@ function createNodeMarriage(person, spouse, isMainMarriage) {
             .attr('class', 'tree-node-marriage-text')
             .text(marriageText);
 
-    const marriageDateText = datesToPeriodText(startDate, endDate);
+    const marriageDateText = datesToPeriodText(marriage.startDate, marriage.endDate);
     const spanMarriageDate =
         $('<span>')
             .attr('class', 'tree-node-marriage-date-text')
@@ -109,11 +155,7 @@ function createNodeMarriage(person, spouse, isMainMarriage) {
             .append(spanMarriageDate);
 
     return $('<div>')
-        .attr('class', `tree-node-marriage ${isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
+        .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
         .attr('title', `${marriageText}\n${marriageDateText}`)
-        .data('inverseBiologicalParents', getCommonBiologicalChildren(person, spouse))
-        .data('inverseAdoptiveParents', getCommonAdoptiveChildren(person, spouse))
-        .data('maleId', person.isMale ? person.id : spouse.id)
-        .data('femaleId', !person.isMale ? person.id : spouse.id)
         .append(textsContainer);
 }

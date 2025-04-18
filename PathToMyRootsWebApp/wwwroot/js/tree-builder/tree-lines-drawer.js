@@ -3,8 +3,8 @@
     const numOfChildrensWithParentOnRow = getNumberOfChildrenWithParents(childrenRow);
     let offsetOnTop = (1 + ((maxChildrenWithParentsOnRows - numOfChildrensWithParentOnRow) * 0.5)) * linesVerticalOffset;
 
-    let parentsNodesGroupContainers = parentsRow.find('.tree-nodes-group-container');
-    parentsNodesGroupContainers.each((_, element) => {
+    let parentsExtendedMarriages = parentsRow.find('.tree-extended-marriage');
+    parentsExtendedMarriages.each((_, element) => {
         const parentsNodeGroupContainer = $(element);
         let leftMarriageNode = parentsNodeGroupContainer.find('.left-marriage');
         let mainMarriageNode = parentsNodeGroupContainer.find('.main-marriage');
@@ -33,11 +33,11 @@
         const leftMarriageBiologicalChildrenNodes = [];
         const leftMarriageAdoptiveChildrenNodes = [];
 
-        let childrenNodesGroupContainers = childrenRow.find('.tree-nodes-group-container');
+        let childrenExtendedMarriages = childrenRow.find('.tree-extended-marriage');
 
-        for (let childrenNodesGroupContainer of childrenNodesGroupContainers) {
-            let childMaleNode = childrenNodesGroupContainer.querySelector('.tree-node-male');
-            let childFemaleNode = childrenNodesGroupContainer.querySelector('.tree-node-female');
+        for (let childrenExtendedMarriage of childrenExtendedMarriages) {
+            let childMaleNode = childrenExtendedMarriage.querySelector('.tree-node-male');
+            let childFemaleNode = childrenExtendedMarriage.querySelector('.tree-node-female');
 
             let childMaleId = Number(childMaleNode?.id);
             let childFemaleId = Number(childFemaleNode?.id);
