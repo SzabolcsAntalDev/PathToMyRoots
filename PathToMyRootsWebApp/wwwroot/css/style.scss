@@ -647,6 +647,8 @@ fieldset {
     width: $node-image-width;
     object-fit: cover;
     display: block;
+    fill: var(--foreground-color-highlight);
+    transition: fill $default-transition;
 }
 
 .tree-node-texts {

@@ -525,6 +525,8 @@ fieldset input[type=text] {
   width: 45px;
   object-fit: cover;
   display: block;
+  fill: var(--foreground-color-highlight);
+  transition: fill 0.3s linear 0s;
 }
 
 .tree-node-texts {

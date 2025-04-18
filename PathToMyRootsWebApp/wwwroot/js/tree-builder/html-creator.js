@@ -79,7 +79,17 @@ function createNodeHtml(person) {
     const imgPerson =
         $('<img>')
             .attr('class', 'tree-node-image')
-            .attr('src', 'https://localhost:7241/api/Image/get/' + person.imageUrl);
+            .attr('src', apiUrl + '/image/get/' + person.imageUrl)
+            .on('error', function () {
+                const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", phantomPersonSymbolPath);
+
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("class", "tree-node-image");
+
+                svg.appendChild(use);
+                $(this).replaceWith(svg);
+            });
 
     const personNameNodeText = personToPersonNameNodeText(person);
     const spanPersonName =
