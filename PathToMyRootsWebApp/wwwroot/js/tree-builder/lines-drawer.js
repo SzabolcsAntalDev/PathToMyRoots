@@ -51,17 +51,17 @@ function someFunc(linesContainer, offsetOnTop, marriageNode, childNodes) {
 }
 
 function drawChildLine(linesContainer, marriageNode, childNode, verticalOffset) {
-    let marriageNodeX = marriageNode.rect.left + marriageNode.rect.width / 2 - linesContainer.rect.left;
-    const marriageNodeY = marriageNode.rect.top + marriageNode.rect.height - linesContainer.rect.top;
-    let childNodeX = childNode.rect.left + childNode.rect.width / 2 - linesContainer.rect.left;
-    const childNodeY = childNode.rect.top - linesContainer.rect.top;
-    const middleY = marriageNodeY + verticalOffset;
+    let marriageNodeHorizontalCenter = marriageNode.rect.left + marriageNode.rect.width / 2 - linesContainer.rect.left;
+    const marriageNodeBottom = marriageNode.rect.top + marriageNode.rect.height - linesContainer.rect.top;
+    let childNodeHorizontalCenter = childNode.rect.left + childNode.rect.width / 2 - linesContainer.rect.left;
+    const childNodeTop = childNode.rect.top - linesContainer.rect.top;
+    const verticalCenter = marriageNodeBottom + verticalOffset;
 
     const hasBiologicalChildren = $(marriageNode).data('inverseBiologicalParentIds').length > 0;
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
 
     if (hasBiologicalChildren && hasAdoptiveChildren) {
-        marriageNodeX += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
+        marriageNodeHorizontalCenter += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
     }
 
     // Szabi: what happens if child has only one parent?
@@ -69,13 +69,13 @@ function drawChildLine(linesContainer, marriageNode, childNode, verticalOffset) 
     const hasAdoptiveParents = $(childNode).data('adoptiveFatherId') != null && $(childNode).data('adoptiveMotherId') != null;
 
     if (hasBiologicalParents && hasAdoptiveParents)
-        childNodeX += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
+        childNodeHorizontalCenter += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
 
     const pathData = `
-        M ${marriageNodeX},${marriageNodeY}
-        L ${marriageNodeX},${middleY}
-        L ${childNodeX},${middleY}
-        L ${childNodeX},${childNodeY}
+        M ${marriageNodeHorizontalCenter},${marriageNodeBottom}
+        L ${marriageNodeHorizontalCenter},${verticalCenter}
+        L ${childNodeHorizontalCenter},${verticalCenter}
+        L ${childNodeHorizontalCenter},${childNodeTop}
     `;
 
     // Szabi: jquery
@@ -85,11 +85,6 @@ function drawChildLine(linesContainer, marriageNode, childNode, verticalOffset) 
 
     linesContainer.append(path);
 }
-
-
-
-
-
 
 function drawMarriageLines(linesContainer, marriageNode) {
     const marriageRect = marriageNode.get(0).getBoundingClientRect();
