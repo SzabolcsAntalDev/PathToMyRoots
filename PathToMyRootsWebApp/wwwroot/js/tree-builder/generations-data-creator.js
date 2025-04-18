@@ -9,8 +9,10 @@
 
     const generationsData = {};
     generationsData.generations = generations;
-    generationsData.largetGenerationSize = getLargestGenerationSize(generations);
-
+    generationsData.largestGenerationSize = getLargestGenerationSize(generations);
+    generationsData.generations.forEach(generation => {
+        generation.generationSize = getGenerationSize(generation);
+    });
     return generationsData;
 }
 
@@ -92,11 +94,13 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
         extendedMarriage.mainMarriage = mainMarriage;
 
         if (!generationsMap.has(currentLevel)) {
-            generationsMap.set(currentLevel, []);
+            const newGeneration = {};
+            newGeneration.extendedMarriages = [];
+            generationsMap.set(currentLevel, newGeneration);
         }
 
-        // Add to the array at that level
-        generationsMap.get(currentLevel).push(extendedMarriage);
+        const generation = generationsMap.get(currentLevel);
+        generation.extendedMarriages.push(extendedMarriage);
     }
 
     extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
@@ -156,15 +160,19 @@ function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
 
     generations.forEach(generation => {
-        let currentGenerationSize = 0;
-        generation.forEach(extendedMarriage => {
-            currentGenerationSize += extendedMarriage.numberOfAvailableParents;
-        });
-
-        largestGenerationSize = Math.max(largestGenerationSize, currentGenerationSize);
+        largestGenerationSize = Math.max(largestGenerationSize, getGenerationSize(generation));
     })
 
     return largestGenerationSize;
+}
+
+function getGenerationSize(generation) {
+    let size = 0;
+    generation.extendedMarriages.forEach(extendedMarriage => {
+        size += extendedMarriage.numberOfAvailableParents;
+    });
+
+    return size;
 }
 
 function getNumberOfAvailableParents(extendedMarriage) {

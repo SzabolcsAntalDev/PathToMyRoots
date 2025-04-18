@@ -447,9 +447,11 @@ fieldset input[type=text] {
 }
 
 .tree-diagram {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+}
+
+.tree-nodes-container {
+  position: relative;
 }
 
 .tree-lines-container {

@@ -29,19 +29,9 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
 
     treeDiagram.append(nodesContainer);
 
-    //const linesContainer = createLinesContainer(generationsData, getSize(nodesContainer));
-    //treeDiagram.append(linesContainer);
+    const linesContainer = createLinesContainer(generationsData, nodesContainer);
+    treeDiagram.append(linesContainer);
 
     await fadeOutElement(loadingTextContainer);
     await fadeInElement(treeDiagram);
-}
-
-function getSize(nodesContainer) {
-    const nodesContainerDomElement = nodesContainer.get(0);
-
-    const nodesContainerStyle = window.getComputedStyle(nodesContainerDomElement);
-    const nodesContainerWidth = nodesContainerDomElement.offsetWidth || parseFloat(nodesContainerStyle.width);
-    const nodesContainerHeight = nodesContainerDomElement.offsetHeight || parseFloat(nodesContainerStyle.height);
-
-    return { width: nodesContainerWidth, height: nodesContainerHeight };
 }

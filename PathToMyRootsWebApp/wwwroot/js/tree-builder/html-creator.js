@@ -8,17 +8,17 @@ function createNodesContainerHtml(generationsData) {
     const nodesContainerHtml = createNodesContainerHtmlInner();
 
     generationsData.generations.forEach(generation => {
-        nodesContainerHtml.append(createGenerationHtml(generation, generationsData.largetGenerationSize));
+        nodesContainerHtml.append(createGenerationHtml(generation, generationsData.largestGenerationSize));
     });
 
     return nodesContainerHtml;
 }
 
-function createGenerationHtml(generation, largetGenerationSize) {
-    const generationHtml = createGenerationHtmlInner(largetGenerationSize);
+function createGenerationHtml(generation, largestGenerationSize) {
+    const generationHtml = createGenerationHtmlInner(largestGenerationSize);
 
-    generation.forEach(nondesGroupContainer => {
-        generationHtml.append(createExtendedMarriageHtml(nondesGroupContainer));
+    generation.extendedMarriages.forEach(extendedMarriage => {
+        generationHtml.append(createExtendedMarriageHtml(extendedMarriage));
     })
 
     return generationHtml;
@@ -59,10 +59,10 @@ function createNodesContainerHtmlInner() {
         .attr('class', 'tree-nodes-container');
 }
 
-function createGenerationHtmlInner(largetGenerationSize) {
+function createGenerationHtmlInner(largestGenerationSize) {
     return $('<div>')
         .attr('class', 'tree-generation')
-        .css('padding', "0px 0px " + ((largetGenerationSize + 3) * linesVerticalOffset) + "px 0px");
+        .css('padding', "0px 0px " + ((largestGenerationSize + 3) * linesVerticalOffset) + "px 0px");
 }
 
 function createExtendedMarriageHtmlInner() {
@@ -120,6 +120,7 @@ function createNodeHtml(person) {
                 window.location.href = url;
             });
 
+    // Szabi: extract one for node-male and node-female for better find selector?
     return $('<div>')
         .attr('id', person.id)
         .attr('class', person.isMale ? 'tree-node-male' : 'tree-node-female')
@@ -164,6 +165,8 @@ function createNodeMarriageHtml(marriage) {
     return $('<div>')
         .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
         .attr('title', `${marriageText}\n${marriageDateText}`)
+        .data('inverseBiologicalParents', marriage.inverseBiologicalParents)
+        .data('inverseAdoptiveParents', marriage.inverseAdoptiveParents)
         .append(textsContainer);
 }
 
