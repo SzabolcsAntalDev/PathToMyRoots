@@ -34,7 +34,6 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
         const childrenNodeGroupContainers = childrenRow.find('.tree-extended-marriage');
         const siblings = [];
 
-        // Szabi: continue here
         // Szabi: use each here
         childrenNodeGroupContainers.each((_, element) => {
             const childrenNodeGroupContainer = $(element);

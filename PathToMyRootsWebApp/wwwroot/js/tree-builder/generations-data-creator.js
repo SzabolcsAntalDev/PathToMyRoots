@@ -2,10 +2,7 @@
     const generationsMap = new Map();
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
-    // Szabi: clean this up a bit
-    const generations = Array.from(generationsMap.entries())
-        .sort((a, b) => a[0] - b[0])
-        .map(([_, value]) => value);
+    const generations = sortByLevelAndConvertToArray(generationsMap);
     sortRowItemsByBirthDates(generations);
 
     const generationsData = {};
@@ -15,6 +12,12 @@
         generation.generationSize = getGenerationSize(generation);
     });
     return generationsData;
+}
+
+function sortByLevelAndConvertToArray(generationsMap) {
+    return Array.from(generationsMap.entries())
+        .sort((a, b) => a[0] - b[0])
+        .map(([_, value]) => value);
 }
 
 async function createGenerationsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
