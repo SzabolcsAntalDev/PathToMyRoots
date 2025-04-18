@@ -1,4 +1,10 @@
-﻿function createNodesContainerHtml(generationsData) {
+﻿function createTreeDiagramHtml(personId) {
+    return $('<div>')
+        .attr('id', 'tree-diagram-' + personId)
+        .attr('class', 'tree-diagram');
+}
+
+function createNodesContainerHtml(generationsData) {
     const nodesContainerHtml = createNodesContainerHtmlInner();
 
     generationsData.generations.forEach(generation => {
@@ -159,4 +165,15 @@ function createNodeMarriageHtml(marriage) {
         .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
         .attr('title', `${marriageText}\n${marriageDateText}`)
         .append(textsContainer);
+}
+
+function createLinesContainerHtml(size) {
+    // no jquery creational method for this
+    const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    return $(linesContainer)
+        .attr('class', 'tree-lines-container')
+        .css({
+            width: size.width,
+            height: size.height
+        });
 }

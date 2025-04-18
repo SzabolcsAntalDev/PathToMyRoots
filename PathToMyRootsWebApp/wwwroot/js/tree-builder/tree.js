@@ -20,11 +20,28 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     treeDiagramsContainer.append(loadingTextContainer);
     await fadeInElement(loadingTextContainer);
 
-    const treeDiagram = await createTreeDiagram(personId);
-    hideElement(treeDiagram);
+    const generationsData = await createGenerationsData(personId);
+    const nodesContainer = createNodesContainer(generationsData);
 
+    const treeDiagram = createTreeDiagramHtml(personId);
+    hideElement(treeDiagram);
     treeDiagramsContainer.append(treeDiagram);
+
+    treeDiagram.append(nodesContainer);
+
+    //const linesContainer = createLinesContainer(generationsData, getSize(nodesContainer));
+    //treeDiagram.append(linesContainer);
 
     await fadeOutElement(loadingTextContainer);
     await fadeInElement(treeDiagram);
+}
+
+function getSize(nodesContainer) {
+    const nodesContainerDomElement = nodesContainer.get(0);
+
+    const nodesContainerStyle = window.getComputedStyle(nodesContainerDomElement);
+    const nodesContainerWidth = nodesContainerDomElement.offsetWidth || parseFloat(nodesContainerStyle.width);
+    const nodesContainerHeight = nodesContainerDomElement.offsetHeight || parseFloat(nodesContainerStyle.height);
+
+    return { width: nodesContainerWidth, height: nodesContainerHeight };
 }
