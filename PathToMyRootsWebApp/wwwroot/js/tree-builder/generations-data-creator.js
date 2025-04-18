@@ -21,7 +21,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
     if (personId == null || processedPersonIds.has(personId))
         return;
 
-    const person = await (await fetch(`${apiUrl}${personId}`)).json();
+    const person = await (await fetch(`${apiUrl}/person/${personId}`)).json();
     const extendedMarriage = {};
     const mainMarriage = {};
 
@@ -30,8 +30,8 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
             mainMarriage.person = person;
         }
         else if (person.firstSpouseId != null && person.secondSpouseId != null) { // double married
-            const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
-            const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
+            const firstSpouse = await (await fetch(`${apiUrl}/person/${person.firstSpouseId}`)).json();
+            const secondSpouse = await (await fetch(`${apiUrl}/person/${person.secondSpouseId}`)).json();
 
             extendedMarriage.secondaryMarriage = createMarriage(person, firstSpouse, false);
 
@@ -43,7 +43,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
         }
         else { // single married
             const spouseId = person.firstSpouseId;
-            const spouse = await (await fetch(`${apiUrl}${spouseId}`)).json();
+            const spouse = await (await fetch(`${apiUrl}/person/${spouseId}`)).json();
 
             if (spouse.secondSpouseId != null) {
                 if (spouse.secondSpouseId == personId) {
@@ -75,7 +75,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
         }
         else { // single married
             const spouseId = person.firstSpouseId;
-            const spouse = await (await fetch(`${apiUrl}${spouseId}`)).json();
+            const spouse = await (await fetch(`${apiUrl}/person/${spouseId}`)).json();
 
             if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) { // double married man
                 mainMarriage.person = person;

@@ -173,7 +173,6 @@ function toggleMarriageDatesContainer(spousePrefix) {
 }
 
 function loadPersonImages() {
-    const phantomPersonSymbolPath = "/icons/icons.svg#phantom-person";
     const personImages = document.querySelectorAll('.person-image');
 
     personImages.forEach(image => {

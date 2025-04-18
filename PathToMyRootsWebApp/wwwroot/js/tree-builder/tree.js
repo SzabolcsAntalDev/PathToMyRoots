@@ -1,9 +1,4 @@
-﻿const linesVerticalOffset = 10;
-
-const apiUrl = "https://localhost:7241/api/person/";
-const imageApiUrl = "https://localhost:7241/";
-
-async function removeTreeDiagram(treeDiagramsContainer, personId) {
+﻿async function removeTreeDiagram(treeDiagramsContainer, personId) {
     const treeDiagram = treeDiagramsContainer.find('#tree-diagram-' + personId).get(0);
     if (treeDiagram) {
         await fadeOutElement(treeDiagram)

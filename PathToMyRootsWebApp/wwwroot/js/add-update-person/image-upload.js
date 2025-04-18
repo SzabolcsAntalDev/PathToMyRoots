@@ -1,6 +1,4 @@
-﻿const apiUrl = 'https://localhost:7241/';
-
-function initImageUpload() {
+﻿function initImageUpload() {
     addImageUploadListeners();
 }
 
@@ -63,7 +61,7 @@ function addImageUploadListeners() {
             }
 
             // upload the new image
-            const response = await fetch(apiUrl + 'api/image/upload/', {
+            const response = await fetch(apiUrl + '/image/upload/', {
                 method: 'POST',
                 body: formData,
             });
@@ -113,7 +111,7 @@ function updatePreviewImage() {
 
     // set image from hidden input into the preview
     toggleablePreviewImageContainer.classList.add('toggleable-container-open');
-    previewImage.src = 'https://localhost:7241/api/Image/get/' + imageUrl;
+    previewImage.src = apiUrl + '/image/get/' + imageUrl;
     removeImageButton.removeAttribute('disabled');
 }
 
@@ -121,7 +119,7 @@ async function deleteImage(imageName) {
     if (!imageName)
         return;
 
-    var url = apiUrl + `api/image/delete/${imageName}`;
+    var url = apiUrl + `/image/delete/${imageName}`;
     await fetch(url, {
         method: 'DELETE',
     });
