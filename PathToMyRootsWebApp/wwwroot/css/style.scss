@@ -608,7 +608,7 @@ fieldset {
     padding: 0px;
 }
 
-%tree-node {
+.tree-node {
     display: inline-flex;
     position: relative;
     flex-direction: row;
@@ -621,12 +621,12 @@ fieldset {
 }
 
 .tree-node-male {
-    @extend %tree-node;
+    @extend .tree-node;
     background-color: var(--male-color);
 }
 
 .tree-node-female {
-    @extend %tree-node;
+    @extend .tree-node;
     background-color: var(--female-color);
 }
 

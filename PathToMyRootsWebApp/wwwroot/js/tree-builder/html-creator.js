@@ -133,7 +133,7 @@ function createNodeHtml(person) {
     // Szabi: extract one for node-male and node-female for better find selector?
     return $('<div>')
         .attr('id', person.id)
-        .attr('class', person.isMale ? 'tree-node-male' : 'tree-node-female')
+        .attr('class', 'tree-node ' + (person.isMale ? 'tree-node-male' : 'tree-node-female'))
         .attr('title', `${personNameNodeText}\n${personLivedNodeText}`)
         .data('biologicalFatherId', person.biologicalFatherId)
         .data('biologicalMotherId', person.biologicalMotherId)
