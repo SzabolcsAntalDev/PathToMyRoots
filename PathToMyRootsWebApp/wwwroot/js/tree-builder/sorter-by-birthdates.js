@@ -1,8 +1,8 @@
 ﻿function sortRowItemsByBirthDates(generations) {
     generations.forEach(g => {
         g.sort((g1, g2) => {
-            const parsedBirthDate1 = parseDateToNumber(g1.simpleMarriage.person.birthDate);
-            const parsedBirthDate2 = parseDateToNumber(g2.simpleMarriage.person.birthDate);
+            const parsedBirthDate1 = parseDateToNumber(g1.mainMarriage.person.birthDate);
+            const parsedBirthDate2 = parseDateToNumber(g2.mainMarriage.person.birthDate);
 
             return parsedBirthDate1 - parsedBirthDate2;
         });

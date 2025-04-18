@@ -6,21 +6,21 @@
     let parentsExtendedMarriages = parentsRow.find('.tree-extended-marriage');
     parentsExtendedMarriages.each((_, element) => {
         const parentsNodeGroupContainer = $(element);
-        let leftMarriageNode = parentsNodeGroupContainer.find('.left-marriage');
+        let secondaryMarriageNode = parentsNodeGroupContainer.find('.left-marriage');
         let mainMarriageNode = parentsNodeGroupContainer.find('.main-marriage');
 
         let oneTreeNodeRect =
             parentsNodeGroupContainer.find('.tree-node-male, .tree-node-female').first().get(0)
                 .getBoundingClientRect();
 
-        let leftMarriageBiologicalChildrenIds;
-        let leftMarriageAdoptiveChildrenIds;
+        let secondaryMarriageBiologicalChildrenIds;
+        let secondaryMarriageAdoptiveChildrenIds;
         let mainMarriageBiologicalChildrenIds;
         let mainMarriageAdoptiveChildrenIds;
 
-        if (leftMarriageNode.length) {
-            leftMarriageBiologicalChildrenIds = leftMarriageNode.data('inverseBiologicalParents');
-            leftMarriageAdoptiveChildrenIds = leftMarriageNode.data('inverseAdoptiveParents');
+        if (secondaryMarriageNode.length) {
+            secondaryMarriageBiologicalChildrenIds = secondaryMarriageNode.data('inverseBiologicalParents');
+            secondaryMarriageAdoptiveChildrenIds = secondaryMarriageNode.data('inverseAdoptiveParents');
         }
 
         if (mainMarriageNode.length) {
@@ -30,8 +30,8 @@
 
         const mainMarriageBiologicalChildrenNodes = [];
         const mainMarriageAdoptiveChildrenNodes = [];
-        const leftMarriageBiologicalChildrenNodes = [];
-        const leftMarriageAdoptiveChildrenNodes = [];
+        const secondaryMarriageBiologicalChildrenNodes = [];
+        const secondaryMarriageAdoptiveChildrenNodes = [];
 
         let childrenExtendedMarriages = childrenRow.find('.tree-extended-marriage');
 
@@ -55,59 +55,59 @@
                 mainMarriageAdoptiveChildrenNodes.push(childFemaleNode);
 
 
-            if (leftMarriageBiologicalChildrenIds != null && leftMarriageBiologicalChildrenIds.includes(childMaleId))
-                leftMarriageBiologicalChildrenNodes.push(childMaleNode);
+            if (secondaryMarriageBiologicalChildrenIds != null && secondaryMarriageBiologicalChildrenIds.includes(childMaleId))
+                secondaryMarriageBiologicalChildrenNodes.push(childMaleNode);
 
-            if (leftMarriageBiologicalChildrenIds != null && leftMarriageBiologicalChildrenIds.includes(childFemaleId))
-                leftMarriageBiologicalChildrenNodes.push(childFemaleNode);
+            if (secondaryMarriageBiologicalChildrenIds != null && secondaryMarriageBiologicalChildrenIds.includes(childFemaleId))
+                secondaryMarriageBiologicalChildrenNodes.push(childFemaleNode);
 
-            if (leftMarriageAdoptiveChildrenIds != null && leftMarriageAdoptiveChildrenIds.includes(childMaleId))
-                leftMarriageAdoptiveChildrenNodes.push(childMaleNode);
+            if (secondaryMarriageAdoptiveChildrenIds != null && secondaryMarriageAdoptiveChildrenIds.includes(childMaleId))
+                secondaryMarriageAdoptiveChildrenNodes.push(childMaleNode);
 
-            if (leftMarriageAdoptiveChildrenIds != null && leftMarriageAdoptiveChildrenIds.includes(childFemaleId))
-                leftMarriageAdoptiveChildrenNodes.push(childFemaleNode);
+            if (secondaryMarriageAdoptiveChildrenIds != null && secondaryMarriageAdoptiveChildrenIds.includes(childFemaleId))
+                secondaryMarriageAdoptiveChildrenNodes.push(childFemaleNode);
         }
 
-        const leftMarriageBiologicalChildrenOnLeft = [];
-        const leftMarriageBiologicalChildrenOnRight = [];
-        const leftMarriageAdoptiveChildrenOnLeft = [];
-        const leftMarriageAdoptiveChildrenOnRight = [];
+        const secondaryMarriageBiologicalChildrenOnLeft = [];
+        const secondaryMarriageBiologicalChildrenOnRight = [];
+        const secondaryMarriageAdoptiveChildrenOnLeft = [];
+        const secondaryMarriageAdoptiveChildrenOnRight = [];
 
         const mainMarriageBiologicalChildrenOnLeft = [];
         const mainMarriageBiologicalChildrenOnRight = [];
         const mainMarriageAdoptiveChildrenOnLeft = [];
         const mainMarriageAdoptiveChildrenOnRight = [];
 
-        const leftMarriageRect = leftMarriageNode.length ? leftMarriageNode.get(0).getBoundingClientRect() : null;
+        const secondaryMarriageRect = secondaryMarriageNode.length ? secondaryMarriageNode.get(0).getBoundingClientRect() : null;
         const mainMarriageRect = mainMarriageNode.length ? mainMarriageNode.get(0).getBoundingClientRect() : null;
 
-        let leftMarriageRectHorizontalCenter;
+        let secondaryMarriageRectHorizontalCenter;
         let mainMarriageRectHorizontalCenter;
 
-        if (leftMarriageRect)
-            leftMarriageRectHorizontalCenter = leftMarriageRect.left + (leftMarriageRect.width / 2);
+        if (secondaryMarriageRect)
+            secondaryMarriageRectHorizontalCenter = secondaryMarriageRect.left + (secondaryMarriageRect.width / 2);
 
         if (mainMarriageRect)
             mainMarriageRectHorizontalCenter = mainMarriageRect.left + (mainMarriageRect.width / 2);
 
-        leftMarriageBiologicalChildrenNodes.forEach(child => {
+        secondaryMarriageBiologicalChildrenNodes.forEach(child => {
             const childRect = child.getBoundingClientRect();
             const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
 
-            if (leftMarriageRectHorizontalCenter > childRectHorizontalCenter)
-                leftMarriageBiologicalChildrenOnLeft.push(child);
+            if (secondaryMarriageRectHorizontalCenter > childRectHorizontalCenter)
+                secondaryMarriageBiologicalChildrenOnLeft.push(child);
             else
-                leftMarriageBiologicalChildrenOnRight.push(child);
+                secondaryMarriageBiologicalChildrenOnRight.push(child);
         });
 
-        leftMarriageAdoptiveChildrenNodes.forEach(child => {
+        secondaryMarriageAdoptiveChildrenNodes.forEach(child => {
             const childRect = child.getBoundingClientRect();
             const childRectHorizontalCenter = childRect.left + (childRect.width / 2);
 
-            if (leftMarriageRectHorizontalCenter > childRectHorizontalCenter)
-                leftMarriageAdoptiveChildrenOnLeft.push(child);
+            if (secondaryMarriageRectHorizontalCenter > childRectHorizontalCenter)
+                secondaryMarriageAdoptiveChildrenOnLeft.push(child);
             else
-                leftMarriageAdoptiveChildrenOnRight.push(child);
+                secondaryMarriageAdoptiveChildrenOnRight.push(child);
         });
 
 
@@ -147,30 +147,30 @@
             drawChildLine(linesContainer, mainMarriageNode, child, offsetOnTop += linesVerticalOffset, false);
         });
 
-        let leftMarriageExtraOffset;
-        if (leftMarriageRect) {
-            leftMarriageExtraOffset = (oneTreeNodeRect.top + oneTreeNodeRect.height) - leftMarriageRect.top;
+        let secondaryMarriageExtraOffset;
+        if (secondaryMarriageRect) {
+            secondaryMarriageExtraOffset = (oneTreeNodeRect.top + oneTreeNodeRect.height) - secondaryMarriageRect.top;
         }
 
-        leftMarriageBiologicalChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
+        secondaryMarriageBiologicalChildrenOnLeft.forEach(child => {
+            drawChildLine(linesContainer, secondaryMarriageNode, child, secondaryMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
         });
 
-        leftMarriageBiologicalChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
+        secondaryMarriageBiologicalChildrenOnRight.reverse().forEach(child => {
+            drawChildLine(linesContainer, secondaryMarriageNode, child, secondaryMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), true);
         });
 
-        leftMarriageAdoptiveChildrenOnLeft.forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
+        secondaryMarriageAdoptiveChildrenOnLeft.forEach(child => {
+            drawChildLine(linesContainer, secondaryMarriageNode, child, secondaryMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
         });
 
-        leftMarriageAdoptiveChildrenOnRight.reverse().forEach(child => {
-            drawChildLine(linesContainer, leftMarriageNode, child, leftMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
+        secondaryMarriageAdoptiveChildrenOnRight.reverse().forEach(child => {
+            drawChildLine(linesContainer, secondaryMarriageNode, child, secondaryMarriageExtraOffset + (offsetOnTop += linesVerticalOffset), false);
         });
 
 
-        if (leftMarriageNode.length)
-            drawMarriageLines(linesContainer, leftMarriageNode);
+        if (secondaryMarriageNode.length)
+            drawMarriageLines(linesContainer, secondaryMarriageNode);
     });
 }
 

@@ -1,7 +1,7 @@
-﻿function createHiddenTreeDiagramContainer(personId) {
+﻿function createTreeDiagramHtml(personId) {
     return $('<div>')
-        .attr('id', 'tree-diagram-container-' + personId)
-        .attr('class', 'tree-diagram-container fade-hidden');
+        .attr('id', 'tree-diagram-' + personId)
+        .attr('class', 'tree-diagram');
 }
 
 function createLinesContainer() {

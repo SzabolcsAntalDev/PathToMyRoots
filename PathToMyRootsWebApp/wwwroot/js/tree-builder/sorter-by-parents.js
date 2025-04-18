@@ -12,17 +12,17 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
     const parentsNodeGroupContainers = parentsRow.find('.tree-extended-marriage');
 
     parentsNodeGroupContainers.each((_, parentsNodeGroupContainer) => {
-        let leftMarriageNode = $(parentsNodeGroupContainer).find('.left-marriage');
+        let secondaryMarriageNode = $(parentsNodeGroupContainer).find('.left-marriage');
         let mainMarriageNode = $(parentsNodeGroupContainer).find('.main-marriage');
 
-        let leftMarriageBiologicalChildrenIds;
-        let leftMarriageAdoptiveChildrenIds;
+        let secondaryMarriageBiologicalChildrenIds;
+        let secondaryMarriageAdoptiveChildrenIds;
         let mainMarriageBiologicalChildrenIds;
         let mainMarriageAdoptiveChildrenIds;
 
-        if (leftMarriageNode.length) {
-            leftMarriageBiologicalChildrenIds = leftMarriageNode.data('inverseBiologicalParents');
-            leftMarriageAdoptiveChildrenIds = leftMarriageNode.data('inverseAdoptiveParents');
+        if (secondaryMarriageNode.length) {
+            secondaryMarriageBiologicalChildrenIds = secondaryMarriageNode.data('inverseBiologicalParents');
+            secondaryMarriageAdoptiveChildrenIds = secondaryMarriageNode.data('inverseAdoptiveParents');
         }
 
         if (mainMarriageNode.length) {
@@ -48,10 +48,10 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
             let childFemaleId = childFemaleNode.left ? Number(childFemaleNode.attr('id')) : null;
 
             // Szabi: can this ever be undefined?
-            if (leftMarriageBiologicalChildrenIds != undefined &&
-                (leftMarriageBiologicalChildrenIds.includes(childMaleId) || leftMarriageBiologicalChildrenIds.includes(childFemaleId))) {
+            if (secondaryMarriageBiologicalChildrenIds != undefined &&
+                (secondaryMarriageBiologicalChildrenIds.includes(childMaleId) || secondaryMarriageBiologicalChildrenIds.includes(childFemaleId))) {
 
-                const isMale = leftMarriageBiologicalChildrenIds.includes(childMaleId);
+                const isMale = secondaryMarriageBiologicalChildrenIds.includes(childMaleId);
                 if (isMale) {
                     const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);
@@ -80,10 +80,10 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
                 return;
             }
 
-            if (leftMarriageAdoptiveChildrenIds != null &&
-                (leftMarriageAdoptiveChildrenIds.includes(childMaleId) || leftMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
+            if (secondaryMarriageAdoptiveChildrenIds != null &&
+                (secondaryMarriageAdoptiveChildrenIds.includes(childMaleId) || secondaryMarriageAdoptiveChildrenIds.includes(childFemaleId))) {
 
-                const isMale = leftMarriageAdoptiveChildrenIds.includes(childMaleId);
+                const isMale = secondaryMarriageAdoptiveChildrenIds.includes(childMaleId);
                 if (isMale) {
                     const firstSpouseNodeGroupContainerOfDoubleMarriedMale =
                         getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(childrenNodeGroupContainer, childrenNodeGroupContainers, childMaleNode);

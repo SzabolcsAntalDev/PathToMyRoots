@@ -1,4 +1,4 @@
-﻿async function createGenerations(personId) {
+﻿async function createGenerationsData(personId) {
     const generationsMap = new Map();
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
@@ -7,30 +7,34 @@
         .map(([_, value]) => value);
     sortRowItemsByBirthDates(generations);
 
-    return generations;
+    const generationsData = {};
+    generationsData.generations = generations;
+    generationsData.largetGenerationSize = getLargestGenerationSize(generations);
+
+    return generationsData;
 }
 
-async function createGenerationsRecursive(personId, processedPersonIds, nodesMap, currentLevel) {
+async function createGenerationsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
     if (personId == null || processedPersonIds.has(personId))
         return;
 
     const person = await (await fetch(`${apiUrl}${personId}`)).json();
     const extendedMarriage = {};
-    const simpleMarriage = {};
+    const mainMarriage = {};
 
     if (person.isMale) {
         if (person.firstSpouseId == null && person.secondSpouseId == null) { // single
-            simpleMarriage.person = person;
+            mainMarriage.person = person;
         }
         else if (person.firstSpouseId != null && person.secondSpouseId != null) { // double married
             const firstSpouse = await (await fetch(`${apiUrl}${person.firstSpouseId}`)).json();
             const secondSpouse = await (await fetch(`${apiUrl}${person.secondSpouseId}`)).json();
 
-            extendedMarriage.leftMarriage = createMarriage(person, firstSpouse, false);
+            extendedMarriage.secondaryMarriage = createMarriage(person, firstSpouse, false);
 
-            simpleMarriage.person = person;
-            simpleMarriage.spouse = secondSpouse;
-            simpleMarriage.mainMarriage = createMarriage(person, secondSpouse, true);
+            mainMarriage.person = person;
+            mainMarriage.spouse = secondSpouse;
+            mainMarriage.mainMarriage = createMarriage(person, secondSpouse, true);
 
             processedPersonIds.add(person.secondSpouseId);
         }
@@ -40,21 +44,21 @@ async function createGenerationsRecursive(personId, processedPersonIds, nodesMap
 
             if (spouse.secondSpouseId != null) {
                 if (spouse.secondSpouseId == personId) {
-                    simpleMarriage.person = person;
-                    simpleMarriage.spouse = spouse;
-                    simpleMarriage.mainMarriage = createMarriage(person, spouse, true);
+                    mainMarriage.person = person;
+                    mainMarriage.spouse = spouse;
+                    mainMarriage.mainMarriage = createMarriage(person, spouse, true);
 
                     processedPersonIds.add(spouseId);
                 }
                 else {
-                    extendedMarriage.leftMarriage = createMarriage(person, spouse, false);
-                    simpleMarriage.person = person;
+                    extendedMarriage.secondaryMarriage = createMarriage(person, spouse, false);
+                    mainMarriage.person = person;
                 }
             }
             else {
-                simpleMarriage.person = person;
-                simpleMarriage.spouse = spouse;;
-                simpleMarriage.mainMarriage = createMarriage(person, spouse, true);
+                mainMarriage.person = person;
+                mainMarriage.spouse = spouse;;
+                mainMarriage.mainMarriage = createMarriage(person, spouse, true);
 
                 processedPersonIds.add(spouseId);
             }
@@ -62,7 +66,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, nodesMap
     }
     else {
         if (person.firstSpouseId == null && person.secondSpouseId == null) { // single
-            simpleMarriage.person = person;
+            mainMarriage.person = person;
         }
         else if (person.firstSpouseId != null && person.secondSpouseId != null) { // double married
         }
@@ -71,12 +75,12 @@ async function createGenerationsRecursive(personId, processedPersonIds, nodesMap
             const spouse = await (await fetch(`${apiUrl}${spouseId}`)).json();
 
             if (spouse.firstSpouseId != null && spouse.secondSpouseId != null) { // double married man
-                simpleMarriage.person = person;
+                mainMarriage.person = person;
             }
             else { // single married man
-                simpleMarriage.spouse = spouse;
-                simpleMarriage.person = person;
-                simpleMarriage.mainMarriage = createMarriage(person, spouse, true);
+                mainMarriage.spouse = spouse;
+                mainMarriage.person = person;
+                mainMarriage.mainMarriage = createMarriage(person, spouse, true);
 
                 processedPersonIds.add(spouseId);
             }
@@ -84,53 +88,54 @@ async function createGenerationsRecursive(personId, processedPersonIds, nodesMap
     }
 
     // if not double married female
-    if (simpleMarriage.person != null || simpleMarriage.leftMarriage != null) {
-        extendedMarriage.simpleMarriage = simpleMarriage;
+    if (mainMarriage.person != null || mainMarriage.secondaryMarriage != null) {
+        extendedMarriage.mainMarriage = mainMarriage;
 
-        if (!nodesMap.has(currentLevel)) {
-            nodesMap.set(currentLevel, []);
+        if (!generationsMap.has(currentLevel)) {
+            generationsMap.set(currentLevel, []);
         }
 
         // Add to the array at that level
-        nodesMap.get(currentLevel).push(extendedMarriage);
+        generationsMap.get(currentLevel).push(extendedMarriage);
     }
+
+    extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
 
     processedPersonIds.add(personId);
 
     setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
 
-    await createGenerationsRecursive(person.biologicalFatherId, processedPersonIds, nodesMap, currentLevel - 1);
-    await createGenerationsRecursive(person.adoptiveFatherId, processedPersonIds, nodesMap, currentLevel - 1);
+    await createGenerationsRecursive(person.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
+    await createGenerationsRecursive(person.adoptiveFatherId, processedPersonIds, generationsMap, currentLevel - 1);
 
     if (person.firstSpouse != null) {
-        await createGenerationsRecursive(person.firstSpouse.id, processedPersonIds, nodesMap, currentLevel);
-        await createGenerationsRecursive(person.firstSpouse.biologicalFatherId, processedPersonIds, nodesMap, currentLevel - 1);
-        await createGenerationsRecursive(person.firstSpouse.adoptiveFatherId, processedPersonIds, nodesMap, currentLevel - 1);
+        await createGenerationsRecursive(person.firstSpouse.id, processedPersonIds, generationsMap, currentLevel);
+        await createGenerationsRecursive(person.firstSpouse.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
+        await createGenerationsRecursive(person.firstSpouse.adoptiveFatherId, processedPersonIds, generationsMap, currentLevel - 1);
     }
 
     if (person.secondSpouse != null) {
-        await createGenerationsRecursive(person.secondSpouse.id, processedPersonIds, nodesMap, currentLevel);
-        await createGenerationsRecursive(person.secondSpouse.biologicalFatherId, processedPersonIds, nodesMap, currentLevel - 1);
-        await createGenerationsRecursive(person.secondSpouse.adoptiveFatherId, processedPersonIds, nodesMap, currentLevel - 1);
+        await createGenerationsRecursive(person.secondSpouse.id, processedPersonIds, generationsMap, currentLevel);
+        await createGenerationsRecursive(person.secondSpouse.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
+        await createGenerationsRecursive(person.secondSpouse.adoptiveFatherId, processedPersonIds, generationsMap, currentLevel - 1);
     }
 
     if (person.inverseBiologicalMother != null)
         for (let child of person.inverseBiologicalMother)
-            await createGenerationsRecursive(child.id, processedPersonIds, nodesMap, currentLevel + 1);
+            await createGenerationsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
 
     if (person.inverseBiologicalFather != null)
         for (let child of person.inverseBiologicalFather)
-            await createGenerationsRecursive(child.id, processedPersonIds, nodesMap, currentLevel + 1);
+            await createGenerationsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
 
     if (person.inverseAdoptiveMother != null)
         for (let child of person.inverseAdoptiveMother)
-            await createGenerationsRecursive(child.id, processedPersonIds, nodesMap, currentLevel + 1);
+            await createGenerationsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
 
     if (person.inverseAdoptiveFather != null)
         for (let child of person.inverseAdoptiveFather)
-            await createGenerationsRecursive(child.id, processedPersonIds, nodesMap, currentLevel + 1);
+            await createGenerationsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
 }
-
 
 function createMarriage(person, spouse, isMainMarriage) {
     const marriage = {};
@@ -144,4 +149,42 @@ function createMarriage(person, spouse, isMainMarriage) {
     marriage.inverseAdoptiveParents = getCommonAdoptiveChildren(person, spouse);
 
     return marriage;
+}
+
+// gets the largest persons with available parents number of all generations
+function getLargestGenerationSize(generations) {
+    let largestGenerationSize = 0;
+
+    generations.forEach(generation => {
+        let currentGenerationSize = 0;
+        generation.forEach(extendedMarriage => {
+            currentGenerationSize += extendedMarriage.numberOfAvailableParents;
+        });
+
+        largestGenerationSize = Math.max(largestGenerationSize, currentGenerationSize);
+    })
+
+    return largestGenerationSize;
+}
+
+function getNumberOfAvailableParents(extendedMarriage) {
+    return getNumOfParents(extendedMarriage.mainMarriage.person) +
+        getNumOfParents(extendedMarriage.mainMarriage.spouse) +
+        getNumOfParents(extendedMarriage.secondaryMarriage?.person) +
+        getNumOfParents(extendedMarriage.secondaryMarriage?.spouse);
+}
+
+function getNumOfParents(person) {
+    if (person == null) {
+        return null;
+    }
+
+    let number = 0;
+
+    number += person.biologicalFatherId ? 1 : 0;
+    number += person.biologicalMotherId ? 1 : 0;
+    number += person.adoptiveFatherId ? 1 : 0;
+    number += person.adoptiveMotherId ? 1 : 0;
+
+    return number;
 }

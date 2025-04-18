@@ -1,15 +1,15 @@
-﻿function createNodesContainerHtml(generations) {
+﻿function createNodesContainerHtml(generationsData) {
     const nodesContainerHtml = createNodesContainerHtmlInner();
 
-    generations.forEach(generation => {
-        nodesContainerHtml.append(createGenerationHtml(generation));
+    generationsData.generations.forEach(generation => {
+        nodesContainerHtml.append(createGenerationHtml(generation, generationsData.largetGenerationSize));
     });
 
     return nodesContainerHtml;
 }
 
-function createGenerationHtml(generation) {
-    const generationHtml = createGenerationHtmlInner();
+function createGenerationHtml(generation, largetGenerationSize) {
+    const generationHtml = createGenerationHtmlInner(largetGenerationSize);
 
     generation.forEach(nondesGroupContainer => {
         generationHtml.append(createExtendedMarriageHtml(nondesGroupContainer));
@@ -21,31 +21,31 @@ function createGenerationHtml(generation) {
 function createExtendedMarriageHtml(extendedMarriage) {
     const extendedMarriageHtml = createExtendedMarriageHtmlInner();
 
-    if (extendedMarriage.leftMarriage != null) {
-        extendedMarriageHtml.append(createNodeMarriageHtml(extendedMarriage.leftMarriage));
+    if (extendedMarriage.secondaryMarriage != null) {
+        extendedMarriageHtml.append(createNodeMarriageHtml(extendedMarriage.secondaryMarriage));
     }
 
-    if (extendedMarriage.simpleMarriage != null) {
-        extendedMarriageHtml.append(createSimpleMarriageHtml(extendedMarriage.simpleMarriage));
+    if (extendedMarriage.mainMarriage != null) {
+        extendedMarriageHtml.append(createSimpleMarriageHtml(extendedMarriage.mainMarriage));
     }
 
     return extendedMarriageHtml;
 }
 
-function createSimpleMarriageHtml(simpleMarriage) {
-    const simpleMarriageHtml = createSimpleMarriageHtmlInner();
+function createSimpleMarriageHtml(mainMarriage) {
+    const mainMarriageHtml = createSimpleMarriageHtmlInner();
 
-    if (simpleMarriage.person != null) {
-        simpleMarriageHtml.append(createNodeHtml(simpleMarriage.person))
+    if (mainMarriage.person != null) {
+        mainMarriageHtml.append(createNodeHtml(mainMarriage.person))
     }
 
-    if (simpleMarriage.spouse != null) {
-        simpleMarriageHtml.append(createNodeHtml(simpleMarriage.spouse))
-        simpleMarriageHtml.append(createLineBreakHtml());
-        simpleMarriageHtml.append(createNodeMarriageHtml(simpleMarriage.mainMarriage));
+    if (mainMarriage.spouse != null) {
+        mainMarriageHtml.append(createNodeHtml(mainMarriage.spouse))
+        mainMarriageHtml.append(createLineBreakHtml());
+        mainMarriageHtml.append(createNodeMarriageHtml(mainMarriage.mainMarriage));
     }
 
-    return simpleMarriageHtml;
+    return mainMarriageHtml;
 }
 
 function createNodesContainerHtmlInner() {
@@ -53,9 +53,10 @@ function createNodesContainerHtmlInner() {
         .attr('class', 'tree-nodes-container');
 }
 
-function createGenerationHtmlInner() {
+function createGenerationHtmlInner(largetGenerationSize) {
     return $('<div>')
-        .attr('class', 'tree-generation');
+        .attr('class', 'tree-generation')
+        .css('padding', "0px 0px " + ((largetGenerationSize + 3) * linesVerticalOffset) + "px 0px");
 }
 
 function createExtendedMarriageHtmlInner() {

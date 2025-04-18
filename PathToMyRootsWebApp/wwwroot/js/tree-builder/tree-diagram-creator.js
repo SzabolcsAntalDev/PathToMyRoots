@@ -1,13 +1,12 @@
 ﻿async function createTreeDiagram(personId) {
 
-    //treeDiagramContainer.append(nodesContainer);
-    //treeDiagramContainer.append(linesContainer);
-    //treeDiagramsContainer.append(treeDiagramContainer);
+    const treeDiagram = createTreeDiagramHtml(personId);
 
-    const generations = await createGenerations(personId);
-    const nodesContainer = createNodesContainerHtml(generations);
+    const generationsData = await createGenerationsData(personId);
+    const nodesContainer = createNodesContainerHtml(generationsData);
 
-    return nodesContainer;
+    treeDiagram.append(nodesContainer);
+    return treeDiagram;
 
     //const nodesContainerDom = nodesContainer.get(0);
 
