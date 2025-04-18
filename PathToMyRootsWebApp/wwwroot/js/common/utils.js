@@ -125,3 +125,22 @@ function scrollToMiddle(container, element) {
     container.scrollTop += verticalOffset;
     container.scrollLeft += horizontalOffset;
 }
+
+function getSize(element) {
+    const domElement = $(element).get(0);
+
+    const elementStyle = window.getComputedStyle(domElement);
+    const elementWidth = domElement.offsetWidth || parseFloat(elementStyle.width);
+    const elementHeight = domElement.offsetHeight || parseFloat(elementStyle.height);
+
+    return { width: elementWidth, height: elementHeight };
+}
+
+function setSize(fromElement, toElement) {
+    const fromElementSize = getSize(fromElement);
+
+    toElement.css({
+        width: fromElementSize.width,
+        height: fromElementSize.height
+    });
+}

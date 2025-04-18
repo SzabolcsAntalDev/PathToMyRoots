@@ -20,17 +20,18 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     treeDiagramsContainer.append(loadingTextContainer);
     await fadeInElement(loadingTextContainer);
 
-    const generationsData = await createGenerationsData(personId);
-    const nodesContainer = createNodesContainer(generationsData);
-
     const treeDiagram = createTreeDiagramHtml(personId);
     hideElement(treeDiagram);
-    treeDiagramsContainer.append(treeDiagram);
+
+    const generationsData = await createGenerationsData(personId);
+    const nodesContainer = createNodesContainer(generationsData);
+    const linesContainer = createEmptyLinesContainerHtml();
 
     treeDiagram.append(nodesContainer);
-
-    const linesContainer = createLinesContainer(generationsData, nodesContainer);
     treeDiagram.append(linesContainer);
+    treeDiagramsContainer.append(treeDiagram);
+
+    drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
 
     await fadeOutElement(loadingTextContainer);
     await fadeInElement(treeDiagram);

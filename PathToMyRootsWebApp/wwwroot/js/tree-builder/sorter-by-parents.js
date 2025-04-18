@@ -21,13 +21,13 @@ function fillRowWithSortedChildren(sortedChildrenRow, parentsRow, childrenRow) {
         let mainMarriageAdoptiveChildrenIds;
 
         if (secondaryMarriageNode.length) {
-            secondaryMarriageBiologicalChildrenIds = secondaryMarriageNode.data('inverseBiologicalParents');
-            secondaryMarriageAdoptiveChildrenIds = secondaryMarriageNode.data('inverseAdoptiveParents');
+            secondaryMarriageBiologicalChildrenIds = secondaryMarriageNode.data('inverseBiologicalParentIds');
+            secondaryMarriageAdoptiveChildrenIds = secondaryMarriageNode.data('inverseAdoptiveParentIds');
         }
 
         if (mainMarriageNode.length) {
-            mainMarriageBiologicalChildrenIds = mainMarriageNode.data('inverseBiologicalParents');
-            mainMarriageAdoptiveChildrenIds = mainMarriageNode.data('inverseAdoptiveParents');
+            mainMarriageBiologicalChildrenIds = mainMarriageNode.data('inverseBiologicalParentIds');
+            mainMarriageAdoptiveChildrenIds = mainMarriageNode.data('inverseAdoptiveParentIds');
         }
 
         const takenSpouseNodeGroupContainers = [];

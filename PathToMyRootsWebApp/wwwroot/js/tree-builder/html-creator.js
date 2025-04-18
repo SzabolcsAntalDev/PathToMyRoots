@@ -48,7 +48,7 @@ function createSimpleMarriageHtml(mainMarriage) {
     if (mainMarriage.spouse != null) {
         mainMarriageHtml.append(createNodeHtml(mainMarriage.spouse))
         mainMarriageHtml.append(createLineBreakHtml());
-        mainMarriageHtml.append(createNodeMarriageHtml(mainMarriage.mainMarriage));
+        mainMarriageHtml.append(createNodeMarriageHtml(mainMarriage.marriage));
     }
 
     return mainMarriageHtml;
@@ -125,6 +125,10 @@ function createNodeHtml(person) {
         .attr('id', person.id)
         .attr('class', person.isMale ? 'tree-node-male' : 'tree-node-female')
         .attr('title', `${personNameNodeText}\n${personLivedNodeText}`)
+        .data('biologicalFatherId', person.biologicalFatherId)
+        .data('biologicalMotherId', person.biologicalMotherId)
+        .data('adoptiveFatherId', person.adoptiveFatherId)
+        .data('adoptiveMotherId', person.adoptiveMotherId)
         .append(imgPerson)
         .append(textsContainer)
         .append(buttonUpdatePerson)
@@ -165,18 +169,14 @@ function createNodeMarriageHtml(marriage) {
     return $('<div>')
         .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
         .attr('title', `${marriageText}\n${marriageDateText}`)
-        .data('inverseBiologicalParents', marriage.inverseBiologicalParents)
-        .data('inverseAdoptiveParents', marriage.inverseAdoptiveParents)
+        .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
+        .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
         .append(textsContainer);
 }
 
-function createLinesContainerHtml(size) {
+function createEmptyLinesContainerHtml() {
     // no jquery creational method for this
     const linesContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     return $(linesContainer)
-        .attr('class', 'tree-lines-container')
-        .css({
-            width: size.width,
-            height: size.height
-        });
+        .attr('class', 'tree-lines-container');
 }

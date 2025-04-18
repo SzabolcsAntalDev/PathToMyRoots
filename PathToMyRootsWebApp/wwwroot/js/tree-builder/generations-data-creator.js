@@ -2,6 +2,7 @@
     const generationsMap = new Map();
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
+    // Szabi: clean this up a bit
     const generations = Array.from(generationsMap.entries())
         .sort((a, b) => a[0] - b[0])
         .map(([_, value]) => value);
@@ -36,7 +37,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
 
             mainMarriage.person = person;
             mainMarriage.spouse = secondSpouse;
-            mainMarriage.mainMarriage = createMarriage(person, secondSpouse, true);
+            mainMarriage.marriage = createMarriage(person, secondSpouse, true);
 
             processedPersonIds.add(person.secondSpouseId);
         }
@@ -48,7 +49,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
                 if (spouse.secondSpouseId == personId) {
                     mainMarriage.person = person;
                     mainMarriage.spouse = spouse;
-                    mainMarriage.mainMarriage = createMarriage(person, spouse, true);
+                    mainMarriage.marriage = createMarriage(person, spouse, true);
 
                     processedPersonIds.add(spouseId);
                 }
@@ -60,7 +61,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
             else {
                 mainMarriage.person = person;
                 mainMarriage.spouse = spouse;;
-                mainMarriage.mainMarriage = createMarriage(person, spouse, true);
+                mainMarriage.marriage = createMarriage(person, spouse, true);
 
                 processedPersonIds.add(spouseId);
             }
@@ -82,7 +83,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
             else { // single married man
                 mainMarriage.spouse = spouse;
                 mainMarriage.person = person;
-                mainMarriage.mainMarriage = createMarriage(person, spouse, true);
+                mainMarriage.marriage = createMarriage(person, spouse, true);
 
                 processedPersonIds.add(spouseId);
             }
@@ -149,8 +150,8 @@ function createMarriage(person, spouse, isMainMarriage) {
     marriage.endDate = person.firstSpouseId == spouse.id ? person.firstMarriageEndDate : person.secondMarriageEndDate;
     marriage.maleId = person.isMale ? person.id : spouse.id;
     marriage.femaleId = !person.isMale ? person.id : spouse.id;
-    marriage.inverseBiologicalParents = getCommonBiologicalChildren(person, spouse);
-    marriage.inverseAdoptiveParents = getCommonAdoptiveChildren(person, spouse);
+    marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(person, spouse);
+    marriage.inverseAdoptiveParentIds = getCommonAdoptiveChildren(person, spouse);
 
     return marriage;
 }
@@ -176,8 +177,9 @@ function getGenerationSize(generation) {
 }
 
 function getNumberOfAvailableParents(extendedMarriage) {
-    return getNumOfParents(extendedMarriage.mainMarriage.person) +
-        getNumOfParents(extendedMarriage.mainMarriage.spouse) +
+    // Szabi: mainMarriage is null when all people??
+    return getNumOfParents(extendedMarriage.mainMarriage?.person) +
+        getNumOfParents(extendedMarriage.mainMarriage?.spouse) +
         getNumOfParents(extendedMarriage.secondaryMarriage?.person) +
         getNumOfParents(extendedMarriage.secondaryMarriage?.spouse);
 }
@@ -189,10 +191,8 @@ function getNumOfParents(person) {
 
     let number = 0;
 
-    number += person.biologicalFatherId ? 1 : 0;
-    number += person.biologicalMotherId ? 1 : 0;
-    number += person.adoptiveFatherId ? 1 : 0;
-    number += person.adoptiveMotherId ? 1 : 0;
+    number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
+    number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
 
     return number;
 }
