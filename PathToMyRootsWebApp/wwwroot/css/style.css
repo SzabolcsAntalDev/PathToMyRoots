@@ -440,20 +440,16 @@ fieldset input[type=text] {
 }
 
 #tree-diagrams-container {
-  display: flex;
   position: relative;
+  display: flex;
   flex: 1;
   overflow: auto;
+  flex-direction: column;
 }
 
 .tree-diagram {
   position: relative;
-}
-
-.tree-nodes-container {
-  position: absolute;
-  top: 0;
-  left: 0;
+  margin: 0px auto;
 }
 
 .tree-lines-container {
@@ -489,7 +485,7 @@ fieldset input[type=text] {
   padding: 0px;
 }
 
-.tree-node-marriage, .tree-node-female, .tree-node-male {
+.tree-node, .tree-node-marriage, .tree-node-female, .tree-node-male {
   display: inline-flex;
   position: relative;
   flex-direction: row;

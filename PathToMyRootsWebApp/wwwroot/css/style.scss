@@ -559,20 +559,19 @@ fieldset {
 
 
 #tree-diagrams-container {
-    display: flex;
     position: relative;
+    display: flex;
     flex: 1;
     overflow: auto;
+    flex-direction: column;
 }
 
 .tree-diagram {
     position: relative;
+    margin: 0px auto;
 }
 
 .tree-nodes-container {
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .tree-lines-container {
@@ -631,7 +630,7 @@ fieldset {
 }
 
 .tree-node-marriage {
-    @extend %tree-node;
+    @extend .tree-node;
     width: $marriage-node-width;
     margin: auto $distance-between-nodes;
     font-size: $font-size-small;
