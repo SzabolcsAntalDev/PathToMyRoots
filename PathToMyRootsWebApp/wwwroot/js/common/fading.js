@@ -3,8 +3,7 @@
 }
 
 async function fadeInElement(element) {
-    $(element).removeClass('fade-hidden');
-    $(element).removeClass('fade-out');
+    
     $(element).addClass('fade-in');
 
     await new Promise(resolve => {
@@ -12,6 +11,9 @@ async function fadeInElement(element) {
             resolve();
         }, getTransitionIntervalInSeconds() * 1000);
     });
+
+    $(element).removeClass('fade-hidden');
+    $(element).removeClass('fade-out');
 }
 
 async function fadeOutElement(element) {

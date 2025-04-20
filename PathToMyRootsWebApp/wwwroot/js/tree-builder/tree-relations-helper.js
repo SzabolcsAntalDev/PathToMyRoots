@@ -22,12 +22,12 @@ function getCommonAdoptiveChildren(person, spouse) {
     }
 }
 
-function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(firstChildrenNodeGroupContainer, childrenNodeGroupContainers, maleNode) {
+function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(actualChildrenNodeGroupContainer, childrenNodeGroupContainers, maleNode) {
     if (maleNode.secondSpouseId == null)
         return null;
 
     for (let childrenNodeGroupContainer of childrenNodeGroupContainers) {
-        if (firstChildrenNodeGroupContainer == childrenNodeGroupContainer)
+        if (actualChildrenNodeGroupContainer == childrenNodeGroupContainer)
             continue;
 
         let childFemaleNode = childrenNodeGroupContainer.querySelector('.tree-node-female');
