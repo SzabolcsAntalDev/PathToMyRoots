@@ -13,5 +13,11 @@
 
         treeDiagramsContainer.append(createTestTitleHtml('Tie spouses in two generations'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, 30);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Double married female'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 50);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Double married male'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 60);
     })();
 });
