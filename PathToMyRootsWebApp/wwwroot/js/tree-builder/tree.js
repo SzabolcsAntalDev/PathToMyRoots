@@ -4,10 +4,6 @@
         await fadeOutElement(treeDiagram)
         treeDiagram.remove();
     }
-
-    const loadingTextContainer = treeDiagramsContainer.find('#loading-text-container').get(0);
-    if (loadingTextContainer)
-        await fadeInElement(loadingTextContainer);
 }
 
 async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
