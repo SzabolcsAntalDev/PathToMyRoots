@@ -1,0 +1,32 @@
+﻿@using PathToMyRootsCommon.Utils
+
+<h1>Tests</h1>
+
+<div id="tree-diagrams-container">
+</div>
+
+@section Scripts {
+    <script src="~/js/common/fading.js"></script>
+
+    <script src="~/js/common/constants.js"></script>
+
+    <script src="~/js/tree-builder/lines-drawer.js"></script>
+    <script src="~/js/tree-builder/tree-relations-helper.js"></script>
+
+    <script src="~/js/tree-builder/sorter-by-birthdates.js"></script>
+    <script src="~/js/tree-builder/sorter-by-parents.js"></script>
+    <script src="~/js/tree-builder/html-creator.js"></script>
+    <script src="~/js/tree-builder/tree-texts-formatter.js"></script>
+
+    <script src="~/js/tree-builder/generations-data-creator.js"></script>
+    <script src="~/js/tree-builder/nodes-container-creator.js"></script>
+    <script src="~/js/tree-builder/lines-container-creator.js"></script>
+    <script src="~/js/tree-builder/tree.js"></script>
+
+    <script src="~/js/test/tests.js"></script>
+
+    <script>
+        const UnknownServerDate = '@Html.Raw(DateHelper.DatabaseDateUnknown)';
+        const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
+    </script>
+}

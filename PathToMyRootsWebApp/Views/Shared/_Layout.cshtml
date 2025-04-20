@@ -46,6 +46,11 @@
                         <a class="nav-a" asp-controller="Person" asp-action="Persons">Persons</a>
                     </h2>
                 </li>
+                <li class="nav-li @(ViewContext.RouteData.Values["controller"]?.ToString() == "Test" && ViewContext.RouteData.Values["action"]?.ToString() == "Tests" ? "active" : "")">
+                    <h2 style="margin: 0px">
+                        <a class="nav-a" asp-controller="Test" asp-action="Tests">Tests</a>
+                    </h2>
+                </li>
             </ul>
         </nav>
 
