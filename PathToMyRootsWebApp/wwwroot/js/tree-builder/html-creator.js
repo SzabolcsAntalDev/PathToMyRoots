@@ -41,12 +41,18 @@ function createExtendedMarriageHtml(extendedMarriage) {
 function createSimpleMarriageHtml(mainMarriage) {
     const mainMarriageHtml = createSimpleMarriageHtmlInner();
 
-    if (mainMarriage.person != null) {
-        mainMarriageHtml.append(createNodeHtml(mainMarriage.person))
-    }
+    if (mainMarriage.male == null || mainMarriage.female == null) {
+        if (mainMarriage.male != null) {
+            mainMarriageHtml.append(createNodeHtml(mainMarriage.male));
+        }
 
-    if (mainMarriage.spouse != null) {
-        mainMarriageHtml.append(createNodeHtml(mainMarriage.spouse))
+        if (mainMarriage.female != null) {
+            mainMarriageHtml.append(createNodeHtml(mainMarriage.female));
+        }
+    }
+    else {
+        mainMarriageHtml.append(createNodeHtml(mainMarriage.male))
+        mainMarriageHtml.append(createNodeHtml(mainMarriage.female))
         mainMarriageHtml.append(createLineBreakHtml());
         mainMarriageHtml.append(createNodeMarriageHtml(mainMarriage.marriage));
     }

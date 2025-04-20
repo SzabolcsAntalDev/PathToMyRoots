@@ -3,20 +3,20 @@ function sortRowItemsByLifeSpan(generations) {
     generations.forEach(generation => {
         generation.extendedMarriages.sort((extendedMarriage1, extendedMarriage2) => {
             const birthDate1 =
-                extendedMarriage1.mainMarriage.person.birthDate ??
-                extendedMarriage1.mainMarriage.spouse?.birthDate;
+                extendedMarriage1.mainMarriage.male?.birthDate ??
+                extendedMarriage1.mainMarriage.female?.birthDate;
 
             const birthDate2 =
-                extendedMarriage2.mainMarriage.person.birthDate ??
-                extendedMarriage2.mainMarriage.spouse?.birthDate;
+                extendedMarriage2.mainMarriage.male?.birthDate ??
+                extendedMarriage2.mainMarriage.female?.birthDate;
 
             const date1 = birthDate1 ??
-                extendedMarriage1.mainMarriage.person.deathDate ??
-                extendedMarriage1.mainMarriage.spouse?.deathDate;
+                extendedMarriage1.mainMarriage.male?.deathDate ??
+                extendedMarriage1.mainMarriage.female?.deathDate;
 
             const date2 = birthDate2 ??
-                extendedMarriage2.mainMarriage.person.deathDate ??
-                extendedMarriage2.mainMarriage.spouse?.deathDate;
+                extendedMarriage2.mainMarriage.male?.deathDate ??
+                extendedMarriage2.mainMarriage.female?.deathDate;
 
             return sortByDates(date1, date2);
         });

@@ -3,8 +3,8 @@
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
     const generations = sortByLevelAndConvertToArray(generationsMap);
-    sortRowItemsByLifeSpan(generations);
-    // createCoupleGroups(generations);
+    groupByMarriages(generations);
+    //sortRowItemsByLifeSpan(generations);
     // createSiblingGroups(generations);
     const generationsData = {};
     generationsData.generations = generations;
@@ -30,66 +30,70 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
     const mainMarriage = {};
 
     if (person.isMale) {
-        if (person.firstSpouseId == null && person.secondSpouseId == null) { // single male ---
-            mainMarriage.person = person;
+        const male = person;
+        if (male.firstSpouseId == null && male.secondSpouseId == null) { // single male ---
+            mainMarriage.male = male;
         }
-        else if (person.secondSpouseId == null) { // single married male
-            const spouseId = person.firstSpouseId;
-            const spouse = await (await fetch(`${apiUrl}/person/${spouseId}`)).json();
+        else if (male.secondSpouseId == null) { // single married male
+            const firstWifeId = male.firstSpouseId;
+            const firstWife = await (await fetch(`${apiUrl}/person/${firstWifeId}`)).json();
 
-            if (spouse.secondSpouseId == null) { // single married male with single married female ---
-                mainMarriage.person = person;
-                mainMarriage.spouse = spouse;
-                mainMarriage.marriage = createMarriage(person, spouse, true);
+            if (firstWife.secondSpouseId == null) { // single married male with single married female ---
+                mainMarriage.male = male;
+                mainMarriage.female = firstWife;
+                mainMarriage.marriage = createMarriage(male, firstWife, true);
 
-                processedPersonIds.add(spouseId);
+                processedPersonIds.add(firstWifeId);
             }
             else { // single married male with double married female
-                if (spouse.firstSpouseId == personId) { // divorced male ---
-                    extendedMarriage.secondaryMarriage = createMarriage(person, spouse, false);
-                    mainMarriage.person = person;
+                if (firstWife.firstSpouseId == personId) { // divorced male ---
+                    extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false);
+                    mainMarriage.male = male;
                 }
                 else { // single male married male with ex-married female ---
-                    mainMarriage.person = person;
-                    mainMarriage.spouse = spouse;
-                    mainMarriage.marriage = createMarriage(person, spouse, true);
+                    mainMarriage.male = male;
+                    mainMarriage.female = firstWife;
+                    mainMarriage.marriage = createMarriage(male, firstWife, true);
 
-                    processedPersonIds.add(spouseId);
+                    processedPersonIds.add(firstWifeId);
                 }
             }
         }
         else { // double married male ---
-            const firstSpouse = await (await fetch(`${apiUrl}/person/${person.firstSpouseId}`)).json();
-            const secondSpouse = await (await fetch(`${apiUrl}/person/${person.secondSpouseId}`)).json();
+            const firstWife = await (await fetch(`${apiUrl}/person/${male.firstSpouseId}`)).json();
+            const secondWife = await (await fetch(`${apiUrl}/person/${male.secondSpouseId}`)).json();
 
-            extendedMarriage.secondaryMarriage = createMarriage(person, firstSpouse, false);
+            extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false);
 
-            mainMarriage.person = person;
-            mainMarriage.spouse = secondSpouse;
-            mainMarriage.marriage = createMarriage(person, secondSpouse, true);
+            mainMarriage.male = male;
+            mainMarriage.female = secondWife;
+            mainMarriage.marriage = createMarriage(male, secondWife, true);
 
-            processedPersonIds.add(person.secondSpouseId);
+            processedPersonIds.add(male.secondSpouseId);
         }
 
     }
     else {
-        if (person.firstSpouseId == null && person.secondSpouseId == null) { // single female ---
-            mainMarriage.person = person;
+        const female = person;
+        if (female.firstSpouseId == null && female.secondSpouseId == null) { // single female ---
+            mainMarriage.female = female;
         }
-        else if (person.secondSpouseId == null) { // single married female
-            const spouseId = person.firstSpouseId;
-            const spouse = await (await fetch(`${apiUrl}/person/${spouseId}`)).json();
+        else if (female.secondSpouseId == null) { // single married female
+            const husbandId = female.firstSpouseId;
+            const husband = await (await fetch(`${apiUrl}/person/${husbandId}`)).json();
 
-            if (spouse.secondSpouseId == null) { // single female with single married man ---
-                // invert roles to have the male the main person in the marriage
-                mainMarriage.spouse = person;
-                mainMarriage.person = spouse;
-                mainMarriage.marriage = createMarriage(spouse, person, true);
+            if (husband.secondSpouseId == null) { // single female with single married man ---
+                mainMarriage.male = husband;
+                mainMarriage.female = female;
+                mainMarriage.marriage = createMarriage(husband, female, true);
 
-                processedPersonIds.add(spouseId);
+                processedPersonIds.add(husbandId);
             }
-            else { // divorced female ---
-                mainMarriage.person = person;
+            else if (husband.firstSpouseId == female.id) { // divorced female from double married man ---
+                mainMarriage.female = female;
+            }
+            else if (husband.secondSpouseId == female.id) { // single married female with double married man ---
+
             }
         }
         else { // double married female
@@ -97,8 +101,8 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
     }
 
     // if not double married female
-    if (mainMarriage.person != null || extendedMarriage.secondaryMarriage != null) {
-        if (mainMarriage.person != null) {
+    if (mainMarriage.male != null || mainMarriage.female != null || extendedMarriage.secondaryMarriage != null) {
+        if (mainMarriage.male != null || mainMarriage.female != null) {
             extendedMarriage.mainMarriage = mainMarriage;
         }
 
@@ -150,16 +154,16 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
             await createGenerationsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
 }
 
-function createMarriage(person, spouse, isMainMarriage) {
+function createMarriage(male, female, isMainMarriage) {
     const marriage = {};
 
     marriage.isMainMarriage = isMainMarriage;
-    marriage.startDate = person.firstSpouseId == spouse.id ? person.firstMarriageStartDate : person.secondMarriageStartDate;;
-    marriage.endDate = person.firstSpouseId == spouse.id ? person.firstMarriageEndDate : person.secondMarriageEndDate;
-    marriage.maleId = person.isMale ? person.id : spouse.id;
-    marriage.femaleId = !person.isMale ? person.id : spouse.id;
-    marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(person, spouse);
-    marriage.inverseAdoptiveParentIds = getCommonAdoptiveChildren(person, spouse);
+    marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;;
+    marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
+    marriage.maleId = male?.id;
+    marriage.femaleId = female?.id;
+    marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);
+    marriage.inverseAdoptiveParentIds = getCommonAdoptiveChildren(male, female);
 
     return marriage;
 }
@@ -186,10 +190,10 @@ function getGenerationSize(generation) {
 
 function getNumberOfAvailableParents(extendedMarriage) {
     // Szabi: mainMarriage is null when all people??
-    return getNumOfParents(extendedMarriage.mainMarriage?.person) +
-        getNumOfParents(extendedMarriage.mainMarriage?.spouse) +
-        getNumOfParents(extendedMarriage.secondaryMarriage?.person) +
-        getNumOfParents(extendedMarriage.secondaryMarriage?.spouse);
+    return getNumOfParents(extendedMarriage.mainMarriage?.male) +
+        getNumOfParents(extendedMarriage.mainMarriage?.female) +
+        getNumOfParents(extendedMarriage.secondaryMarriage?.male) +
+        getNumOfParents(extendedMarriage.secondaryMarriage?.female);
 }
 
 function getNumOfParents(person) {

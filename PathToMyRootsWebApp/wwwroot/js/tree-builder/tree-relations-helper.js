@@ -1,25 +1,13 @@
-﻿function getCommonBiologicalChildren(person, spouse) {
-    if (person.isMale) {
-        return person.inverseBiologicalFather
-            .filter(child => spouse.inverseBiologicalMother.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    } else {
-        return person.inverseBiologicalMother
-            .filter(child => spouse.inverseBiologicalFather.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    }
+﻿function getCommonBiologicalChildren(male, female) {
+    return male.inverseBiologicalFather
+        .filter(maleChild => female.inverseBiologicalMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .map(child => child.id);
 }
 
-function getCommonAdoptiveChildren(person, spouse) {
-    if (person.isMale) {
-        return person.inverseAdoptiveFather
-            .filter(child => spouse.inverseAdoptiveMother.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    } else {
-        return person.inverseAdoptiveMother
-            .filter(child => spouse.inverseAdoptiveFather.some(spouseChild => spouseChild.id === child.id))
-            .map(child => child.id);
-    }
+function getCommonAdoptiveChildren(male, female) {
+    return male.inverseAdoptiveFather
+        .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .map(child => child.id);
 }
 
 function getFirstSpouseNodeGroupContainerOfDoubleMarriedMale(actualChildrenNodeGroupContainer, childrenNodeGroupContainers, maleNode) {
