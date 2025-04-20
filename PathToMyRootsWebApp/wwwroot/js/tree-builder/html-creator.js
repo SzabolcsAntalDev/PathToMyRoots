@@ -190,3 +190,8 @@ function createEmptyLinesContainerHtml() {
     return $(linesContainer)
         .attr('class', 'tree-lines-container');
 }
+
+function createTestTitleHtml(testTitle) {
+    return $('<h2>')
+        .text(testTitle);
+}
