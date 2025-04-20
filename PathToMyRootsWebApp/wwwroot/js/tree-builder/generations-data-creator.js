@@ -3,8 +3,9 @@
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
     const generations = sortByLevelAndConvertToArray(generationsMap);
-    sortRowItemsByBirthDates(generations);
-
+    sortRowItemsByLifeSpan(generations);
+    // createCoupleGroups(generations);
+    // createSiblingGroups(generations);
     const generationsData = {};
     generationsData.generations = generations;
     generationsData.largestGenerationSize = getLargestGenerationSize(generations);
@@ -48,7 +49,7 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
                     extendedMarriage.secondaryMarriage = createMarriage(person, spouse, false);
                     mainMarriage.person = person;
                 }
-                else { // male married with ex-married female ---
+                else { // single male married male with ex-married female ---
                     mainMarriage.person = person;
                     mainMarriage.spouse = spouse;
                     mainMarriage.marriage = createMarriage(person, spouse, true);
@@ -80,9 +81,10 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
             const spouse = await (await fetch(`${apiUrl}/person/${spouseId}`)).json();
 
             if (spouse.secondSpouseId == null) { // single female with single married man ---
-                mainMarriage.spouse = spouse;
-                mainMarriage.person = person;
-                mainMarriage.marriage = createMarriage(person, spouse, true);
+                // invert roles to have the male the main person in the marriage
+                mainMarriage.spouse = person;
+                mainMarriage.person = spouse;
+                mainMarriage.marriage = createMarriage(spouse, person, true);
 
                 processedPersonIds.add(spouseId);
             }
