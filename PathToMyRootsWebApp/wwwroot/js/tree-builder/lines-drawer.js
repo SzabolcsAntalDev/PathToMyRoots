@@ -2,7 +2,7 @@
     linesContainer.rect = linesContainer.get(0).getBoundingClientRect();
     const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * linesVerticalOffset };
 
-    //.attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
+    //.attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'secondary-marriage'}`)
     marriageNodes.filter('.main-marriage').each((_, marriageNode) => {
         someFunc(linesContainer, offsetOnTop, marriageNode, childNodes);
     });

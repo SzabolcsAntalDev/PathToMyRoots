@@ -117,11 +117,13 @@ function createNodeHtml(person) {
             .attr('class', 'tree-node-image')
             .attr('src', apiUrl + '/image/get/' + person.imageUrl)
             .on('error', function () {
-                const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-                use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", phantomPersonSymbolPath);
+                const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+                use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', phantomPersonSymbolPath);
 
-                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                svg.setAttribute("class", "tree-node-image");
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', 'tree-node-image');
+                svg.setAttribute('viewBox', '0 0 3 4'); // keep 3:4 aspect ratio
+                svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
                 svg.appendChild(use);
                 $(this).replaceWith(svg);
@@ -213,7 +215,7 @@ function createNodeMarriageHtml(marriage) {
             .append(spanMarriageDate);
 
     return $('<div>')
-        .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'left-marriage'}`)
+        .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'secondary-marriage'}`)
         .attr('title', `${marriageText}\n${marriageDateText}`)
         .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
         .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)

@@ -133,10 +133,11 @@ $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
 $person-node-width: 200px;
-$distance-between-nodes: 15px;
-$node-image-width: 45px;
-$node-image-height: 60px;
+$person-node-height: 70px;
 $marriage-node-width: 70px;
+$marriage-node-height: ($person-node-height / 2);
+
+$distance-between-nodes: 15px;
 
 $persons-and-dropdown-image-width: 30px;
 $persons-and-dropdown-image-height: 40px;
@@ -588,12 +589,16 @@ fieldset {
     text-align: center;
 }
 
+.tree-generation, .tree-generation * {
+    box-sizing: border-box;
+}
+
 .tree-siblings-group {
     display: flex;
     padding: 0px;
     margin: 0px 30px;
     padding: 0px;
-    border: 5px solid blue;
+    /*border: 5px solid blue;*/
 }
 
 .tree-extended-marriages {
@@ -601,7 +606,7 @@ fieldset {
     padding: 0px;
     margin: 0px auto;
     padding: 0px;
-    border: 3px solid orange;
+    /*border: 3px solid orange;*/
 }
 
 .tree-extended-marriage {
@@ -623,6 +628,7 @@ fieldset {
     flex-direction: row;
     align-items: center;
     width: $person-node-width;
+    height: $person-node-height;
     padding: $thickness-small;
     border: $border;
     border-radius: $border-radius;
@@ -642,22 +648,24 @@ fieldset {
 .tree-node-marriage {
     @extend .tree-node;
     width: $marriage-node-width;
-    margin: auto $distance-between-nodes;
+    height: $marriage-node-height;
     font-size: $font-size-small;
     background-color: var(--marriage-color);
     vertical-align: central;
 }
 
+.secondary-marriage {
+    top: 16.66%;
+}
+
 .tree-node-image {
+    height: 100%;
+    object-fit: contain;
     margin-right: $thickness-small;
-    min-height: $node-image-height;
-    min-width: $node-image-width;
-    height: $node-image-height;
-    width: $node-image-width;
-    object-fit: cover;
-    display: block;
     fill: var(--foreground-color-highlight);
     transition: fill $default-transition;
+    /*border: 3px solid red;*/
+    padding: 0;
 }
 
 .tree-node-texts {
