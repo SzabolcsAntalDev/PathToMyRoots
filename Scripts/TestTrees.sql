@@ -36,9 +36,10 @@ VALUES
 		(	@id + 1,	'GrandMother1', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
 		(	@id + 2,	'GrandFather2', 	NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
 		(	@id + 3,	'GrandMother2', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
-		(	@id + 4,	'Father', 			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 4,	'Father1', 			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
 		(	@id + 5,	'Mother', 			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
-		(	@id + 6,	'Child',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
+		(	@id + 6,	'Child',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 7,	'Father2', 			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
 
 -- ==========================================================================================================================
 -- child with biological and adoptive parents

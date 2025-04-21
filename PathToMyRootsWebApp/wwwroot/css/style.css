@@ -466,18 +466,28 @@ fieldset input[type=text] {
   text-align: center;
 }
 
-.tree-siblings-container {
+.tree-siblings-group {
+  display: flex;
+  padding: 0px;
+  margin: 0px 30px;
+  padding: 0px;
+  border: 5px solid blue;
+}
+
+.tree-extended-marriages {
   display: flex;
   padding: 0px;
   margin: 0px auto;
-  padding: 0px 37.5px;
+  padding: 0px;
+  border: 3px solid orange;
 }
 
 .tree-extended-marriage {
   display: flex;
-  padding: 0px 15px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0px;
+  margin: 0px auto;
+  padding: 0px;
+  /*border: 1px solid yellow;*/
 }
 
 .tree-simple-marriage {

@@ -3,9 +3,25 @@
     await createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
 
     const generations = sortByLevelAndConvertToArray(generationsMap);
+
+    sortFirstGenerationByLifeSpan(generations[0]);
+
+    // generation.extendedMarriagesSortedByMarriages
+    sortByMarriages(generations);
+
+    // generation.extendedMarriageGroupsByMarriages
     groupByMarriages(generations);
-    //sortRowItemsByLifeSpan(generations);
-    // createSiblingGroups(generations);
+
+    // sort first level by life span
+    groupByParents(generations)
+
+    sortSiblings(generations);
+    //sortSiblingGroups();
+
+
+    // sort rest of levels by life span
+    //sortByLifeSpan(generations);
+
     const generationsData = {};
     generationsData.generations = generations;
     generationsData.largestGenerationSize = getLargestGenerationSize(generations);

@@ -17,11 +17,31 @@ function createNodesContainerHtml(generationsData) {
 function createGenerationHtml(generation, largestGenerationSize) {
     const generationHtml = createGenerationHtmlInner(largestGenerationSize);
 
-    generation.extendedMarriages.forEach(extendedMarriage => {
-        generationHtml.append(createExtendedMarriageHtml(extendedMarriage));
+    generation.siblingsGroups.forEach(siblingsGroup => {
+        generationHtml.append(createSiblingsGroupHtml(siblingsGroup));
     })
 
     return generationHtml;
+}
+
+function createSiblingsGroupHtml(siblingsGroup) {
+    const siblingsGroupHtml = createSiblingsGroupHtmlInner();
+
+    siblingsGroup.forEach(extendedMarriagesGroup => {
+        siblingsGroupHtml.append(createExtendedMarriagesGroupHtml(extendedMarriagesGroup));
+    });
+
+    return siblingsGroupHtml;
+}
+
+function createExtendedMarriagesGroupHtml(extendedMarriageGroup) {
+    const extendedMarriageGroupHtml = createExtendedMarriageGroupHtmlInner();
+
+    extendedMarriageGroup.forEach(extendedMarriage => {
+        extendedMarriageGroupHtml.append(createExtendedMarriageHtml(extendedMarriage));
+    })
+
+    return extendedMarriageGroupHtml;
 }
 
 function createExtendedMarriageHtml(extendedMarriage) {
@@ -69,6 +89,16 @@ function createGenerationHtmlInner(largestGenerationSize) {
     return $('<div>')
         .attr('class', 'tree-generation')
         .css('padding', "0px 0px " + ((largestGenerationSize + 3) * linesVerticalOffset) + "px 0px");
+}
+
+function createSiblingsGroupHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-siblings-group');
+}
+
+function createExtendedMarriageGroupHtmlInner() {
+    return $('<div>')
+        .attr('class', 'tree-extended-marriages');
 }
 
 function createExtendedMarriageHtmlInner() {
