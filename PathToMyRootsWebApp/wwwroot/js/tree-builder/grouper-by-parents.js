@@ -1,28 +1,27 @@
-﻿function groupByParents(generations) {
-    generations.forEach((generation, index) => {
-        let siblingsGroups = [];
-        let flatAddedMarriageGroups = [];
+﻿function createSiblingsChains(generations) {
+    generations.forEach((generation, level) => {
+        let siblingsChains = [];
+        let consumedMarriagesChain = [];
         // persons on first level are non siblings
-        if (index == 0) {
-            generation.extendedMarriageGroupsByMarriages.forEach(marriageGroup => {
-                siblingsGroups.push([marriageGroup]);
-                flatAddedMarriageGroups.push(marriageGroup);
+        if (level == 0) {
+            generation.extendedMarriagesChains.forEach(extendedMarriages => {
+                siblingsChains.push([extendedMarriages]);
+                consumedMarriagesChain.push(extendedMarriages);
             });
         }
         else {
-            generations[index - 1].extendedMarriageGroupsByMarriages.forEach(extendedMarriageGroup => {
-                extendedMarriageGroup.forEach(extendedMarriage => {
-
+            generations[level - 1].extendedMarriagesChains.forEach(extendedMarriages => {
+                extendedMarriages.forEach(extendedMarriage => {
                     const childrenIds = getChildrenIds(extendedMarriage)
-                    const siblings = getChildrenOf(childrenIds, generations[index], flatAddedMarriageGroups);
+                    const siblings = getChildrenFromGeneration(generations[level], childrenIds, consumedMarriagesChain);
                     if (siblings.length > 0) {
-                        siblingsGroups.push(siblings);
+                        siblingsChains.push(siblings);
                     }
                 });
             });
         }
 
-        generation.siblingsGroups = siblingsGroups;
+        generation.siblingsChains = siblingsChains;
     });
 }
 
@@ -34,30 +33,29 @@ function getChildrenIds(extendedMarriage) {
         .concat(extendedMarriage.mainMarriage?.marriage?.inverseAdoptiveParentIds ?? []);
 }
 
-
-function getChildrenOf(childrenIds, generation, flatAddedMarriageGroups) {
+function getChildrenFromGeneration(generation, childrenIds, consumedMarriagesChain) {
     const siblings = [];
-    generation.extendedMarriageGroupsByMarriages.forEach(extendedMarriagesGroupInner => {
-        if (flatAddedMarriageGroups.includes(extendedMarriagesGroupInner)) {
+    generation.extendedMarriagesChains.forEach(extendedMarriages => {
+        if (consumedMarriagesChain.includes(extendedMarriages)) {
             return;
         }
 
-        if (myContains(childrenIds, extendedMarriagesGroupInner)) {
-            siblings.push(extendedMarriagesGroupInner);
-            flatAddedMarriageGroups.push(extendedMarriagesGroupInner);
+        if (marriagesIsChildOf(extendedMarriages, childrenIds)) {
+            siblings.push(extendedMarriages);
+            consumedMarriagesChain.push(extendedMarriages);
         }
     });
 
     return siblings;
 }
 
-function myContains(childrenIds, extendedMarriagesGroup) {
-    return extendedMarriagesGroup.some(extendedMarriageInner => {
-        const maleId = extendedMarriageInner.mainMarriage?.male?.id;
-        const femaleId = extendedMarriageInner.mainMarriage?.female?.id;
+function marriagesIsChildOf(extendedMarriages, childrenIds) {
+    return extendedMarriages.some(extendedMarriage => {
+        const maleId = extendedMarriage.mainMarriage?.male?.id;
+        const femaleId = extendedMarriage.mainMarriage?.female?.id;
 
         if (childrenIds.includes(maleId) || childrenIds.includes(femaleId)) {
-            extendedMarriageInner.isMainSibling = true;
+            extendedMarriage.isMainSibling = true;
             return true;
         }
 

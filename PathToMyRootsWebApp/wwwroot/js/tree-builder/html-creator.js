@@ -17,31 +17,31 @@ function createNodesContainerHtml(generationsData) {
 function createGenerationHtml(generation, largestGenerationSize) {
     const generationHtml = createGenerationHtmlInner(largestGenerationSize);
 
-    generation.siblingsGroups.forEach(siblingsGroup => {
-        generationHtml.append(createSiblingsGroupHtml(siblingsGroup));
+    generation.siblingsChains.forEach(siblings => {
+        generationHtml.append(createSiblingsHtml(siblings));
     })
 
     return generationHtml;
 }
 
-function createSiblingsGroupHtml(siblingsGroup) {
-    const siblingsGroupHtml = createSiblingsGroupHtmlInner();
+function createSiblingsHtml(siblings) {
+    const siblingsHtml = createSiblingsHtmlInner();
 
-    siblingsGroup.forEach(extendedMarriagesGroup => {
-        siblingsGroupHtml.append(createExtendedMarriagesGroupHtml(extendedMarriagesGroup));
+    siblings.forEach(extendedMarriages => {
+        siblingsHtml.append(createExtendedMarriagesHtml(extendedMarriages));
     });
 
-    return siblingsGroupHtml;
+    return siblingsHtml;
 }
 
-function createExtendedMarriagesGroupHtml(extendedMarriageGroup) {
-    const extendedMarriageGroupHtml = createExtendedMarriageGroupHtmlInner();
+function createExtendedMarriagesHtml(extendedMarriages) {
+    const extendedMarriagesHtml = createExtendedMarriagesHtmlInner();
 
-    extendedMarriageGroup.forEach(extendedMarriage => {
-        extendedMarriageGroupHtml.append(createExtendedMarriageHtml(extendedMarriage));
+    extendedMarriages.forEach(extendedMarriage => {
+        extendedMarriagesHtml.append(createExtendedMarriageHtml(extendedMarriage));
     })
 
-    return extendedMarriageGroupHtml;
+    return extendedMarriagesHtml;
 }
 
 function createExtendedMarriageHtml(extendedMarriage) {
@@ -52,14 +52,14 @@ function createExtendedMarriageHtml(extendedMarriage) {
     }
 
     if (extendedMarriage.mainMarriage != null) {
-        extendedMarriageHtml.append(createSimpleMarriageHtml(extendedMarriage.mainMarriage));
+        extendedMarriageHtml.append(createMainMarriageHtml(extendedMarriage.mainMarriage));
     }
 
     return extendedMarriageHtml;
 }
 
-function createSimpleMarriageHtml(mainMarriage) {
-    const mainMarriageHtml = createSimpleMarriageHtmlInner();
+function createMainMarriageHtml(mainMarriage) {
+    const mainMarriageHtml = createMainMarriageHtmlInner();
 
     if (mainMarriage.male == null || mainMarriage.female == null) {
         if (mainMarriage.male != null) {
@@ -91,12 +91,12 @@ function createGenerationHtmlInner(largestGenerationSize) {
         .css('padding', "0px 0px " + ((largestGenerationSize + 3) * linesVerticalOffset) + "px 0px");
 }
 
-function createSiblingsGroupHtmlInner() {
+function createSiblingsHtmlInner() {
     return $('<div>')
-        .attr('class', 'tree-siblings-group');
+        .attr('class', 'tree-siblings');
 }
 
-function createExtendedMarriageGroupHtmlInner() {
+function createExtendedMarriagesHtmlInner() {
     return $('<div>')
         .attr('class', 'tree-extended-marriages');
 }
@@ -106,9 +106,9 @@ function createExtendedMarriageHtmlInner() {
         .attr('class', 'tree-extended-marriage');
 }
 
-function createSimpleMarriageHtmlInner() {
+function createMainMarriageHtmlInner() {
     return $('<div>')
-        .attr('class', 'tree-simple-marriage');
+        .attr('class', 'tree-main-marriage');
 }
 
 function createNodeHtml(person) {

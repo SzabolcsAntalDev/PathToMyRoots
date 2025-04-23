@@ -1,4 +1,4 @@
-﻿function sortByMarriages(generations) {
+﻿function sortExtendedMarriagesByMainAndSecondaryMarriages(generations) {
     generations.forEach(generation => {
         const marriages = generation.extendedMarriages;
 
@@ -47,6 +47,6 @@
 
         marriages.forEach(visit);
 
-        generation.extendedMarriagesSortedByMarriages = sorted;
+        generation.extendedMarriages = sorted;
     });
 }
