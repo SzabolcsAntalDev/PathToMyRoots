@@ -523,6 +523,7 @@ fieldset input[type=text] {
 .tree-node-marriage {
   width: 70px;
   height: 35px;
+  margin: 0px 20px;
   font-size: 11px;
   background-color: var(--marriage-color);
   vertical-align: central;

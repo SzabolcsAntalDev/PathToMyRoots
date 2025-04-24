@@ -229,6 +229,22 @@ function createEmptyLinesContainerHtml() {
         .attr('class', 'tree-lines-container');
 }
 
+function createMarriageChildLinePathHtml(pathData, isBiological) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    return $(path)
+        .attr('d', pathData)
+        .attr('class', isBiological ? 'tree-line-biological-svg' : 'tree-line-adoptive-svg');
+}
+
+function createMarriagesLinePathHtml(pathData, isBiological) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    return $(path)
+        .attr('d', pathData)
+        .attr('class', 'tree-line-marriage-svg');
+}
+
 function createTestTitleHtml(testTitle) {
     return $('<h2>')
         .text(testTitle);

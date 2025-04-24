@@ -649,6 +649,7 @@ fieldset {
     @extend .tree-node;
     width: $marriage-node-width;
     height: $marriage-node-height;
+    margin: 0px 20px;
     font-size: $font-size-small;
     background-color: var(--marriage-color);
     vertical-align: central;
