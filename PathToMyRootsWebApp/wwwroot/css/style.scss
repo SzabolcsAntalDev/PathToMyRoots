@@ -565,178 +565,179 @@ fieldset {
     flex: 1;
     overflow: auto;
     flex-direction: column;
-}
 
-.tree-diagram {
-    position: relative;
-    margin: 0px auto;
-}
+    .tree-diagram {
+        position: relative;
+        margin: 0px auto;
 
-.tree-nodes-container {
-}
+        .tree-nodes-container {
 
-.tree-lines-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    background-color: transparent;
-}
+            .tree-generation, .tree-generation * {
+                box-sizing: border-box;
+            }
 
-.tree-generation {
-    display: flex;
-    white-space: nowrap;
-    text-align: center;
-}
+            .tree-generation {
+                display: flex;
+                white-space: nowrap;
+                text-align: center;
 
-.tree-generation, .tree-generation * {
-    box-sizing: border-box;
-}
+                .tree-siblings {
+                    display: flex;
+                    padding: 0px;
+                    margin: 0px 30px;
+                    padding: 0px;
 
-.tree-siblings {
-    display: flex;
-    padding: 0px;
-    margin: 0px 30px;
-    padding: 0px;
-    /*border: 5px solid blue;*/
-}
+                    .tree-extended-marriages {
+                        display: flex;
+                        padding: 0px;
+                        margin: 0px auto;
+                        padding: 0px;
 
-.tree-extended-marriages {
-    display: flex;
-    padding: 0px;
-    margin: 0px auto;
-    padding: 0px;
-    /*border: 3px solid orange;*/
-}
+                        .tree-extended-marriage {
+                            display: flex;
+                            padding: 0px;
+                            margin: 0px auto;
+                            padding: 0px;
 
-.tree-extended-marriage {
-    display: flex;
-    padding: 0px;
-    margin: 0px auto;
-    padding: 0px;
-    /*border: 1px solid yellow;*/
-}
+                            .tree-node {
+                                display: inline-flex;
+                                position: relative;
+                                flex-direction: row;
+                                align-items: center;
+                                width: $person-node-width;
+                                height: $person-node-height;
+                                padding: $thickness-small;
+                                border: $border;
+                                border-radius: $border-radius;
+                                transition: background-color $default-transition, border $default-transition;
+                            }
 
-.tree-main-marriage {
-    display: inline-block;
-    padding: 0px;
-}
+                            .tree-node-texts {
+                                display: inline-flex;
+                                flex-direction: column;
+                                overflow: hidden;
+                                margin: auto;
 
-.tree-node {
-    display: inline-flex;
-    position: relative;
-    flex-direction: row;
-    align-items: center;
-    width: $person-node-width;
-    height: $person-node-height;
-    padding: $thickness-small;
-    border: $border;
-    border-radius: $border-radius;
-    transition: background-color $default-transition, border $default-transition;
-}
+                                %tree-node-main-text {
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    text-align: center;
+                                    font-size: $font-size-small;
+                                }
+                            }
 
-.tree-node-male {
-    @extend .tree-node;
-    background-color: var(--male-color);
-}
 
-.tree-node-female {
-    @extend .tree-node;
-    background-color: var(--female-color);
-}
+                            .tree-main-marriage {
+                                display: inline-block;
+                                padding: 0px;
 
-.tree-node-marriage {
-    @extend .tree-node;
-    width: $marriage-node-width;
-    height: $marriage-node-height;
-    margin: 0px 20px;
-    font-size: $font-size-small;
-    background-color: var(--marriage-color);
-    vertical-align: central;
-}
+                                .tree-node-image {
+                                    height: 100%;
+                                    object-fit: contain;
+                                    margin-right: $thickness-small;
+                                    fill: var(--foreground-color-highlight);
+                                    transition: fill $default-transition;
+                                    padding: 0;
+                                }
 
-.secondary-marriage {
-    top: 16.66%;
-}
+                                .tree-node-main-name-text {
+                                    @extend %tree-node-main-text;
+                                    font-weight: bold;
+                                }
 
-.tree-node-image {
-    height: 100%;
-    object-fit: contain;
-    margin-right: $thickness-small;
-    fill: var(--foreground-color-highlight);
-    transition: fill $default-transition;
-    /*border: 3px solid red;*/
-    padding: 0;
-}
+                                .tree-node-main-lived-text {
+                                    @extend %tree-node-main-text;
+                                }
 
-.tree-node-texts {
-    display: inline-flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin: auto;
-}
+                                .tree-action-button {
+                                    position: absolute;
+                                    margin: 3px;
+                                    padding: 3px;
+                                    border: none;
+                                    top: $thickness-small;
+                                    right: $thickness-small;
+                                    background-color: transparent;
 
-%tree-node-main-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: center;
-    font-size: $font-size-small;
-}
+                                    &:hover {
+                                        background-color: transparent;
+                                    }
+                                }
 
-.tree-node-main-name-text {
-    @extend %tree-node-main-text;
-    font-weight: bold;
-}
+                                .tree-node-male {
+                                    @extend .tree-node;
+                                    background-color: var(--male-color);
+                                }
 
-.tree-node-main-lived-text {
-    @extend %tree-node-main-text;
-}
+                                .tree-node-female {
+                                    @extend .tree-node;
+                                    background-color: var(--female-color);
+                                }
 
-.tree-node-marriage-text {
-    @extend %tree-node-main-text;
-}
+                                .main-marriage {
+                                    
+                                }
+                            }
 
-.tree-node-marriage-date-text {
-    @extend %tree-node-main-text;
-    font-weight: bold;
-}
+                            .tree-node-marriage {
+                                @extend .tree-node;
+                                width: $marriage-node-width;
+                                height: $marriage-node-height;
+                                margin: 0px 20px;
+                                font-size: $font-size-small;
+                                background-color: var(--marriage-color);
+                                vertical-align: central;
 
-.tree-action-button {
-    position: absolute;
-    margin: 3px;
-    padding: 3px;
-    border: none;
-    top: $thickness-small;
-    right: $thickness-small;
-    background-color: transparent;
+                                .tree-node-marriage-text {
+                                    @extend %tree-node-main-text;
+                                }
 
-    &:hover {
-        background-color: transparent;
+                                .tree-node-marriage-date-text {
+                                    @extend %tree-node-main-text;
+                                    font-weight: bold;
+                                }
+                            }
+
+                            .secondary-marriage {
+                                top: 16.66%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .tree-lines-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-color: transparent;
+
+            %tree-line-svg {
+                stroke-width: 1px;
+                transition: stroke $default-transition;
+                fill: transparent;
+            }
+
+            .tree-line-biological-svg {
+                @extend %tree-line-svg;
+                stroke: var(--foreground-color);
+                stroke-dasharray: 4,4;
+            }
+
+            .tree-line-adoptive-svg {
+                @extend %tree-line-svg;
+                stroke-dasharray: 6,6;
+                stroke: orange;
+            }
+
+            .tree-line-marriage-svg {
+                @extend %tree-line-svg;
+                stroke: forestgreen;
+            }
+        }
     }
-}
-
-%tree-line-svg {
-    stroke-width: 1px;
-    transition: stroke $default-transition;
-    fill: transparent;
-}
-
-.tree-line-biological-svg {
-    @extend %tree-line-svg;
-    stroke: var(--foreground-color);
-    stroke-dasharray: 4,4;
-}
-
-.tree-line-adoptive-svg {
-    @extend %tree-line-svg;
-    stroke-dasharray: 6,6;
-    stroke: orange;
-}
-
-.tree-line-marriage-svg {
-    @extend %tree-line-svg;
-    stroke: forestgreen;
 }
 
 #loading-text-container {
