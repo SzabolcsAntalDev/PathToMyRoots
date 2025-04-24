@@ -8,7 +8,7 @@
             extendedMarriage2.mainMarriage?.male?.birthDate ??
             extendedMarriage2.mainMarriage?.female?.birthDate;
 
-        return sortByDates(birthDate1, birthDate2);
+        return sortDates(birthDate1, birthDate2);
     });
 }
 
@@ -19,20 +19,25 @@ function sortSiblingsByBirthDate(generations) {
                 const birthDate1 = getBirthDate(extendedMarriages1);
                 const birthDate2 = getBirthDate(extendedMarriages2);
 
-                return sortByDates(birthDate1, birthDate2);
+                return sortDates(birthDate1, birthDate2);
             });
         });
     });
 }
 
 function getBirthDate(extendedMarriages) {
-    let mainExtendedMarriageSibling = getMainExtendedMarriageSibling(extendedMarriages);
-    if (!mainExtendedMarriageSibling) {
-        mainExtendedMarriageSibling = getFirstExtendedMarriageSiblingWithBirthDate(extendedMarriages);
+    let extendedMarriageWithBirthDate = getMainExtendedMarriageSibling(extendedMarriages);
+    if (!extendedMarriageWithBirthDate) {
+        // if main sibling does not have birthDate
+        if (!extendedMarriageWithBirthDate.mainMarriage?.male?.birthDate &&
+            !extendedMarriageWithBirthDate.mainMarriage?.female?.birthDate) {
+            // Szabi: when can this happen? feels like never
+            extendedMarriageWithBirthDate = getFirstExtendedMarriageSiblingWithBirthDate(extendedMarriages);
+        }
     }
 
-    return mainExtendedMarriageSibling?.mainMarriage?.male?.birthDate ??
-        mainExtendedMarriageSibling?.mainMarriage?.female?.birthDate;
+    return extendedMarriageWithBirthDate?.mainMarriage?.male?.birthDate ??
+        extendedMarriageWithBirthDate?.mainMarriage?.female?.birthDate;
 }
 
 function getMainExtendedMarriageSibling(extendedMarriages) {
@@ -44,7 +49,6 @@ function getMainExtendedMarriageSibling(extendedMarriages) {
     return null;
 }
 
-// Szabi: birthDate that is not null and not default
 function getFirstExtendedMarriageSiblingWithBirthDate(extendedMarriages) {
     for (const extendedMarriage of extendedMarriages) {
         if (extendedMarriage.mainMarriage?.male?.birthDate || extendedMarriage.mainMarriage?.female?.birthDate) {
@@ -54,7 +58,7 @@ function getFirstExtendedMarriageSiblingWithBirthDate(extendedMarriages) {
     return null;
 }
 
-function sortByDates(date1, date2) {
+function sortDates(date1, date2) {
     const parsedDate1 = parseDateToNumber(date1);
     const parsedDate2 = parseDateToNumber(date2);
 

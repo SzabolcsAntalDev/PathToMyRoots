@@ -25,7 +25,6 @@
     });
 }
 
-
 function getChildrenIds(extendedMarriage) {
     return (extendedMarriage.secondaryMarriage?.inverseBiologicalParentIds ?? [])
         .concat(extendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? [])

@@ -1,27 +1,27 @@
 ﻿function createExtendedMarriagesChains(generations) {
     generations.forEach(generation => {
-        let groups = [];
-        let currentGroup = [];
+        let extendedMarriagesChains = [];
+        let currentExtendedMarriages = [];
 
         generation.extendedMarriages.forEach(extendedMarriage => {
-            if (currentGroup.length == 0) {
-                currentGroup.push(extendedMarriage);
-                groups.push(currentGroup);
+            if (currentExtendedMarriages.length == 0) {
+                currentExtendedMarriages.push(extendedMarriage);
+                extendedMarriagesChains.push(currentExtendedMarriages);
                 return;
             }
 
-            const previousExtendedMarriage = currentGroup[currentGroup.length - 1];
-            const prevFemaleId = previousExtendedMarriage.mainMarriage?.female?.id;
-            const currSecondaryId = extendedMarriage.secondaryMarriage?.femaleId;
+            const previousExtendedMarriage = currentExtendedMarriages[currentExtendedMarriages.length - 1];
+            const femaleIdFromPreviousMarriage = previousExtendedMarriage.mainMarriage?.female?.id;
+            const femaleIdFromCurrentMarriage = extendedMarriage.secondaryMarriage?.femaleId;
 
-            if (prevFemaleId && currSecondaryId && prevFemaleId === currSecondaryId) {
-                currentGroup.push(extendedMarriage);
+            if (femaleIdFromPreviousMarriage && femaleIdFromCurrentMarriage && femaleIdFromPreviousMarriage === femaleIdFromCurrentMarriage) {
+                currentExtendedMarriages.push(extendedMarriage);
             } else {
-                currentGroup = [extendedMarriage];
-                groups.push(currentGroup);
+                currentExtendedMarriages = [extendedMarriage];
+                extendedMarriagesChains.push(currentExtendedMarriages);
             }
         });
 
-        generation.extendedMarriagesChains = groups;
+        generation.extendedMarriagesChains = extendedMarriagesChains;
     });
 }

@@ -3,13 +3,11 @@
     const generations = await createGenerationsWithExtendedMarriages(personId);
 
     sortGenerationExtendedMarriagesByBirthDate(generations[0]);
-    sortExtendedMarriagesByMainAndSecondaryMarriages(generations);
+    sortExtendedMarriagesBySecondaryMarriages(generations);
     createExtendedMarriagesChains(generations);
     createSiblingsChains(generations)
     sortSiblingsByBirthDate(generations);
-
-    // Szabi: sort only orphans
-    //sortSiblingsChainsByBirthDate();
+    // sortOrphansByBirthDate(generations);
 
     const generationsData = {};
     generationsData.generations = generations;
