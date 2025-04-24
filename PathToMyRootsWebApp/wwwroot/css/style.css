@@ -461,20 +461,23 @@ fieldset input[type=text] {
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings {
   display: flex;
   padding: 0px;
-  margin: 0px 30px;
-  padding: 0px;
+  margin: 0px auto;
+  padding: 0px 20px;
+  /*border: 2px solid yellow;*/
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages {
   display: flex;
   padding: 0px;
-  margin: 0px auto;
+  margin: 0px 10px;
   padding: 0px;
+  /*border: 2px solid red;*/
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage {
   display: flex;
   padding: 0px;
-  margin: 0px auto;
+  margin: 0px 10px;
   padding: 0px;
+  /*border: 2px solid blue;*/
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-female, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-male {
   display: inline-flex;
@@ -537,7 +540,7 @@ fieldset input[type=text] {
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage {
   width: 70px;
   height: 35px;
-  margin: 0px 20px;
+  margin: 0px 10px;
   font-size: 11px;
   background-color: var(--marriage-color);
   vertical-align: central;

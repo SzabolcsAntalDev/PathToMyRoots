@@ -136,8 +136,8 @@ $person-node-width: 200px;
 $person-node-height: 70px;
 $marriage-node-width: 70px;
 $marriage-node-height: ($person-node-height / 2);
-
-$distance-between-nodes: 15px;
+$node-margin-value: 10px;
+$node-margin: 0px $node-margin-value;
 
 $persons-and-dropdown-image-width: 30px;
 $persons-and-dropdown-image-height: 40px;
@@ -584,20 +584,23 @@ fieldset {
                 .tree-siblings {
                     display: flex;
                     padding: 0px;
-                    margin: 0px 30px;
-                    padding: 0px;
+                    margin: 0px auto;
+                    padding: 0px calc($node-margin-value * 2);
+                    /*border: 2px solid yellow;*/
 
                     .tree-extended-marriages {
                         display: flex;
                         padding: 0px;
-                        margin: 0px auto;
+                        margin: $node-margin;
                         padding: 0px;
+                        /*border: 2px solid red;*/
 
                         .tree-extended-marriage {
                             display: flex;
                             padding: 0px;
-                            margin: 0px auto;
+                            margin: $node-margin;
                             padding: 0px;
+                            /*border: 2px solid blue;*/
 
                             .tree-node {
                                 display: inline-flex;
@@ -675,7 +678,6 @@ fieldset {
                                 }
 
                                 .main-marriage {
-                                    
                                 }
                             }
 
@@ -683,7 +685,7 @@ fieldset {
                                 @extend .tree-node;
                                 width: $marriage-node-width;
                                 height: $marriage-node-height;
-                                margin: 0px 20px;
+                                margin: $node-margin;
                                 font-size: $font-size-small;
                                 background-color: var(--marriage-color);
                                 vertical-align: central;
