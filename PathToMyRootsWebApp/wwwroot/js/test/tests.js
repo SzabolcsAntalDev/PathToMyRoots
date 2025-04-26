@@ -28,5 +28,11 @@
 
         treeDiagramsContainer.append(createTestTitleHtml('Orpan parents on second level are added'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, 100);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Double married females first husband is displayed'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 110);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Step siblings grouping'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 120);
     })();
 });
