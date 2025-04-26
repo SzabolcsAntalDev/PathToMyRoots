@@ -588,10 +588,11 @@ fieldset {
                     padding: 0px calc($node-margin-value * 2);
                     /*border: 2px solid yellow;*/
 
+                    // Szabi: could be called tree-sibling
                     .tree-extended-marriages {
                         display: flex;
                         padding: 0px;
-                        margin: $node-margin;
+                        margin: 0px;
                         padding: 0px;
                         /*border: 2px solid red;*/
 
@@ -601,6 +602,10 @@ fieldset {
                             margin: $node-margin;
                             padding: 0px;
                             /*border: 2px solid blue;*/
+
+                            &:has(.secondary-marriage) {
+                                margin-left: calc($node-margin-value * -1);
+                            }
 
                             .tree-node {
                                 display: inline-flex;
@@ -629,7 +634,6 @@ fieldset {
                                     font-size: $font-size-small;
                                 }
                             }
-
 
                             .tree-main-marriage {
                                 display: inline-block;
