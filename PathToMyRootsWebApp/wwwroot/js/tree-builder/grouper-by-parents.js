@@ -71,11 +71,6 @@ function marriagesIsChildOf(extendedMarriages, childrenIds) {
         const maleId = extendedMarriage.mainMarriage?.male?.id;
         const femaleId = extendedMarriage.mainMarriage?.female?.id;
 
-        if (childrenIds.includes(maleId) || childrenIds.includes(femaleId)) {
-            extendedMarriage.isMainSibling = true;
-            return true;
-        }
-
-        return false;
+        return childrenIds.includes(maleId) || childrenIds.includes(femaleId);
     });
 }

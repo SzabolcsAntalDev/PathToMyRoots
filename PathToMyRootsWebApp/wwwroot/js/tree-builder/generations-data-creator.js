@@ -6,7 +6,6 @@
     sortExtendedMarriagesBySecondaryMarriages(generations);
     createExtendedMarriagesChains(generations);
     createSiblingsChains(generations)
-    sortSiblingsByBirthDate(generations);
 
     const generationsData = {};
     generationsData.generations = generations;
