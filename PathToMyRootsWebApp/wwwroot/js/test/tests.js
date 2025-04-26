@@ -49,5 +49,9 @@
         personId += personIdBuffer;
         treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents as orphans on the second level, they are sorted by birthDates'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
+
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents as orphans on the second level, they are sorted by birthDates'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
     })();
 });
