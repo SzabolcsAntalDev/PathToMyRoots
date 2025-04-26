@@ -28,8 +28,6 @@ INSERT INTO Persons (
 			FirstName, 			LastName, 				MaidenName, 	OtherNames, 	BiologicalFatherID, BiologicalMotherID, AdoptiveFatherID, AdoptiveMotherID, FirstSpouseID,	SecondSpouseID, FirstMarriageStartDate, SecondMarriageStartDate,	IsMale, BirthDate, 		DeathDate, 		ImageUrl)
 VALUES
 
-
-
 /* 1  */ (	'András', 			'Antal', 				NULL, 			'Púj', 			7, 					8, 					NULL,				NULL,			2, 				NULL,			NULL,					NULL, 						1, 		'+19580310', 	NULL, 			'a802a6f1-cf37-47f9-9384-dcac755b2596.png'	),
 /* 2  */ (	'Irénke', 			'Antal', 				'Korpos', 		'Rigó',			6, 					5, 					NULL,				NULL,			1, 				NULL,			NULL,					NULL, 						0, 		'+19620501', 	NULL, 			'd4691786-9873-4f29-bf20-ec23359cd1ae.png'	),
 /* 3  */ (	'Szabolcs-Csongor', 'Antal', 				NULL, 			NULL, 			1, 					2, 					NULL,				NULL,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+19910816', 	NULL, 			'b045774e-7737-4c0b-b5b6-2b2a13abc112.png'	),
@@ -447,7 +445,177 @@ VALUES
 /* 394 */ (	'Beáta',			'Tóth',					'?',	    	NULL,			384, 				385, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+19770114',	NULL, 			NULL	),
 /* 395 */ (	'Tamara',			'Mihály',				NULL,	    	'Pendzsi',		388, 				389, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'bf562941-39be-4fe3-bd98-6c0f07b9e4a9.png'	)
 
--- /* 264 */ (	'Dezső',			'Aaa',				NULL,	    	NULL,			NULL, 				NULL, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL, 						0, 		'+yyyymmdd',	'+yyyymmdd', 	NULL	)
+
+SET IDENTITY_INSERT Persons ON;
+DECLARE @id INT = -1000000;
+DECLARE @idBuffer INT = 30;
+
+-- ==========================================================================================================================
+-- three simple generations
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0, 	'GrandFather1', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 1,	'GrandMother1', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 2,	'GrandFather2', 	NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 3,	'GrandMother2', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 4,	'Father1', 			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 5,	'Mother', 			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 6,	'Child',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 7,	'Father2', 			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
+
+-- ==========================================================================================================================
+-- child with biological and adoptive parents
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'BiologicalFather', NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
+		(	@id + 1,	'BiologicalMother', NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
+		(	@id + 2,	'AdoptoveMother', 	NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
+		(	@id + 3,	'AdoptiveFather', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
+		(	@id + 4,	'Child', 			NULL,			NULL,			NULL,			@id + 0, 			@id + 1, 			@id + 2,			@id + 3,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL)
+
+-- ==========================================================================================================================
+-- sort two generations by birthdays
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'ChildFemale5',		NULL,			NULL,			NULL,			@id + 6, 			@id + 5,			NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		'+20080101',	NULL,	NULL),
+		(	@id + 1,	'ChildMale4',		NULL,			NULL,			NULL,			@id + 8, 			@id + 7,			NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		'+20070101',	NULL,	NULL),
+		(	@id + 2,	'ChildFemale4', 	NULL,			NULL,			NULL, 			@id + 8, 			@id + 7,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						0, 		'+20060101',	NULL,	NULL),
+		(	@id + 3,	'ChildFemale3', 	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+20050101',	NULL,	NULL),
+		(	@id + 4,	'ChildMale3', 		NULL,			NULL,			NULL,			@id + 8, 			@id + 7, 			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+20040101',	NULL,	NULL),
+		(	@id + 5,	'ParentFemale2', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+20030101',	NULL,	NULL),
+		(	@id + 6,	'ParentMale2', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+20020101',	NULL,	NULL),
+		(	@id + 7,	'ParentFemale1', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+20010101',	NULL,	NULL),
+		(	@id + 8,	'ParentMale1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+20000101',	NULL,	NULL)
+
+-- ==========================================================================================================================
+-- tie spouses in two generations
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'ChildFemale4',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'ChildMale4',		NULL,			NULL,			NULL,			@id + 9, 			@id + 8,			NULL,				NULL,				@id + 2, 		@id + 0,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'ChildFemale3',		NULL,			NULL,			NULL, 			NULL, 				NULL,				NULL,				NULL,				@id + 1,		@id + 3,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 3,	'ChildMale3', 		NULL,			NULL,			NULL,			@id + 11, 			@id + 10,			NULL,				NULL,				@id + 5, 		@id + 2,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 4,	'ChildMale2', 		NULL,			NULL,			NULL,			@id + 12, 			@id + 13, 			NULL,				NULL,				@id + 7, 		@id + 5,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 5,	'ChildFemale2',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 3, 		@id + 4,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 6,	'ChildMale1', 		NULL,			NULL,			NULL,			@id + 14, 			@id + 15,			NULL,				NULL,				@id + 7, 		NULL,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 7,	'ChildFemale1',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 4, 		@id + 6,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 8,	'ParentFemale4',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 9, 		NULL,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 9,	'ParentMale4', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 10, 		@id + 8,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 10,	'ParentFemale3',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 9, 		@id + 11,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 11,	'ParentMale3', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 13, 		@id + 10,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 12,	'ParentMale2', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 15, 		@id + 13,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 13,	'ParentFemale2',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 11, 		@id + 12,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 14,	'ParentMale1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 15, 		NULL,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 15,	'ParentFemale1',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 12, 		@id + 14,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
+
+-- ==========================================================================================================================
+-- double married female
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 1,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'Male2',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL)
+
+
+-- ==========================================================================================================================
+-- double married male
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'Female2',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
+
+-- ==========================================================================================================================
+-- divorced female with biological and adoptive children
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Male',				NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		@id + 4,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'BiologicalChild',	NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 3,	'AdoptiveChild',	NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 0,			@id + 1,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 4,	'Female2',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
+
+-- ==========================================================================================================================
+-- order correctly younger children with older parents
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Level0 Male1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 1,	'Level0 Female1',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 2,	'Level0 Male2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 3,	'Level0 Female2',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 4,	'Level1 Male2',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
+		(	@id + 5,	'Level1 Female2',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
+		(	@id + 6,	'Level1 Male1',		NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+1996mmdd',	NULL,		NULL),
+		(	@id + 7,	'Level1 Female1',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1997mmdd',	NULL,		NULL),
+		(	@id + 8,	'Level2 Male1',		NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						1, 		'+1998mmdd',	NULL,		NULL),
+		(	@id + 9,	'Level2 Female1',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+1999mmdd',	NULL,		NULL),
+		(	@id + 10,	'Level2 Male2',		NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 11, 		NULL,			NULL,					NULL, 						1, 		'+2000mmdd',	NULL,		NULL),
+		(	@id + 11,	'Level2 Female2',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+2001mmdd',	NULL,		NULL),
+		(	@id + 12,	'Level3 Male1',		NULL,			NULL,			NULL,			@id + 8, 			@id + 9,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+2002mmdd',	NULL,		NULL),
+		(	@id + 13,	'Level3 Female1',	NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+2003mmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- double married females first husband is displayed when female is loaded first
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- step siblings grouping
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'Female2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'Child1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'Child3',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'Child5',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'Child2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'Child4',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'Child6',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- sort second level orphan parents by birthDate
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'GrandFather',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'GrandMother',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 3,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 4,	'Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
+		(	@id + 5,	'Female2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
+		(	@id + 6,	'Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 7,	 	NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 7,	'Female3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 8,	'ChildFemale1',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'ChildMale1',		NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 8,	 	@id + 10,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'ChildFemale2',		NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 9,	 	NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+SET IDENTITY_INSERT Persons OFF;
 
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_BiologicalFatherID
