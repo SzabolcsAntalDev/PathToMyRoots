@@ -245,7 +245,7 @@ function createMarriagesLinePathHtml(pathData, isBiological) {
         .attr('class', 'tree-line-marriage-svg');
 }
 
-function createTestTitleHtml(testTitle) {
+function createTestTitleHtml(testIndex, testTitle) {
     return $('<h2>')
-        .text(testTitle);
+        .text(`${testIndex}. ${testTitle}`);
 }

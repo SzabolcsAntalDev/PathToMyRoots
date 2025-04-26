@@ -2,40 +2,52 @@
     (async () => {
         const treeDiagramsContainer = $('#tree-diagrams-container');
 
-        treeDiagramsContainer.append(createTestTitleHtml('Three simple generations'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 1);
+        let personId = -1000000;
+        let personIdBuffer = 30;
+        let testIndex = 1;
 
-        treeDiagramsContainer.append(createTestTitleHtml('Child with biological and adoptive parents'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 10);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When a person has a three generaion family, generations are displayed on three levels'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Sort two generations by birthdays'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 20);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When child has biological and adoptive parents, biological and adoptive lines are drawn'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Tie spouses in two generations'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 30);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When sibling groups and siblings are not ordered when loaded, they are sorted after loading'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Double married female'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 50);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When extended marriages have secondary marriage, they are chained based on the second marriage'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Double married male'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 60);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When female is double married, both husbands are displayed'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Divorced female with biological and adoptive children'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 70);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When male is double married, both wives are displayed'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Order correctly younger children with older parents'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 82);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Orpan parents on second level are added'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 100);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When older parents have younger children, children are ordered by parents first instead of birthDates'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Double married females first husband is displayed'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 110);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When female is loaded first, her first husband is still loaded'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Step siblings grouping'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 120);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When children have common parents, they are displayed in separate sibling groups'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
-        treeDiagramsContainer.append(createTestTitleHtml('Sort second level orphan parents by birthDate'));
-        await createAndDisplayTreeDiagram(treeDiagramsContainer, 130);
+        personId += personIdBuffer;
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents as orphans on the second level, they are sorted by birthDates'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
     })();
 });
