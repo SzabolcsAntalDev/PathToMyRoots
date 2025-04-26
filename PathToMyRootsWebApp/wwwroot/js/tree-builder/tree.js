@@ -15,7 +15,7 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     hideElement(treeDiagram);
 
     const generationsData = await createGenerationsData(personId);
-    const nodesContainer = createNodesContainer(generationsData);
+    const nodesContainer = createNodesContainerHtml(generationsData);
     const linesContainer = createEmptyLinesContainerHtml();
 
     treeDiagram.append(nodesContainer);

@@ -184,24 +184,16 @@ function createMarriage(male, female, isMainMarriage) {
     return marriage;
 }
 
-// gets the largest persons with available parents number of all generations
-function getLargestGenerationSize(generations) {
-    let largestGenerationSize = 0;
-
-    generations.forEach(generation => {
-        largestGenerationSize = Math.max(largestGenerationSize, getGenerationSize(generation));
-    })
-
-    return largestGenerationSize;
+function getCommonBiologicalChildren(male, female) {
+    return male.inverseBiologicalFather
+        .filter(maleChild => female.inverseBiologicalMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .map(child => child.id);
 }
 
-function getGenerationSize(generation) {
-    let size = 0;
-    generation.extendedMarriages.forEach(extendedMarriage => {
-        size += extendedMarriage.numberOfAvailableParents;
-    });
-
-    return size;
+function getCommonAdoptiveChildren(male, female) {
+    return male.inverseAdoptiveFather
+        .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .map(child => child.id);
 }
 
 function getNumberOfAvailableParents(extendedMarriage) {
