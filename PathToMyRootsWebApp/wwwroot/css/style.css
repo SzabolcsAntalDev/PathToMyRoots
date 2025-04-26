@@ -468,7 +468,7 @@ fieldset input[type=text] {
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages {
   display: flex;
   padding: 0px;
-  margin: 0px 10px;
+  margin: 0px;
   padding: 0px;
   /*border: 2px solid red;*/
 }
@@ -478,6 +478,9 @@ fieldset input[type=text] {
   margin: 0px 10px;
   padding: 0px;
   /*border: 2px solid blue;*/
+}
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage:has(.secondary-marriage) {
+  margin-left: -10px;
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-female, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-male {
   display: inline-flex;

@@ -34,5 +34,8 @@
 
         treeDiagramsContainer.append(createTestTitleHtml('Step siblings grouping'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, 120);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Sort second level orphan parents by birthDate'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 130);
     })();
 });

@@ -2,12 +2,11 @@
 
     const generations = await createGenerationsWithExtendedMarriages(personId);
 
-    sortGenerationExtendedMarriagesByBirthDate(generations[0]);
+    sortExtendedMarriagesByBirthDate(generations);
     sortExtendedMarriagesBySecondaryMarriages(generations);
     createExtendedMarriagesChains(generations);
     createSiblingsChains(generations)
     sortSiblingsByBirthDate(generations);
-    // sortOrphansByBirthDate(generations);
 
     const generationsData = {};
     generationsData.generations = generations;

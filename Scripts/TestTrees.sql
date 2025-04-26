@@ -171,7 +171,6 @@ VALUES
 		(	@id + 1,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
-
 -- ==========================================================================================================================
 -- step siblings grouping
 SET @id = 120;
@@ -188,6 +187,25 @@ VALUES
 		(	@id + 7,	'Child2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 8,	'Child4',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 9,	'Child6',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- sort second level orphan parents by birthDate
+SET @id = 130;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'GrandFather',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'GrandMother',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 3,	'Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 4,	'Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
+		(	@id + 5,	'Female2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
+		(	@id + 6,	'Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 7,	 	NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 7,	'Female3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 8,	'ChildFemale1',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'ChildMale1',		NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 8,	 	@id + 10,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'ChildFemale2',		NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 9,	 	NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
 
 SET IDENTITY_INSERT Persons OFF;
 
