@@ -1,23 +1,32 @@
 ﻿function createSiblingsChains(generations) {
     generations.forEach((generation, level) => {
         let siblingsChains = [];
-        let consumedMarriagesChain = [];
         // persons on first level are non siblings
         if (level == 0) {
             generation.extendedMarriagesChains.forEach(extendedMarriages => {
                 siblingsChains.push([extendedMarriages]);
-                consumedMarriagesChain.push(extendedMarriages);
             });
         }
         else {
-            generations[level - 1].extendedMarriagesChains.forEach(extendedMarriages => {
-                extendedMarriages.forEach(extendedMarriage => {
-                    const childrenIds = getChildrenIds(extendedMarriage)
-                    const siblings = getChildrenFromGeneration(generations[level], childrenIds, consumedMarriagesChain);
-                    if (siblings.length > 0) {
-                        siblingsChains.push(siblings);
-                    }
+            const consumedMarriagesChain = [];
+            // use siblings set in the previous iteration, needed for the order of the children
+            generations[level - 1].siblingsChains.forEach(sibling => {
+                sibling.forEach(extendedMarriages => {
+                    extendedMarriages.forEach(extendedMarriage => {
+                        const childrenIds = getChildrenIds(extendedMarriage)
+                        const siblings = getChildrenFromGeneration(generations[level], childrenIds, consumedMarriagesChain);
+                        if (siblings.length > 0) {
+                            siblingsChains.push(siblings);
+                        }
+                    });
                 });
+            });
+
+            // add orphans
+            generation.extendedMarriagesChains.forEach(extendedMarriages => {
+                if (!consumedMarriagesChain.includes(extendedMarriages)) {
+                    siblingsChains.push([extendedMarriages]);
+                }
             });
         }
 

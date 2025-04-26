@@ -22,5 +22,11 @@
 
         treeDiagramsContainer.append(createTestTitleHtml('Divorced female with biological and adoptive children'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, 70);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Order correctly younger children with older parents'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 82);
+
+        treeDiagramsContainer.append(createTestTitleHtml('Orpan parents on second level are added'));
+        await createAndDisplayTreeDiagram(treeDiagramsContainer, 100);
     })();
 });
