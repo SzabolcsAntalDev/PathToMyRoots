@@ -51,7 +51,7 @@
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
-        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents as orphans on the second level, they are sorted by birthDates'));
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When extended marriage male has default birthDate, use female birthDate for sorting'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
     })();
 });
