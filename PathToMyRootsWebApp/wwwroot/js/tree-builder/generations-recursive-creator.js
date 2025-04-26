@@ -205,13 +205,13 @@ function getGenerationSize(generation) {
 }
 
 function getNumberOfAvailableParents(extendedMarriage) {
-    return getNumOfParents(extendedMarriage.mainMarriage?.male) +
-        getNumOfParents(extendedMarriage.mainMarriage?.female) +
-        getNumOfParents(extendedMarriage.secondaryMarriage?.male) +
-        getNumOfParents(extendedMarriage.secondaryMarriage?.female);
+    return getNumberOfParents(extendedMarriage.mainMarriage?.male) +
+        getNumberOfParents(extendedMarriage.mainMarriage?.female) +
+        getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
+        getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
 }
 
-function getNumOfParents(person) {
+function getNumberOfParents(person) {
     if (person == null) {
         return null;
     }

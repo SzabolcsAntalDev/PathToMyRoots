@@ -13,10 +13,16 @@
             generations[level - 1].siblingsChains.forEach(sibling => {
                 sibling.forEach(extendedMarriages => {
                     extendedMarriages.forEach(extendedMarriage => {
-                        const childrenIds = getChildrenIds(extendedMarriage)
-                        const siblings = getChildrenFromGeneration(generations[level], childrenIds, consumedMarriagesChain);
-                        if (siblings.length > 0) {
-                            siblingsChains.push(siblings);
+                        const secondMarriageChildrenIds = getSecondaryMarriageChildrenIds(extendedMarriage);
+                        const secondaryMarriageSiblings = getChildrenFromGeneration(generations[level], secondMarriageChildrenIds, consumedMarriagesChain);
+                        if (secondaryMarriageSiblings.length > 0) {
+                            siblingsChains.push(secondaryMarriageSiblings);
+                        }
+
+                        const mainMarriageChildrenIds = getMainMarriageChildrenIds(extendedMarriage);
+                        const mainMarriageSiblings = getChildrenFromGeneration(generations[level], mainMarriageChildrenIds, consumedMarriagesChain);
+                        if (mainMarriageSiblings.length > 0) {
+                            siblingsChains.push(mainMarriageSiblings);
                         }
                     });
                 });
@@ -34,10 +40,13 @@
     });
 }
 
-function getChildrenIds(extendedMarriage) {
+function getSecondaryMarriageChildrenIds(extendedMarriage) {
     return (extendedMarriage.secondaryMarriage?.inverseBiologicalParentIds ?? [])
-        .concat(extendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? [])
-        .concat(extendedMarriage.mainMarriage?.marriage?.inverseBiologicalParentIds ?? [])
+        .concat(extendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? []);
+}
+
+function getMainMarriageChildrenIds(extendedMarriage) {
+    return (extendedMarriage.mainMarriage?.marriage?.inverseBiologicalParentIds ?? [])
         .concat(extendedMarriage.mainMarriage?.marriage?.inverseAdoptiveParentIds ?? []);
 }
 
