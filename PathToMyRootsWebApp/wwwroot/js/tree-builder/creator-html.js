@@ -159,17 +159,6 @@ function createNodeHtml(person) {
             .attr('height', '20')
             .append(use);
 
-    const buttonUpdatePerson =
-        $('<button>')
-            .attr('class', 'tree-action-button')
-            .css('visibility', 'hidden')
-            .append(svg)
-            .on('click', function () {
-                const url = `/Person/UpdatePerson?id=${person.id}`;
-                window.location.href = url;
-            });
-
-    // Szabi: extract one for node-male and node-female for better find selector?
     return $('<div>')
         .attr('id', person.id)
         .attr('class', 'tree-node ' + (person.isMale ? 'tree-node-male' : 'tree-node-female'))
@@ -180,14 +169,9 @@ function createNodeHtml(person) {
         .data('adoptiveMotherId', person.adoptiveMotherId)
         .append(imgPerson)
         .append(textsContainer)
-        .append(buttonUpdatePerson)
-        .on({
-            mouseenter: function () {
-                $(buttonUpdatePerson).css('visibility', 'visible');
-            },
-            mouseleave: function () {
-                $(buttonUpdatePerson).css('visibility', 'hidden');
-            }
+        .on('click', function () {
+            const url = `/Person/PersonDetails?id=${person.id}`;
+            window.location.href = url;
         });
 }
 

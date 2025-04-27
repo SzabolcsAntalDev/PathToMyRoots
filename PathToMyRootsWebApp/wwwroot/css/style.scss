@@ -619,6 +619,18 @@ fieldset {
                                 transition: background-color $default-transition, border $default-transition;
                             }
 
+                            .tree-node-person {
+                                @extend .tree-node;
+                                transition: color $default-transition, background-color $default-transition, border $default-transition;
+
+                                &:hover {
+                                    color: var(--foreground-color-highlight);
+                                    border-color: var(--foreground-color-highlight);
+                                    cursor: pointer;
+                                }
+                            }
+
+
                             .tree-node-texts {
                                 display: inline-flex;
                                 flex-direction: column;
@@ -656,27 +668,13 @@ fieldset {
                                     @extend %tree-node-main-text;
                                 }
 
-                                .tree-action-button {
-                                    position: absolute;
-                                    margin: 3px;
-                                    padding: 3px;
-                                    border: none;
-                                    top: $thickness-small;
-                                    right: $thickness-small;
-                                    background-color: transparent;
-
-                                    &:hover {
-                                        background-color: transparent;
-                                    }
-                                }
-
                                 .tree-node-male {
-                                    @extend .tree-node;
+                                    @extend .tree-node-person;
                                     background-color: var(--male-color);
                                 }
 
                                 .tree-node-female {
-                                    @extend .tree-node;
+                                    @extend .tree-node-person;
                                     background-color: var(--female-color);
                                 }
 
