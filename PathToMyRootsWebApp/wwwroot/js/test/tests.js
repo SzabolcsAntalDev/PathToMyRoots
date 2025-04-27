@@ -15,7 +15,7 @@
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
-        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When sibling groups and siblings are not ordered when loaded, they are sorted after loading'));
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When sibling groups and siblings are not sorted when loaded, they are sorted after loading'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
@@ -35,7 +35,7 @@
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
-        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When older parents have younger children, children are ordered by parents first instead of birthDates'));
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When older parents have younger children, children are sorted by parents first instead of birthDates'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
@@ -47,7 +47,7 @@
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
-        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents as orphans on the second level, they are sorted by birthDates'));
+        treeDiagramsContainer.append(createTestTitleHtml(testIndex++, 'When parents are orphans on the second level, they are sorted by birthDates'));
         await createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
         personId += personIdBuffer;
