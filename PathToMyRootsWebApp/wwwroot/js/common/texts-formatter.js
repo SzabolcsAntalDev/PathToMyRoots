@@ -19,6 +19,17 @@
     return details.filter(Boolean).join(' ');
 }
 
+function datesToPeriodText(startDate, endDate) {
+
+    var startDateString = dateToString(startDate) ?? HumanReadableDateUnknownDate;
+    var endDateString = dateToString(endDate);
+
+    if (endDateString)
+        return `${startDateString} - ${endDateString}`;
+
+    return startDateString;
+}
+
 function dateToString(date) {
     if (date == null)
         return null;
@@ -27,14 +38,4 @@ function dateToString(date) {
         return HumanReadableDateUnknownDate;
 
     return formatDateString(date);
-}
-
-function datesToPeriodText(startDate, endDate) {
-    var startDateString = dateToString(startDate) ?? HumanReadableDateUnknownDate;
-    var endDateString = dateToString(endDate);
-
-    if (endDateString)
-        return `${startDateString} - ${endDateString}`;
-
-    return startDateString;
 }

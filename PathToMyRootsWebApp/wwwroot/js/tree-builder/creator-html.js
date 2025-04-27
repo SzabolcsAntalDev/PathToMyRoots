@@ -197,27 +197,20 @@ function createLineBreakHtml() {
 
 function createNodeMarriageHtml(marriage) {
 
-    const marriageText = 'marriage';
+    const marriageText = `m. ${datesToPeriodText(marriage.startDate, marriage.endDate)}`;
     const spanMarriage =
         $('<span>')
             .attr('class', 'tree-node-marriage-text')
             .html(marriageText);
 
-    const marriageDateText = datesToPeriodText(marriage.startDate, marriage.endDate);
-    const spanMarriageDate =
-        $('<span>')
-            .attr('class', 'tree-node-marriage-date-text')
-            .text(marriageDateText);
-
     const textsContainer =
         $('<div>')
             .attr('class', 'tree-node-texts')
-            .append(spanMarriage)
-            .append(spanMarriageDate);
+            .append(spanMarriage);
 
     return $('<div>')
         .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'secondary-marriage'}`)
-        .attr('title', `${marriageText}\n${marriageDateText}`)
+        .attr('title', marriageText)
         .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
         .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
         .append(textsContainer);
