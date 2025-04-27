@@ -132,9 +132,9 @@ $thickness-super-large: 64px;
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
-$person-node-width: 200px;
-$person-node-height: 70px;
-$marriage-node-width: 70px;
+$person-node-width: 170px;
+$person-node-height: 45px;
+$marriage-node-width: 100px;
 $marriage-node-height: ($person-node-height / 2);
 $node-margin-value: 10px;
 $node-margin: 0px $node-margin-value;
@@ -695,11 +695,6 @@ fieldset {
 
                                 .tree-node-marriage-text {
                                     @extend %tree-node-main-text;
-                                }
-
-                                .tree-node-marriage-date-text {
-                                    @extend %tree-node-main-text;
-                                    font-weight: bold;
                                 }
                             }
 
