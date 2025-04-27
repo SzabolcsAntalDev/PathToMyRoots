@@ -6,6 +6,10 @@
     }
 }
 
+let generationsData;
+let nodesContainer;
+let linesContainer;
+
 async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(treeDiagramsContainer);
     treeDiagramsContainer.append(loadingTextContainer);
@@ -14,9 +18,9 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     const treeDiagram = createTreeDiagramHtml(personId);
     hideElement(treeDiagram);
 
-    const generationsData = await createGenerationsData(personId);
-    const nodesContainer = createNodesContainerHtml(generationsData);
-    const linesContainer = createEmptyLinesContainerHtml();
+    generationsData = await createGenerationsData(personId);
+    nodesContainer = createNodesContainerHtml(generationsData);
+    linesContainer = createEmptyLinesContainerHtml();
 
     treeDiagram.append(nodesContainer);
     treeDiagram.append(linesContainer);
@@ -27,3 +31,10 @@ async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
     await fadeOutElement(loadingTextContainer);
     await fadeInElement(treeDiagram);
 }
+
+document.addEventListener('wheel', (event) => {
+    if (event.ctrlKey) {
+        $(linesContainer).empty();
+        drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
+    }
+});

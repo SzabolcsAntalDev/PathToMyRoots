@@ -34,7 +34,7 @@ function dateToString(date) {
     if (date == null)
         return null;
 
-    if (date === UnknownServerDate)
+    if (date === DatabaseDateUnknown)
         return HumanReadableDateUnknownDate;
 
     return formatDateString(date);
