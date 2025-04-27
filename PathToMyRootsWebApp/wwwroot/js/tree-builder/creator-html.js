@@ -7,15 +7,16 @@
 function createNodesContainerHtml(generationsData) {
     const nodesContainerHtml = createNodesContainerHtmlInner();
 
-    generationsData.generations.forEach(generation => {
-        nodesContainerHtml.append(createGenerationHtml(generation, generationsData.largestGenerationSize));
+
+    generationsData.generations.forEach((generation, index) => {
+        nodesContainerHtml.append(createGenerationHtml(generation, generationsData.largestGenerationSize, index == generationsData.generations.length - 1));
     });
 
     return nodesContainerHtml;
 }
 
-function createGenerationHtml(generation, largestGenerationSize) {
-    const generationHtml = createGenerationHtmlInner(largestGenerationSize);
+function createGenerationHtml(generation, largestGenerationSize, isLast) {
+    const generationHtml = createGenerationHtmlInner(largestGenerationSize, isLast);
 
     generation.siblingsChains.forEach(siblingsChain => {
         generationHtml.append(createSiblingsChainHtml(siblingsChain));
@@ -85,10 +86,10 @@ function createNodesContainerHtmlInner() {
         .attr('class', 'tree-nodes-container');
 }
 
-function createGenerationHtmlInner(largestGenerationSize) {
+function createGenerationHtmlInner(largestGenerationSize, isLast) {
     return $('<div>')
         .attr('class', 'tree-generation')
-        .css('padding', "0px 0px " + ((largestGenerationSize + 3) * linesVerticalOffset) + "px 0px");
+        .css('padding', isLast ? '0px' : '0px 0px ' + ((largestGenerationSize + 3) * linesVerticalOffset) + 'px 0px');
 }
 
 function createSiblingsChainHtmlInner() {
