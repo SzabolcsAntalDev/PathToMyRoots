@@ -740,6 +740,12 @@ fieldset {
     }
 }
 
+#tree-diagrams-container.test-trees-container {
+    .tree-diagram {
+        margin: 0px auto $thickness-extra-large 0px;
+    }
+}
+
 #loading-text-container {
     display: flex;
     flex-direction: column;
