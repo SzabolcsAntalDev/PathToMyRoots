@@ -11,7 +11,7 @@
 
 function getValidOrNullBirthDate(extendedMarriage) {
     const maleBirthDate = extendedMarriage.mainMarriage?.male?.birthDate;
-    return maleBirthDate == null || maleBirthDate == "+yyyymmdd"
+    return maleBirthDate == null || maleBirthDate == DatabaseDateUnknown
         ? extendedMarriage.mainMarriage?.female?.birthDate
         : maleBirthDate;
 }
@@ -27,8 +27,7 @@ function parseDateToNumber(date) {
     if (!date)
         return Infinity;
 
-    // Szabi: extract this probably into Layout.cshtml
-    if (date === "+yyyymmdd")
+    if (date === DatabaseDateUnknown)
         return 99999999;
 
     const dateNumberString =
