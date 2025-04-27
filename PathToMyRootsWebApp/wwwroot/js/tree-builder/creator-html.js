@@ -239,7 +239,11 @@ function createMarriagesLinePathHtml(pathData, isBiological) {
         .attr('class', 'tree-line-marriage-svg');
 }
 
-function createTestTitleHtml(testIndex, testTitle) {
-    return $('<h2>')
+function createHiddenTestTitleHtml(testIndex, testTitle) {
+    const testTitleHtml = $('<h2>')
         .text(`${testIndex}. ${testTitle}`);
+
+    hideElement(testTitleHtml);
+
+    return testTitleHtml;
 }

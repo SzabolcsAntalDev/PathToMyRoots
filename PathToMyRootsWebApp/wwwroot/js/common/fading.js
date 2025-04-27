@@ -3,7 +3,16 @@
 }
 
 async function fadeInElement(element) {
-    
+    // in case fade-hidden and fade-in is immediately applied
+    // the browser does not fade it in, it just shows the element instantly
+    if ($(element).hasClass('fade-hidden')) {
+        await new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, getTransitionIntervalInSeconds() * 50);
+        });
+    }
+
     $(element).addClass('fade-in');
 
     await new Promise(resolve => {
