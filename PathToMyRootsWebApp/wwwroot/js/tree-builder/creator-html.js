@@ -200,7 +200,7 @@ function createNodeMarriageHtml(marriage) {
     const spanMarriage =
         $('<span>')
             .attr('class', 'tree-node-marriage-text')
-            .html(`${marriageText} <br> ${marriage.maleId}-${marriage.femaleId}`);
+            .html(marriageText);
 
     const marriageDateText = datesToPeriodText(marriage.startDate, marriage.endDate);
     const spanMarriageDate =

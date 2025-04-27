@@ -1,8 +1,6 @@
 ﻿function personToPersonNameNodeText(person) {
     let details = [];
 
-    details.push(person.id);
-
     if (person.nobleTitle)
         details.push(person.nobleTitle);
 
