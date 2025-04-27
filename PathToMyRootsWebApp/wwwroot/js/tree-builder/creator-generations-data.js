@@ -3,8 +3,8 @@
     const generations = await createGenerationsWithExtendedMarriages(personId);
 
     sortExtendedMarriagesByBirthDate(generations);
-    sortExtendedMarriagesBySecondaryMarriages(generations);
-    createExtendedMarriagesChains(generations);
+    createExtendedMarriages(generations);
+    createSiblings(generations);
     createSiblingsChains(generations)
 
     const generationsData = {};

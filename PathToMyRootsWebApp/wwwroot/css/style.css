@@ -458,31 +458,31 @@ fieldset input[type=text] {
   white-space: nowrap;
   text-align: center;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain {
   display: flex;
   padding: 0px;
   margin: 0px auto;
   padding: 0px 20px;
   /*border: 2px solid yellow;*/
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling {
   display: flex;
   padding: 0px;
   margin: 0px;
   padding: 0px;
   /*border: 2px solid red;*/
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage {
   display: flex;
   padding: 0px;
   margin: 0px 10px;
   padding: 0px;
   /*border: 2px solid blue;*/
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage:has(.secondary-marriage) {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage:has(.secondary-marriage) {
   margin-left: -10px;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-female, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-male {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-female, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-male {
   display: inline-flex;
   position: relative;
   flex-direction: row;
@@ -494,24 +494,24 @@ fieldset input[type=text] {
   border-radius: 4px;
   transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-texts {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-texts {
   display: inline-flex;
   flex-direction: column;
   overflow: hidden;
   margin: auto;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-texts .tree-node-marriage .tree-node-marriage-date-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage .tree-node-texts .tree-node-marriage-date-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-texts .tree-node-marriage .tree-node-marriage-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage .tree-node-texts .tree-node-marriage-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-texts .tree-main-marriage .tree-node-main-lived-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-texts .tree-node-main-lived-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-texts .tree-main-marriage .tree-node-main-name-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-texts .tree-node-main-name-text {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-texts .tree-node-marriage .tree-node-marriage-date-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage .tree-node-texts .tree-node-marriage-date-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-texts .tree-node-marriage .tree-node-marriage-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage .tree-node-texts .tree-node-marriage-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-texts .tree-main-marriage .tree-node-main-lived-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-texts .tree-node-main-lived-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-texts .tree-main-marriage .tree-node-main-name-text, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-texts .tree-node-main-name-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
   font-size: 11px;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage {
   display: inline-block;
   padding: 0px;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-image {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-image {
   height: 100%;
   object-fit: contain;
   margin-right: 4px;
@@ -519,10 +519,10 @@ fieldset input[type=text] {
   transition: fill 0.3s linear 0s;
   padding: 0;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-main-name-text {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-main-name-text {
   font-weight: bold;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-action-button {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-action-button {
   position: absolute;
   margin: 3px;
   padding: 3px;
@@ -531,16 +531,16 @@ fieldset input[type=text] {
   right: 4px;
   background-color: transparent;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-action-button:hover {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-action-button:hover {
   background-color: transparent;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-male {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-male {
   background-color: var(--male-color);
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-main-marriage .tree-node-female {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-female {
   background-color: var(--female-color);
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage {
   width: 70px;
   height: 35px;
   margin: 0px 10px;
@@ -548,10 +548,10 @@ fieldset input[type=text] {
   background-color: var(--marriage-color);
   vertical-align: central;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .tree-node-marriage .tree-node-marriage-date-text {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage .tree-node-marriage-date-text {
   font-weight: bold;
 }
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings .tree-extended-marriages .tree-extended-marriage .secondary-marriage {
+#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .secondary-marriage {
   top: 16.66%;
 }
 #tree-diagrams-container .tree-diagram .tree-lines-container {

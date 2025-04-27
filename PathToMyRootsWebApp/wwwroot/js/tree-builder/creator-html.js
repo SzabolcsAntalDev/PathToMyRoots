@@ -17,31 +17,31 @@ function createNodesContainerHtml(generationsData) {
 function createGenerationHtml(generation, largestGenerationSize) {
     const generationHtml = createGenerationHtmlInner(largestGenerationSize);
 
-    generation.siblingsChains.forEach(siblings => {
-        generationHtml.append(createSiblingsHtml(siblings));
+    generation.siblingsChains.forEach(siblingsChain => {
+        generationHtml.append(createSiblingsChainHtml(siblingsChain));
     })
 
     return generationHtml;
 }
 
-function createSiblingsHtml(siblings) {
-    const siblingsHtml = createSiblingsHtmlInner();
+function createSiblingsChainHtml(siblingsChain) {
+    const siblingsChainHtml = createSiblingsChainHtmlInner();
 
-    siblings.forEach(extendedMarriages => {
-        siblingsHtml.append(createExtendedMarriagesHtml(extendedMarriages));
+    siblingsChain.forEach(sibling => {
+        siblingsChainHtml.append(createSiblingHtml(sibling));
     });
 
-    return siblingsHtml;
+    return siblingsChainHtml;
 }
 
-function createExtendedMarriagesHtml(extendedMarriages) {
-    const extendedMarriagesHtml = createExtendedMarriagesHtmlInner();
+function createSiblingHtml(sibling) {
+    const siblingHtml = createSiblingHtmlInner();
 
-    extendedMarriages.forEach(extendedMarriage => {
-        extendedMarriagesHtml.append(createExtendedMarriageHtml(extendedMarriage));
+    sibling.forEach(extendedMarriage => {
+        siblingHtml.append(createExtendedMarriageHtml(extendedMarriage));
     })
 
-    return extendedMarriagesHtml;
+    return siblingHtml;
 }
 
 function createExtendedMarriageHtml(extendedMarriage) {
@@ -91,14 +91,14 @@ function createGenerationHtmlInner(largestGenerationSize) {
         .css('padding', "0px 0px " + ((largestGenerationSize + 3) * linesVerticalOffset) + "px 0px");
 }
 
-function createSiblingsHtmlInner() {
+function createSiblingsChainHtmlInner() {
     return $('<div>')
-        .attr('class', 'tree-siblings');
+        .attr('class', 'tree-siblings-chain');
 }
 
-function createExtendedMarriagesHtmlInner() {
+function createSiblingHtmlInner() {
     return $('<div>')
-        .attr('class', 'tree-extended-marriages');
+        .attr('class', 'tree-sibling');
 }
 
 function createExtendedMarriageHtmlInner() {

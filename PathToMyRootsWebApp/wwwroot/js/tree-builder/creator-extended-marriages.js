@@ -1,4 +1,5 @@
-﻿function sortExtendedMarriagesBySecondaryMarriages(generations) {
+﻿// sorts the extended marriages so each first and second spouse follows each other
+function createExtendedMarriages(generations) {
     generations.forEach(generation => {
         const femaleIdToExtendedMarriage = new Map();
         generation.extendedMarriages.forEach(extendedMarriage => {

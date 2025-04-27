@@ -581,15 +581,14 @@ fieldset {
                 white-space: nowrap;
                 text-align: center;
 
-                .tree-siblings {
+                .tree-siblings-chain {
                     display: flex;
                     padding: 0px;
                     margin: 0px auto;
                     padding: 0px calc($node-margin-value * 2);
                     /*border: 2px solid yellow;*/
 
-                    // Szabi: could be called tree-sibling
-                    .tree-extended-marriages {
+                    .tree-sibling {
                         display: flex;
                         padding: 0px;
                         margin: 0px;
