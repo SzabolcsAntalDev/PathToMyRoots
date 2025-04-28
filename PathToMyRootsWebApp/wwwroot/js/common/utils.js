@@ -15,28 +15,6 @@ function getPopupDisplayIntervalInSeconds() {
     return getIntervalInSeconds('popup-loading-bar-transition-interval');
 }
 
-function formatDateString(dateStr) {
-    const year = parseInt(dateStr.slice(1, 5), 10);
-    const month = parseInt(dateStr.slice(5, 7), 10);
-    const day = parseInt(dateStr.slice(7, 9), 10);
-
-    let parts = [];
-
-    if (!isNaN(year)) {
-        parts.push(year + '.');
-
-        if (!isNaN(month)) {
-            parts.push(String(month).padStart(2, '0') + '.');
-
-            if (!isNaN(day)) {
-                parts.push(String(day).padStart(2, '0') + '.');
-            }
-        }
-    }
-
-    return parts.join(' ');
-}
-
 function showPopup(popupPrefix, message) {
     if (!message) {
         return;

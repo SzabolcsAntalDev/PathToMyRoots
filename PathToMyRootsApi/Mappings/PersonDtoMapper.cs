@@ -82,12 +82,14 @@ namespace PathToMyRootsApi.Mappings
                 LastName = person.LastName,
                 MaidenName = person.MaidenName,
                 OtherNames = person.OtherNames,
+                IsMale = person.IsMale,
                 BirthDate = person.BirthDate,
                 DeathDate = person.DeathDate,
                 BiologicalFatherId = person.BiologicalFatherId,
                 BiologicalMotherId = person.BiologicalMotherId,
                 AdoptiveFatherId = person.AdoptiveFatherId,
                 AdoptiveMotherId = person.AdoptiveMotherId,
+                ImageUrl = person.ImageUrl
             };
         }
     }

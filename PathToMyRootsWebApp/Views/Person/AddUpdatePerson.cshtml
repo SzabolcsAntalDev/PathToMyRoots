@@ -194,6 +194,7 @@
                         {
                             <li data-value="@father.Id" class="@(Model.BiologicalFatherId == father.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
+                                    @* Szabi: this api url chould be extracted *@
                                     <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@father.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(father)

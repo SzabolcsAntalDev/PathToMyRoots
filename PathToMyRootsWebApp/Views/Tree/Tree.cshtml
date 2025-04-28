@@ -21,7 +21,6 @@
         const DatabaseDateUnknown = '@Html.Raw(DateHelper.DatabaseDateUnknown)';
         const HumanReadableDateUnknownDate = '@Html.Raw(DateHelper.HumanReadableDateUnknownDate)';
 
-        const personId = @Model.Id;
-        createAndDisplayTreeDiagram(personId);
+        createAndDisplayTreeDiagram(@Model.Id);
     </script>
 }

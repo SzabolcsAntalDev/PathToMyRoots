@@ -369,6 +369,17 @@ input[type="text"]::placeholder {
     }
 }
 
+.male-background-color {
+    background-color: var(--male-color);
+    transition: background-color $default-transition;
+}
+
+.female-background-color {
+    background-color: var(--female-color);
+    transition: background-color $default-transition;
+}
+
+// Szabi: what is this?
 .small-svg {
     @extend %hoverable-svg;
     width: $small-svg-size;
@@ -615,7 +626,7 @@ fieldset {
                                 height: $person-node-height;
                                 padding: $thickness-small;
                                 border: $border;
-                                border-radius: $border-radius;
+                                border-radius: 0;
                                 transition: background-color $default-transition, border $default-transition;
                             }
 
@@ -670,12 +681,12 @@ fieldset {
 
                                 .tree-node-male {
                                     @extend .tree-node-person;
-                                    background-color: var(--male-color);
+                                    @extend .male-background-color;
                                 }
 
                                 .tree-node-female {
                                     @extend .tree-node-person;
-                                    background-color: var(--female-color);
+                                    @extend .female-background-color;
                                 }
 
                                 .main-marriage {
@@ -786,6 +797,108 @@ fieldset {
     }
 }
 
+
+.person-details {
+    display: flex;
+    flex-direction: row;
+    margin: $thickness-large;
+
+    .info-column {
+        width: 300px;
+        margin: $thickness-large;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .person-details-img {
+            width: 100%;
+            margin-bottom: $thickness-large;
+        }
+
+        .person-details-name-span {
+            margin-bottom: $thickness-medium;
+            font-size: $font-size-large;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .person-details-lived-span {
+            font-size: $font-size-large;
+            text-align: center;
+        }
+    }
+
+    .relatives-column {
+        width: 250px;
+        margin: $thickness-large;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .person-details-relatives-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: $thickness-medium 0px;
+
+            .person-details-relatives-container-title-span {
+                flex-grow: 0;
+                font-size: $font-size-medium;
+            }
+
+            .person-details-relatives {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+
+                .person-details-relative {
+                    display: flex;
+                    cursor: pointer;
+                    margin: $thickness-small 0px;
+
+                    .persons-relative-texts-container {
+                        margin: $thickness-small;
+                        display: flex;
+                        flex-direction: column;
+                        flex-grow: 1;
+                        justify-content: center;
+                    }
+
+                    .persons-relative-name-span {
+                        font-weight: bold;
+                        text-align: center;
+                    }
+
+                    .persons-relative-lived-span {
+                        text-align: center;
+                    }
+
+                    .persons-relative-marriage-span {
+                        text-align: center;
+                        margin-top: $thickness-extra-small;
+                    }
+
+                    .person-details-spouse-img {
+                        width: ($persons-and-dropdown-image-width * 1.4);
+                        height: ($persons-and-dropdown-image-height * 1.4);
+                    }
+
+                    .person-details-child-img {
+                        width: $persons-and-dropdown-image-width;
+                        height: $persons-and-dropdown-image-height;
+                    }
+                }
+            }
+        }
+    }
+
+    .tree-column {
+        flex-grow: 1;
+        align-content: center;
+    }
+}
 
 .persons-filter {
     display: flex;

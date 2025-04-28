@@ -123,20 +123,20 @@ function createNodeHtml(person) {
 
                 const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                 svg.setAttribute('class', 'tree-node-image');
-                svg.setAttribute('viewBox', '0 0 3 4'); // keep 3:4 aspect ratio
+                svg.setAttribute('viewBox', '0 0 3 4');
                 svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
                 svg.appendChild(use);
                 $(this).replaceWith(svg);
             });
 
-    const personNameNodeText = personToPersonNameNodeText(person);
+    const personNameNodeText = formatPersonName(person);
     const spanPersonName =
         $('<span>')
             .text(personNameNodeText)
             .attr('class', 'tree-node-main-name-text');
 
-    const personLivedNodeText = datesToPeriodText(person.birthDate, person.deathDate);
+    const personLivedNodeText = formatTimePeriod(person.birthDate, person.deathDate);
     const spanPersonLived =
         $('<span>')
             .text(personLivedNodeText)
@@ -148,6 +148,7 @@ function createNodeHtml(person) {
             .append(spanPersonName)
             .append(spanPersonLived);
 
+            // Szabi: are these used? this svg is weird with 20x20
     const use =
         $(document.createElementNS('http://www.w3.org/2000/svg', 'use'))
             .attr('href', '/icons/icons.svg#update');
@@ -181,7 +182,7 @@ function createLineBreakHtml() {
 
 function createNodeMarriageHtml(marriage) {
 
-    const marriageText = `m. ${datesToPeriodText(marriage.startDate, marriage.endDate)}`;
+    const marriageText = `m. ${formatTimePeriod(marriage.startDate, marriage.endDate)}`;
     const spanMarriage =
         $('<span>')
             .attr('class', 'tree-node-marriage-text')

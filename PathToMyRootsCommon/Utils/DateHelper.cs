@@ -113,6 +113,7 @@ namespace PathToMyRootsCommon.Utils
             }
         }
 
+        // Szabi: this should be removed, do not format ui stuff on server
         public static string ConvertDatabaseDateToHumanReadableDateFormat(string? databaseDate)
         {
             if (databaseDate == null)

@@ -267,6 +267,16 @@ input[type=text]::placeholder {
   fill: var(--foreground-color-highlight);
 }
 
+.male-background-color, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-male {
+  background-color: var(--male-color);
+  transition: background-color 0.3s linear 0s;
+}
+
+.female-background-color, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-female {
+  background-color: var(--female-color);
+  transition: background-color 0.3s linear 0s;
+}
+
 .small-svg, .person-info-image, #persons-table .td-shrink .persons-action-svg {
   width: 20px;
   height: 20px;
@@ -491,7 +501,7 @@ fieldset input[type=text] {
   height: 45px;
   padding: 4px;
   border: 1px solid var(--foreground-color);
-  border-radius: 4px;
+  border-radius: 0;
   transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-person, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-female, #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-male {
@@ -529,12 +539,6 @@ fieldset input[type=text] {
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-main-name-text {
   font-weight: bold;
-}
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-male {
-  background-color: var(--male-color);
-}
-#tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-main-marriage .tree-node-female {
-  background-color: var(--female-color);
 }
 #tree-diagrams-container .tree-diagram .tree-nodes-container .tree-generation .tree-siblings-chain .tree-sibling .tree-extended-marriage .tree-node-marriage {
   width: 100px;
@@ -611,6 +615,92 @@ fieldset input[type=text] {
 }
 .pagination-container span {
   margin: 0px 8px;
+}
+
+.person-details {
+  display: flex;
+  flex-direction: row;
+  margin: 16px;
+}
+.person-details .info-column {
+  width: 300px;
+  margin: 16px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.person-details .info-column .person-details-img {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.person-details .info-column .person-details-name-span {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+.person-details .info-column .person-details-lived-span {
+  font-size: 18px;
+  text-align: center;
+}
+.person-details .relatives-column {
+  width: 250px;
+  margin: 16px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.person-details .relatives-column .person-details-relatives-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 8px 0px;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives-container-title-span {
+  flex-grow: 0;
+  font-size: 14px;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative {
+  display: flex;
+  cursor: pointer;
+  margin: 4px 0px;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-texts-container {
+  margin: 4px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-name-span {
+  font-weight: bold;
+  text-align: center;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-lived-span {
+  text-align: center;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-marriage-span {
+  text-align: center;
+  margin-top: 2px;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .person-details-spouse-img {
+  width: 42px;
+  height: 56px;
+}
+.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .person-details-child-img {
+  width: 30px;
+  height: 40px;
+}
+.person-details .tree-column {
+  flex-grow: 1;
+  align-content: center;
 }
 
 .persons-filter {
