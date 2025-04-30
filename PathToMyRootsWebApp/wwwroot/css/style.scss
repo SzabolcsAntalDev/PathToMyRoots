@@ -636,6 +636,7 @@ fieldset {
 
                                 &:hover {
                                     color: var(--foreground-color-highlight);
+                                    background-color: var(--background-color-highlight);
                                     border-color: var(--foreground-color-highlight);
                                     cursor: pointer;
                                 }
@@ -830,12 +831,13 @@ fieldset {
     }
 
     .relatives-column {
-        width: 250px;
+        width: 300px;
         margin: $thickness-large;
-        min-width: 250px;
+        min-width: 300px;
         display: flex;
         flex-direction: column;
         align-items: stretch;
+        border: 1px solid blue;
 
         .person-details-relatives-container {
             display: flex;
@@ -851,12 +853,19 @@ fieldset {
             .person-details-relatives {
                 flex-grow: 1;
                 display: flex;
-                flex-direction: column;
 
                 .person-details-relative {
                     display: flex;
+                    flex-grow: 1;
                     cursor: pointer;
-                    margin: $thickness-small 0px;
+                    margin: $thickness-small $thickness-extra-small;
+
+                    &:hover {
+                        color: var(--foreground-color-highlight);
+                        background-color: var(--background-color-highlight);
+                        border-color: var(--foreground-color-highlight);
+                        cursor: pointer;
+                    }
 
                     .persons-relative-texts-container {
                         margin: $thickness-small;
@@ -869,6 +878,9 @@ fieldset {
                     .persons-relative-name-span {
                         font-weight: bold;
                         text-align: center;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
                     }
 
                     .persons-relative-lived-span {
@@ -885,11 +897,19 @@ fieldset {
                         height: ($persons-and-dropdown-image-height * 1.4);
                     }
 
-                    .person-details-child-img {
+                    .person-details-non-spouse-img {
                         width: $persons-and-dropdown-image-width;
                         height: $persons-and-dropdown-image-height;
                     }
                 }
+            }
+
+            .person-details-relatives-horizontal {
+                @extend .person-details-relatives;
+                flex-direction: row;
+            }
+
+            .person-details-relatives-vertical {
             }
         }
     }

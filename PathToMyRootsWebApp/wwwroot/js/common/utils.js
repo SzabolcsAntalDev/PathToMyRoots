@@ -1,4 +1,12 @@
-﻿function getPropertyValue(propertyName) {
+﻿async function getPersonJson(personId) {
+    if (personId == null) {
+        return null;
+    }
+    
+    return await(await fetch(`${apiUrl}/person/${personId}`)).json()
+}
+
+function getPropertyValue(propertyName) {
     return getComputedStyle(document.documentElement).getPropertyValue('--' + propertyName);
 }
 

@@ -37,10 +37,18 @@ function createPersonDetailsRelativesContainerTitle(title) {
     return relativesContainerTitleSpan;
 }
 
-function createRelatives() {
+function createRelativesHorizontal() {
     const relatives =
         $('<div>')
-            .attr('class', 'person-details-relatives');
+            .attr('class', 'person-details-relatives-horizontal');
+
+    return relatives;
+}
+
+function createRelativesVertical() {
+    const relatives =
+        $('<div>')
+            .attr('class', 'person-details-relatives-vertical');
 
     return relatives;
 }
@@ -85,7 +93,7 @@ function createPersonDetailsSpouse(person, marriageStartDate, marriageEndDate) {
         });
 }
 
-function createPersonDetailsChild(person) {
+function createPersonDetailsNonSpouse(person) {
     const personNameText = formatPersonName(person);
     const personNameSpan =
         $('<span>')
@@ -104,7 +112,7 @@ function createPersonDetailsChild(person) {
             .append(personNameSpan)
             .append(personLivedSpan);
 
-    const imgPerson = createPersonImageWithFallbackSvg('person-details-child-img', person.imageUrl);
+    const imgPerson = createPersonImageWithFallbackSvg('person-details-non-spouse-img', person.imageUrl);
 
     return $('<div>')
         .attr('id', person.id)
