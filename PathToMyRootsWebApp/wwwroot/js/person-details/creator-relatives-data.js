@@ -49,6 +49,8 @@
     const adoptiveChildren = getAdoptiveChildren(person);
 
     if (person.firstSpouseId) {
+        relativesData.firstSpouseId = person.firstSpouseId;
+
         const firstSpouse = await getPersonJson(person.firstSpouseId);
 
         const firstMarriageBiologicalChildren = getBiologicalChildrenIds(firstSpouse);
@@ -62,6 +64,8 @@
     }
 
     if (person.secondSpouseId) {
+        relativesData.secondSpouseId = person.secondSpouseId;
+
         const secondSpouse = await getPersonJson(person.secondSpouseId);
 
         const secondMarriageBiologicalChildren = getBiologicalChildrenIds(secondSpouse);
@@ -83,7 +87,7 @@
             grandChildren.push(grandChild);
         }
     }
-    relativesData.grandChildren = grandChildren;
+    relativesData.grandChildren = arrayRemoveDuplicatesWithSameId(grandChildren);
 
     return relativesData;
 }
