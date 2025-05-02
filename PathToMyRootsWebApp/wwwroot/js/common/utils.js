@@ -2,8 +2,8 @@
     if (personId == null) {
         return null;
     }
-    
-    return await(await fetch(`${apiUrl}/person/${personId}`)).json()
+
+    return await (await fetch(`${apiUrl}/person/${personId}`)).json()
 }
 
 function getPropertyValue(propertyName) {
@@ -129,4 +129,8 @@ function setSize(fromElement, toElement) {
         width: fromElementSize.width,
         height: fromElementSize.height
     });
+}
+
+function arrayRemoveDuplicatesWithSameId(array){
+    return Array.from(new Map(array.map(obj => [obj.id, obj])).values());
 }

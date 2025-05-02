@@ -3,7 +3,7 @@
 
     createInfoColumn(person);
     await createRelativesColumn(person);
-    createTreeColumn(personId);
+    //createTreeColumn(personId);
 }
 
 function createInfoColumn(person) {
@@ -20,9 +20,14 @@ async function createRelativesColumn(person) {
 
     const relativesData = await createRelativesData(person)
 
-    addRelatives(relativesColumn, 'Grandparents', relativesData.grandParents);
+    addRelatives(relativesColumn, relativesData.adoptiveGrandParents.length > 0 ? 'Biological grandparents' : 'Grandparents', relativesData.biologicalGrandParents);
     addRelatives(relativesColumn, 'Biological Parents', relativesData.biologicalParents);
+
+    addRelatives(relativesColumn, 'Adoptive grandparents', relativesData.adoptiveGrandParents);
     addRelatives(relativesColumn, 'Adoptive Parents', relativesData.adoptiveParents);
+
+    addRelatives(relativesColumn, 'Siblings', relativesData.siblings);
+    addRelatives(relativesColumn, 'First cousins', relativesData.cousins);
 
     addSpouse(
         relativesColumn,

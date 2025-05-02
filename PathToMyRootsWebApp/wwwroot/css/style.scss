@@ -850,13 +850,6 @@ fieldset {
                     width: 100%;
                     min-width: 0;
                     margin: $thickness-small $thickness-extra-small;
-                    cursor: pointer;
-
-                    &:hover {
-                        color: var(--foreground-color-highlight);
-                        background-color: var(--background-color-highlight);
-                        border-color: var(--foreground-color-highlight);
-                    }
 
                     .relative-spans-container {
                         flex-grow: 1;
@@ -899,6 +892,17 @@ fieldset {
                         flex-shrink: 0;
                     }
                 }
+
+                .relative-interactive {
+                    @extend .relative;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--foreground-color-highlight);
+                        background-color: var(--background-color-highlight);
+                        border-color: var(--foreground-color-highlight);
+                    }
+                }
             }
         }
     }
@@ -906,6 +910,7 @@ fieldset {
     .tree-column {
         display: flex;
         flex-grow: 1;
+        width: 56%;
         min-width: 0;
         padding: $thickness-large;
 
