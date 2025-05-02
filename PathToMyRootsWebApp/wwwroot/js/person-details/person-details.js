@@ -1,6 +1,6 @@
 ﻿async function createPersonDetails(personId) {
     const treeDiagramsContainer = $('#tree-diagrams-container');
-    //createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
+    createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
 
     const person = await getPersonJson(personId);
     const infoColumn = $('.info-column');
@@ -14,138 +14,171 @@
     const familyData = await generateFamilyData(person);
 
     {
-        const grandParentsContainer =
-            createPersonDetailsRelativesContainer()
+        const withTitleContainer =
+            createPersonDetailsRelativesWithTitleContainer()
                 .append(createPersonDetailsRelativesContainerTitle('Grandparents'));
 
-        const container = createRelativesHorizontal();
+        const horizontalContainer = createRelativesHorizontalContainer();
 
         familyData.grandParents.forEach(grandParent => {
-            container.append(createPersonDetailsNonSpouse(grandParent));
+            horizontalContainer
+                .append(createPersonDetailsNonSpouse(grandParent));
         });
 
-        grandParentsContainer.append(container);
-        relativesColumn.append(grandParentsContainer);
+        withTitleContainer.append(horizontalContainer);
+        relativesColumn.append(withTitleContainer);
     }
 
     {
-        const biologicalParentsContainer =
-            createPersonDetailsRelativesContainer()
+        const withTitleContainer =
+            createPersonDetailsRelativesWithTitleContainer()
                 .append(createPersonDetailsRelativesContainerTitle('Biological Parents'));
 
-        const container = createRelativesHorizontal();
+        const horizontalContainer = createRelativesHorizontalContainer();
 
         familyData.biologicalParents.forEach(parent => {
-            container.append(createPersonDetailsNonSpouse(parent));
+            horizontalContainer.append(createPersonDetailsNonSpouse(parent));
         });
-        biologicalParentsContainer.append(container);
-        relativesColumn.append(biologicalParentsContainer);
+        withTitleContainer.append(horizontalContainer);
+        relativesColumn.append(withTitleContainer);
     }
 
     {
-        const adoptiveParentsContainer =
-            createPersonDetailsRelativesContainer()
+        const withTitleContainer =
+            createPersonDetailsRelativesWithTitleContainer()
                 .append(createPersonDetailsRelativesContainerTitle('Adoptive Parents'));
 
-        const container = createRelativesHorizontal();
+        const horizontalContainer = createRelativesHorizontalContainer();
 
         familyData.adoptiveParents.forEach(parent => {
-            container.append(createPersonDetailsNonSpouse(parent));
+            horizontalContainer.append(createPersonDetailsNonSpouse(parent));
         });
-        adoptiveParentsContainer.append(container);
-        relativesColumn.append(adoptiveParentsContainer);
+        withTitleContainer.append(horizontalContainer);
+        relativesColumn.append(withTitleContainer);
     }
 
     {
         if (familyData.firstSpouse) {
-            const spouseContainer =
-                createPersonDetailsRelativesContainer()
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
                     .append(createPersonDetailsRelativesContainerTitle(
                         familyData.secondSpouse ? 'First spouse' : 'Spouse'));
 
-            const spouse = createRelativesHorizontal();
-            spouse.append(
+            const horizontalContainer = createRelativesHorizontalContainer();
+            horizontalContainer.append(
                 createPersonDetailsSpouse(
                     person.firstSpouse,
                     person.firstMarriageStartDate,
                     person.firstMarriageEndDate));
 
-            spouseContainer.append(spouse);
-            relativesColumn.append(spouseContainer);
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
         }
+    }
 
+    {
         if (familyData.firstMarriageBiologicalChildren) {
-            const childrenContainer =
-                createPersonDetailsRelativesContainer()
-                    .append(createPersonDetailsRelativesContainerTitle('Biological children'));
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Biological Children'));
 
-            const container = createRelativesHorizontal();
+            const horizontalContainer = createRelativesHorizontalContainer();
 
             familyData.firstMarriageBiologicalChildren.forEach(child => {
-                container.append(createPersonDetailsNonSpouse(child));
+                horizontalContainer.append(createPersonDetailsNonSpouse(child));
             });
 
-            childrenContainer.append(container);
-            relativesColumn.append(childrenContainer);
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
         }
+    }
 
+    {
         if (familyData.firstMarriageAdoptiveChildren) {
-            const childrenContainer =
-                createPersonDetailsRelativesContainer()
-                    .append(createPersonDetailsRelativesContainerTitle('Adoptive children'));
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Adoptive Children'));
 
-            const container = createRelativesHorizontal();
+            const horizontalContainer = createRelativesHorizontalContainer();
 
             familyData.firstMarriageAdoptiveChildren.forEach(child => {
-                container.append(createPersonDetailsNonSpouse(child));
+                horizontalContainer.append(createPersonDetailsNonSpouse(child));
             });
 
-            childrenContainer.append(container);
-            relativesColumn.append(childrenContainer);
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
         }
-
-
-
-
-
-
-
-        if (familyData.firstSpouseChildren)
-
-            if (person.secondSpouse) {
-                const spouseContainer =
-                    createPersonDetailsRelativesContainer()
-                        .append(createPersonDetailsRelativesContainerTitle('Second spouse'));
-
-                const spouse = createRelativesHorizontal();
-                spouse.append(
-                    createPersonDetailsSpouse(
-                        person.secondSpouse,
-                        person.secondMarriageStartDate,
-                        person.secondMarriageEndDate));
-
-                spouseContainer.append(spouse);
-                relativesColumn.append(spouseContainer);
-            }
     }
-    //const childrenObjects = (person.inverseBiologicalFather ?? [])
-    //    .concat(person.inverseBiologicalMother ?? [])
-    //    .concat(person.inverseAdoptiveFather ?? [])
-    //    .concat(person.inverseAdoptiveMother ?? [])
 
-    //if (childrenObjects) {
-    //    const childrenContainer =
-    //        createPersonDetailsRelativesContainer()
-    //            .append(createPersonDetailsRelativesContainerTitle('Children'))
 
-    //    const children = createRelatives();
-    //    childrenObjects.forEach(child => {
-    //        children.append(createPersonDetailsChild(child));
-    //    })
+    {
+        if (familyData.secondSpouse) {
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Second Spouse'));
 
-    //    childrenContainer.append(children);
-    //    relativesColumn.append(childrenContainer);
-    //}
+            const horizontalContainer = createRelativesHorizontalContainer();
+            horizontalContainer.append(
+                createPersonDetailsSpouse(
+                    person.secondSpouse,
+                    person.secondMarriageStartDate,
+                    person.secondMarriageEndDate));
+
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
+        }
+    }
+
+    {
+        if (familyData.secondMarriageBiologicalChildren) {
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Biological Children'));
+
+            const horizontalContainer = createRelativesHorizontalContainer();
+
+            familyData.secondMarriageBiologicalChildren.forEach(child => {
+                horizontalContainer.append(createPersonDetailsNonSpouse(child));
+            });
+
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
+        }
+    }
+
+    {
+        if (familyData.secondMarriageAdoptiveChildren) {
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Adoptive Children'));
+
+            const horizontalContainer = createRelativesHorizontalContainer();
+
+            familyData.secondMarriageAdoptiveChildren.forEach(child => {
+                horizontalContainer.append(createPersonDetailsNonSpouse(child));
+            });
+
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
+        }
+    }
+
+    {
+        if (familyData.grandChildren) {
+            const withTitleContainer =
+                createPersonDetailsRelativesWithTitleContainer()
+                    .append(createPersonDetailsRelativesContainerTitle('Grandchildren'));
+
+            const horizontalContainer = createRelativesHorizontalContainer();
+
+            familyData.grandChildren.forEach(grandChild => {
+                horizontalContainer.append(createPersonDetailsNonSpouse(grandChild));
+            });
+
+            withTitleContainer.append(horizontalContainer);
+            relativesColumn.append(withTitleContainer);
+        }
+    }
 }
 
 async function generateFamilyData(person) {
@@ -212,7 +245,26 @@ async function generateFamilyData(person) {
     familyData.secondMarriageAdoptiveChildren =
         adoptiveChildren.filter(child => secondMarriageAdoptiveChildren.includes(child.id));
 
+    const grandChildren = [];
+
+    const children = (biologicalChildren ?? []).concat(adoptiveChildren ?? []);
+    for (const child of children) {
+        const childObject = await getPersonJson(child.id);
+        const allChildren = getAllChildren(childObject);
+        for (const grandChild of allChildren) {
+            grandChildren.push(grandChild);
+        }
+    }
+
+    familyData.grandChildren = grandChildren;
     return familyData;
+}
+
+function getAllChildren(person) {
+    return (person.inverseBiologicalFather ?? [])
+        .concat(person.inverseBiologicalMother ?? [])
+        .concat(person.inverseAdoptiveFather ?? [])
+        .concat(person.inverseAdoptiveMother ?? []);
 }
 
 function getBiologicalChildren(person) {

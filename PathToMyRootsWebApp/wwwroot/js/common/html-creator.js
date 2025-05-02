@@ -20,10 +20,10 @@ function createPersonDetailsLivedSpan(person) {
     return livedSpan;
 }
 
-function createPersonDetailsRelativesContainer() {
+function createPersonDetailsRelativesWithTitleContainer() {
     const relativesContainer =
         $('<div>')
-            .attr('class', 'person-details-relatives-container');
+            .attr('class', 'person-details-relatives-with-title-container');
 
     return relativesContainer;
 }
@@ -37,10 +37,10 @@ function createPersonDetailsRelativesContainerTitle(title) {
     return relativesContainerTitleSpan;
 }
 
-function createRelativesHorizontal() {
+function createRelativesHorizontalContainer() {
     const relatives =
         $('<div>')
-            .attr('class', 'person-details-relatives-horizontal');
+            .attr('class', 'person-details-relatives-horizontal-container');
 
     return relatives;
 }

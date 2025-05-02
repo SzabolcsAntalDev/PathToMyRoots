@@ -9,6 +9,7 @@
   --male-color: #2C333A;
   --female-color: #22272B;
   --marriage-color: #161A1D;
+  --adoptive-color: orange;
   --success-color: forestgreen;
   --error-color: red;
   --success-popup-foreground-color: #C7D1DB;
@@ -30,6 +31,7 @@
   --male-color: #DEE4EA;
   --female-color: #F1F2F4;
   --marriage-color: #F7F8F9;
+  --adoptive-color: orange;
   --success-color: forestgreen;
   --error-color: red;
   --success-popup-foreground-color: #C7D1DB;
@@ -68,7 +70,7 @@ body {
 }
 
 .nav-and-right-container {
-  flex: 1;
+  flex-grow: 1;
   display: flex;
   overflow: auto;
 }
@@ -81,24 +83,23 @@ body {
 }
 
 .right-container {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  flex: 1;
   background-color: var(--background-color);
   transition: background-color 0.3s linear 0s;
 }
 
 .top-container {
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
 }
 
 .page-data-container {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
   margin: 64px;
   margin-top: 0px;
   min-width: 800px;
@@ -451,10 +452,10 @@ fieldset input[type=text] {
 
 #tree-diagrams-container {
   position: relative;
+  flex-grow: 1;
   display: flex;
-  flex: 1;
-  overflow: auto;
   flex-direction: column;
+  overflow: auto;
 }
 #tree-diagrams-container .tree-diagram {
   position: relative;
@@ -570,7 +571,7 @@ fieldset input[type=text] {
 }
 #tree-diagrams-container .tree-diagram .tree-lines-container .tree-line-adoptive-svg {
   stroke-dasharray: 6, 6;
-  stroke: orange;
+  stroke: var(--adoptive-color);
 }
 #tree-diagrams-container .tree-diagram .tree-lines-container .tree-line-marriage-svg {
   stroke: forestgreen;
@@ -619,20 +620,17 @@ fieldset input[type=text] {
 }
 
 .person-details {
+  flex-grow: 1;
   display: flex;
-  flex-direction: row;
-  margin: 16px;
+  column-gap: 16px;
+  overflow-y: auto;
 }
 .person-details .info-column {
-  width: 300px;
-  margin: 16px;
-  min-width: 300px;
+  width: 22%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
 }
 .person-details .info-column .person-details-img {
-  width: 100%;
   margin-bottom: 16px;
 }
 .person-details .info-column .person-details-name-span {
@@ -646,77 +644,65 @@ fieldset input[type=text] {
   text-align: center;
 }
 .person-details .relatives-column {
-  width: 300px;
-  margin: 16px;
-  min-width: 300px;
+  width: 22%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  border: 1px solid blue;
 }
-.person-details .relatives-column .person-details-relatives-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.person-details .relatives-column .person-details-relatives-with-title-container {
   margin: 8px 0px;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives-container-title-span {
-  flex-grow: 0;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-container-title-span {
   font-size: 14px;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal {
-  flex-grow: 1;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container {
   display: flex;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative {
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative {
   display: flex;
-  flex-grow: 1;
-  cursor: pointer;
+  width: 100%;
+  min-width: 0;
   margin: 4px 2px;
+  cursor: pointer;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative:hover, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative:hover {
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative:hover {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
   border-color: var(--foreground-color-highlight);
-  cursor: pointer;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-texts-container, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .persons-relative-texts-container {
-  margin: 4px;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: center;
+  min-width: 0;
+  padding: 4px;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-name-span, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .persons-relative-name-span {
-  font-weight: bold;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container .centered-with-ellipsis, .person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container .persons-relative-marriage-span, .person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container .persons-relative-lived-span, .person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container .persons-relative-name-span {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-lived-span, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .persons-relative-lived-span {
-  text-align: center;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .persons-relative-texts-container .persons-relative-name-span {
+  font-weight: bold;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .persons-relative-marriage-span, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .persons-relative-marriage-span {
-  text-align: center;
-  margin-top: 2px;
-}
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .person-details-spouse-img, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .person-details-spouse-img {
-  width: 42px;
-  height: 56px;
-}
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives .person-details-relative .person-details-non-spouse-img, .person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal .person-details-relative .person-details-non-spouse-img {
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .person-details-non-spouse-img {
   width: 30px;
   height: 40px;
+  flex-shrink: 0;
 }
-.person-details .relatives-column .person-details-relatives-container .person-details-relatives-horizontal {
-  flex-direction: row;
+.person-details .relatives-column .person-details-relatives-with-title-container .person-details-relatives-horizontal-container .person-details-relative .person-details-spouse-img {
+  width: 42px;
+  height: 56px;
+  flex-shrink: 0;
 }
 .person-details .tree-column {
+  display: flex;
   flex-grow: 1;
-  align-content: center;
+  min-width: 0;
+  /*border: 1px solid blue;*/
+  padding: 20px;
 }
-
 .persons-filter {
   display: flex;
 }

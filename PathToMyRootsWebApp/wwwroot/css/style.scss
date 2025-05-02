@@ -2,6 +2,7 @@
 
 $success-color-default: forestgreen;
 $error-color-default: red;
+$adoptive-color-default: orange;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
@@ -15,6 +16,7 @@ $background-color-highlight-dark: #454F59;
 $male-color-dark: $background-color-footer-dark;
 $female-color-dark: $background-color-nav-dark;
 $marriage-color-dark: $background-color-dark;
+$adoptive-color-dark: $adoptive-color-default;
 
 $success-color-dark: $success-color-default;
 $error-color-dark: $error-color-default;
@@ -38,6 +40,7 @@ $background-color-highlight-light: #DCDFE4;
 $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
 $marriage-color-light: $background-color-light;
+$adoptive-color-light: $adoptive-color-default;
 
 $success-color-light: $success-color-default;
 $error-color-light: $error-color-default;
@@ -60,6 +63,7 @@ $error-popup-background-color-light: $error-color-light;
     --male-color: #{$male-color-dark};
     --female-color: #{$female-color-dark};
     --marriage-color: #{$marriage-color-dark};
+    --adoptive-color: #{$adoptive-color-dark};
     --success-color: #{$success-color-dark};
     --error-color: #{$error-color-dark};
     --success-popup-foreground-color: #{$success-popup-foreground-color-dark};
@@ -81,6 +85,7 @@ $error-popup-background-color-light: $error-color-light;
     --male-color: #{$male-color-light};
     --female-color: #{$female-color-light};
     --marriage-color: #{$marriage-color-light};
+    --adoptive-color: #{$adoptive-color-light};
     --success-color: #{$success-color-light};
     --error-color: #{$error-color-light};
     --success-popup-foreground-color: #{$success-popup-foreground-color-light};
@@ -160,7 +165,7 @@ body {
 }
 
 .nav-and-right-container {
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     overflow: auto;
 }
@@ -173,24 +178,23 @@ body {
 }
 
 .right-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow: auto;
-    flex: 1;
     background-color: var(--background-color);
     transition: background-color $default-transition;
 }
 
 .top-container {
     display: flex;
-    flex-direction: row;
     justify-content: flex-end;
 }
 
 .page-data-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
     margin: $thickness-super-large;
     margin-top: 0px;
     min-width: 800px;
@@ -572,10 +576,10 @@ fieldset {
 
 #tree-diagrams-container {
     position: relative;
+    flex-grow: 1;
     display: flex;
-    flex: 1;
-    overflow: auto;
     flex-direction: column;
+    overflow: auto;
 
     .tree-diagram {
         position: relative;
@@ -739,7 +743,7 @@ fieldset {
             .tree-line-adoptive-svg {
                 @extend %tree-line-svg;
                 stroke-dasharray: 6,6;
-                stroke: orange;
+                stroke: var(--adoptive-color);
             }
 
             .tree-line-marriage-svg {
@@ -798,22 +802,18 @@ fieldset {
     }
 }
 
-
 .person-details {
+    flex-grow: 1;
     display: flex;
-    flex-direction: row;
-    margin: $thickness-large;
+    column-gap: $thickness-large;
+    overflow-y: auto;
 
     .info-column {
-        width: 300px;
-        margin: $thickness-large;
-        min-width: 300px;
+        width: 22%;
         display: flex;
         flex-direction: column;
-        align-items: stretch;
 
         .person-details-img {
-            width: 100%;
             margin-bottom: $thickness-large;
         }
 
@@ -831,92 +831,88 @@ fieldset {
     }
 
     .relatives-column {
-        width: 300px;
-        margin: $thickness-large;
-        min-width: 300px;
+        width: 22%;
         display: flex;
         flex-direction: column;
-        align-items: stretch;
-        border: 1px solid blue;
 
-        .person-details-relatives-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+        .person-details-relatives-with-title-container {
             margin: $thickness-medium 0px;
 
             .person-details-relatives-container-title-span {
-                flex-grow: 0;
                 font-size: $font-size-medium;
             }
 
-            .person-details-relatives {
-                flex-grow: 1;
+            .person-details-relatives-horizontal-container {
                 display: flex;
 
                 .person-details-relative {
                     display: flex;
-                    flex-grow: 1;
-                    cursor: pointer;
+                    width: 100%;
+                    min-width: 0;
                     margin: $thickness-small $thickness-extra-small;
+                    cursor: pointer;
 
                     &:hover {
                         color: var(--foreground-color-highlight);
                         background-color: var(--background-color-highlight);
                         border-color: var(--foreground-color-highlight);
-                        cursor: pointer;
                     }
 
                     .persons-relative-texts-container {
-                        margin: $thickness-small;
+                        flex-grow: 1;
                         display: flex;
                         flex-direction: column;
-                        flex-grow: 1;
                         justify-content: center;
-                    }
+                        min-width: 0;
+                        padding: $thickness-small;
 
-                    .persons-relative-name-span {
-                        font-weight: bold;
-                        text-align: center;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                    }
+                        .centered-with-ellipsis {
+                            text-align: center;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
 
-                    .persons-relative-lived-span {
-                        text-align: center;
-                    }
+                        .persons-relative-name-span {
+                            @extend .centered-with-ellipsis;
+                            font-weight: bold;
+                        }
 
-                    .persons-relative-marriage-span {
-                        text-align: center;
-                        margin-top: $thickness-extra-small;
-                    }
+                        .persons-relative-lived-span {
+                            @extend .centered-with-ellipsis;
+                        }
 
-                    .person-details-spouse-img {
-                        width: ($persons-and-dropdown-image-width * 1.4);
-                        height: ($persons-and-dropdown-image-height * 1.4);
+                        .persons-relative-marriage-span {
+                            @extend .centered-with-ellipsis;
+                        }
                     }
 
                     .person-details-non-spouse-img {
                         width: $persons-and-dropdown-image-width;
                         height: $persons-and-dropdown-image-height;
+                        flex-shrink: 0;
+                    }
+
+
+                    .person-details-spouse-img {
+                        width: ($persons-and-dropdown-image-width * 1.4);
+                        height: ($persons-and-dropdown-image-height * 1.4);
+                        flex-shrink: 0;
                     }
                 }
-            }
-
-            .person-details-relatives-horizontal {
-                @extend .person-details-relatives;
-                flex-direction: row;
-            }
-
-            .person-details-relatives-vertical {
             }
         }
     }
 
     .tree-column {
+        display: flex;
         flex-grow: 1;
-        align-content: center;
+        min-width: 0;
+        /*border: 1px solid blue;*/
+        padding: 20px;
+
+        #tree-diagrams-container {
+        }
     }
 }
 
