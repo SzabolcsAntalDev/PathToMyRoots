@@ -849,7 +849,9 @@ fieldset {
                     display: flex;
                     width: 100%;
                     min-width: 0;
-                    margin: $thickness-small $thickness-extra-small;
+                    border: $thickness-extra-small solid var(--background-color);
+                    transition: color $default-transition, background-color $default-transition, border $default-transition;
+                    box-sizing: border-box;
 
                     .relative-spans-container {
                         flex-grow: 1;
@@ -900,7 +902,6 @@ fieldset {
                     &:hover {
                         color: var(--foreground-color-highlight);
                         background-color: var(--background-color-highlight);
-                        border-color: var(--foreground-color-highlight);
                     }
                 }
             }
