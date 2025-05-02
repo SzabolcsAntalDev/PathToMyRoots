@@ -813,18 +813,18 @@ fieldset {
         display: flex;
         flex-direction: column;
 
-        .person-details-img {
+        .img {
             margin-bottom: $thickness-large;
         }
 
-        .person-details-name-span {
+        .name {
             margin-bottom: $thickness-medium;
             font-size: $font-size-large;
             font-weight: bold;
             text-align: center;
         }
 
-        .person-details-lived-span {
+        .lived {
             font-size: $font-size-large;
             text-align: center;
         }
@@ -835,17 +835,17 @@ fieldset {
         display: flex;
         flex-direction: column;
 
-        .person-details-relatives-with-title-container {
+        .container-with-title {
             margin: $thickness-medium 0px;
 
-            .person-details-relatives-container-title-span {
+            .container-title {
                 font-size: $font-size-medium;
             }
 
-            .person-details-relatives-horizontal-container {
+            .horizontal-relatives-container {
                 display: flex;
 
-                .person-details-relative {
+                .relative {
                     display: flex;
                     width: 100%;
                     min-width: 0;
@@ -858,7 +858,7 @@ fieldset {
                         border-color: var(--foreground-color-highlight);
                     }
 
-                    .persons-relative-texts-container {
+                    .relative-spans-container {
                         flex-grow: 1;
                         display: flex;
                         flex-direction: column;
@@ -866,35 +866,34 @@ fieldset {
                         min-width: 0;
                         padding: $thickness-small;
 
-                        .centered-with-ellipsis {
+                        .relative-span {
                             text-align: center;
                             text-overflow: ellipsis;
                             white-space: nowrap;
                             overflow: hidden;
                         }
 
-                        .persons-relative-name-span {
-                            @extend .centered-with-ellipsis;
+                        .relative-name-span {
+                            @extend .relative-span;
                             font-weight: bold;
                         }
 
-                        .persons-relative-lived-span {
-                            @extend .centered-with-ellipsis;
+                        .relative-lived-span {
+                            @extend .relative-span;
                         }
 
-                        .persons-relative-marriage-span {
-                            @extend .centered-with-ellipsis;
+                        .relative-marriage-span {
+                            @extend .relative-span;
                         }
                     }
 
-                    .person-details-non-spouse-img {
+                    .relative-non-spouse-img {
                         width: $persons-and-dropdown-image-width;
                         height: $persons-and-dropdown-image-height;
                         flex-shrink: 0;
                     }
 
-
-                    .person-details-spouse-img {
+                    .relative-spouse-img {
                         width: ($persons-and-dropdown-image-width * 1.4);
                         height: ($persons-and-dropdown-image-height * 1.4);
                         flex-shrink: 0;
@@ -908,8 +907,7 @@ fieldset {
         display: flex;
         flex-grow: 1;
         min-width: 0;
-        /*border: 1px solid blue;*/
-        padding: 20px;
+        padding: $thickness-large;
 
         #tree-diagrams-container {
         }
