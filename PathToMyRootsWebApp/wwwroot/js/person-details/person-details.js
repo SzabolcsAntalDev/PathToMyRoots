@@ -20,8 +20,15 @@ async function createRelativesColumn(person) {
 
     const relativesData = await createRelativesData(person)
 
-    addRelatives(relativesColumn, relativesData.adoptiveGrandParents.length > 0 ? 'Biological grandparents' : 'Grandparents', relativesData.biologicalGrandParents);
-    addRelatives(relativesColumn, 'Biological Parents', relativesData.biologicalParents);
+    addRelatives(
+        relativesColumn,
+        relativesData.adoptiveGrandParents.length > 0 ? 'Biological grandparents' : 'Grandparents',
+        relativesData.biologicalGrandParents);
+
+    addRelatives(
+        relativesColumn,
+        relativesData.adoptiveParents ? 'Biological Parents' : 'Parents',
+        relativesData.biologicalParents);
 
     addRelatives(relativesColumn, 'Adoptive grandparents', relativesData.adoptiveGrandParents);
     addRelatives(relativesColumn, 'Adoptive Parents', relativesData.adoptiveParents);
@@ -35,16 +42,17 @@ async function createRelativesColumn(person) {
         person.firstSpouse,
         person.firstMarriageStartDate,
         person.firstMarriageEndDate);
-    addRelatives(relativesColumn, 'Biological Children', relativesData.firstMarriageBiologicalChildren);
+    addRelatives(
+        relativesColumn,
+        relativesData.firstMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+        relativesData.firstMarriageBiologicalChildren);
     addRelatives(relativesColumn, 'Adoptive Children', relativesData.firstMarriageAdoptiveChildren);
 
-    addSpouse(
+    addSpouse(relativesColumn, 'Second spouse', person.secondSpouse, person.secondMarriageStartDate, person.secondMarriageEndDate);
+    addRelatives(
         relativesColumn,
-        'Second spouse',
-        person.secondSpouse,
-        person.secondMarriageStartDate,
-        person.secondMarriageEndDate);
-    addRelatives(relativesColumn, 'Biological Children', relativesData.secondMarriageBiologicalChildren);
+        relativesData.secondMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+        relativesData.secondMarriageBiologicalChildren);
     addRelatives(relativesColumn, 'Adoptive Children', relativesData.secondMarriageAdoptiveChildren);
 
     addRelatives(relativesColumn, 'Grandchildren', relativesData.grandChildren);
