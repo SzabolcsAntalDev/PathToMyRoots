@@ -51,9 +51,12 @@ function createPersonDetailsNonSpouse(person) {
 
     const imgPerson = createPersonImageWithFallbackSvg('relative-non-spouse-img', person.imageUrl);
 
+    const classes =
+        (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
+        (person.isMale ? 'male-background-color' : 'female-background-color');
+
     return $('<div>')
-        .attr('id', person.id)
-        .attr('class', 'relative ' + (person.isMale ? 'male-background-color' : 'female-background-color'))
+        .attr('class', classes)
         .attr('title', `${personNameText}\n${personLivedText}`)
         .append(spansContainer)
         .append(imgPerson)
@@ -91,9 +94,12 @@ function createPersonDetailsSpouse(person, marriageStartDate, marriageEndDate) {
 
     const imgPerson = createPersonImageWithFallbackSvg('relative-spouse-img', person.imageUrl);
 
+    const classes =
+        (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
+        (person.isMale ? 'male-background-color' : 'female-background-color');
+
     return $('<div>')
-        .attr('id', person.id)
-        .attr('class', 'relative ' + (person.isMale ? 'male-background-color' : 'female-background-color'))
+        .attr('class', classes)
         .attr('title', `${personNameText}\n${personLivedText}\n${personMarriageText}`)
         .append(spansContainer)
         .append(imgPerson)

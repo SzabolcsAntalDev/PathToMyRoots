@@ -1,5 +1,4 @@
 ﻿async function createPersonDetails(personId) {
-
     const person = await getPersonJson(personId);
 
     createInfoColumn(person);
