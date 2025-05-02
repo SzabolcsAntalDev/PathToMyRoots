@@ -36,24 +36,28 @@ async function createRelativesColumn(person) {
     addRelatives(relativesColumn, 'Siblings', relativesData.siblings);
     addRelatives(relativesColumn, 'First cousins', relativesData.cousins);
 
-    addSpouse(
-        relativesColumn,
-        relativesData.secondSpouse ? 'First spouse' : 'Spouse',
-        person.firstSpouse,
-        person.firstMarriageStartDate,
-        person.firstMarriageEndDate);
-    addRelatives(
-        relativesColumn,
-        relativesData.firstMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
-        relativesData.firstMarriageBiologicalChildren);
-    addRelatives(relativesColumn, 'Adoptive Children', relativesData.firstMarriageAdoptiveChildren);
+    if (relativesData.firstSpouseId) {
+        addSpouse(
+            relativesColumn,
+            relativesData.secondSpouseId ? 'First spouse' : 'Spouse',
+            person.firstSpouse,
+            person.firstMarriageStartDate,
+            person.firstMarriageEndDate);
+        addRelatives(
+            relativesColumn,
+            relativesData.firstMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+            relativesData.firstMarriageBiologicalChildren);
+        addRelatives(relativesColumn, 'Adoptive Children', relativesData.firstMarriageAdoptiveChildren);
+    }
 
-    addSpouse(relativesColumn, 'Second spouse', person.secondSpouse, person.secondMarriageStartDate, person.secondMarriageEndDate);
-    addRelatives(
-        relativesColumn,
-        relativesData.secondMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
-        relativesData.secondMarriageBiologicalChildren);
-    addRelatives(relativesColumn, 'Adoptive Children', relativesData.secondMarriageAdoptiveChildren);
+    if (relativesData.secondSpouseId) {
+        addSpouse(relativesColumn, 'Second spouse', person.secondSpouse, person.secondMarriageStartDate, person.secondMarriageEndDate);
+        addRelatives(
+            relativesColumn,
+            relativesData.secondMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+            relativesData.secondMarriageBiologicalChildren);
+        addRelatives(relativesColumn, 'Adoptive Children', relativesData.secondMarriageAdoptiveChildren);
+    }
 
     addRelatives(relativesColumn, 'Grandchildren', relativesData.grandChildren);
 }
@@ -67,14 +71,22 @@ function addRelatives(relativesColumn, title, relatives) {
         createPersonDetailsContainerWithTitle()
             .append(createPersonDetailsContainerTitleSpan(title));
 
-    const horizontalFamilyContainer = createPersonDetailsHorizontalRelativesContainer();
+    let horizontalFamilyContainer;
 
-    relatives.forEach(relative => {
-        horizontalFamilyContainer
-            .append(createPersonDetailsNonSpouse(relative));
+    relatives.forEach((relative, i) => {
+        if (i % 4 == 0) {
+            horizontalFamilyContainer = createPersonDetailsHorizontalRelativesContainer();
+            containerWithTitle.append(horizontalFamilyContainer);
+        }
+
+        const nonSpouse = createPersonDetailsNonSpouse(relative);
+        if (i >= 4) {
+            $(nonSpouse).css("width", "25%");
+        }
+
+        horizontalFamilyContainer.append(nonSpouse);
     });
 
-    containerWithTitle.append(horizontalFamilyContainer);
     relativesColumn.append(containerWithTitle);
 }
 
