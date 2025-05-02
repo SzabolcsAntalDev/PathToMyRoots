@@ -61,8 +61,11 @@ function createPersonDetailsNonSpouse(person) {
         .append(spansContainer)
         .append(imgPerson)
         .on('click', function () {
-            const url = `/Person/PersonDetails?id=${person.id}`;
-            window.location.href = url;
+            if (person.id == -1) {
+                return;
+            }
+
+            window.location.href = `/Person/PersonDetails?id=${person.id}`;
         });
 }
 
@@ -104,7 +107,9 @@ function createPersonDetailsSpouse(person, marriageStartDate, marriageEndDate) {
         .append(spansContainer)
         .append(imgPerson)
         .on('click', function () {
-            const url = `/Person/PersonDetails?id=${person.id}`;
-            window.location.href = url;
+            if (person.id == -1) {
+                return;
+            }
+            window.location.href = `/Person/PersonDetails?id=${person.id}`;
         });
 }
