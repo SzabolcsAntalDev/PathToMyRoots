@@ -173,21 +173,13 @@ function toggleMarriageDatesContainer(spousePrefix) {
 }
 
 function loadPersonImages() {
-    const personImages = document.querySelectorAll('.person-image');
+    const personImages = document.querySelectorAll('.person-small-image');
 
     personImages.forEach(image => {
         image.onerror = function () {
-            const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-            use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", phantomPersonSymbolPath);
-
-            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("class", "person-svg");
-
-            svg.appendChild(use);
-            image.replaceWith(svg);
+            onGetImageError('person-small-image', this);
         };
 
-        const url = image.getAttribute('data-image-url');
-        image.src = url;
+        image.src = image.getAttribute('data-image-url');
     });
 }

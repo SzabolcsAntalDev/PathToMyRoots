@@ -10,7 +10,7 @@
 function drawMarriagesLines(linesContainer, marriageNodes) {
     linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
 
-    marriageNodes.filter('.secondary-marriage').each((_, marriageNode) => {
+    marriageNodes.filter('.secondary-marriage-node').each((_, marriageNode) => {
         drawMarriageLines(linesContainer, marriageNode);
     });
 }
@@ -55,7 +55,7 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
     let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - linesContainer.clientRect.top;
     let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - linesContainer.clientRect.left;
     let childNodeTop = childNode.clientRect.top - linesContainer.clientRect.top;
-    let verticalCenter = (marriageNodeBottom + ($(marriageNode).hasClass('secondary-marriage') ? marriageNode.clientRect.height * 1.5 : 0)) + verticalOffset;
+    let verticalCenter = (marriageNodeBottom + ($(marriageNode).hasClass('secondary-marriage-node') ? marriageNode.clientRect.height * 1.5 : 0)) + verticalOffset;
 
     const hasBiologicalChildren = $(marriageNode).data('inverseBiologicalParentIds').length > 0;
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;

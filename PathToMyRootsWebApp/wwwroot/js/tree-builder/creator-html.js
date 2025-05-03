@@ -113,22 +113,7 @@ function createMainMarriageHtmlInner() {
 }
 
 function createNodeHtml(person) {
-    const imgPerson =
-        $('<img>')
-            .attr('class', 'tree-node-image')
-            .attr('src', apiUrl + '/image/get/' + person.imageUrl)
-            .on('error', function () {
-                const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-                use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', phantomPersonSymbolPath);
-
-                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg.setAttribute('class', 'tree-node-image');
-                svg.setAttribute('viewBox', '0 0 3 4');
-                svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-
-                svg.appendChild(use);
-                $(this).replaceWith(svg);
-            });
+    const imgPerson = createPersonImageWithFallbackSvg('tree-node-image', person.imageUrl);
 
     const personNameNodeText = formatPersonName(person);
     const spanPersonName =
@@ -147,18 +132,6 @@ function createNodeHtml(person) {
             .attr('class', 'tree-node-texts')
             .append(spanPersonName)
             .append(spanPersonLived);
-
-            // Szabi: are these used? this svg is weird with 20x20
-    const use =
-        $(document.createElementNS('http://www.w3.org/2000/svg', 'use'))
-            .attr('href', '/icons/icons.svg#update');
-
-    const svg =
-        $(document.createElementNS('http://www.w3.org/2000/svg', 'svg'))
-            .attr('class', 'small-svg')
-            .attr('width', '20')
-            .attr('height', '20')
-            .append(use);
 
     return $('<div>')
         .attr('id', person.id)
@@ -194,7 +167,7 @@ function createNodeMarriageHtml(marriage) {
             .append(spanMarriage);
 
     return $('<div>')
-        .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage' : 'secondary-marriage'}`)
+        .attr('class', `tree-node-marriage ${marriage.isMainMarriage ? 'main-marriage-node' : 'secondary-marriage-node'}`)
         .attr('title', marriageText)
         .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
         .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)

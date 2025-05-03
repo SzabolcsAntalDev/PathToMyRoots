@@ -113,7 +113,7 @@
                                 @:value="@Model.BirthDate"
                             } />
                             <div class="tooltip">
-                                <svg class="person-info-image">
+                                <svg class="info-svg">
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                 </svg>
                                 <span class="tooltip-text">
@@ -161,7 +161,7 @@
                                 @:value="@Model.DeathDate"
                             } />
                             <div class="tooltip">
-                                <svg class="person-info-image">
+                                <svg class="info-svg">
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                 </svg>
                                 <span class="tooltip-text">
@@ -195,7 +195,7 @@
                             <li data-value="@father.Id" class="@(Model.BiologicalFatherId == father.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
                                     @* Szabi: this api url chould be extracted *@
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@father.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@father.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(father)
                                     </span>
@@ -225,7 +225,7 @@
                         {
                             <li data-value="@mother.Id" class="@(Model.BiologicalMotherId == mother.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@mother.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@mother.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(mother)
                                     </span>
@@ -255,7 +255,7 @@
                         {
                             <li data-value="@father.Id" class="@(Model.AdoptiveFatherId == father.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@father.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@father.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(father)
                                     </span>
@@ -285,7 +285,7 @@
                         {
                             <li data-value="@mother.Id" class="@(Model.AdoptiveMotherId == mother.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@mother.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@mother.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(mother)
                                     </span>
@@ -320,7 +320,7 @@
                                 data-is-male="@spouse.IsMale"
                                 class="@(Model.FirstSpouseId == spouse.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@spouse.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@spouse.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                                     </span>
@@ -363,7 +363,7 @@
                                         @:value="@Model.FirstMarriageStartDate"
                                     } />
                                     <div class="tooltip">
-                                        <svg class="person-info-image">
+                                        <svg class="info-svg">
                                             <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                         </svg>
                                         <span class="tooltip-text">
@@ -411,7 +411,7 @@
                                         @:value="@Model.FirstMarriageEndDate"
                                     } />
                                     <div class="tooltip">
-                                        <svg class="person-info-image">
+                                        <svg class="info-svg">
                                             <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                         </svg>
                                         <span class="tooltip-text">
@@ -444,7 +444,7 @@
                                 data-is-male="@spouse.IsMale"
                                 class="@(Model.SecondSpouseId == spouse.Id ? "selected-option" : "")">
                                 <div class="option-with-image">
-                                    <img class="person-image" data-image-url="https://localhost:7241/api/Image/get/@spouse.ImageUrl" />
+                                    <img class="person-small-image" data-image-url="https://localhost:7241/api/Image/get/@spouse.ImageUrl" />
                                     <span class="person-name-span">
                                         @PersonModelFormatter.ToFullNameAndBirthDate(spouse)
                                     </span>
@@ -487,7 +487,7 @@
                                         @:value="@Model.SecondMarriageStartDate"
                                     } />
                                     <div class="tooltip">
-                                        <svg class="person-info-image">
+                                        <svg class="info-svg">
                                             <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                         </svg>
                                         <span class="tooltip-text">
@@ -535,7 +535,7 @@
                                         @:value="@Model.SecondMarriageEndDate"
                                     } />
                                     <div class="tooltip">
-                                        <svg class="person-info-image">
+                                        <svg class="info-svg">
                                             <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                         </svg>
                                         <span class="tooltip-text">
@@ -615,6 +615,7 @@
     <script src="~/js/external-libs/cropper.js"></script>
     <script src="~/js/common/constants.js"></script>
     <script src="~/js/common/fading.js"></script>
+    <script src="~/js/common/html-creator.js"></script>
     <script src="~/js/add-update-person/add-update-person.js"></script>
     <script src="~/js/add-update-person/dropdown.js"></script>
     <script src="~/js/add-update-person/date-input.js"></script>
