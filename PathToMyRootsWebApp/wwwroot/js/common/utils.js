@@ -131,6 +131,6 @@ function setSize(fromElement, toElement) {
     });
 }
 
-function arrayRemoveDuplicatesWithSameId(array){
+function arrayRemoveDuplicatesWithSameId(array) {
     return Array.from(new Map(array.map(obj => [obj.id, obj])).values());
 }

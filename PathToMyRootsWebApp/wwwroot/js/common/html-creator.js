@@ -15,9 +15,18 @@ function onGetImageError(className, image) {
     svg.setAttribute('class', className);
 
     const imageDiv = $('<div>')
-        .attr('class', 'tree-node-image-div');
+        .attr('class', 'image-div');
 
     svg.appendChild(use);
     imageDiv.append(svg);
     image.replaceWith(imageDiv[0]);
+}
+
+function createHiddenH2(text) {
+    const hiddenH2 = $('<h2>')
+        .text(text);
+
+    hideElement(hiddenH2);
+
+    return hiddenH2;
 }

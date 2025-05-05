@@ -114,6 +114,6 @@ function addSpouse(
 }
 
 function createTreeColumn(personId) {
-    const treeDiagramsContainer = $('#tree-diagrams-container');
-    createAndDisplayTreeDiagram(treeDiagramsContainer, personId);
+    const treeDiagramsDiv = $('#tree-diagrams-div');
+    createAndDisplayTreeDiagram(treeDiagramsDiv, personId);
 }

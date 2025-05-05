@@ -170,10 +170,10 @@ async function createGenerationsRecursive(personId, processedPersonIds, generati
     }
 }
 
-function createMarriage(male, female, isMainMarriage) {
+function createMarriage(male, female, isStaticMarriage) {
     const marriage = {};
 
-    marriage.isMainMarriage = isMainMarriage;
+    marriage.isStaticMarriage = isStaticMarriage;
     marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;;
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
     marriage.maleId = male?.id;

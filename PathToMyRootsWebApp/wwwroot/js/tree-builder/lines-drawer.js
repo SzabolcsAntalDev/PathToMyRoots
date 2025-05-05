@@ -2,7 +2,7 @@
     linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
     const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * linesVerticalOffset };
 
-    marriageNodes.filter('.tree-node-marriage').each((_, marriageNode) => {
+    marriageNodes.filter('.marriage-node').each((_, marriageNode) => {
         drawMarriageChildrenLines(linesContainer, offsetOnTop, marriageNode, childNodes);
     });
 }
@@ -10,7 +10,7 @@
 function drawMarriagesLines(linesContainer, marriageNodes) {
     linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
 
-    marriageNodes.filter('.secondary-marriage-node').each((_, marriageNode) => {
+    marriageNodes.filter('.floating-marriage-node').each((_, marriageNode) => {
         drawMarriageLines(linesContainer, marriageNode);
     });
 }
@@ -55,7 +55,15 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
     let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - linesContainer.clientRect.top;
     let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - linesContainer.clientRect.left;
     let childNodeTop = childNode.clientRect.top - linesContainer.clientRect.top;
-    let verticalCenter = (marriageNodeBottom + ($(marriageNode).hasClass('secondary-marriage-node') ? marriageNode.clientRect.height * 1.5 : 0)) + verticalOffset;
+
+    let verticalCenter;
+    if ($(marriageNode).hasClass('floating-marriage-node')) {
+        const hiddenMarriageNodeClientRect = $(marriageNode).siblings('.hidden-marriage-node').get(0).getBoundingClientRect();
+        const hiddenMarriageNodeBottom = hiddenMarriageNodeClientRect.top + hiddenMarriageNodeClientRect.height - linesContainer.clientRect.top
+        verticalCenter = hiddenMarriageNodeBottom + verticalOffset;
+    } else {
+        verticalCenter = marriageNodeBottom + verticalOffset;
+    }
 
     const hasBiologicalChildren = $(marriageNode).data('inverseBiologicalParentIds').length > 0;
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
@@ -79,7 +87,7 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
         L ${childNodeHorizontalCenter},${childNodeTop}
     `;
 
-    linesContainer.append(createMarriageChildLinePathHtml(pathData, childNode.isBiological));
+    linesContainer.append(treeHtmlCreator.createMarriageChildLinePath(pathData, childNode.isBiological));
 }
 
 function drawMarriageLines(linesContainer, marriageNode) {
@@ -102,5 +110,5 @@ function drawMarriageLines(linesContainer, marriageNode) {
         M ${x3},${y} L ${x4},${y}
     `;
 
-    linesContainer.append(createMarriagesLinePathHtml(pathData));
+    linesContainer.append(treeHtmlCreator.createMarriageLinePath(pathData));
 }

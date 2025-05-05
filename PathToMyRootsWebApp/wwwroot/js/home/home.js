@@ -1,10 +1,10 @@
-﻿let treeDiagramsContainer;
+﻿let treeDiagramsDiv;
 
 const personIds = [1, 4];
 let currentPersonIndex = -1;
 
 $(() => {
-    treeDiagramsContainer = $('#tree-diagrams-container');
+    treeDiagramsDiv = $('#tree-diagrams-div');
 
     $('#prevTree').on('click', function () {
         showTree(-1);
@@ -20,7 +20,7 @@ $(() => {
 async function showTree(direction) {
     const currentPersonId = personIds[currentPersonIndex];
 
-    await removeTreeDiagram(treeDiagramsContainer, currentPersonId);
+    await removeTreeDiagram(treeDiagramsDiv, currentPersonId);
     currentPersonIndex += direction;
 
     if (currentPersonIndex < 0) {
@@ -31,5 +31,5 @@ async function showTree(direction) {
     }
 
     const nextPersonId = personIds[currentPersonIndex];
-    createAndDisplayTreeDiagram(treeDiagramsContainer, nextPersonId);
+    createAndDisplayTreeDiagram(treeDiagramsDiv, nextPersonId);
 }

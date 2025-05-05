@@ -142,7 +142,7 @@ $marriage-node-width: 100px;
 $node-margin-value: 10px;
 $node-margin: 0px $node-margin-value;
 
-$person-small-image-height: 40px;
+$person-small-image-height: 60px;
 $person-small-image-width: $person-small-image-height * 0.75;
 
 $person-medium-image-width: $person-small-image-width * 1.4;
@@ -614,48 +614,49 @@ fieldset {
 }
 
 
-#tree-diagrams-container {
+#tree-diagrams-div {
     position: relative;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow: auto;
 
-    .tree-diagram {
+    .diagram {
         margin: 0px auto;
+        // needed for drawing the lines
         position: relative;
 
-        .tree-nodes-container {
+        .nodes-div {
 
-            .tree-generation, .tree-generation * {
+            .generation, .generation * {
                 box-sizing: border-box;
             }
 
-            .tree-generation {
+            .generation {
                 display: flex;
                 white-space: nowrap;
 
-                .tree-siblings-chain {
+                .siblings-chain {
                     display: flex;
                     padding: 0px;
                     margin: 0px auto;
                     padding: 0px calc($node-margin-value * 2);
 
-                    .tree-sibling {
+                    .sibling {
                         display: flex;
                         margin: 0px;
                         padding: 0px;
 
-                        .tree-extended-marriage {
+                        .extended-marriage {
                             display: flex;
                             margin: $node-margin;
                             padding: 0px;
 
-                            &:has(.secondary-marriage-node) {
+                            &:has(.floating-and-hidden-marriage-nodes-div) {
                                 margin-left: calc($node-margin-value * -1);
                             }
 
-                            .tree-node {
+                            .node {
                                 display: flex;
                                 align-items: center;
                                 border: $border;
@@ -663,13 +664,13 @@ fieldset {
                                 padding: $thickness-small;
                                 transition: background-color $default-transition, border $default-transition;
 
-                                .tree-node-texts {
+                                .texts-div {
                                     display: flex;
                                     flex-grow: 1;
                                     flex-direction: column;
                                     overflow: hidden;
 
-                                    %tree-node-text {
+                                    %text {
                                         overflow: hidden;
                                         text-overflow: ellipsis;
                                         white-space: nowrap;
@@ -679,34 +680,47 @@ fieldset {
                                 }
                             }
 
-                            .tree-node-marriage {
-                                @extend .tree-node;
+                            .marriage-node {
+                                @extend .node;
                                 width: $marriage-node-width;
                                 margin: $node-margin;
                                 font-size: $font-size-small;
                                 background-color: var(--marriage-color);
 
-                                .tree-node-marriage-text {
-                                    @extend %tree-node-text;
+                                .marriage-text {
+                                    @extend %text;
                                 }
                             }
 
-                            .secondary-marriage-node {
-                                top: 16.66%;
+                            .floating-and-hidden-marriage-nodes-div {
+                                position: relative;
+                                display: flex;
+                                flex-direction: column;
+
+                                .floating-marriage-node {
+                                    margin-top: auto;
+                                    margin-bottom: auto;
+                                }
+
+                                .hidden-marriage-node {
+                                    @extend .marriage-node;
+                                    margin-bottom: 0;
+                                    visibility: hidden;
+                                }
                             }
 
-                            .tree-main-marriage {
+                            .main-marriage {
                                 display: flex;
                                 flex-direction: column;
                                 padding: 0px;
                                 align-items: center;
 
-                                .tree-couple {
+                                .couple {
                                     display: flex;
                                 }
 
-                                .tree-node-person {
-                                    @extend .tree-node;
+                                .person-node {
+                                    @extend .node;
                                     width: $person-node-width;
                                     transition: color $default-transition, background-color $default-transition, border $default-transition;
 
@@ -716,42 +730,42 @@ fieldset {
                                         border-color: var(--foreground-color-highlight);
                                         cursor: pointer;
 
-                                        .tree-node-image {
+                                        .image {
                                             fill: var(--foreground-color-highlight);
                                         }
                                     }
 
-                                    .tree-node-image-div {
+                                    .image-div {
                                         width: $person-small-image-width;
                                         height: $person-small-image-height;
                                     }
 
-                                    .tree-node-image {
+                                    .image {
                                         @extend .person-small-image;
                                         margin-right: $thickness-small;
                                     }
 
-                                    .tree-node-main-name-text {
-                                        @extend %tree-node-text;
+                                    .name-text {
+                                        @extend %text;
                                         font-weight: bold;
                                     }
 
-                                    .tree-node-main-lived-text {
-                                        @extend %tree-node-text;
+                                    .lived-text {
+                                        @extend %text;
                                     }
                                 }
 
-                                .tree-node-male {
-                                    @extend .tree-node-person;
+                                .male-node {
+                                    @extend .person-node;
                                     @extend .male-background-color;
                                 }
 
-                                .tree-node-female {
-                                    @extend .tree-node-person;
+                                .female-node {
+                                    @extend .person-node;
                                     @extend .female-background-color;
                                 }
 
-                                .main-marriage-node {
+                                .static-marriage-node {
                                 }
                             }
                         }
@@ -760,41 +774,41 @@ fieldset {
             }
         }
 
-        .tree-lines-container {
+        .lines-svg {
             position: absolute;
             top: 0;
             left: 0;
             pointer-events: none;
             background-color: transparent;
 
-            %tree-line-svg {
+            %line-svg {
                 stroke-width: 1px;
                 transition: stroke $default-transition;
                 fill: transparent;
             }
 
-            .tree-line-biological-svg {
-                @extend %tree-line-svg;
+            .biological-line-svg {
+                @extend %line-svg;
                 stroke: var(--foreground-color);
                 stroke-dasharray: 4,4;
             }
 
-            .tree-line-adoptive-svg {
-                @extend %tree-line-svg;
+            .adoptive-line-svg {
+                @extend %line-svg;
                 stroke-dasharray: 6,6;
                 stroke: var(--adoptive-color);
             }
 
-            .tree-line-marriage-svg {
-                @extend %tree-line-svg;
+            .marriage-line-svg {
+                @extend %line-svg;
                 stroke: forestgreen;
             }
         }
     }
 }
 
-#tree-diagrams-container.test-trees-container {
-    .tree-diagram {
+#tree-diagrams-div.test-trees-div {
+    .diagram {
         margin: 0px auto $thickness-extra-large 0px;
     }
 }
@@ -969,7 +983,7 @@ fieldset {
         min-width: 0;
         padding: $thickness-large;
 
-        #tree-diagrams-container {
+        #tree-diagrams-div {
         }
     }
 }

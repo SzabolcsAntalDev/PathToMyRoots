@@ -1,5 +1,5 @@
-﻿async function removeTreeDiagram(treeDiagramsContainer, personId) {
-    const treeDiagram = treeDiagramsContainer.find('#tree-diagram-' + personId).get(0);
+﻿async function removeTreeDiagram(treeDiagramsDiv, personId) {
+    const treeDiagram = treeDiagramsDiv.find('#diagram - ' + personId).get(0);
     if (treeDiagram) {
         await fadeOutElement(treeDiagram)
         treeDiagram.remove();
@@ -10,21 +10,21 @@ let generationsData;
 let nodesContainer;
 let linesContainer;
 
-async function createAndDisplayTreeDiagram(treeDiagramsContainer, personId) {
-    const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(treeDiagramsContainer);
-    treeDiagramsContainer.append(loadingTextContainer);
+async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId) {
+    const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(treeDiagramsDiv);
+    treeDiagramsDiv.append(loadingTextContainer);
     await fadeInElement(loadingTextContainer);
 
-    const treeDiagram = createTreeDiagramHtml(personId);
+    const treeDiagram = treeHtmlCreator.createDiagram(personId);
     hideElement(treeDiagram);
 
     generationsData = await createGenerationsData(personId);
-    nodesContainer = createNodesContainerHtml(generationsData);
-    linesContainer = createEmptyLinesContainerHtml();
+    nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
+    linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
     treeDiagram.append(nodesContainer);
     treeDiagram.append(linesContainer);
-    treeDiagramsContainer.append(treeDiagram);
+    treeDiagramsDiv.append(treeDiagram);
 
     drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
 
