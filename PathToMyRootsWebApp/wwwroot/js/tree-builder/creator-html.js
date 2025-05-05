@@ -72,9 +72,11 @@ function createMainMarriageHtml(mainMarriage) {
         }
     }
     else {
-        mainMarriageHtml.append(createNodeHtml(mainMarriage.male))
-        mainMarriageHtml.append(createNodeHtml(mainMarriage.female))
-        mainMarriageHtml.append(createLineBreakHtml());
+        const treeCouple = $('<div>')
+            .attr('class', 'tree-couple');
+        treeCouple.append(createNodeHtml(mainMarriage.male))
+        treeCouple.append(createNodeHtml(mainMarriage.female))
+        mainMarriageHtml.append(treeCouple);
         mainMarriageHtml.append(createNodeMarriageHtml(mainMarriage.marriage));
     }
 
@@ -147,10 +149,6 @@ function createNodeHtml(person) {
             const url = `/Person/PersonDetails?id=${person.id}`;
             window.location.href = url;
         });
-}
-
-function createLineBreakHtml() {
-    return $('<br>');
 }
 
 function createNodeMarriageHtml(marriage) {

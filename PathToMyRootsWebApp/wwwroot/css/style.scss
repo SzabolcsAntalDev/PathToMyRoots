@@ -138,14 +138,15 @@ $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
 $person-node-width: 170px;
-$person-node-height: 45px;
 $marriage-node-width: 100px;
-$marriage-node-height: ($person-node-height / 2);
 $node-margin-value: 10px;
 $node-margin: 0px $node-margin-value;
 
-$person-small-image-width: 30px;
 $person-small-image-height: 40px;
+$person-small-image-width: $person-small-image-height * 0.75;
+
+$person-medium-image-width: $person-small-image-width * 1.4;
+$person-medium-image-height: $person-small-image-height * 1.4;
 
 $svg-small-size: 20px;
 
@@ -621,8 +622,8 @@ fieldset {
     overflow: auto;
 
     .tree-diagram {
-        position: relative;
         margin: 0px auto;
+        position: relative;
 
         .tree-nodes-container {
 
@@ -633,7 +634,6 @@ fieldset {
             .tree-generation {
                 display: flex;
                 white-space: nowrap;
-                text-align: center;
 
                 .tree-siblings-chain {
                     display: flex;
@@ -643,7 +643,6 @@ fieldset {
 
                     .tree-sibling {
                         display: flex;
-                        padding: 0px;
                         margin: 0px;
                         padding: 0px;
 
@@ -657,12 +656,11 @@ fieldset {
                             }
 
                             .tree-node {
-                                position: relative;
-                                display: inline-flex;
+                                display: flex;
+                                align-items: center;
                                 border: $border;
                                 border-radius: 0;
                                 padding: $thickness-small;
-                                align-items: center;
                                 transition: background-color $default-transition, border $default-transition;
 
                                 .tree-node-texts {
@@ -684,11 +682,9 @@ fieldset {
                             .tree-node-marriage {
                                 @extend .tree-node;
                                 width: $marriage-node-width;
-                                height: $marriage-node-height;
                                 margin: $node-margin;
                                 font-size: $font-size-small;
                                 background-color: var(--marriage-color);
-                                vertical-align: central;
 
                                 .tree-node-marriage-text {
                                     @extend %tree-node-text;
@@ -700,13 +696,18 @@ fieldset {
                             }
 
                             .tree-main-marriage {
-                                display: inline-block;
+                                display: flex;
+                                flex-direction: column;
                                 padding: 0px;
+                                align-items: center;
+
+                                .tree-couple {
+                                    display: flex;
+                                }
 
                                 .tree-node-person {
                                     @extend .tree-node;
                                     width: $person-node-width;
-                                    height: $person-node-height;
                                     transition: color $default-transition, background-color $default-transition, border $default-transition;
 
                                     &:hover {
@@ -720,10 +721,13 @@ fieldset {
                                         }
                                     }
 
+                                    .tree-node-image-div {
+                                        width: $person-small-image-width;
+                                        height: $person-small-image-height;
+                                    }
+
                                     .tree-node-image {
-                                        @extend %svg-hoverable;
-                                        height: 100%;
-                                        object-fit: contain;
+                                        @extend .person-small-image;
                                         margin-right: $thickness-small;
                                     }
 

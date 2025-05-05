@@ -3,7 +3,7 @@
 
     createInfoColumn(person);
     await createRelativesColumn(person);
-    //createTreeColumn(personId);
+    createTreeColumn(personId);
 }
 
 function createInfoColumn(person) {

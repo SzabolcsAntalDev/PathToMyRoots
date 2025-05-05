@@ -13,8 +13,11 @@ function onGetImageError(className, image) {
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', className);
-    svg.setAttribute('viewBox', '0 0 3 4');
+
+    const imageDiv = $('<div>')
+        .attr('class', 'tree-node-image-div');
 
     svg.appendChild(use);
-    image.replaceWith(svg);
+    imageDiv.append(svg);
+    image.replaceWith(imageDiv[0]);
 }
