@@ -1,115 +1,117 @@
-﻿function createPersonDetailsImage(person) {
-    return createPersonImageWithFallbackSvg('img', person.imageUrl);
-}
+﻿const personDetailsHtmlCreator = {
+    createInfoImage(person) {
+        return createPersonImageWithFallbackSvg('image', person.imageUrl);
+    },
 
-function createPersonDetailsNameSpan(person) {
-    return $('<span>')
-        .attr('class', 'name')
-        .text(formatPersonName(person));
-}
+    createInfoNameText(person) {
+        return $('<span>')
+            .attr('class', 'name')
+            .text(formatPersonName(person));
+    },
 
-function createPersonDetailsLivedSpan(person) {
-    return $('<span>')
-        .attr('class', 'lived')
-        .text(formatTimePeriod(person.birthDate, person.deathDate));
-}
+    createInfoLivedText(person) {
+        return $('<span>')
+            .attr('class', 'lived')
+            .text(formatTimePeriod(person.birthDate, person.deathDate));
+    },
 
-function createPersonDetailsContainerWithTitle() {
-    return $('<div>')
-        .attr('class', 'container-with-title');
-}
+    createDivWithTitle() {
+        return $('<div>')
+            .attr('class', 'div-with-title');
+    },
 
-function createPersonDetailsContainerTitleSpan(title) {
-    return $('<span>')
-        .attr('class', 'container-title')
-        .text(title);
-}
+    createDivTitle(title) {
+        return $('<span>')
+            .attr('class', 'div-title')
+            .text(title);
+    },
 
-function createPersonDetailsHorizontalRelativesContainer() {
-    return $('<div>')
-        .attr('class', 'horizontal-relatives-container');
-}
+    createHorizontalRelativesDiv() {
+        return $('<div>')
+            .attr('class', 'horizontal-relatives-div');
+    },
 
-function createPersonDetailsNonSpouse(person) {
-    const personNameText = formatPersonName(person);
-    const personNameSpan =
-        $('<span>')
-            .text(personNameText)
-            .attr('class', 'relative-name-span');
+    createNonSpouse(person) {
+        const personNameText = formatPersonName(person);
+        const personNameSpan =
+            $('<span>')
+                .text(personNameText)
+                .attr('class', 'name-text');
 
-    const personLivedText = formatTimePeriod(person.birthDate, person.deathDate);
-    const personLivedSpan =
-        $('<span>')
-            .text(personLivedText)
-            .attr('class', 'relative-lived-span');
+        const personLivedText = formatTimePeriod(person.birthDate, person.deathDate);
+        const personLivedSpan =
+            $('<span>')
+                .text(personLivedText)
+                .attr('class', 'lived-text');
 
-    const spansContainer =
-        $('<div>')
-            .attr('class', 'relative-spans-container')
-            .append(personNameSpan)
-            .append(personLivedSpan);
+        const textsDiv =
+            $('<div>')
+                .attr('class', 'texts-div')
+                .append(personNameSpan)
+                .append(personLivedSpan);
 
-    const imgPerson = createPersonImageWithFallbackSvg('relative-non-spouse-img', person.imageUrl);
+        const image = createPersonImageWithFallbackSvg('non-spouse-img', person.imageUrl);
 
-    const classes =
-        (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
-        (person.isMale ? 'male-background-color' : 'female-background-color');
+        const classes =
+            (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
+            (person.isMale ? 'male-background-color' : 'female-background-color');
 
-    return $('<div>')
-        .attr('class', classes)
-        .attr('title', `${personNameText}\n${personLivedText}`)
-        .append(spansContainer)
-        .append(imgPerson)
-        .on('click', function () {
-            if (person.id == -1) {
-                return;
-            }
+        return $('<div>')
+            .attr('class', classes)
+            .attr('title', `${personNameText}\n${personLivedText}`)
+            .append(textsDiv)
+            .append(image)
+            .on('click', function () {
+                if (person.id == -1) {
+                    return;
+                }
 
-            window.location.href = `/Person/PersonDetails?id=${person.id}`;
-        });
-}
+                window.location.href = `/Person/PersonDetails?id=${person.id}`;
+            });
+    },
 
-function createPersonDetailsSpouse(person, marriageStartDate, marriageEndDate) {
-    const personNameText = formatPersonName(person);
-    const personNameSpan =
-        $('<span>')
-            .text(personNameText)
-            .attr('class', 'relative-name-span');
+    createSpouse(person, marriageStartDate, marriageEndDate) {
+        const personNameText = formatPersonName(person);
+        const personNameSpan =
+            $('<span>')
+                .text(personNameText)
+                .attr('class', 'name-text');
 
-    const personLivedText = formatTimePeriod(person.birthDate, person.deathDate);
-    const personLivedSpan =
-        $('<span>')
-            .text(personLivedText)
-            .attr('class', 'relative-lived-span');
+        const personLivedText = formatTimePeriod(person.birthDate, person.deathDate);
+        const personLivedSpan =
+            $('<span>')
+                .text(personLivedText)
+                .attr('class', 'lived-text');
 
-    const personMarriageText = `m. ${formatTimePeriod(marriageStartDate, marriageEndDate)}`;
-    const personMarriageSpan =
-        $('<span>')
-            .attr('class', 'relative-marriage-span')
-            .html(personMarriageText);
+        const personMarriageText = `m. ${formatTimePeriod(marriageStartDate, marriageEndDate)}`;
+        const personMarriageSpan =
+            $('<span>')
+                .attr('class', 'marriage-text')
+                .html(personMarriageText);
 
-    const spansContainer =
-        $('<div>')
-            .attr('class', 'relative-spans-container')
-            .append(personNameSpan)
-            .append(personLivedSpan)
-            .append(personMarriageSpan);
+        const textsDiv =
+            $('<div>')
+                .attr('class', 'texts-div')
+                .append(personNameSpan)
+                .append(personLivedSpan)
+                .append(personMarriageSpan);
 
-    const imgPerson = createPersonImageWithFallbackSvg('relative-spouse-img', person.imageUrl);
+        const image = createPersonImageWithFallbackSvg('spouse-img', person.imageUrl);
 
-    const classes =
-        (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
-        (person.isMale ? 'male-background-color' : 'female-background-color');
+        const classes =
+            (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
+            (person.isMale ? 'male-background-color' : 'female-background-color');
 
-    return $('<div>')
-        .attr('class', classes)
-        .attr('title', `${personNameText}\n${personLivedText}\n${personMarriageText}`)
-        .append(spansContainer)
-        .append(imgPerson)
-        .on('click', function () {
-            if (person.id == -1) {
-                return;
-            }
-            window.location.href = `/Person/PersonDetails?id=${person.id}`;
-        });
+        return $('<div>')
+            .attr('class', classes)
+            .attr('title', `${personNameText}\n${personLivedText}\n${personMarriageText}`)
+            .append(textsDiv)
+            .append(image)
+            .on('click', function () {
+                if (person.id == -1) {
+                    return;
+                }
+                window.location.href = `/Person/PersonDetails?id=${person.id}`;
+            });
+    }
 }

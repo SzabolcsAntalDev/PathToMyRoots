@@ -142,7 +142,7 @@ $marriage-node-width: 100px;
 $node-margin-value: 10px;
 $node-margin: 0px $node-margin-value;
 
-$person-small-image-height: 60px;
+$person-small-image-height: 40px;
 $person-small-image-width: $person-small-image-height * 0.75;
 
 $person-medium-image-width: $person-small-image-width * 1.4;
@@ -866,7 +866,7 @@ fieldset {
         display: flex;
         flex-direction: column;
 
-        .img {
+        .image {
             @extend %svg-hoverable;
             margin-bottom: $thickness-large;
         }
@@ -889,14 +889,14 @@ fieldset {
         display: flex;
         flex-direction: column;
 
-        .container-with-title {
+        .div-with-title {
             margin: $thickness-medium 0px;
 
-            .container-title {
+            .div-title {
                 font-size: $font-size-medium;
             }
 
-            .horizontal-relatives-container {
+            .horizontal-relatives-div {
                 display: flex;
 
                 .relative {
@@ -907,7 +907,7 @@ fieldset {
                     transition: color $default-transition, background-color $default-transition, border $default-transition;
                     box-sizing: border-box;
 
-                    .relative-spans-container {
+                    .texts-div {
                         flex-grow: 1;
                         display: flex;
                         flex-direction: column;
@@ -915,28 +915,28 @@ fieldset {
                         min-width: 0;
                         padding: $thickness-small;
 
-                        .relative-span {
+                        .text {
                             text-align: center;
                             text-overflow: ellipsis;
                             white-space: nowrap;
                             overflow: hidden;
                         }
 
-                        .relative-name-span {
-                            @extend .relative-span;
+                        .name-text {
+                            @extend .text;
                             font-weight: bold;
                         }
 
-                        .relative-lived-span {
-                            @extend .relative-span;
+                        .lived-text {
+                            @extend .text;
                         }
 
-                        .relative-marriage-span {
-                            @extend .relative-span;
+                        .marriage-text {
+                            @extend .text;
                         }
                     }
 
-                    .relative-non-spouse-img {
+                    .non-spouse-img {
                         @extend .person-small-image;
                         // cancel hovering effect
                         &:hover {
@@ -946,7 +946,7 @@ fieldset {
                         flex-shrink: 0;
                     }
 
-                    .relative-spouse-img {
+                    .spouse-img {
                         @extend .person-small-image;
                         // cancel hovering effect
                         &:hover {

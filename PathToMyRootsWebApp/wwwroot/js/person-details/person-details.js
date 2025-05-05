@@ -10,9 +10,9 @@ function createInfoColumn(person) {
     const infoColumn = $('.info-column');
 
     infoColumn
-        .append(createPersonDetailsImage(person))
-        .append(createPersonDetailsNameSpan(person))
-        .append(createPersonDetailsLivedSpan(person));
+        .append(personDetailsHtmlCreator.createInfoImage(person))
+        .append(personDetailsHtmlCreator.createInfoNameText(person))
+        .append(personDetailsHtmlCreator.createInfoLivedText(person));
 }
 
 async function createRelativesColumn(person) {
@@ -67,27 +67,27 @@ function addRelatives(relativesColumn, title, relatives) {
     if (!relatives || relatives.length == 0) {
         return
     }
-    const containerWithTitle =
-        createPersonDetailsContainerWithTitle()
-            .append(createPersonDetailsContainerTitleSpan(title));
+    const divWithTitle =
+        personDetailsHtmlCreator.createDivWithTitle()
+            .append(personDetailsHtmlCreator.createDivTitle(title));
 
-    let horizontalFamilyContainer;
+    let horizontalRelativesDiv;
 
     relatives.forEach((relative, i) => {
         if (i % 4 == 0) {
-            horizontalFamilyContainer = createPersonDetailsHorizontalRelativesContainer();
-            containerWithTitle.append(horizontalFamilyContainer);
+            horizontalRelativesDiv = personDetailsHtmlCreator.createHorizontalRelativesDiv();
+            divWithTitle.append(horizontalRelativesDiv);
         }
 
-        const nonSpouse = createPersonDetailsNonSpouse(relative);
+        const nonSpouse = personDetailsHtmlCreator.createNonSpouse(relative);
         if (i >= 4) {
             $(nonSpouse).css("width", "25%");
         }
 
-        horizontalFamilyContainer.append(nonSpouse);
+        horizontalRelativesDiv.append(nonSpouse);
     });
 
-    relativesColumn.append(containerWithTitle);
+    relativesColumn.append(divWithTitle);
 }
 
 function addSpouse(
@@ -97,19 +97,19 @@ function addSpouse(
     marriageStartDate,
     marriageEndDate) {
     if (spouse) {
-        const containerWithTitle =
-            createPersonDetailsContainerWithTitle()
-                .append(createPersonDetailsContainerTitleSpan(title));
+        const divWithTitle =
+            personDetailsHtmlCreator.createDivWithTitle()
+                .append(personDetailsHtmlCreator.createDivTitle(title));
 
-        const horizontalContainer = createPersonDetailsHorizontalRelativesContainer();
-        horizontalContainer.append(
-            createPersonDetailsSpouse(
+        const horizontalRelativesDiv = personDetailsHtmlCreator.createHorizontalRelativesDiv();
+        horizontalRelativesDiv.append(
+            personDetailsHtmlCreator.createSpouse(
                 spouse,
                 marriageStartDate,
                 marriageEndDate));
 
-        containerWithTitle.append(horizontalContainer);
-        relativesColumn.append(containerWithTitle);
+        divWithTitle.append(horizontalRelativesDiv);
+        relativesColumn.append(divWithTitle);
     }
 }
 
