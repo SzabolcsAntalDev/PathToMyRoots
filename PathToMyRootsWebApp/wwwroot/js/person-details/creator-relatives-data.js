@@ -148,6 +148,7 @@ async function getSecondCousins(relativesData, personId) {
                 .flat()
                 .filter(grandParent => grandParent))
 
+    // retrieve all grand parents
     const extendedGrandParents = [];
     for (const grandParentShallow of extendedGrandParentsShallowFlat) {
         const grandParent = await getPersonJson(grandParentShallow.id);
@@ -176,16 +177,16 @@ async function getGrandChildrenOfGrandParents(grandParents) {
 
     const children = arrayRemoveDuplicatesWithSameId(childrenNested.flat());
 
-    const nestedGrandChildren = [];
+    const grandChildrenNested = [];
     for (const child of children) {
         const childJson = await getPersonJson(child.id);
-        nestedGrandChildren.push(childJson.inverseBiologicalFather);
-        nestedGrandChildren.push(childJson.inverseBiologicalMother);
-        nestedGrandChildren.push(childJson.inverseAdoptiveFather);
-        nestedGrandChildren.push(childJson.inverseAdoptiveMother);
+        grandChildrenNested.push(childJson.inverseBiologicalFather);
+        grandChildrenNested.push(childJson.inverseBiologicalMother);
+        grandChildrenNested.push(childJson.inverseAdoptiveFather);
+        grandChildrenNested.push(childJson.inverseAdoptiveMother);
     }
 
-    return arrayRemoveDuplicatesWithSameId(nestedGrandChildren.flat());
+    return arrayRemoveDuplicatesWithSameId(grandChildrenNested.flat());
 }
 
 function getBiologicalChildren(person) {
@@ -215,16 +216,18 @@ function getCommonChildren(children, spouseChildrenIds) {
     return children.filter(child => spouseChildrenIds.includes(child.id));
 }
 
-// Szabi: ?
 async function getGrandChildren(biologicalChildren, adoptiveChildren) {
     const grandChildrenNested = [];
     const children = (biologicalChildren ?? []).concat(adoptiveChildren ?? []);
+
     for (const child of children) {
         const childJson = await getPersonJson(child.id);
+
         const childrenOfChild = getAllChildren(childJson);
         for (const grandChild of childrenOfChild) {
             grandChildrenNested.push(grandChild);
         }
     }
+
     return arrayRemoveDuplicatesWithSameId(grandChildrenNested);
 }
