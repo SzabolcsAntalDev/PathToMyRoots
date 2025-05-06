@@ -18,7 +18,8 @@ async function createRelativesData(person) {
     relativesData.biologicalParents = getBiologicalParents(person);
     relativesData.adoptiveParents = getAdoptiveParents(person);
     relativesData.siblings = await getSiblings(person);
-    relativesData.cousins = await getCousins(relativesData, person.id);
+    relativesData.firstCousins = await getFirstCousins(relativesData, person.id);
+    relativesData.secondCousins = await getSecondCousins(relativesData, person.id);
 
     const biologicalChildren = getBiologicalChildren(person);
     const adoptiveChildren = getAdoptiveChildren(person);
@@ -97,36 +98,94 @@ async function getSiblings(person) {
     return arrayRemoveDuplicatesWithSameId(siblings).filter(sibling => sibling.id != person.id);
 }
 
-async function getCousins(relativesData, personId) {
+async function getFirstCousins(relativesData, personId) {
     const grandParents =
         relativesData.biologicalGrandParents
             .concat(relativesData.adoptiveGrandParents)
             .filter(grandParent => grandParent.id != -1);
 
-    const parentsNested = [];
-    grandParents.forEach(grandParent => {
-        parentsNested.push(grandParent.inverseBiologicalFather);
-        parentsNested.push(grandParent.inverseBiologicalMother);
-        parentsNested.push(grandParent.inverseAdoptiveFather);
-        parentsNested.push(grandParent.inverseAdoptiveMother);
-    })
-
-    const parents = arrayRemoveDuplicatesWithSameId(parentsNested.flat());
-
-    const nestedCousins = [];
-    for (const parent of parents) {
-        const parentJson = await getPersonJson(parent.id);
-        nestedCousins.push(parentJson.inverseBiologicalFather);
-        nestedCousins.push(parentJson.inverseBiologicalMother);
-        nestedCousins.push(parentJson.inverseAdoptiveFather);
-        nestedCousins.push(parentJson.inverseAdoptiveMother);
-    }
+    const grandChildren = await getGrandChildrenOfGrandParents(grandParents);
 
     const siblingsIds = relativesData.siblings.map(sibling => sibling.id);
-    return arrayRemoveDuplicatesWithSameId(nestedCousins.flat())
-        .filter(cousin =>
-            !siblingsIds.includes(cousin.id) &&
-            cousin.id != personId);
+    const nonFirstCousinIds = siblingsIds.concat([personId]);
+
+    return arrayRemoveDuplicatesWithSameId(grandChildren)
+        .filter(cousin => !nonFirstCousinIds.includes(cousin.id));
+}
+
+async function getSecondCousins(relativesData, personId) {
+    const grandParents =
+        relativesData.biologicalGrandParents
+            .concat(relativesData.adoptiveGrandParents)
+            .filter(grandParent => grandParent.id != -1);
+
+    // get parents of grand parents
+    const greatGrandParentsWithNulls = [];
+    for (const grandParent of grandParents) {
+        greatGrandParentsWithNulls.push(grandParent.biologicalFather);
+        greatGrandParentsWithNulls.push(grandParent.biologicalMother);
+        greatGrandParentsWithNulls.push(grandParent.adoptiveFather);
+        greatGrandParentsWithNulls.push(grandParent.adoptiveMother);
+    }
+
+    const greatGrandParents =
+        arrayRemoveDuplicatesWithSameId(
+            greatGrandParentsWithNulls.filter(greatGrandParent => greatGrandParent));
+
+    // get children of great grand parents
+    const extendedGrandParentsShallowNested = [];
+    for (const greatGrandParent of greatGrandParents) {
+        const greatGrandParentJson = await getPersonJson(greatGrandParent.id);
+        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalFather);
+        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalMother);
+        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseAdoptiveFather);
+        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseAdoptiveMother);
+    }
+
+    const extendedGrandParentsShallowFlat =
+        arrayRemoveDuplicatesWithSameId(
+            extendedGrandParentsShallowNested
+                .flat()
+                .filter(grandParent => grandParent))
+
+    const extendedGrandParents = [];
+    for (const grandParentShallow of extendedGrandParentsShallowFlat) {
+        const grandParent = await getPersonJson(grandParentShallow.id);
+        extendedGrandParents.push(grandParent);
+    }
+
+    const greatGrandChildren = await getGrandChildrenOfGrandParents(extendedGrandParents);
+
+    const siblingsIds = relativesData.siblings.map(sibling => sibling.id);
+    const firstCousinIds = relativesData.firstCousins.map(firstCousin => firstCousin.id);
+    const nonSecondCousinIds = firstCousinIds.concat(siblingsIds).concat([personId]);
+
+    return arrayRemoveDuplicatesWithSameId(greatGrandChildren)
+        .filter(secondCousin =>
+            !nonSecondCousinIds.includes(secondCousin.id));
+}
+
+async function getGrandChildrenOfGrandParents(grandParents) {
+    const childrenNested = [];
+    grandParents.forEach(grandParent => {
+        childrenNested.push(grandParent.inverseBiologicalFather);
+        childrenNested.push(grandParent.inverseBiologicalMother);
+        childrenNested.push(grandParent.inverseAdoptiveFather);
+        childrenNested.push(grandParent.inverseAdoptiveMother);
+    })
+
+    const children = arrayRemoveDuplicatesWithSameId(childrenNested.flat());
+
+    const nestedGrandChildren = [];
+    for (const child of children) {
+        const childJson = await getPersonJson(child.id);
+        nestedGrandChildren.push(childJson.inverseBiologicalFather);
+        nestedGrandChildren.push(childJson.inverseBiologicalMother);
+        nestedGrandChildren.push(childJson.inverseAdoptiveFather);
+        nestedGrandChildren.push(childJson.inverseAdoptiveMother);
+    }
+
+    return arrayRemoveDuplicatesWithSameId(nestedGrandChildren.flat());
 }
 
 function getBiologicalChildren(person) {
@@ -156,6 +215,7 @@ function getCommonChildren(children, spouseChildrenIds) {
     return children.filter(child => spouseChildrenIds.includes(child.id));
 }
 
+// Szabi: ?
 async function getGrandChildren(biologicalChildren, adoptiveChildren) {
     const grandChildrenNested = [];
     const children = (biologicalChildren ?? []).concat(adoptiveChildren ?? []);

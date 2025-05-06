@@ -34,7 +34,8 @@ async function createRelativesColumn(person) {
     addRelatives(relativesColumn, 'Adoptive Parents', relativesData.adoptiveParents);
 
     addRelatives(relativesColumn, 'Siblings', relativesData.siblings);
-    addRelatives(relativesColumn, 'First cousins', relativesData.cousins);
+    addRelatives(relativesColumn, 'First cousins', relativesData.firstCousins);
+    addRelatives(relativesColumn, 'Second cousins', relativesData.secondCousins);
 
     if (relativesData.firstSpouseId) {
         addSpouse(
