@@ -1,11 +1,13 @@
-﻿async function createGenerationsData(personId) {
+﻿async function createGenerationsData(personId, treeType) {
+    let generations;
 
-    const generations = await createGenerationsWithExtendedMarriages(personId);
+    if (treeType == treeTypes.COMPLETE) {
+        generations = await completeTreeCreator.createCompleteTreeGenerations(personId);
+    }
 
-    sortExtendedMarriagesByBirthDate(generations);
-    createExtendedMarriages(generations);
-    createSiblings(generations);
-    createSiblingsChains(generations)
+    if (treeType == treeTypes.HOURGLASS) {
+        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId);
+    }
 
     const generationsData = {};
     generationsData.generations = generations;
@@ -27,6 +29,7 @@ function getLargestGenerationSize(generations) {
     return largestGenerationSize;
 }
 
+// gets the number of lines that should be drawn towards the generation
 function getGenerationSize(generation) {
     let size = 0;
 

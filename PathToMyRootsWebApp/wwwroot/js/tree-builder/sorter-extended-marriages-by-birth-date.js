@@ -1,4 +1,5 @@
-﻿function sortExtendedMarriagesByBirthDate(generations) {
+﻿// sorts the extended marriages by the male's then by the female's birthday
+function sortExtendedMarriagesByBirthDate(generations) {
     generations.forEach(generation => {
         generation.extendedMarriages.sort((extendedMarriage1, extendedMarriage2) => {
             const birthDate1 = getValidOrNullBirthDate(extendedMarriage1);

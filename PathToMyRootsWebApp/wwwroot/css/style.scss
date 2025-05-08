@@ -6,12 +6,12 @@ $adoptive-color-default: orange;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
-$foreground-color-disabled-dark: gray;
+$foreground-color-disabled-dark: #454F59;
 
 $background-color-dark: #161A1D;
 $background-color-nav-dark: #22272B;
 $background-color-footer-dark: #2C333A;
-$background-color-highlight-dark: #454F59;
+$background-color-highlight-dark: $foreground-color-disabled-dark;
 
 $male-color-dark: $background-color-footer-dark;
 $female-color-dark: $background-color-nav-dark;
@@ -30,12 +30,12 @@ $error-popup-background-color-dark: $error-color-dark;
 
 $foreground-color-light: #22272B;
 $foreground-color-highlight-light: black;
-$foreground-color-disabled-light: gray;
+$foreground-color-disabled-light: #DCDFE4;
 
 $background-color-light: #F7F8F9;
 $background-color-nav-light: #F1F2F4;
 $background-color-footer-light: #DEE4EA;
-$background-color-highlight-light: #DCDFE4;
+$background-color-highlight-light: $foreground-color-disabled-light;
 
 $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
@@ -685,11 +685,18 @@ fieldset {
                                 width: $marriage-node-width;
                                 margin: $node-margin;
                                 font-size: $font-size-small;
+                                color: var(--foreground-color-disabled);
                                 background-color: var(--marriage-color);
+                                border-color: var(--foreground-color-disabled);
 
                                 .marriage-text {
                                     @extend %text;
                                 }
+                            }
+
+                            .marriage-node.interactive {
+                                color: var(--foreground-color);
+                                border-color: var(--foreground-color);
                             }
 
                             .floating-and-hidden-marriage-nodes-div {
@@ -722,7 +729,42 @@ fieldset {
                                 .person-node {
                                     @extend .node;
                                     width: $person-node-width;
+                                    color: var(--foreground-color-disabled);
+                                    border-color: var(--foreground-color-disabled);
                                     transition: color $default-transition, background-color $default-transition, border $default-transition;
+
+                                    .image-div {
+                                        width: $person-small-image-width;
+                                        height: $person-small-image-height;
+                                    }
+
+                                    .image {
+                                        @extend .person-small-image;
+                                        fill: var(--foreground-color-disabled);
+                                        margin-right: $thickness-small;
+
+                                        &:hover {
+                                            fill: var(--foreground-color-disabled);
+                                        }
+                                    }
+
+                                    .name-text {
+                                        @extend %text;
+                                        font-weight: bold;
+                                    }
+
+                                    .lived-text {
+                                        @extend %text;
+                                    }
+                                }
+
+                                .person-node.interactive {
+                                    color: var(--foreground-color);
+                                    border-color: var(--foreground-color);
+
+                                    .image {
+                                        fill: var(--foreground-color);
+                                    }
 
                                     &:hover {
                                         color: var(--foreground-color-highlight);
@@ -733,25 +775,6 @@ fieldset {
                                         .image {
                                             fill: var(--foreground-color-highlight);
                                         }
-                                    }
-
-                                    .image-div {
-                                        width: $person-small-image-width;
-                                        height: $person-small-image-height;
-                                    }
-
-                                    .image {
-                                        @extend .person-small-image;
-                                        margin-right: $thickness-small;
-                                    }
-
-                                    .name-text {
-                                        @extend %text;
-                                        font-weight: bold;
-                                    }
-
-                                    .lived-text {
-                                        @extend %text;
                                     }
                                 }
 

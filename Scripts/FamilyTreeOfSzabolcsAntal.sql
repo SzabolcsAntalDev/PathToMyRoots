@@ -425,9 +425,14 @@ VALUES
 /* 395 */ (	'Tamara',			'Mihály',				NULL,	    	'Pendzsi',		388, 				389, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'bf562941-39be-4fe3-bd98-6c0f07b9e4a9.png'	)
 
 
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+
+
 SET IDENTITY_INSERT Persons ON;
-DECLARE @id INT = -1000000;
 DECLARE @idBuffer INT = 30;
+DECLARE @id INT = 1000;
 
 -- ==========================================================================================================================
 -- When a person has a three generaion family, generations are displayed on three levels
@@ -605,6 +610,42 @@ VALUES
 		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1990mmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL)
+
+
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+
+
+SET @id = 2000;
+
+-- ==========================================================================================================================
+-- When only male ancestors are present, fake ancestors are added
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L3 Male',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L2 Male',			NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L2 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male',			NULL,			NULL,			NULL,			@id + 5, 			@id + 6,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+		-- ==========================================================================================================================
+-- When only female ancestors are present, fake ancestors are added
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L3 Male',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L2 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L2 Female',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female',		NULL,			NULL,			NULL,			@id + 5, 			@id + 6,			NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 SET IDENTITY_INSERT Persons OFF;
 

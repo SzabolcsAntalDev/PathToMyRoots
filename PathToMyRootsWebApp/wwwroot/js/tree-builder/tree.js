@@ -10,7 +10,7 @@ let generationsData;
 let nodesContainer;
 let linesContainer;
 
-async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId) {
+async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) {
     const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(treeDiagramsDiv);
     treeDiagramsDiv.append(loadingTextContainer);
     await fadeInElement(loadingTextContainer);
@@ -18,7 +18,7 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId) {
     const treeDiagram = treeHtmlCreator.createDiagram(personId);
     hideElement(treeDiagram);
 
-    generationsData = await createGenerationsData(personId);
+    generationsData = await createGenerationsData(personId, treeType);
     nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
     linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 

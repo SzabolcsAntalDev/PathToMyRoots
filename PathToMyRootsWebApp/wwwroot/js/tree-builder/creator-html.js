@@ -80,7 +80,7 @@
                 .append(marriageSpan);
 
         const marriageNode = $('<div>')
-            .attr('class', `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'}`)
+            .attr('class', `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'}`)
             .attr('title', marriageText)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
@@ -148,7 +148,7 @@
 
         return $('<div>')
             .attr('id', person.id)
-            .attr('class', 'person-node ' + (person.isMale ? 'male-node' : 'female-node'))
+            .attr('class', `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'}`)
             .attr('title', `${personNameText}\n${personLivedText}`)
             .data('biologicalFatherId', person.biologicalFatherId)
             .data('biologicalMotherId', person.biologicalMotherId)
@@ -157,6 +157,9 @@
             .append(image)
             .append(textsDiv)
             .on('click', function () {
+                if (person.fakeId) {
+                    return;
+                }
                 const url = `/Person/PersonDetails?id=${person.id}`;
                 window.location.href = url;
             });
