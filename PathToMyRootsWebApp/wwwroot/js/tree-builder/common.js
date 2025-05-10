@@ -8,7 +8,7 @@ function createMarriage(male, female, isStaticMarriage, isFake) {
     const marriage = {};
 
     marriage.isStaticMarriage = isStaticMarriage;
-    marriage.isFake= isFake;
+    marriage.isFake = isFake;
     marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;;
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
     marriage.maleId = male?.id;
@@ -29,24 +29,4 @@ function getCommonAdoptiveChildren(male, female) {
     return male.inverseAdoptiveFather
         .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id === femaleChild.id))
         .map(child => child.id);
-}
-
-function getNumberOfAvailableParents(extendedMarriage) {
-    return getNumberOfParents(extendedMarriage.mainMarriage?.male) +
-        getNumberOfParents(extendedMarriage.mainMarriage?.female) +
-        getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
-        getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
-}
-
-function getNumberOfParents(person) {
-    if (person == null) {
-        return null;
-    }
-
-    let number = 0;
-
-    number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
-    number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
-
-    return number;
 }

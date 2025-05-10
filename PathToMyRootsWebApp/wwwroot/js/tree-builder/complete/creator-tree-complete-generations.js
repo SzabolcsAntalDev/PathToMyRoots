@@ -14,23 +14,24 @@ const completeTreeCreator = {
 
     async createGenerationsWithExtendedMarriages(personId) {
         const generationsMap = new Map();
-        await this.createGenerationsRecursive(personId, new Set([null]), generationsMap, 0);
+        await this.createGenerationsRecursive(personId, new Set(), generationsMap, 0);
         return sortByLevelAndConvertToArray(generationsMap);
     },
 
     async createGenerationsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
-        if (personId == null || processedPersonIds.has(personId))
+        if (!personId || processedPersonIds.has(personId))
             return;
 
         const person = await getPersonJson(personId);
         const extendedMarriage = {};
         const mainMarriage = {};
         let firstWifesFirstSpouseId;
+        let secondWifesFirstSpouseId;
 
         if (person.isMale) {
             const male = person;
 
-            if (male.firstSpouseId == null && male.secondSpouseId == null) { // | male | -----
+            if (male.firstSpouseId == null && male.secondSpouseId == null) { // | MALE | -----
                 mainMarriage.male = male;
                 processedPersonIds.add(male.id);
             }
@@ -84,6 +85,9 @@ const completeTreeCreator = {
 
                 processedPersonIds.add(male.id);
                 processedPersonIds.add(secondWife.id);
+
+                // if - l l - | MALE | female | - l l - | male | then secondWife's firstSpouse should be created inclusively
+                secondWifesFirstSpouseId = secondWife.firstSpouseId;
             }
 
         }
@@ -138,7 +142,7 @@ const completeTreeCreator = {
             generation.extendedMarriages.push(extendedMarriage);
         }
 
-        extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
+        extendedMarriage.numberOfAvailableParents = this.getNumberOfAvailableParents(extendedMarriage);
 
         setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
 
@@ -176,5 +180,29 @@ const completeTreeCreator = {
         if (firstWifesFirstSpouseId) {
             await this.createGenerationsRecursive(firstWifesFirstSpouseId, processedPersonIds, generationsMap, currentLevel);
         }
+
+        if (secondWifesFirstSpouseId) {
+            await this.createGenerationsRecursive(secondWifesFirstSpouseId, processedPersonIds, generationsMap, currentLevel);
+        }
+    },
+
+    getNumberOfAvailableParents(extendedMarriage) {
+        return this.getNumberOfParents(extendedMarriage.mainMarriage?.male) +
+            this.getNumberOfParents(extendedMarriage.mainMarriage?.female) +
+            this.getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
+            this.getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
+    },
+
+    getNumberOfParents(person) {
+        if (person == null) {
+            return null;
+        }
+
+        let number = 0;
+
+        number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
+        number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
+
+        return number;
     }
 }

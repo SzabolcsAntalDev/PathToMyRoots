@@ -19,6 +19,9 @@
 }
 
 // gets the largest persons with available parents number of all generations
+// numberOfAvailableParents:
+// for COMPLETE trees is adoptive + biological parents number
+// for HOURGLASS trees is only biological known and unknown parents number
 function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
 

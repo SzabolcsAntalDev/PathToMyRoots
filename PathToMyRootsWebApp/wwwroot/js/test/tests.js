@@ -3,8 +3,8 @@
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
-        //addTreeTypeCompleteTests(treeDiagramsDiv);
-        addTreeTypeHourglassTests(treeDiagramsDiv);
+        // await addTreeTypeCompleteTests(treeDiagramsDiv);
+        await addTreeTypeHourglassTests(treeDiagramsDiv);
     })();
 });
 
@@ -13,16 +13,17 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         personId: 1000,
         personIdBuffer: 30,
         testIndex: 1,
-        treeType: treeTypes.HOURGLASS
+        treeType: treeTypes.COMPLETE
     };
 
     const tests = [
         'When a person has a three generation family, generations are displayed on three levels',
         'When child has biological and adoptive parents, biological and adoptive lines are drawn',
         'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
-        'When extended marriages have secondary marriage, they are chained based on the second marriage',
         'When female is double married, both husbands are displayed',
         'When male is double married, both wives are displayed',
+        'When extended marriages have secondary marriage, they are chained based on the second marriage',
+        'When second wife of male has first spouse, that first spouse is also displayed',
         'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage',
         'When older parents have younger children, children are sorted by parents first instead of birthDates',
         'When female is loaded first, her first husband is still loaded',
@@ -47,6 +48,8 @@ async function addTreeTypeHourglassTests(treeDiagramsDiv) {
     const tests = [
         'When only male ancestors are present, fake ancestors are added',
         'When only female ancestors are present, fake ancestors are added',
+        'When male has two spouses, both spouses are displayed, and spouses of wives are not displayed',
+        'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed'
     ];
 
     for (const testTitle of tests) {
