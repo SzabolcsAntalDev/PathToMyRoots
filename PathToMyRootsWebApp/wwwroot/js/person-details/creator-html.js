@@ -15,6 +15,11 @@
             .text(formatTimePeriod(person.birthDate, person.deathDate));
     },
 
+    createRelativesColumnContent() {
+        return $('<div>')
+            .attr('class', 'relatives-column-content');
+    },
+
     createDivWithTitle() {
         return $('<div>')
             .attr('class', 'div-with-title');

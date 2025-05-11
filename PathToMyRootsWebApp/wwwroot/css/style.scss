@@ -203,6 +203,7 @@ body {
 }
 
 .footer-container {
+    min-height: 6vh;
     display: flex;
     background-color: var(--background-color-footer);
     transition: background-color $default-transition;
@@ -879,19 +880,17 @@ fieldset {
 }
 
 .person-details {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    column-gap: $thickness-large;
 
     .top-row {
+        width: 75%;
+        position: relative;
         display: flex;
-        margin: auto;
-        width: 60%;
-        gap: $thickness-large;
+        margin: 0px auto;
 
         .info-column {
-            width: 40%;
+            width: 30%;
             display: flex;
             flex-direction: column;
 
@@ -914,90 +913,96 @@ fieldset {
         }
 
         .relatives-column {
-            width: 60%;
-            display: flex;
-            flex-direction: column;
+            position: absolute;
+            left: 30%;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            padding: 0px $thickness-large;
+            overflow: auto;
 
-            .div-with-title {
-                margin: $thickness-medium 0px;
+            .relatives-column-content {
+                .div-with-title {
+                    margin: $thickness-medium 0px;
 
-                .div-title {
-                    font-size: $font-size-medium;
-                }
-
-                .horizontal-relatives-div {
-                    display: flex;
-
-                    .relative {
-                        display: flex;
-                        width: 100%;
-                        min-width: 0;
-                        border: $thickness-extra-small solid var(--background-color);
-                        transition: color $default-transition, background-color $default-transition, border $default-transition;
-                        box-sizing: border-box;
-
-                        .texts-div {
-                            flex-grow: 1;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            min-width: 0;
-                            padding: $thickness-small;
-
-                            .text {
-                                text-align: center;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                                overflow: hidden;
-                            }
-
-                            .name-text {
-                                @extend .text;
-                                font-weight: bold;
-                            }
-
-                            .lived-text {
-                                @extend .text;
-                            }
-
-                            .marriage-text {
-                                @extend .text;
-                            }
-                        }
-
-                        .non-spouse-img {
-                            @extend .person-small-image;
-                            // cancel hovering effect
-                            &:hover {
-                                fill: var(--foreground-color);
-                            }
-
-                            flex-shrink: 0;
-                        }
-
-                        .spouse-img {
-                            @extend .person-small-image;
-                            // cancel hovering effect
-                            &:hover {
-                                fill: var(--foreground-color);
-                            }
-
-                            width: ($person-small-image-width * 1.4);
-                            height: ($person-small-image-height * 1.4);
-                            flex-shrink: 0;
-                        }
+                    .div-title {
+                        font-size: $font-size-medium;
                     }
 
-                    .relative-interactive {
-                        @extend .relative;
-                        cursor: pointer;
+                    .horizontal-relatives-div {
+                        display: flex;
 
-                        &:hover {
-                            color: var(--foreground-color-highlight);
-                            background-color: var(--background-color-highlight);
+                        .relative {
+                            display: flex;
+                            width: 100%;
+                            min-width: 0;
+                            border: $thickness-extra-small solid var(--background-color);
+                            transition: color $default-transition, background-color $default-transition, border $default-transition;
+                            box-sizing: border-box;
 
-                            .person-small-image {
-                                fill: var(--foreground-color-highlight);
+                            .texts-div {
+                                flex-grow: 1;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                min-width: 0;
+                                padding: $thickness-small;
+
+                                .text {
+                                    text-align: center;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                }
+
+                                .name-text {
+                                    @extend .text;
+                                    font-weight: bold;
+                                }
+
+                                .lived-text {
+                                    @extend .text;
+                                }
+
+                                .marriage-text {
+                                    @extend .text;
+                                }
+                            }
+
+                            .non-spouse-img {
+                                @extend .person-small-image;
+                                // cancel hovering effect
+                                &:hover {
+                                    fill: var(--foreground-color);
+                                }
+
+                                flex-shrink: 0;
+                            }
+
+                            .spouse-img {
+                                @extend .person-small-image;
+                                // cancel hovering effect
+                                &:hover {
+                                    fill: var(--foreground-color);
+                                }
+
+                                width: ($person-small-image-width * 1.4);
+                                height: ($person-small-image-height * 1.4);
+                                flex-shrink: 0;
+                            }
+                        }
+
+                        .relative-interactive {
+                            @extend .relative;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: var(--foreground-color-highlight);
+                                background-color: var(--background-color-highlight);
+
+                                .person-small-image {
+                                    fill: var(--foreground-color-highlight);
+                                }
                             }
                         }
                     }
@@ -1008,10 +1013,12 @@ fieldset {
 
     .tree-row {
         display: flex;
-        min-width: 0;
-        padding: $thickness-large;
+        height: 94vh;
+        padding: $thickness-super-large 0px;
+        box-sizing: border-box;
 
         #tree-diagrams-div {
+            padding: $thickness-large;
         }
     }
 }
