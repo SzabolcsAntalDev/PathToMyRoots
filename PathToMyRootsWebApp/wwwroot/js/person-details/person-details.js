@@ -25,7 +25,7 @@ async function createRelativesColumn(person) {
     const relativesColumnContent = personDetailsHtmlCreator.createRelativesColumnContent();
     hideElement(relativesColumnContent);
 
-    await addRelativesToRelativesColumnContent(person, relativesColumnContent);
+    await addRelativesToRelativesColumnContent(person, relativesColumnContent, relativesColumn);
 
     relativesColumn.append(relativesColumnContent);
 
@@ -33,8 +33,8 @@ async function createRelativesColumn(person) {
     await fadeInElement(relativesColumnContent);
 }
 
-async function addRelativesToRelativesColumnContent(person, relativesColumnContent) {
-    const relativesData = await createRelativesData(person)
+async function addRelativesToRelativesColumnContent(person, relativesColumnContent, relativesColumn) {
+    const relativesData = await createRelativesData(person, relativesColumn);
 
     addRelatives(
         relativesColumnContent,

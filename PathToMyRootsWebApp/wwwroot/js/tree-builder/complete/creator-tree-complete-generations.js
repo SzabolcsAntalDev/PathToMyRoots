@@ -1,8 +1,8 @@
 ﻿
 
 const completeTreeCreator = {
-    async createCompleteTreeGenerations(personId) {
-        const generations = await this.createGenerationsWithExtendedMarriages(personId);
+    async createCompleteTreeGenerations(personId, loadingTextContainerParent) {
+        const generations = await this.createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent);
 
         sortExtendedMarriagesByBirthDate(generations);
         sortExtendedMarriagesBySpouses(generations);
@@ -12,13 +12,13 @@ const completeTreeCreator = {
         return generations;
     },
 
-    async createGenerationsWithExtendedMarriages(personId) {
+    async createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent) {
         const generationsMap = new Map();
-        await this.createGenerationsRecursive(personId, new Set(), generationsMap, 0);
+        await this.createGenerationsRecursive(personId, new Set(), generationsMap, 0, loadingTextContainerParent);
         return sortByLevelAndConvertToArray(generationsMap);
     },
 
-    async createGenerationsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
+    async createGenerationsRecursive(personId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
         if (!personId || processedPersonIds.has(personId))
             return;
 
@@ -144,7 +144,7 @@ const completeTreeCreator = {
 
         extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
 
-        setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
+        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         await this.createGenerationsRecursive(person.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
         await this.createGenerationsRecursive(person.adoptiveFatherId, processedPersonIds, generationsMap, currentLevel - 1);

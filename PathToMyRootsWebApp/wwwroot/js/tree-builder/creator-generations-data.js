@@ -1,12 +1,12 @@
-﻿async function createGenerationsData(personId, treeType) {
+﻿async function createGenerationsData(personId, treeType, loadingTextContainerParent) {
     let generations;
 
     if (treeType == treeTypes.COMPLETE) {
-        generations = await completeTreeCreator.createCompleteTreeGenerations(personId);
+        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, loadingTextContainerParent);
     }
 
     if (treeType == treeTypes.HOURGLASS) {
-        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId);
+        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId, loadingTextContainerParent);
     }
 
     const generationsData = {};

@@ -1,8 +1,8 @@
 ﻿let fakeId = -10000;
 
 const hourglassTreeCreator = {
-    async createHourglassTreeGenerations(personId) {
-        const generations = await this.createGenerationsWithExtendedMarriages(personId);
+    async createHourglassTreeGenerations(personId, loadingTextContainerParent) {
+        const generations = await this.createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent);
 
         sortExtendedMarriagesBySpouses(generations);
         createSiblings(generations);
@@ -11,25 +11,25 @@ const hourglassTreeCreator = {
         return generations;
     },
 
-    async createGenerationsWithExtendedMarriages(personId) {
+    async createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent) {
         const person = await getPersonJson(personId);
-        const processedPersonIds = new Set();
+        const processedPersonIds = new Set([personId]);
 
         const ancestorsGenerationsMap = new Map();
-        await this.createKnownAncestors(person.id, person.biologicalFatherId, processedPersonIds, ancestorsGenerationsMap, -1);
+        await this.createKnownAncestors(person.id, person.biologicalFatherId, processedPersonIds, ancestorsGenerationsMap, -1, loadingTextContainerParent);
         const ancestorsGenerations = sortByLevelAndConvertToArray(ancestorsGenerationsMap);
         this.addUnknownAncestors(ancestorsGenerations);
 
         const generation0 = await this.createGeneration0(person, processedPersonIds);
 
         const descedantsGenerationsMap = new Map();
-        await this.createDescedants(person, processedPersonIds, descedantsGenerationsMap);
+        await this.createDescedants(person, processedPersonIds, descedantsGenerationsMap, loadingTextContainerParent);
         const descedantsGenerations = sortByLevelAndConvertToArray(descedantsGenerationsMap);
 
         return ancestorsGenerations.concat(generation0).concat(descedantsGenerations);
     },
 
-    async createKnownAncestors(childId, fatherId, processedPersonIds, generationsMap, currentLevel) {
+    async createKnownAncestors(childId, fatherId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
         if (!fatherId)
             return;
 
@@ -91,10 +91,10 @@ const hourglassTreeCreator = {
         const generation = generationsMap.get(currentLevel);
         generation.extendedMarriages.push(extendedMarriage);
 
-        setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
+        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
-        await this.createKnownAncestors(father.id, father.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
-        await this.createKnownAncestors(motherId, mothersFatherId, processedPersonIds, generationsMap, currentLevel - 1);
+        await this.createKnownAncestors(father.id, father.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
+        await this.createKnownAncestors(motherId, mothersFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
     },
 
     addUnknownAncestors(generations) {
@@ -181,7 +181,7 @@ const hourglassTreeCreator = {
         }
     },
 
-    async createGeneration0(person, processedPersonIds) {
+    async createGeneration0(person, processedPersonIds, loadingTextContainerParent) {
         let extendedMarriageLeft;
         let extendedMarriageRight;
 
@@ -313,18 +313,18 @@ const hourglassTreeCreator = {
             extendedMarriages: extendedMarriages,
         };
 
-        setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
+        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         return generation;
     },
 
-    async createDescedants(person, processedPersonIds, generationsMap) {
+    async createDescedants(person, processedPersonIds, generationsMap, loadingTextContainerParent) {
         for (const child of person.inverseBiologicalFather) {
-            await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, 1);
+            await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, 1, loadingTextContainerParent);
         }
     },
 
-    async createDescedantsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
+    async createDescedantsRecursive(personId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
         if (!personId) {
             return;
         }
@@ -341,15 +341,15 @@ const hourglassTreeCreator = {
         const generation = generationsMap.get(currentLevel);
         generation.extendedMarriages.push(...generationEntity.extendedMarriages);
 
-        setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
+        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         if (person.inverseBiologicalFather != null)
             for (let child of person.inverseBiologicalFather)
-                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
+                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1, loadingTextContainerParent);
 
         if (person.inverseBiologicalMother != null)
             for (let child of person.inverseBiologicalMother)
-                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
+                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1, loadingTextContainerParent);
     },
 
     createFakeMale(childId) {

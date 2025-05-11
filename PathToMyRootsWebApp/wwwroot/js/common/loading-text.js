@@ -24,10 +24,10 @@
     return loadingTextContainer;
 }
 
-function getLoadingProgressTextLabel() {
-    return $('#loading-text-container').find('#loading-progress-text-label');
+function getLoadingProgressTextLabel(loadingTextContainerParent) {
+    return $(loadingTextContainerParent).find('#loading-text-container').find('#loading-progress-text-label');
 }
 
-function setLoadingProgressText(text) {
-    getLoadingProgressTextLabel().html(text);
+function setLoadingProgressText(loadingTextContainerParent, text) {
+    getLoadingProgressTextLabel(loadingTextContainerParent).html(text);
 }

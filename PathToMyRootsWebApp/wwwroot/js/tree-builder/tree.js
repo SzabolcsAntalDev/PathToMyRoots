@@ -18,7 +18,7 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) 
     const treeDiagram = treeHtmlCreator.createDiagram(personId);
     hideElement(treeDiagram);
 
-    generationsData = await createGenerationsData(personId, treeType);
+    generationsData = await createGenerationsData(personId, treeType, treeDiagramsDiv);
     nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
     linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
