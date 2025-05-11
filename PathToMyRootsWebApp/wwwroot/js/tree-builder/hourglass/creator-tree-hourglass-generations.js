@@ -13,17 +13,20 @@ const hourglassTreeCreator = {
 
     async createGenerationsWithExtendedMarriages(personId) {
         const person = await getPersonJson(personId);
-
         const processedPersonIds = new Set();
-        const ancestorsGenerationsMap = new Map();
 
+        const ancestorsGenerationsMap = new Map();
         await this.createKnownAncestors(person.id, person.biologicalFatherId, processedPersonIds, ancestorsGenerationsMap, -1);
-        const ancestorsGeneration = sortByLevelAndConvertToArray(ancestorsGenerationsMap);
-        this.addUnknownAncestors(ancestorsGeneration);
+        const ancestorsGenerations = sortByLevelAndConvertToArray(ancestorsGenerationsMap);
+        this.addUnknownAncestors(ancestorsGenerations);
 
         const generation0 = await this.createGeneration0(person, processedPersonIds);
 
-        return ancestorsGeneration.concat(generation0);
+        const descedantsGenerationsMap = new Map();
+        await this.createDescedants(person, processedPersonIds, descedantsGenerationsMap);
+        const descedantsGenerations = sortByLevelAndConvertToArray(descedantsGenerationsMap);
+
+        return ancestorsGenerations.concat(generation0).concat(descedantsGenerations);
     },
 
     async createKnownAncestors(childId, fatherId, processedPersonIds, generationsMap, currentLevel) {
@@ -201,7 +204,7 @@ const hourglassTreeCreator = {
                 const firstWife = await getPersonJson(firstWifeId);
 
                 extendedMarriageLeft = {
-                    mainMarriageLeft: {
+                    mainMarriage: {
                         male: male,
                         female: firstWife,
                         marriage: createMarriage(male, firstWife, true)
@@ -258,7 +261,7 @@ const hourglassTreeCreator = {
                 const firstHusband = await getPersonJson(firstHusbandId);
 
                 extendedMarriageLeft = {
-                    mainMarriageLeft: {
+                    mainMarriage: {
                         male: firstHusband,
                         female: female,
                         marriage: createMarriage(firstHusband, female, true)
@@ -313,6 +316,40 @@ const hourglassTreeCreator = {
         setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
 
         return generation;
+    },
+
+    async createDescedants(person, processedPersonIds, generationsMap) {
+        for (const child of person.inverseBiologicalFather) {
+            await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, 1);
+        }
+    },
+
+    async createDescedantsRecursive(personId, processedPersonIds, generationsMap, currentLevel) {
+        if (!personId) {
+            return;
+        }
+
+        const person = await getPersonJson(personId);
+        const generationEntity = await this.createGeneration0(person, processedPersonIds);
+
+        if (!generationsMap.has(currentLevel)) {
+            const newGeneration = {};
+            newGeneration.extendedMarriages = [];
+            generationsMap.set(currentLevel, newGeneration);
+        }
+
+        const generation = generationsMap.get(currentLevel);
+        generation.extendedMarriages.push(...generationEntity.extendedMarriages);
+
+        setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
+
+        if (person.inverseBiologicalFather != null)
+            for (let child of person.inverseBiologicalFather)
+                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
+
+        if (person.inverseBiologicalMother != null)
+            for (let child of person.inverseBiologicalMother)
+                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1);
     },
 
     createFakeMale(childId) {

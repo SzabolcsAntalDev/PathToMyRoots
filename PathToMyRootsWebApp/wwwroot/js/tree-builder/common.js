@@ -30,3 +30,23 @@ function getCommonAdoptiveChildren(male, female) {
         .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id === femaleChild.id))
         .map(child => child.id);
 }
+
+function getNumberOfAvailableParents(extendedMarriage) {
+    return this.getNumberOfParents(extendedMarriage.mainMarriage?.male) +
+        this.getNumberOfParents(extendedMarriage.mainMarriage?.female) +
+        this.getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
+        this.getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
+}
+
+function getNumberOfParents(person) {
+    if (person == null) {
+        return null;
+    }
+
+    let number = 0;
+
+    number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
+    number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
+
+    return number;
+}

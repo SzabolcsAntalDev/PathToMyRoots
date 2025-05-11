@@ -30,7 +30,6 @@
     },
 
     createSiblingsChain(siblingsChain) {
-
         const siblingsChainDiv = $('<div>')
             .attr('class', 'siblings-chain');
 

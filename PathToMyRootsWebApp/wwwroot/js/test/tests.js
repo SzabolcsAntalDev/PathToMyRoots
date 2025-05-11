@@ -49,7 +49,8 @@ async function addTreeTypeHourglassTests(treeDiagramsDiv) {
         'When only male ancestors are present, fake ancestors are added',
         'When only female ancestors are present, fake ancestors are added',
         'When male has two spouses, both spouses are displayed, and spouses of wives are not displayed',
-        'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed'
+        'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed',
+        'When'
     ];
 
     for (const testTitle of tests) {

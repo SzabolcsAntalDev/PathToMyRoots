@@ -142,7 +142,7 @@ const completeTreeCreator = {
             generation.extendedMarriages.push(extendedMarriage);
         }
 
-        extendedMarriage.numberOfAvailableParents = this.getNumberOfAvailableParents(extendedMarriage);
+        extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
 
         setLoadingProgressText(`Number of persons found:<br>${processedPersonIds.size}`);
 
@@ -184,25 +184,5 @@ const completeTreeCreator = {
         if (secondWifesFirstSpouseId) {
             await this.createGenerationsRecursive(secondWifesFirstSpouseId, processedPersonIds, generationsMap, currentLevel);
         }
-    },
-
-    getNumberOfAvailableParents(extendedMarriage) {
-        return this.getNumberOfParents(extendedMarriage.mainMarriage?.male) +
-            this.getNumberOfParents(extendedMarriage.mainMarriage?.female) +
-            this.getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
-            this.getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
-    },
-
-    getNumberOfParents(person) {
-        if (person == null) {
-            return null;
-        }
-
-        let number = 0;
-
-        number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
-        number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
-
-        return number;
     }
 }

@@ -692,6 +692,17 @@ VALUES
 		(	@id + 6,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 7,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
+-- ==========================================================================================================================
+-- When
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Male',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female',		NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
 SET IDENTITY_INSERT Persons OFF;
 
 ALTER TABLE Persons
