@@ -60,7 +60,7 @@ const hourglassTreeCreator = {
             const firstWife = await getPersonJson(father.firstSpouseId);
             let mother = (firstWife.inverseBiologicalMother.map(e => e.id).includes(childId))
                 ? firstWife
-                : await getPersonJson(male.secondSpouseId);
+                : await getPersonJson(father.secondSpouseId);
 
             mainMarriage = {
                 male: father,
@@ -257,7 +257,7 @@ const hourglassTreeCreator = {
             }
 
             if (female.firstSpouseId != null && female.secondSpouseId == null) { // | FEMALE | male | ----
-                const firstHusbandId = male.firstSpouseId;
+                const firstHusbandId = female.firstSpouseId;
                 const firstHusband = await getPersonJson(firstHusbandId);
 
                 extendedMarriageLeft = {
