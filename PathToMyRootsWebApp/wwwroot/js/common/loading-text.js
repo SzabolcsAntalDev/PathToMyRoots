@@ -28,13 +28,13 @@
     },
 
     async fadeIn(loadingTextContainer) {
-        this.startAnimating(loadingTextContainer);
-        await fadeInElement(loadingTextContainer);
+        this.startAnimating($(loadingTextContainer));
+        await fadeInElement($(loadingTextContainer));
     },
 
     async fadeOut(loadingTextContainer) {
-        await fadeOutElement(loadingTextContainer);
-        this.stopAnimating(loadingTextContainer);
+        await fadeOutElement($(loadingTextContainer));
+        this.stopAnimating($(loadingTextContainer));
     },
 
     startAnimating(loadingTextContainer) {
