@@ -12,66 +12,49 @@ const unknownFemale = {
 
 async function createRelativesData(person, relativesColumn) {
     const relativesData = {};
-    let numberOfPersonsFound = 0;
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading biological grandparents');
     relativesData.biologicalGrandParents = await getBiologicalGrandParents(person);
-    numberOfPersonsFound += relativesData.biologicalGrandParents.filter(p => p.id != -1).length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading adoptive grandparents');
     relativesData.adoptiveGrandParents = await getAdoptiveGrandParents(person);
-    numberOfPersonsFound += relativesData.adoptiveGrandParents?.filter(p => p.id != -1).length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading biological parents');
     relativesData.biologicalParents = getBiologicalParents(person);
-    numberOfPersonsFound += relativesData.biologicalParents.filter(p => p.id != -1).length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading adoptive parents');
     relativesData.adoptiveParents = getAdoptiveParents(person);
-    numberOfPersonsFound += relativesData.adoptiveParents.filter(p => p.id != -1).length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading siblings');
     relativesData.siblings = await getSiblings(person);
-    numberOfPersonsFound += relativesData.siblings.length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading first cousins');
     relativesData.firstCousins = await getFirstCousins(relativesData, person.id);
-    numberOfPersonsFound += relativesData.firstCousins.length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading second cousins');
     relativesData.secondCousins = await getSecondCousins(relativesData, person.id);
-    numberOfPersonsFound += relativesData.secondCousins.length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
     const biologicalChildren = getBiologicalChildren(person);
     const adoptiveChildren = getAdoptiveChildren(person);
 
     if (person.firstSpouseId) {
+        loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading' + (person.secondSpouseId ? ' first ' : ' ') + 'marriage');
         relativesData.firstSpouseId = person.firstSpouseId;
         relativesData.firstSpouse = await getPersonJson(person.firstSpouseId);
         relativesData.firstMarriageBiologicalChildren = getCommonChildren(biologicalChildren, getBiologicalChildrenIds(relativesData.firstSpouse));
         relativesData.firstMarriageAdoptiveChildren = getCommonChildren(adoptiveChildren, getAdoptiveChildrenIds(relativesData.firstSpouse));
-
-        numberOfPersonsFound += 1; // spouse
-        numberOfPersonsFound += relativesData.firstMarriageBiologicalChildren.length;
-        numberOfPersonsFound += relativesData.firstMarriageAdoptiveChildren.length;
-        setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
     }
 
     if (person.secondSpouseId) {
+        loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading second marriage');
         relativesData.secondSpouseId = person.secondSpouseId;
         relativesData.secondSpouse = await getPersonJson(person.secondSpouseId);
         relativesData.secondMarriageBiologicalChildren = getCommonChildren(biologicalChildren, getBiologicalChildrenIds(relativesData.secondSpouse));
         relativesData.secondMarriageAdoptiveChildren = getCommonChildren(adoptiveChildren, getAdoptiveChildrenIds(relativesData.secondSpouse));
-
-        numberOfPersonsFound += 1; // spouse
-        numberOfPersonsFound += relativesData.secondMarriageBiologicalChildren.length;
-        numberOfPersonsFound += relativesData.secondMarriageAdoptiveChildren.length;
-        setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
     }
 
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading granchildren');
     relativesData.grandChildren = await getGrandChildren(biologicalChildren, adoptiveChildren);
-    numberOfPersonsFound += relativesData.grandChildren.length;
-    setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound);
 
     return relativesData;
 }
@@ -263,8 +246,4 @@ async function getGrandChildren(biologicalChildren, adoptiveChildren) {
     }
 
     return arrayRemoveDuplicatesWithSameId(grandChildrenNested);
-}
-
-function setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound) {
-    loadingTextManager.setLoadingProgressText(relativesColumn, `Number of persons found:<br>${numberOfPersonsFound}`);
 }
