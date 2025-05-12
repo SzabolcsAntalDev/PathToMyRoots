@@ -11,9 +11,9 @@ let nodesContainer;
 let linesContainer;
 
 async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) {
-    const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(treeDiagramsDiv);
+    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramsDiv);
     treeDiagramsDiv.append(loadingTextContainer);
-    await fadeInElement(loadingTextContainer);
+    await loadingTextManager.fadeIn(loadingTextContainer);
 
     const treeDiagram = treeHtmlCreator.createDiagram(personId);
     hideElement(treeDiagram);
@@ -28,7 +28,7 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) 
 
     drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
 
-    await fadeOutElement(loadingTextContainer);
+    await loadingTextManager.fadeOut(loadingTextContainer);
     await fadeInElement(treeDiagram);
 }
 

@@ -18,9 +18,9 @@ function createInfoColumn(person) {
 async function createRelativesColumn(person) {
     const relativesColumn = $('.relatives-column');
 
-    const loadingTextContainer = getOrCreateHiddenLoadingTextContainer(relativesColumn);
+    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(relativesColumn);
     relativesColumn.append(loadingTextContainer);
-    await fadeInElement(loadingTextContainer);
+    await loadingTextManager.fadeIn(loadingTextContainer);
 
     const relativesColumnContent = personDetailsHtmlCreator.createRelativesColumnContent();
     hideElement(relativesColumnContent);
@@ -29,7 +29,7 @@ async function createRelativesColumn(person) {
 
     relativesColumn.append(relativesColumnContent);
 
-    await fadeOutElement(loadingTextContainer);
+    await loadingTextManager.fadeOut(loadingTextContainer);
     await fadeInElement(relativesColumnContent);
 }
 

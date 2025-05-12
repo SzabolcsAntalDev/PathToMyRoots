@@ -144,7 +144,7 @@ const completeTreeCreator = {
 
         extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
 
-        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         await this.createGenerationsRecursive(person.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1);
         await this.createGenerationsRecursive(person.adoptiveFatherId, processedPersonIds, generationsMap, currentLevel - 1);

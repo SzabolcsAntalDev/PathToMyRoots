@@ -266,5 +266,5 @@ async function getGrandChildren(biologicalChildren, adoptiveChildren) {
 }
 
 function setLoadingProgressTextInner(relativesColumn, numberOfPersonsFound) {
-    setLoadingProgressText(relativesColumn, `Number of persons found:<br>${numberOfPersonsFound}`);
+    loadingTextManager.setLoadingProgressText(relativesColumn, `Number of persons found:<br>${numberOfPersonsFound}`);
 }

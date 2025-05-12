@@ -44,12 +44,14 @@
 
 :root.theme-light {
   --default-transition-interval: 0.3s;
+  --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
 }
 
 :root.theme-dark {
   --default-transition-interval: 0.3s;
+  --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
 }
@@ -642,7 +644,7 @@ fieldset input[type=text] {
   margin: 0px auto 32px 0px;
 }
 
-#loading-text-container {
+.loading-text-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -653,13 +655,19 @@ fieldset input[type=text] {
   width: 100%;
   height: 100%;
 }
-#loading-text-container #loading-text-label {
+.loading-text-container .animated-loading-text-div {
   margin: 0px;
   margin-bottom: 16px;
-  font-size: 18px;
   font-weight: bold;
+  font-size: 18px;
 }
-#loading-text-container #loading-progress-text-label {
+.loading-text-container .animated-loading-text-div span {
+  transition: 0.2s linear 0s;
+}
+.loading-text-container .animated-loading-text-div .highlighted {
+  color: var(--foreground-color-highlight);
+}
+.loading-text-container .custom-loading-text-label {
   margin: 0px;
   text-align: center;
   font-size: 14px;

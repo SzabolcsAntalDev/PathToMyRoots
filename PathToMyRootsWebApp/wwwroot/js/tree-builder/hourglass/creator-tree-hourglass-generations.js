@@ -91,7 +91,7 @@ const hourglassTreeCreator = {
         const generation = generationsMap.get(currentLevel);
         generation.extendedMarriages.push(extendedMarriage);
 
-        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         await this.createKnownAncestors(father.id, father.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
         await this.createKnownAncestors(motherId, mothersFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
@@ -313,7 +313,7 @@ const hourglassTreeCreator = {
             extendedMarriages: extendedMarriages,
         };
 
-        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         return generation;
     },
@@ -341,7 +341,7 @@ const hourglassTreeCreator = {
         const generation = generationsMap.get(currentLevel);
         generation.extendedMarriages.push(...generationEntity.extendedMarriages);
 
-        setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
         if (person.inverseBiologicalFather != null)
             for (let child of person.inverseBiologicalFather)
