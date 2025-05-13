@@ -125,7 +125,7 @@
     },
 
     createPersonNode(person) {
-        const image = createPersonImageWithFallbackSvg('image', person.imageUrl);
+        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'image');
 
         const personNameText = formatPersonName(person);
         const personNameSpan =

@@ -1,6 +1,6 @@
 ﻿const personDetailsHtmlCreator = {
     createInfoImage(person) {
-        return createPersonImageWithFallbackSvg('image', person.imageUrl);
+        return createPersonImageWithFallbackSvg(person.imageUrl, 'image');
     },
 
     createInfoNameText(person) {
@@ -55,7 +55,7 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
-        const image = createPersonImageWithFallbackSvg('non-spouse-img', person.imageUrl);
+        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'non-spouse-img');
 
         const classes =
             (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
@@ -101,7 +101,7 @@
                 .append(personLivedSpan)
                 .append(personMarriageSpan);
 
-        const image = createPersonImageWithFallbackSvg('spouse-img', person.imageUrl);
+        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'spouse-img');
 
         const classes =
             (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +

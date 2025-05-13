@@ -413,6 +413,18 @@ input[type="text"]::placeholder {
     height: $person-small-image-height;
 }
 
+.phantom-image-div {
+    aspect-ratio: 3 / 4;
+
+    .phantom-svg {
+        width: 100%;
+        height: 100%;
+
+        .phantom-use {
+        }
+    }
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -742,6 +754,8 @@ fieldset {
                                     .image-div {
                                         width: $person-small-image-width;
                                         height: $person-small-image-height;
+                                        margin: 0;
+                                        position: relative;
                                     }
 
                                     .image {
@@ -910,6 +924,7 @@ fieldset {
             .image {
                 @extend %svg-hoverable;
                 margin-bottom: $thickness-large;
+                width: 100%;
             }
 
             .name {

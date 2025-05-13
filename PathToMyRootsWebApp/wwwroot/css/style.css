@@ -298,6 +298,13 @@ input[type=text]::placeholder {
   height: 40px;
 }
 
+.phantom-image-div {
+  aspect-ratio: 3/4;
+}
+.phantom-image-div .phantom-svg {
+  width: 100%;
+  height: 100%;
+}
 .tooltip {
   position: relative;
   display: inline-block;
@@ -589,6 +596,8 @@ fieldset input[type=text] {
 #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image-div {
   width: 30px;
   height: 40px;
+  margin: 0;
+  position: relative;
 }
 #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   fill: var(--foreground-color-disabled);
@@ -705,6 +714,7 @@ fieldset input[type=text] {
 }
 .person-details .top-row .info-column .image {
   margin-bottom: 16px;
+  width: 100%;
 }
 .person-details .top-row .info-column .name {
   margin-bottom: 8px;
