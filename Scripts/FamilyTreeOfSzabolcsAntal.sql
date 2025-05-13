@@ -435,7 +435,7 @@ DECLARE @idBuffer INT = 30;
 DECLARE @id INT = 1000;
 
 -- ==========================================================================================================================
--- When a person has a three generaion family, generations are displayed on three levels
+-- COMPLETE - When a person has a three generaion family, generations are displayed on three levels
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
@@ -450,7 +450,7 @@ VALUES
 		(	@id + 7,	'L1 Male2', 		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
 
 -- ==========================================================================================================================
--- When child has biological and adoptive parents, biological and adoptive lines are drawn
+-- COMPLETE - When child has biological and adoptive parents, biological and adoptive lines are drawn
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,				LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
@@ -462,7 +462,7 @@ VALUES
 		(	@id + 4,	'L1 Male', 				NULL,			NULL,			NULL,			@id + 0, 			@id + 1, 			@id + 2,			@id + 3,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL)
 
 -- ==========================================================================================================================
--- When sibling groups and siblings are not sorted when loaded, they are sorted after loading
+-- COMPLETE - When sibling groups and siblings are not sorted when loaded, they are sorted after loading
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -478,7 +478,7 @@ VALUES
 		(	@id + 8,	'L0 Male1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+20000101',	NULL,	NULL)
 
 -- ==========================================================================================================================
--- When female is double married, both husbands are displayed
+-- COMPLETE - When female is double married, both husbands are displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -489,7 +489,7 @@ VALUES
 
 
 -- ==========================================================================================================================
--- When male is double married, both wives are displayed
+-- COMPLETE - When male is double married, both wives are displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -499,7 +499,7 @@ VALUES
 		(	@id + 2,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
 
 -- ==========================================================================================================================
--- When extended marriages have secondary marriage, they are chained based on the second marriage
+-- COMPLETE - When extended marriages have secondary marriage, they are chained based on the second marriage
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -522,7 +522,7 @@ VALUES
 		(	@id + 15,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 12, 		@id + 14,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
 
 -- ==========================================================================================================================
--- When second wife of male has first spouse, that first spouse is also displayed
+-- COMPLETE - When second wife of male has first spouse, that first spouse is also displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -535,7 +535,7 @@ VALUES
 		(	@id + 4,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage
+-- COMPLETE - When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -547,7 +547,7 @@ VALUES
 		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
 
 -- ==========================================================================================================================
--- When older parents have younger children, children are sorted by parents first instead of birthDates
+-- COMPLETE - When older parents have younger children, children are sorted by parents first instead of birthDates
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -568,7 +568,7 @@ VALUES
 		(	@id + 13,	'L3 Female1',		NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+2003mmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When female is loaded first, her first husband is still loaded
+-- COMPLETE - When female is loaded first, her first husband is still loaded
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -578,7 +578,7 @@ VALUES
 		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When children have common parents, they are displayed in separate sibling groups
+-- COMPLETE - When children have common parents, they are displayed in separate sibling groups
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -595,7 +595,7 @@ VALUES
 		(	@id + 9,	'L1 Male6',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When parents are orphans on the second level, they are sorted by birthDates
+-- COMPLETE - When parents are orphans on the second level, they are sorted by birthDates
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -613,7 +613,7 @@ VALUES
 		(	@id + 10,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 9,	 	NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When extended marriage male has default birthDate, use female birthDate for sorting
+-- COMPLETE - When extended marriage male has default birthDate, use female birthDate for sorting
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -633,7 +633,7 @@ VALUES
 SET @id = 2000;
 
 -- ==========================================================================================================================
--- When only male ancestors are present, fake ancestors are added
+-- HOURGLASS - When only male ancestors are present, fake ancestors are added
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -647,7 +647,7 @@ VALUES
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When only female ancestors are present, fake ancestors are added
+-- HOURGLASS - When only female ancestors are present, fake ancestors are added
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -661,7 +661,7 @@ VALUES
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When male has two spouses, both spouses are displayed, and spouses of wives are not displayed
+-- HOURGLASS - When male has two spouses, both spouses are displayed, and spouses of wives are not displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -677,7 +677,7 @@ VALUES
 		(	@id + 7,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed
+-- HOURGLASS - When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -693,7 +693,7 @@ VALUES
 		(	@id + 7,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- When
+-- HOURGLASS - Children
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
