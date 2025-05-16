@@ -42,7 +42,7 @@ async function addTreeTypeHourglassTests(treeDiagramsDiv) {
         personId: 2000,
         personIdBuffer: 30,
         testIndex: 1,
-        treeType: treeTypes.HOURGLASS
+        treeType: treeTypes.HOURGLASS_EXTENDED
     };
 
     const tests = [
@@ -50,7 +50,7 @@ async function addTreeTypeHourglassTests(treeDiagramsDiv) {
         'When only female ancestors are present, fake ancestors are added',
         'When male has two spouses, both spouses are displayed, and spouses of wives are not displayed',
         'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed',
-        'Children'
+        'When children are shown, all children are displayed until their spouses, but not wider than that'
     ];
 
     for (const testTitle of tests) {

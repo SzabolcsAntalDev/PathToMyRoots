@@ -29,50 +29,50 @@ const hourglassTreeCreator = {
         return ancestorsGenerations.concat(generation0).concat(descedantsGenerations);
     },
 
-    async createKnownAncestors(childId, fatherId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
-        if (!fatherId)
+    async createKnownAncestors(childId, biologicalFatherId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
+        if (!biologicalFatherId)
             return;
 
-        const father = await getPersonJson(fatherId);
+        const biologicalFather = await getPersonJson(biologicalFatherId);
         let mainMarriage;
 
-        let motherId;
-        let mothersFatherId;
+        let biologicalMotherId;
+        let biologicalMothersFatherId;
 
-        if (father.firstSpouseId != null && father.secondSpouseId == null) { // single married male
-            motherId = father.firstSpouseId;
-            const mother = await getPersonJson(motherId);
+        if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId == null) { // single married male
+            biologicalMotherId = biologicalFather.firstSpouseId;
+            const biologicalMother = await getPersonJson(biologicalMotherId);
 
             mainMarriage = {
-                male: father,
-                female: mother,
-                marriage: createMarriage(father, mother, true)
+                male: biologicalFather,
+                female: biologicalMother,
+                marriage: createMarriage(biologicalFather, biologicalMother, true)
             }
 
-            motherId = mother.id;
-            mothersFatherId = mother.biologicalFatherId;
+            biologicalMotherId = biologicalMother.id;
+            biologicalMothersFatherId = biologicalMother.biologicalFatherId;
 
-            processedPersonIds.add(father.id);
-            processedPersonIds.add(mother.id);
+            processedPersonIds.add(biologicalFather.id);
+            processedPersonIds.add(biologicalMother.id);
         }
 
-        if (father.firstSpouseId != null && father.secondSpouseId != null) { // double married male
-            const firstWife = await getPersonJson(father.firstSpouseId);
-            let mother = (firstWife.inverseBiologicalMother.map(e => e.id).includes(childId))
+        if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId != null) { // double married male
+            const firstWife = await getPersonJson(biologicalFather.firstSpouseId);
+            let biologicalMother = (firstWife.inverseBiologicalMother.map(e => e.id).includes(childId))
                 ? firstWife
-                : await getPersonJson(father.secondSpouseId);
+                : await getPersonJson(biologicalFather.secondSpouseId);
 
             mainMarriage = {
-                male: father,
-                female: mother,
-                marriage: createMarriage(father, mother, true)
+                male: biologicalFather,
+                female: biologicalMother,
+                marriage: createMarriage(biologicalFather, biologicalMother, true)
             }
 
-            motherId = mother.id;
-            mothersFatherId = mother.biologicalFatherId;
+            biologicalMotherId = biologicalMother.id;
+            biologicalMothersFatherId = biologicalMother.biologicalFatherId;
 
-            processedPersonIds.add(father.id);
-            processedPersonIds.add(mother.id);
+            processedPersonIds.add(biologicalFather.id);
+            processedPersonIds.add(biologicalMother.id);
         }
 
         // Szabi
@@ -93,8 +93,8 @@ const hourglassTreeCreator = {
 
         loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
 
-        await this.createKnownAncestors(father.id, father.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
-        await this.createKnownAncestors(motherId, mothersFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
+        await this.createKnownAncestors(biologicalFather.id, biologicalFather.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
+        await this.createKnownAncestors(biologicalMotherId, biologicalMothersFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
     },
 
     addUnknownAncestors(generations) {
@@ -181,6 +181,7 @@ const hourglassTreeCreator = {
         }
     },
 
+    // creates the nodes with person and its first and second spouse
     async createGeneration0(person, processedPersonIds, loadingTextContainerParent) {
         let extendedMarriageLeft;
         let extendedMarriageRight;
@@ -319,13 +320,13 @@ const hourglassTreeCreator = {
     },
 
     async createDescedants(person, processedPersonIds, generationsMap, loadingTextContainerParent) {
-        for (const child of person.inverseBiologicalFather) {
+        for (const child of (person.isMale ? person.inverseBiologicalFather : person.inverseBiologicalMother)) {
             await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, 1, loadingTextContainerParent);
         }
     },
 
     async createDescedantsRecursive(personId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
-        if (!personId) {
+        if (!personId || processedPersonIds.has(personId)) {
             return;
         }
 

@@ -5,7 +5,11 @@
         generations = await completeTreeCreator.createCompleteTreeGenerations(personId, loadingTextContainerParent);
     }
 
-    if (treeType == treeTypes.HOURGLASS) {
+    if (treeType == treeTypes.HOURGLASS_WITH_ADOPTIVE) {
+        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId, loadingTextContainerParent);
+    }
+
+    if (treeType == treeTypes.HOURGLASS_EXTENDED) {
         generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId, loadingTextContainerParent);
     }
 
@@ -21,7 +25,7 @@
 // gets the largest persons with available parents number of all generations
 // numberOfAvailableParents:
 // for COMPLETE trees is adoptive + biological parents number
-// for HOURGLASS trees is only biological known and unknown parents number
+// for HOURGLASS_EXTENDED trees is only biological known and unknown parents number
 function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
 
