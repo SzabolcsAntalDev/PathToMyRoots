@@ -13,6 +13,7 @@ const hourglassTreeCreator = {
 
     async createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent) {
         const person = await getPersonJson(personId);
+        person.isHighlighted = true;
         const processedPersonIds = new Set([personId]);
 
         const ancestorsGenerationsMap = new Map();

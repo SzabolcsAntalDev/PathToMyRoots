@@ -553,6 +553,14 @@ fieldset input[type=text] {
   text-align: center;
   font-size: 11px;
 }
+#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node {
+  animation: colorFade 1s linear infinite alternate;
+}
+@keyframes colorFade {
+  to {
+    background-color: var(--background-color-highlight);
+  }
+}
 #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   width: 100px;
   margin: 0px 10px;

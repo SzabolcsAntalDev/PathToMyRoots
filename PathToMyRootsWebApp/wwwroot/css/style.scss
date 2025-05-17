@@ -698,6 +698,16 @@ fieldset {
                                 }
                             }
 
+                            .highlighted-node {
+                                animation: colorFade 1s linear infinite alternate;
+
+                                @keyframes colorFade {
+                                    to {
+                                        background-color: var(--background-color-highlight);
+                                    }
+                                }
+                            }
+
                             .marriage-node {
                                 @extend .node;
                                 width: $marriage-node-width;

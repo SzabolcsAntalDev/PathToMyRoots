@@ -145,9 +145,11 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
+        const nodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''}`;
+
         return $('<div>')
             .attr('id', person.id)
-            .attr('class', `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'}`)
+            .attr('class', nodeClass)
             .attr('title', `${personNameText}\n${personLivedText}`)
             .data('biologicalFatherId', person.biologicalFatherId)
             .data('biologicalMotherId', person.biologicalMotherId)
