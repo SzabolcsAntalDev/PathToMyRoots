@@ -1,105 +1,165 @@
 ﻿let fakeId = -10000;
 
 const hourglassTreeCreator = {
-    async createHourglassTreeGenerations(personId, loadingTextContainerParent) {
-        const generations = await this.createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent);
 
-        sortExtendedMarriagesBySpouses(generations);
+    async createHourglassExtendedTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        const generations = await this.createExtendedTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+        return this.sortExtendedMarriagesAndCreateSiblingsChains(generations);
+    },
+
+    async createHourglassWithAdoptiveTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        const generations = await this.createWithAdoptiveTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+        return this.sortExtendedMarriagesAndCreateSiblingsChains(generations);
+    },
+
+    sortExtendedMarriagesAndCreateSiblingsChains(generations) {
         createSiblings(generations);
         createSiblingsChains(generations);
-
         return generations;
     },
 
-    async createGenerationsWithExtendedMarriages(personId, loadingTextContainerParent) {
+    createIterationContext(includeAdoptive, processedPersonIds, ancestorsGenerationsMap, descedantsGenerationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        return {
+            includeAdoptive: includeAdoptive,
+            processedPersonIds: processedPersonIds,
+            ancestorsGenerationsMap: ancestorsGenerationsMap,
+            descedantsGenerationsMap: descedantsGenerationsMap,
+            ancestorsDepth: ancestorsDepth,
+            descedantsDepth: descedantsDepth,
+            loadingTextContainerParent: loadingTextContainerParent
+        };
+    },
+
+    async createExtendedTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
         const person = await getPersonJson(personId);
         person.isHighlighted = true;
-        const processedPersonIds = new Set([personId]);
 
-        const ancestorsGenerationsMap = new Map();
-        await this.createKnownAncestors(person.id, person.biologicalFatherId, processedPersonIds, ancestorsGenerationsMap, -1, loadingTextContainerParent);
-        const ancestorsGenerations = sortByLevelAndConvertToArray(ancestorsGenerationsMap);
+        const context = this.createIterationContext(false, new Set([personId]), new Map(), new Map(), ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+
+        await this.createKnownAncestorsRecursive(context, person.id, person.biologicalFatherId, person.adoptiveFatherId, -1);
+        const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
         this.addUnknownAncestors(ancestorsGenerations);
 
-        const generation0 = await this.createGeneration0(person, processedPersonIds);
+        const generation0 = await this.createGeneration0(context, person);
 
-        const descedantsGenerationsMap = new Map();
-        await this.createDescedants(person, processedPersonIds, descedantsGenerationsMap, loadingTextContainerParent);
-        const descedantsGenerations = sortByLevelAndConvertToArray(descedantsGenerationsMap);
+        await this.createDescedants(context, person);
+        const descedantsGenerations = sortByLevelAndConvertToArray(context.descedantsGenerationsMap);
+        sortExtendedMarriagesByBirthDate(descedantsGenerations);
 
         return ancestorsGenerations.concat(generation0).concat(descedantsGenerations);
     },
 
-    async createKnownAncestors(childId, biologicalFatherId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
-        if (!biologicalFatherId)
+    async createWithAdoptiveTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        const person = await getPersonJson(personId);
+        person.isHighlighted = true;
+
+        const context = this.createIterationContext(true, new Set([personId]), new Map(), new Map(), ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+
+        await this.createKnownAncestorsRecursive(context, person.id, person.biologicalFatherId, person.adoptiveFatherId, -1);
+        const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
+
+        const generation0 = await this.createGeneration0(context, person);
+
+        await this.createDescedants(context, person);
+        const descedantsGenerations = sortByLevelAndConvertToArray(context.descedantsGenerationsMap);
+        sortExtendedMarriagesByBirthDate(descedantsGenerations);
+
+        return ancestorsGenerations.concat(generation0).concat(descedantsGenerations);
+    },
+
+    async createKnownAncestorsRecursive(context, childId, biologicalFatherId, adoptiveFatherId, currentLevel) {
+        if (!biologicalFatherId && (context.includeAdoptive && !adoptiveFatherId))
             return;
 
-        const biologicalFather = await getPersonJson(biologicalFatherId);
-        let mainMarriage;
+        if (currentLevel < -context.ancestorsDepth) {
+            return;
+        }
 
-        let biologicalMotherId;
-        let biologicalMothersFatherId;
+        if (biologicalFatherId) {
+            const biologicalFather = await getPersonJson(biologicalFatherId);
 
-        if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId == null) { // single married male
-            biologicalMotherId = biologicalFather.firstSpouseId;
-            const biologicalMother = await getPersonJson(biologicalMotherId);
+            let mainMarriage;
+            let biologicalMotherId;
+            let biologicalMothersBiologicalFatherId;
+            let biologicalMothersAdoptiveFatherId;
 
-            mainMarriage = {
-                male: biologicalFather,
-                female: biologicalMother,
-                marriage: createMarriage(biologicalFather, biologicalMother, true)
+            if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId == null) { // single married male
+                biologicalMotherId = biologicalFather.firstSpouseId;
+                const biologicalMother = await getPersonJson(biologicalMotherId);
+
+                mainMarriage = {
+                    male: biologicalFather,
+                    female: biologicalMother,
+                    marriage: createMarriage(biologicalFather, biologicalMother, true)
+                }
+
+                biologicalMotherId = biologicalMother.id;
+                biologicalMothersBiologicalFatherId = biologicalMother.biologicalFatherId;
+                biologicalMothersAdoptiveFatherId = biologicalMother.adoptiveFatherId;
+
+                context.processedPersonIds.add(biologicalFather.id);
+                context.processedPersonIds.add(biologicalMother.id);
             }
 
-            biologicalMotherId = biologicalMother.id;
-            biologicalMothersFatherId = biologicalMother.biologicalFatherId;
+            if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId != null) { // double married male
+                const firstWife = await getPersonJson(biologicalFather.firstSpouseId);
+                let biologicalMother = (firstWife.inverseBiologicalMother.map(e => e.id).includes(childId))
+                    ? firstWife
+                    : await getPersonJson(biologicalFather.secondSpouseId);
 
-            processedPersonIds.add(biologicalFather.id);
-            processedPersonIds.add(biologicalMother.id);
-        }
+                mainMarriage = {
+                    male: biologicalFather,
+                    female: biologicalMother,
+                    marriage: createMarriage(biologicalFather, biologicalMother, true)
+                }
 
-        if (biologicalFather.firstSpouseId != null && biologicalFather.secondSpouseId != null) { // double married male
-            const firstWife = await getPersonJson(biologicalFather.firstSpouseId);
-            let biologicalMother = (firstWife.inverseBiologicalMother.map(e => e.id).includes(childId))
-                ? firstWife
-                : await getPersonJson(biologicalFather.secondSpouseId);
+                biologicalMotherId = biologicalMother.id;
+                biologicalMothersBiologicalFatherId = biologicalMother.biologicalFatherId;
+                biologicalMothersAdoptiveFatherId = biologicalMother.adoptiveFatherId;
 
-            mainMarriage = {
-                male: biologicalFather,
-                female: biologicalMother,
-                marriage: createMarriage(biologicalFather, biologicalMother, true)
+                context.processedPersonIds.add(biologicalFather.id);
+                context.processedPersonIds.add(biologicalMother.id);
             }
 
-            biologicalMotherId = biologicalMother.id;
-            biologicalMothersFatherId = biologicalMother.biologicalFatherId;
+            // Szabi
+            // numberOfAvailableParents will be set when adding unknown parents
+            const extendedMarriage = {
+                mainMarriage: mainMarriage,
+                numberOfAvailableParents: 2
+            }
 
-            processedPersonIds.add(biologicalFather.id);
-            processedPersonIds.add(biologicalMother.id);
+            if (!context.ancestorsGenerationsMap.has(currentLevel)) {
+                const newGeneration = {};
+                newGeneration.extendedMarriages = [];
+                context.ancestorsGenerationsMap.set(currentLevel, newGeneration);
+            }
+
+            const generation = context.ancestorsGenerationsMap.get(currentLevel);
+            generation.extendedMarriages.push(extendedMarriage);
+
+            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+            await this.createKnownAncestorsRecursive(context, biologicalFather.id, biologicalFather.biologicalFatherId, biologicalFather.adoptiveFatherId, currentLevel - 1);
+            await this.createKnownAncestorsRecursive(context, biologicalMotherId, biologicalMothersBiologicalFatherId, biologicalMothersAdoptiveFatherId, currentLevel - 1);
         }
 
-        // Szabi
-        // numberOfAvailableParents will be set when adding unknown parents
-        const extendedMarriage = {
-            mainMarriage: mainMarriage,
-            numberOfAvailableParents: 2
+        if (context.includeAdoptive && adoptiveFatherId) {
+            const adoptiveFather = await getPersonJson(adoptiveFatherId);
+            const generation0 = await this.createGeneration0(context, adoptiveFather);
+
+            if (!context.ancestorsGenerationsMap.has(currentLevel)) {
+                const newGeneration = {};
+                newGeneration.extendedMarriages = [];
+                context.ancestorsGenerationsMap.set(currentLevel, newGeneration);
+            }
+
+            const generation = context.ancestorsGenerationsMap.get(currentLevel);
+            generation.extendedMarriages.push(...generation0.extendedMarriages);
         }
-
-        if (!generationsMap.has(currentLevel)) {
-            const newGeneration = {};
-            newGeneration.extendedMarriages = [];
-            generationsMap.set(currentLevel, newGeneration);
-        }
-
-        const generation = generationsMap.get(currentLevel);
-        generation.extendedMarriages.push(extendedMarriage);
-
-        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
-
-        await this.createKnownAncestors(biologicalFather.id, biologicalFather.biologicalFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
-        await this.createKnownAncestors(biologicalMotherId, biologicalMothersFatherId, processedPersonIds, generationsMap, currentLevel - 1, loadingTextContainerParent);
     },
 
     addUnknownAncestors(generations) {
-        if (generations.length <= 1) {
+        if (generations.length < 2) {
             return;
         }
 
@@ -132,19 +192,7 @@ const hourglassTreeCreator = {
                 if (!malesFatherId || malesFatherId != fatherIdOnMalesFatherIndex) {
                     const male = this.createFakeMale(maleId);
                     const female = this.createFakeFemale(maleId);
-
-                    male.firstSpouseId = female.fakeId;
-                    female.firstSpouseId = male.fakeId;
-
-                    const fakeExtendedMarriage = {
-                        mainMarriage: {
-                            male: male,
-                            female: female,
-                            marriage: createMarriage(male, female, true, true)
-                        },
-                        numberOfAvailableParents: 2
-                    };
-
+                    const fakeExtendedMarriage = this.createFakeExtendedMarriage(male, female);
                     parents.extendedMarriages.splice(malesParentsExtendedMarriageIndex, 0, fakeExtendedMarriage);
                 }
 
@@ -152,19 +200,7 @@ const hourglassTreeCreator = {
                 if (!femalesFatherId || femalesFatherId != fatherIdOnFemalesFatherIndex) {
                     const male = this.createFakeMale(femaleId);
                     const female = this.createFakeFemale(femaleId);
-
-                    male.firstSpouseId = female.fakeId;
-                    female.firstSpouseId = male.fakeId;
-
-                    const fakeExtendedMarriage = {
-                        mainMarriage: {
-                            male: male,
-                            female: female,
-                            marriage: createMarriage(male, female, true, true)
-                        },
-                        numberOfAvailableParents: 2
-                    };
-
+                    const fakeExtendedMarriage = this.createFakeExtendedMarriage(male, female);
                     parents.extendedMarriages.splice(femalesParentsExtendedMarriageIndex, 0, fakeExtendedMarriage);
                 }
 
@@ -183,7 +219,7 @@ const hourglassTreeCreator = {
     },
 
     // creates the nodes with person and its first and second spouse
-    async createGeneration0(person, processedPersonIds, loadingTextContainerParent) {
+    async createGeneration0(context, person) {
         let extendedMarriageLeft;
         let extendedMarriageRight;
 
@@ -198,7 +234,7 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: (male.biologicalFatherId || male.biologicalMotherId) ? 1 : 0
                 }
 
-                processedPersonIds.add(male.id);
+                context.processedPersonIds.add(male.id);
             }
 
             if (male.firstSpouseId != null && male.secondSpouseId == null) { // | MALE | female | ----
@@ -214,8 +250,8 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: (male.biologicalFatherId || male.biologicalMotherId) ? 1 : 0
                 }
 
-                processedPersonIds.add(male.id);
-                processedPersonIds.add(firstWife.id);
+                context.processedPersonIds.add(male.id);
+                context.processedPersonIds.add(firstWife.id);
             }
             if (male.firstSpouseId != null && male.secondSpouseId != null) { // | ???? | - l l - | MALE | female | -----
                 const firstWife = await getPersonJson(male.firstSpouseId);
@@ -238,9 +274,9 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: (male.biologicalFatherId || male.biologicalMotherId) ? 1 : 0
                 }
 
-                processedPersonIds.add(male.id);
-                processedPersonIds.add(firstWife.id);
-                processedPersonIds.add(secondWife.id);
+                context.processedPersonIds.add(male.id);
+                context.processedPersonIds.add(firstWife.id);
+                context.processedPersonIds.add(secondWife.id);
             }
 
         }
@@ -255,7 +291,7 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: (female.biologicalFatherId || female.biologicalMotherId) ? 1 : 0
                 }
 
-                processedPersonIds.add(female.id);
+                context.processedPersonIds.add(female.id);
             }
 
             if (female.firstSpouseId != null && female.secondSpouseId == null) { // | FEMALE | male | ----
@@ -271,8 +307,8 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: (female.biologicalFatherId || female.biologicalMotherId) ? 1 : 0
                 }
 
-                processedPersonIds.add(female.id);
-                processedPersonIds.add(firstHusband.id);
+                context.processedPersonIds.add(female.id);
+                context.processedPersonIds.add(firstHusband.id);
             }
 
             if (female.firstSpouseId != null && female.secondSpouseId != null) { // | male | FEMALE | - l l - | male | -----
@@ -296,9 +332,9 @@ const hourglassTreeCreator = {
                     numberOfAvailableParents: 0
                 }
 
-                processedPersonIds.add(female.id);
-                processedPersonIds.add(firstHusband.id);
-                processedPersonIds.add(secondHusband.id);
+                context.processedPersonIds.add(female.id);
+                context.processedPersonIds.add(firstHusband.id);
+                context.processedPersonIds.add(secondHusband.id);
             }
         }
 
@@ -315,43 +351,89 @@ const hourglassTreeCreator = {
             extendedMarriages: extendedMarriages,
         };
 
-        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 
         return generation;
     },
 
-    async createDescedants(person, processedPersonIds, generationsMap, loadingTextContainerParent) {
-        for (const child of (person.isMale ? person.inverseBiologicalFather : person.inverseBiologicalMother)) {
-            await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, 1, loadingTextContainerParent);
+    async createDescedants(context, person) {
+        const currentLevel = 0;
+
+        const biologicalChildren = (person.inverseBiologicalFather ?? []).concat(person.inverseBiologicalMother ?? []);
+        for (const child of biologicalChildren) {
+            await this.createDescedantsRecursive(context, child.id, currentLevel + 1);
+        }
+
+        if (currentLevel + 1 > context.descedantsDepth) {
+            return;
+        }
+
+        if (context.includeAdoptive) {
+            const adoptiveChildren = (person.inverseAdoptiveFather ?? []).concat(person.inverseAdoptiveMother ?? []);
+
+            for (const child of adoptiveChildren) {
+                const generation0Inner = await this.createGeneration0(context, child);
+
+                if (!context.descedantsGenerationsMap.has(currentLevel + 1)) {
+                    const newGeneration = {};
+                    newGeneration.extendedMarriages = [];
+                    context.descedantsGenerationsMap.set(currentLevel + 1, newGeneration);
+                }
+
+                const generation = context.descedantsGenerationsMap.get(currentLevel + 1);
+                generation.extendedMarriages.push(...generation0Inner.extendedMarriages);
+            }
         }
     },
 
-    async createDescedantsRecursive(personId, processedPersonIds, generationsMap, currentLevel, loadingTextContainerParent) {
-        if (!personId || processedPersonIds.has(personId)) {
+    async createDescedantsRecursive(context, personId, currentLevel) {
+        if (!personId || context.processedPersonIds.has(personId)) {
+            return;
+        }
+
+        if (currentLevel > context.descedantsDepth) {
             return;
         }
 
         const person = await getPersonJson(personId);
-        const generationEntity = await this.createGeneration0(person, processedPersonIds);
+        const generation0 = await this.createGeneration0(context, person);
 
-        if (!generationsMap.has(currentLevel)) {
+        if (!context.descedantsGenerationsMap.has(currentLevel)) {
             const newGeneration = {};
             newGeneration.extendedMarriages = [];
-            generationsMap.set(currentLevel, newGeneration);
+            context.descedantsGenerationsMap.set(currentLevel, newGeneration);
         }
 
-        const generation = generationsMap.get(currentLevel);
-        generation.extendedMarriages.push(...generationEntity.extendedMarriages);
+        const generation = context.descedantsGenerationsMap.get(currentLevel);
+        generation.extendedMarriages.push(...generation0.extendedMarriages);
 
-        loadingTextManager.setLoadingProgressText(loadingTextContainerParent, `Number of persons found:<br>${processedPersonIds.size}`);
+        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 
-        if (person.inverseBiologicalFather != null)
-            for (let child of person.inverseBiologicalFather)
-                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1, loadingTextContainerParent);
+        const biologicalChildren = (person.inverseBiologicalFather ?? []).concat(person.inverseBiologicalMother ?? []);
+        for (const child of biologicalChildren) {
+            await this.createDescedantsRecursive(context, child.id, currentLevel + 1);
+        }
 
-        if (person.inverseBiologicalMother != null)
-            for (let child of person.inverseBiologicalMother)
-                await this.createDescedantsRecursive(child.id, processedPersonIds, generationsMap, currentLevel + 1, loadingTextContainerParent);
+        if (currentLevel + 1 > context.descedantsDepth) {
+            return;
+        }
+
+        if (context.includeAdoptive) {
+            const adoptiveChildren = (person.inverseAdoptiveFather ?? []).concat(person.inverseAdoptiveMother ?? []);
+
+            for (const child of adoptiveChildren) {
+                const generation0Inner = await this.createGeneration0(context, child);
+
+                if (!context.descedantsGenerationsMap.has(currentLevel + 1)) {
+                    const newGeneration = {};
+                    newGeneration.extendedMarriages = [];
+                    context.descedantsGenerationsMap.set(currentLevel + 1, newGeneration);
+                }
+
+                const generation = context.descedantsGenerationsMap.get(currentLevel + 1);
+                generation.extendedMarriages.push(...generation0Inner.extendedMarriages);
+            }
+        }
     },
 
     createFakeMale(childId) {
@@ -376,5 +458,19 @@ const hourglassTreeCreator = {
             inverseAdoptiveMother: []
         };
         return female;
+    },
+
+    createFakeExtendedMarriage(male, female) {
+        male.firstSpouseId = female.fakeId;
+        female.firstSpouseId = male.fakeId;
+
+        return {
+            mainMarriage: {
+                male: male,
+                female: female,
+                marriage: createMarriage(male, female, true, true)
+            },
+            numberOfAvailableParents: 2
+        };
     }
 }

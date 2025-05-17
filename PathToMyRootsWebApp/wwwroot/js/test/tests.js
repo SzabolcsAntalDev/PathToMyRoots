@@ -3,8 +3,9 @@
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
-        // await addTreeTypeCompleteTests(treeDiagramsDiv);
-        await addTreeTypeHourglassTests(treeDiagramsDiv);
+        await addTreeTypeCompleteTests(treeDiagramsDiv);
+        await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
+        await addTreeTypeHourglassWithAdoptiveTests(treeDiagramsDiv);
     })();
 });
 
@@ -29,7 +30,8 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         'When female is loaded first, her first husband is still loaded',
         'When children have common parents, they are displayed in separate sibling groups',
         'When parents are orphans on the second level, they are sorted by birthDates',
-        'When extended marriage male has default birthDate, use female birthDate for sorting'
+        'When extended marriage male has default birthDate, use female birthDate for sorting',
+        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {
@@ -37,7 +39,7 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
     }
 }
 
-async function addTreeTypeHourglassTests(treeDiagramsDiv) {
+async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
     const testsContext = {
         personId: 2000,
         personIdBuffer: 30,
@@ -50,7 +52,27 @@ async function addTreeTypeHourglassTests(treeDiagramsDiv) {
         'When only female ancestors are present, fake ancestors are added',
         'When male has two spouses, both spouses are displayed, and spouses of wives are not displayed',
         'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed',
-        'When children are shown, all children are displayed until their spouses, but not wider than that'
+        'When parents have multiple children, children are sorted by their birthDates',
+        'When children are shown, all children are displayed until their spouses, but not wider than that',
+        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
+    ];
+
+    for (const testTitle of tests) {
+        await addTest(treeDiagramsDiv, testsContext, testTitle);
+    }
+}
+
+async function addTreeTypeHourglassWithAdoptiveTests(treeDiagramsDiv) {
+    const testsContext = {
+        personId: 3000,
+        personIdBuffer: 30,
+        testIndex: 1,
+        treeType: treeTypes.HOURGLASS_WITH_ADOPTIVE
+    };
+
+    const tests = [
+        'When ancestors or descedants are adopted, their relatives on further levels are not displayed',
+        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {

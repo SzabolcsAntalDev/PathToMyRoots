@@ -1,16 +1,16 @@
-﻿async function createGenerationsData(personId, treeType, loadingTextContainerParent) {
+﻿async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
     let generations;
 
     if (treeType == treeTypes.COMPLETE) {
-        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, loadingTextContainerParent);
-    }
-
-    if (treeType == treeTypes.HOURGLASS_WITH_ADOPTIVE) {
-        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId, loadingTextContainerParent);
+        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
     }
 
     if (treeType == treeTypes.HOURGLASS_EXTENDED) {
-        generations = await hourglassTreeCreator.createHourglassTreeGenerations(personId, loadingTextContainerParent);
+        generations = await hourglassTreeCreator.createHourglassExtendedTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    }
+
+    if (treeType == treeTypes.HOURGLASS_WITH_ADOPTIVE) {
+        generations = await hourglassTreeCreator.createHourglassWithAdoptiveTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
     }
 
     const generationsData = {};
@@ -22,10 +22,12 @@
     return generationsData;
 }
 
-// gets the largest persons with available parents number of all generations
+// gets the largest -persons with available parents number- of all generations
 // numberOfAvailableParents:
 // for COMPLETE trees is adoptive + biological parents number
-// for HOURGLASS_EXTENDED trees is only biological known and unknown parents number
+// for HOURGLASS_EXTENDED trees is biological known and unknown parents number
+// Szabi
+// for HOURGLASS_WITH_ADOPTIVE tree is biological and adoptive parents number displayed in the tree (not necessarily all the parents ar displayed)
 function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
 
