@@ -9,7 +9,7 @@ function createMarriage(male, female, isStaticMarriage, isFake) {
 
     marriage.isStaticMarriage = isStaticMarriage;
     marriage.isFake = isFake;
-    marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;;
+    marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
     marriage.maleId = male?.id;
     marriage.femaleId = female?.id;

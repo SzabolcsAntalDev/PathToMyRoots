@@ -1,19 +1,88 @@
-﻿$(() => {
+﻿const personIdBuffer = 40;
+
+$(() => {
     (async () => {
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
-        await addTreeTypeCompleteTests(treeDiagramsDiv);
+        await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
+        await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
         await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
-        await addTreeTypeHourglassWithAdoptiveTests(treeDiagramsDiv);
+        // await addTreeTypeCompleteTests(treeDiagramsDiv);
     })();
 });
 
-async function addTreeTypeCompleteTests(treeDiagramsDiv) {
+async function addTreeTypeHourglassCommonTests(treeDiagramsDiv) {
     const testsContext = {
         personId: 1000,
-        personIdBuffer: 30,
+        personIdBuffer: personIdBuffer,
         testIndex: 1,
+        testPrefix: "COMMON",
+        treeType: treeTypes.HOURGLASS_BIOLOGICAL
+    };
+
+    const tests = [
+        'Generation0 - When male has two wives, both wives are displayed, and husbands of wives are not displayed',
+        'Generation0 - When female has two husbands, both husbands are displayed, and wives of husbands are not displayed'
+    ];
+
+    for (const testTitle of tests) {
+        await addTest(treeDiagramsDiv, testsContext, testTitle);
+    }
+}
+
+async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
+    const testsContext = {
+        personId: 2000,
+        personIdBuffer: personIdBuffer,
+        testIndex: 1,
+        testPrefix: treeTypes.HOURGLASS_BIOLOGICAL,
+        treeType: treeTypes.HOURGLASS_BIOLOGICAL
+    };
+
+    const tests = [
+        'When only male ancestors are present, fake ancestors are added',
+        'When only female ancestors are present, fake ancestors are added',
+        'When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation',
+        'When person has multiple children, children are sorted by their birthDates',
+        'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+    ];
+
+    for (const testTitle of tests) {
+        await addTest(treeDiagramsDiv, testsContext, testTitle);
+    }
+}
+
+async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
+    const testsContext = {
+        personId: 3000,
+        personIdBuffer: personIdBuffer,
+        testIndex: 1,
+        testPrefix: treeTypes.HOURGLASS_EXTENDED,
+        treeType: treeTypes.HOURGLASS_EXTENDED
+    };
+
+    const tests = [
+        'When ancestors have multiple spouses, their spouses are displayed', // Szabi: complete tree is not working well in this case
+        'When ancestors have adoptive parents, the ancestors of the adoptive parents are not displayed', // Szabi: complete tree is not working well in this case
+        'When person has biological siblings, they and their spouses and displayed and sorted by birthDates',
+        'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates',
+        'When person has adoptive descedants, its descedants are not displayed',
+        'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates',
+        'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+    ];
+
+    for (const testTitle of tests) {
+        await addTest(treeDiagramsDiv, testsContext, testTitle);
+    }
+}
+
+async function addTreeTypeCompleteTests(treeDiagramsDiv) {
+    const testsContext = {
+        personId: 4000,
+        personIdBuffer: personIdBuffer,
+        testIndex: 1,
+        testPrefix: treeTypes.COMPLETE,
         treeType: treeTypes.COMPLETE
     };
 
@@ -39,53 +108,21 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
     }
 }
 
-async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
-    const testsContext = {
-        personId: 2000,
-        personIdBuffer: 30,
-        testIndex: 1,
-        treeType: treeTypes.HOURGLASS_EXTENDED
-    };
-
-    const tests = [
-        'When only male ancestors are present, fake ancestors are added',
-        'When only female ancestors are present, fake ancestors are added',
-        'When male has two spouses, both spouses are displayed, and spouses of wives are not displayed',
-        'When female has two spouses, both spouses are displayed, and spouses of husbands are not displayed',
-        'When parents have multiple children, children are sorted by their birthDates',
-        'When children are shown, all children are displayed until their spouses, but not wider than that',
-        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
-    ];
-
-    for (const testTitle of tests) {
-        await addTest(treeDiagramsDiv, testsContext, testTitle);
-    }
-}
-
-async function addTreeTypeHourglassWithAdoptiveTests(treeDiagramsDiv) {
-    const testsContext = {
-        personId: 3000,
-        personIdBuffer: 30,
-        testIndex: 1,
-        treeType: treeTypes.HOURGLASS_WITH_ADOPTIVE
-    };
-
-    const tests = [
-        'When ancestors or descedants are adopted, their relatives on further levels are not displayed',
-        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
-    ];
-
-    for (const testTitle of tests) {
-        await addTest(treeDiagramsDiv, testsContext, testTitle);
-    }
-}
-
 async function addTest(treeDiagramsDiv, testsContext, testTitle) {
-    const orderedTestTitle = `${testsContext.testIndex++}. ${testsContext.treeType} - ${testTitle}`;
+    const orderedTestTitle = `${testsContext.testIndex++}. ${testsContext.testPrefix} - ${testTitle}`;
     const testTitleH2 = createHiddenH2(orderedTestTitle);
     treeDiagramsDiv.append(testTitleH2);
     await fadeInElement(testTitleH2);
 
     testsContext.personId += testsContext.personIdBuffer;
+
+    const titleOriginalTree = createHiddenH3('Original tree');
+    treeDiagramsDiv.append(titleOriginalTree);
+    await fadeInElement(titleOriginalTree);
+    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE);
+
+    const titleResultTree = createHiddenH3('Result tree');
+    treeDiagramsDiv.append(titleResultTree);
+    await fadeInElement(titleResultTree);
     await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType);
 }

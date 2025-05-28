@@ -554,7 +554,7 @@ fieldset input[type=text] {
   font-size: 11px;
 }
 #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node {
-  animation: colorFade 1s linear infinite alternate;
+  animation: colorFade 0.5s linear infinite alternate;
 }
 @keyframes colorFade {
   to {

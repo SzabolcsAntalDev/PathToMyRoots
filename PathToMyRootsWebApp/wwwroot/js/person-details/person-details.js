@@ -132,5 +132,5 @@ function addSpouse(
 
 function createTreeColumn(personId) {
     const treeDiagramsDiv = $('#tree-diagrams-div');
-    createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeTypes.HOURGLASS_EXTENDED);
+    createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeTypes.COMPLETE);
 }

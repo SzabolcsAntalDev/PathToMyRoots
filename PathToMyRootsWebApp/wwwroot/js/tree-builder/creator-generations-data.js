@@ -1,16 +1,17 @@
-﻿async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+﻿
+async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
     let generations;
 
-    if (treeType == treeTypes.COMPLETE) {
-        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    if (treeType == treeTypes.HOURGLASS_BIOLOGICAL) {
+        generations = await hourglassTreeCreator.createHourglassBiologicalTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
     }
 
     if (treeType == treeTypes.HOURGLASS_EXTENDED) {
         generations = await hourglassTreeCreator.createHourglassExtendedTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
     }
 
-    if (treeType == treeTypes.HOURGLASS_WITH_ADOPTIVE) {
-        generations = await hourglassTreeCreator.createHourglassWithAdoptiveTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    if (treeType == treeTypes.COMPLETE) {
+        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
     }
 
     const generationsData = {};
@@ -30,7 +31,6 @@
 // for HOURGLASS_WITH_ADOPTIVE tree is biological and adoptive parents number displayed in the tree (not necessarily all the parents ar displayed)
 function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
-
     generations.forEach(generation => {
         largestGenerationSize = Math.max(largestGenerationSize, getGenerationSize(generation));
     })

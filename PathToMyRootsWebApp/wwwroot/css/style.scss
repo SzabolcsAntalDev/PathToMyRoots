@@ -699,7 +699,7 @@ fieldset {
                             }
 
                             .highlighted-node {
-                                animation: colorFade 1s linear infinite alternate;
+                                animation: colorFade 0.5s linear infinite alternate;
 
                                 @keyframes colorFade {
                                     to {

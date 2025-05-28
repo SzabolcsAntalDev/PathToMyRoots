@@ -32,3 +32,12 @@ function createHiddenH2(text) {
 
     return hiddenH2;
 }
+
+function createHiddenH3(text) {
+    const hiddenH3 = $('<h3>')
+        .text(text);
+
+    hideElement(hiddenH3);
+
+    return hiddenH3;
+}
