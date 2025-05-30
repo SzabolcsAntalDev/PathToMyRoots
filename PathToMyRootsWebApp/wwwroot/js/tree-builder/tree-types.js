@@ -12,7 +12,14 @@
 // - all the persons from the database that are related in any way to the actual person
 
 const treeTypes = {
-    HOURGLASS_BIOLOGICAL: 'HOURGLASS_BIOLOGICAL',
-    HOURGLASS_EXTENDED: 'HOURGLASS_EXTENDED',
-    COMPLETE: 'COMPLETE',
+    HOURGLASS_BIOLOGICAL:
+        { index: 0, id: 'HOURGLASS_BIOLOGICAL' },
+    HOURGLASS_EXTENDED:
+        { index: 1, id: 'HOURGLASS_EXTENDED' },
+    COMPLETE:
+        { index: 2, id: 'COMPLETE' },
 };
+
+function getTreeTypeByIndex(index) {
+    return Object.values(treeTypes).find(type => type.index === index)
+}

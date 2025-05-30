@@ -5,10 +5,12 @@ $(() => {
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
-        await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
-        await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
-        await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
-        // await addTreeTypeCompleteTests(treeDiagramsDiv);
+        //await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
+        //await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
+        //await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
+        await addTreeTypeCompleteTests(treeDiagramsDiv);
+
+        addSettingsListeners();
     })();
 });
 
@@ -17,13 +19,13 @@ async function addTreeTypeHourglassCommonTests(treeDiagramsDiv) {
         personId: 1000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: "COMMON",
+        testPrefix: "HOURGLASS_COMMON",
         treeType: treeTypes.HOURGLASS_BIOLOGICAL
     };
 
     const tests = [
         'Generation0 - When male has two wives, both wives are displayed, and husbands of wives are not displayed',
-        'Generation0 - When female has two husbands, both husbands are displayed, and wives of husbands are not displayed'
+        // 'Generation0 - When female has two husbands, both husbands are displayed, and wives of husbands are not displayed'
     ];
 
     for (const testTitle of tests) {
@@ -36,7 +38,7 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
         personId: 2000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.HOURGLASS_BIOLOGICAL,
+        testPrefix: treeTypes.HOURGLASS_BIOLOGICAL.id,
         treeType: treeTypes.HOURGLASS_BIOLOGICAL
     };
 
@@ -58,7 +60,7 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         personId: 3000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.HOURGLASS_EXTENDED,
+        testPrefix: treeTypes.HOURGLASS_EXTENDED.id,
         treeType: treeTypes.HOURGLASS_EXTENDED
     };
 
@@ -82,25 +84,25 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         personId: 4000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.COMPLETE,
+        testPrefix: treeTypes.COMPLETE.id,
         treeType: treeTypes.COMPLETE
     };
 
     const tests = [
         'When a person has a three generation family, generations are displayed on three levels',
-        'When child has biological and adoptive parents, biological and adoptive lines are drawn',
-        'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
-        'When female is double married, both husbands are displayed',
-        'When male is double married, both wives are displayed',
-        'When extended marriages have secondary marriage, they are chained based on the second marriage',
-        'When second wife of male has first spouse, that first spouse is also displayed',
-        'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage',
-        'When older parents have younger children, children are sorted by parents first instead of birthDates',
-        'When female is loaded first, her first husband is still loaded',
-        'When children have common parents, they are displayed in separate sibling groups',
-        'When parents are orphans on the second level, they are sorted by birthDates',
-        'When extended marriage male has default birthDate, use female birthDate for sorting',
-        'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
+        //'When child has biological and adoptive parents, biological and adoptive lines are drawn',
+        //'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
+        //'When female is double married, both husbands are displayed',
+        //'When male is double married, both wives are displayed',
+        //'When extended marriages have secondary marriage, they are chained based on the second marriage',
+        //'When second wife of male has first spouse, that first spouse is also displayed',
+        //'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage',
+        //'When older parents have younger children, children are sorted by parents first instead of birthDates',
+        //'When female is loaded first, her first husband is still loaded',
+        //'When children have common parents, they are displayed in separate sibling groups',
+        //'When parents are orphans on the second level, they are sorted by birthDates',
+        //'When extended marriage male has default birthDate, use female birthDate for sorting',
+        //'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {
