@@ -142,6 +142,8 @@ $thickness-super-large: 64px;
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
+$tree-diagram-min-width: 300px;
+$tree-diagram-min-height: 60px;
 $person-node-width: 170px;
 $marriage-node-width: 100px;
 $node-margin-value: 10px;
@@ -653,16 +655,14 @@ fieldset {
     flex-direction: column;
     overflow: auto;
 
-    .diagram {
-        margin: 0px auto;
-        padding: $thickness-large;
+    .diagram-frame {
         position: relative;
         border: 1px solid var(--foreground-color);
 
         .settings-div {
             position: absolute;
             // display it on top of tree lines
-            z-index: 1;
+            z-index: 2;
             display: flex;
             width: fit-content;
             top: $thickness-medium;
@@ -691,7 +691,6 @@ fieldset {
             }
 
             .content-div {
-
                 .content-inner-div {
                     display: flex;
                     flex: 1;
@@ -706,323 +705,231 @@ fieldset {
                     }
                 }
             }
-            /*.dropdown {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: $thickness-medium;
-
-            .dropdown-header {
-                cursor: pointer;
-                display: flex;
-                flex-direction: row;
-
-                .dropdown-header-selected-option {
-                    flex-grow: 1;
-                }
-
-                .dropdown-header-expand-button {
-                    border-left: 6px solid transparent;
-                    border-right: 6px solid transparent;
-                    border-top: 6px solid;
-                    background-color: transparent;
-                    transition: transform $default-transition;
-                    align-self: center;
-                }
-
-                .dropdown-header-expand-button-opened {
-                    transform: rotate(180deg);
-                }
-            }
-
-            .dropdown-header-opened {
-                color: var(--foreground-color-highlight);
-                background-color: var(--background-color-highlight);
-                border-color: var(--foreground-color-highlight);
-            }
-
-            .dropdown-menu-invisible-parent {
-                margin: -$thickness-medium $thickness-medium 0px 0px;
-                height: 0px;
-                position: relative;
-
-                .dropdown-menu {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    transition: opacity $default-transition;
-                    opacity: 0;
-                    height: 0;
-                    visibility: collapse;
-                    background-color: var(--background-color);
-
-                    .dropdown-menu-filter-input {
-                        margin: 0px;
-                        border: none;
-                        border-bottom: $border;
-                        border-bottom-left-radius: 0px;
-                        border-bottom-right-radius: 0px;
-                    }
-
-                    ul {
-                        list-style: none;
-                        padding: 0px;
-                        margin: 1px;
-                        max-height: 400px;
-                        overflow: auto;
-
-                        li {
-                            padding: $thickness-medium;
-                        }
-
-                        li.selected-option {
-                            background-color: var(--background-color-highlight);
-                        }
-                    }
-                }
-
-                .dropdown-menu-opened {
-                    opacity: 1;
-                    height: auto;
-                    visibility: visible;
-                }
-            }
-
-            .option-with-image {
-                display: flex;
-                flex-direction: row;
-
-                &:hover {
-                    .person-small-image {
-                        fill: var(--foreground-color-highlight);
-                    }
-                }
-
-                .person-name-span {
-                    flex-grow: 1;
-                    align-content: center;
-                    text-align: center;
-                }
-            }
-        }*/
         }
 
+        .diagram {
+            min-width: $tree-diagram-min-width;
+            min-height: $tree-diagram-min-height;
+            position: relative;
+            margin: 0px auto;
+            padding: $thickness-large;
 
-        .nodes-div {
+            .nodes-div {
+                .generation, .generation * {
+                    box-sizing: border-box;
+                }
 
-            .generation, .generation * {
-                box-sizing: border-box;
-            }
-
-            .generation {
-                display: flex;
-                white-space: nowrap;
-
-                .siblings-chain {
+                .generation {
                     display: flex;
-                    padding: 0px;
-                    margin: 0px auto;
-                    padding: 0px calc($node-margin-value * 2);
+                    white-space: nowrap;
 
-                    .sibling {
+                    .siblings-chain {
                         display: flex;
-                        margin: 0px;
                         padding: 0px;
+                        margin: 0px auto;
+                        padding: 0px calc($node-margin-value * 2);
 
-                        .extended-marriage {
+                        .sibling {
                             display: flex;
-                            margin: $node-margin;
+                            margin: 0px;
                             padding: 0px;
 
-                            &:has(.floating-and-hidden-marriage-nodes-div) {
-                                margin-left: calc($node-margin-value * -1);
-                            }
-
-                            .node {
+                            .extended-marriage {
                                 display: flex;
-                                align-items: center;
-                                border: $border;
-                                border-radius: 0;
-                                padding: $thickness-small;
-                                transition: background-color $default-transition, border $default-transition;
-
-                                .texts-div {
-                                    display: flex;
-                                    flex-grow: 1;
-                                    flex-direction: column;
-                                    overflow: hidden;
-
-                                    %text {
-                                        overflow: hidden;
-                                        text-overflow: ellipsis;
-                                        white-space: nowrap;
-                                        text-align: center;
-                                        font-size: $font-size-small;
-                                    }
-                                }
-                            }
-
-                            .highlighted-node {
-                                animation: colorFade 0.5s linear infinite alternate;
-
-                                @keyframes colorFade {
-                                    to {
-                                        background-color: var(--background-color-highlight);
-                                    }
-                                }
-                            }
-
-                            .marriage-node {
-                                @extend .node;
-                                width: $marriage-node-width;
                                 margin: $node-margin;
-                                font-size: $font-size-small;
-                                color: var(--foreground-color-disabled);
-                                background-color: var(--marriage-color);
-                                border-color: var(--foreground-color-disabled);
-
-                                .marriage-text {
-                                    @extend %text;
-                                }
-                            }
-
-                            .marriage-node.interactive {
-                                color: var(--foreground-color);
-                                border-color: var(--foreground-color);
-                            }
-
-                            .floating-and-hidden-marriage-nodes-div {
-                                position: relative;
-                                display: flex;
-                                flex-direction: column;
-
-                                .floating-marriage-node {
-                                    margin-top: auto;
-                                    margin-bottom: auto;
-                                }
-
-                                .hidden-marriage-node {
-                                    @extend .marriage-node;
-                                    margin-bottom: 0;
-                                    visibility: hidden;
-                                }
-                            }
-
-                            .main-marriage {
-                                display: flex;
-                                flex-direction: column;
                                 padding: 0px;
-                                align-items: center;
 
-                                .couple {
-                                    display: flex;
+                                &:has(.floating-and-hidden-marriage-nodes-div) {
+                                    margin-left: calc($node-margin-value * -1);
                                 }
 
-                                .person-node {
-                                    @extend .node;
-                                    width: $person-node-width;
-                                    color: var(--foreground-color-disabled);
-                                    border-color: var(--foreground-color-disabled);
-                                    transition: color $default-transition, background-color $default-transition, border $default-transition;
+                                .node {
+                                    display: flex;
+                                    align-items: center;
+                                    border: $border;
+                                    border-radius: 0;
+                                    padding: $thickness-small;
+                                    transition: background-color $default-transition, border $default-transition;
 
-                                    .image-div {
-                                        width: $person-small-image-width;
-                                        height: $person-small-image-height;
-                                    }
+                                    .texts-div {
+                                        display: flex;
+                                        flex-grow: 1;
+                                        flex-direction: column;
+                                        overflow: hidden;
 
-                                    .image {
-                                        @extend .person-small-image;
-                                        fill: var(--foreground-color-disabled);
-                                        margin-right: $thickness-small;
-
-                                        &:hover {
-                                            fill: var(--foreground-color-disabled);
+                                        %text {
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;
+                                            text-align: center;
+                                            font-size: $font-size-small;
                                         }
                                     }
+                                }
 
-                                    .name-text {
-                                        @extend %text;
-                                        font-weight: bold;
+                                .highlighted-node {
+                                    animation: colorFade 0.5s linear infinite alternate;
+
+                                    @keyframes colorFade {
+                                        to {
+                                            background-color: var(--background-color-highlight);
+                                        }
                                     }
+                                }
 
-                                    .lived-text {
+                                .marriage-node {
+                                    @extend .node;
+                                    width: $marriage-node-width;
+                                    margin: $node-margin;
+                                    font-size: $font-size-small;
+                                    color: var(--foreground-color-disabled);
+                                    background-color: var(--marriage-color);
+                                    border-color: var(--foreground-color-disabled);
+
+                                    .marriage-text {
                                         @extend %text;
                                     }
                                 }
 
-                                .person-node.interactive {
+                                .marriage-node.interactive {
                                     color: var(--foreground-color);
                                     border-color: var(--foreground-color);
+                                }
 
-                                    .image {
-                                        fill: var(--foreground-color);
+                                .floating-and-hidden-marriage-nodes-div {
+                                    position: relative;
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    .floating-marriage-node {
+                                        margin-top: auto;
+                                        margin-bottom: auto;
                                     }
 
-                                    &:hover {
-                                        color: var(--foreground-color-highlight);
-                                        background-color: var(--background-color-highlight);
-                                        border-color: var(--foreground-color-highlight);
-                                        cursor: pointer;
+                                    .hidden-marriage-node {
+                                        @extend .marriage-node;
+                                        margin-bottom: 0;
+                                        visibility: hidden;
+                                    }
+                                }
+
+                                .main-marriage {
+                                    display: flex;
+                                    flex-direction: column;
+                                    padding: 0px;
+                                    align-items: center;
+
+                                    .couple {
+                                        display: flex;
+                                    }
+
+                                    .person-node {
+                                        @extend .node;
+                                        width: $person-node-width;
+                                        color: var(--foreground-color-disabled);
+                                        border-color: var(--foreground-color-disabled);
+                                        transition: color $default-transition, background-color $default-transition, border $default-transition;
+
+                                        .image-div {
+                                            width: $person-small-image-width;
+                                            height: $person-small-image-height;
+                                        }
 
                                         .image {
-                                            fill: var(--foreground-color-highlight);
+                                            @extend .person-small-image;
+                                            fill: var(--foreground-color-disabled);
+                                            margin-right: $thickness-small;
+
+                                            &:hover {
+                                                fill: var(--foreground-color-disabled);
+                                            }
+                                        }
+
+                                        .name-text {
+                                            @extend %text;
+                                            font-weight: bold;
+                                        }
+
+                                        .lived-text {
+                                            @extend %text;
                                         }
                                     }
-                                }
 
-                                .male-node {
-                                    @extend .person-node;
-                                    @extend .male-background-color;
-                                }
+                                    .person-node.interactive {
+                                        color: var(--foreground-color);
+                                        border-color: var(--foreground-color);
 
-                                .female-node {
-                                    @extend .person-node;
-                                    @extend .female-background-color;
-                                }
+                                        .image {
+                                            fill: var(--foreground-color);
+                                        }
 
-                                .static-marriage-node {
+                                        &:hover {
+                                            color: var(--foreground-color-highlight);
+                                            background-color: var(--background-color-highlight);
+                                            border-color: var(--foreground-color-highlight);
+                                            cursor: pointer;
+
+                                            .image {
+                                                fill: var(--foreground-color-highlight);
+                                            }
+                                        }
+                                    }
+
+                                    .male-node {
+                                        @extend .person-node;
+                                        @extend .male-background-color;
+                                    }
+
+                                    .female-node {
+                                        @extend .person-node;
+                                        @extend .female-background-color;
+                                    }
+
+                                    .static-marriage-node {
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
-        .lines-svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            background-color: transparent;
+            .lines-svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                background-color: transparent;
 
-            %line-svg {
-                stroke-width: 1px;
-                transition: stroke $default-transition;
-                fill: transparent;
-            }
+                %line-svg {
+                    stroke-width: 1px;
+                    transition: stroke $default-transition;
+                    fill: transparent;
+                }
 
-            .biological-line-svg {
-                @extend %line-svg;
-                stroke: var(--foreground-color);
-                stroke-dasharray: 4,4;
-            }
+                .biological-line-svg {
+                    @extend %line-svg;
+                    stroke: var(--foreground-color);
+                    stroke-dasharray: 4,4;
+                }
 
-            .adoptive-line-svg {
-                @extend %line-svg;
-                stroke-dasharray: 6,6;
-                stroke: var(--adoptive-color);
-            }
+                .adoptive-line-svg {
+                    @extend %line-svg;
+                    stroke-dasharray: 6,6;
+                    stroke: var(--adoptive-color);
+                }
 
-            .marriage-line-svg {
-                @extend %line-svg;
-                stroke: forestgreen;
+                .marriage-line-svg {
+                    @extend %line-svg;
+                    stroke: forestgreen;
+                }
             }
         }
     }
 }
 
 #tree-diagrams-div.test-trees-div {
-    .diagram {
+    .diagram-frame {
         margin: 0px auto $thickness-extra-large 0px;
     }
 }

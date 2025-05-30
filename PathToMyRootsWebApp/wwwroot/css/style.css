@@ -263,22 +263,22 @@ input[type=text]::placeholder {
   font-style: italic;
 }
 
-.male-background-color, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
+.male-background-color, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
   background-color: var(--male-color);
   transition: background-color 0.3s linear 0s;
 }
 
-.female-background-color, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node {
+.female-background-color, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node {
   background-color: var(--female-color);
   transition: background-color 0.3s linear 0s;
 }
 
-.person-details .top-row .info-column .image, .person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, .svg-small, #persons-table .td-shrink .persons-action-svg, .info-svg {
+.person-details .top-row .info-column .image, .person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, .svg-small, #persons-table .td-shrink .persons-action-svg, .info-svg {
   fill: var(--foreground-color);
   transition: fill 0.3s linear 0s;
 }
 
-.person-details .top-row .info-column .image:hover, .person-small-image:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover, .svg-small:hover, #persons-table .td-shrink .persons-action-svg:hover, .info-svg:hover {
+.person-details .top-row .info-column .image:hover, .person-small-image:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover, .svg-small:hover, #persons-table .td-shrink .persons-action-svg:hover, .info-svg:hover {
   fill: var(--foreground-color-highlight);
 }
 
@@ -293,7 +293,7 @@ input[type=text]::placeholder {
   margin: 8px 8px 0 -4px;
 }
 
-.person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
+.person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   width: 30px;
   height: 40px;
 }
@@ -516,136 +516,36 @@ fieldset input[type=text] {
   flex-direction: column;
   overflow: auto;
 }
-#tree-diagrams-div .diagram {
-  margin: 0px auto;
-  padding: 16px;
+#tree-diagrams-div .diagram-frame {
   position: relative;
   border: 1px solid var(--foreground-color);
 }
-#tree-diagrams-div .diagram .settings-div {
+#tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   width: fit-content;
   top: 8px;
   left: 8px;
-  /*.dropdown {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: $thickness-medium;
-
-      .dropdown-header {
-          cursor: pointer;
-          display: flex;
-          flex-direction: row;
-
-          .dropdown-header-selected-option {
-              flex-grow: 1;
-          }
-
-          .dropdown-header-expand-button {
-              border-left: 6px solid transparent;
-              border-right: 6px solid transparent;
-              border-top: 6px solid;
-              background-color: transparent;
-              transition: transform $default-transition;
-              align-self: center;
-          }
-
-          .dropdown-header-expand-button-opened {
-              transform: rotate(180deg);
-          }
-      }
-
-      .dropdown-header-opened {
-          color: var(--foreground-color-highlight);
-          background-color: var(--background-color-highlight);
-          border-color: var(--foreground-color-highlight);
-      }
-
-      .dropdown-menu-invisible-parent {
-          margin: -$thickness-medium $thickness-medium 0px 0px;
-          height: 0px;
-          position: relative;
-
-          .dropdown-menu {
-              position: relative;
-              display: flex;
-              flex-direction: column;
-              transition: opacity $default-transition;
-              opacity: 0;
-              height: 0;
-              visibility: collapse;
-              background-color: var(--background-color);
-
-              .dropdown-menu-filter-input {
-                  margin: 0px;
-                  border: none;
-                  border-bottom: $border;
-                  border-bottom-left-radius: 0px;
-                  border-bottom-right-radius: 0px;
-              }
-
-              ul {
-                  list-style: none;
-                  padding: 0px;
-                  margin: 1px;
-                  max-height: 400px;
-                  overflow: auto;
-
-                  li {
-                      padding: $thickness-medium;
-                  }
-
-                  li.selected-option {
-                      background-color: var(--background-color-highlight);
-                  }
-              }
-          }
-
-          .dropdown-menu-opened {
-              opacity: 1;
-              height: auto;
-              visibility: visible;
-          }
-      }
-
-      .option-with-image {
-          display: flex;
-          flex-direction: row;
-
-          &:hover {
-              .person-small-image {
-                  fill: var(--foreground-color-highlight);
-              }
-          }
-
-          .person-name-span {
-              flex-grow: 1;
-              align-content: center;
-              text-align: center;
-          }
-      }
-  }*/
 }
-#tree-diagrams-div .diagram .settings-div .expand-button-div {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button-div {
   flex: 0;
   cursor: pointer;
   height: fit-content;
   background-color: var(--background-color-nav);
   padding: 8px;
 }
-#tree-diagrams-div .diagram .settings-div .expand-button-div .expand-button-icon {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button-div .expand-button-icon {
   border-bottom: 6px solid transparent;
   border-left: 6px solid;
   border-top: 6px solid transparent;
   background-color: transparent;
   transition: transform 0.3s linear 0s;
 }
-#tree-diagrams-div .diagram .settings-div .expand-button-div-opened .expand-button-icon {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button-div-opened .expand-button-icon {
   transform: rotate(180deg);
 }
-#tree-diagrams-div .diagram .settings-div .content-div .content-inner-div {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -654,36 +554,43 @@ fieldset input[type=text] {
   border-radius: $border-radius;*/
   padding: 8px;
 }
-#tree-diagrams-div .diagram .settings-div .content-div .content-inner-div label {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label {
   white-space: nowrap;
 }
-#tree-diagrams-div .diagram .nodes-div .generation, #tree-diagrams-div .diagram .nodes-div .generation * {
+#tree-diagrams-div .diagram-frame .diagram {
+  min-width: 300px;
+  min-height: 60px;
+  position: relative;
+  margin: 0px auto;
+  padding: 16px;
+}
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation * {
   box-sizing: border-box;
 }
-#tree-diagrams-div .diagram .nodes-div .generation {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation {
   display: flex;
   white-space: nowrap;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain {
   display: flex;
   padding: 0px;
   margin: 0px auto;
   padding: 0px 20px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling {
   display: flex;
   margin: 0px;
   padding: 0px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage {
   display: flex;
   margin: 0px 10px;
   padding: 0px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage:has(.floating-and-hidden-marriage-nodes-div) {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage:has(.floating-and-hidden-marriage-nodes-div) {
   margin-left: -10px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   display: flex;
   align-items: center;
   border: 1px solid var(--foreground-color);
@@ -691,20 +598,20 @@ fieldset input[type=text] {
   padding: 4px;
   transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
   overflow: hidden;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .person-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .female-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .male-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .person-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .female-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .male-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .marriage-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .marriage-text {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .person-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .female-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .main-marriage .male-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .person-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .female-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .floating-and-hidden-marriage-nodes-div .male-node .texts-div .hidden-marriage-node .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .person-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .female-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .male-node .lived-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .person-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .female-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .main-marriage .male-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div .marriage-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div .marriage-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
   font-size: 11px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node {
   animation: colorFade 0.5s linear infinite alternate;
 }
 @keyframes colorFade {
@@ -712,7 +619,7 @@ fieldset input[type=text] {
     background-color: var(--background-color-highlight);
   }
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   width: 100px;
   margin: 0px 10px;
   font-size: 11px;
@@ -720,93 +627,93 @@ fieldset input[type=text] {
   background-color: var(--marriage-color);
   border-color: var(--foreground-color-disabled);
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node.interactive, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .interactive.hidden-marriage-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node.interactive, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .interactive.hidden-marriage-node {
   color: var(--foreground-color);
   border-color: var(--foreground-color);
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div {
   position: relative;
   display: flex;
   flex-direction: column;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .floating-marriage-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .floating-marriage-node {
   margin-top: auto;
   margin-bottom: auto;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   margin-bottom: 0;
   visibility: hidden;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage {
   display: flex;
   flex-direction: column;
   padding: 0px;
   align-items: center;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .couple {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .couple {
   display: flex;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
   width: 170px;
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
   transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image-div, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image-div {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image-div {
   width: 30px;
   height: 40px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   fill: var(--foreground-color-disabled);
   margin-right: 4px;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover {
   fill: var(--foreground-color-disabled);
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .name-text, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .name-text {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .name-text, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .name-text {
   font-weight: bold;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node {
   color: var(--foreground-color);
   border-color: var(--foreground-color);
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node .image {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node .image {
   fill: var(--foreground-color);
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
   border-color: var(--foreground-color-highlight);
   cursor: pointer;
 }
-#tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover .image {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover .image {
   fill: var(--foreground-color-highlight);
 }
-#tree-diagrams-div .diagram .lines-svg {
+#tree-diagrams-div .diagram-frame .diagram .lines-svg {
   position: absolute;
   top: 0;
   left: 0;
   pointer-events: none;
   background-color: transparent;
 }
-#tree-diagrams-div .diagram .lines-svg .marriage-line-svg, #tree-diagrams-div .diagram .lines-svg .adoptive-line-svg, #tree-diagrams-div .diagram .lines-svg .biological-line-svg {
+#tree-diagrams-div .diagram-frame .diagram .lines-svg .marriage-line-svg, #tree-diagrams-div .diagram-frame .diagram .lines-svg .adoptive-line-svg, #tree-diagrams-div .diagram-frame .diagram .lines-svg .biological-line-svg {
   stroke-width: 1px;
   transition: stroke 0.3s linear 0s;
   fill: transparent;
 }
-#tree-diagrams-div .diagram .lines-svg .biological-line-svg {
+#tree-diagrams-div .diagram-frame .diagram .lines-svg .biological-line-svg {
   stroke: var(--foreground-color);
   stroke-dasharray: 4, 4;
 }
-#tree-diagrams-div .diagram .lines-svg .adoptive-line-svg {
+#tree-diagrams-div .diagram-frame .diagram .lines-svg .adoptive-line-svg {
   stroke-dasharray: 6, 6;
   stroke: var(--adoptive-color);
 }
-#tree-diagrams-div .diagram .lines-svg .marriage-line-svg {
+#tree-diagrams-div .diagram-frame .diagram .lines-svg .marriage-line-svg {
   stroke: forestgreen;
 }
 
-#tree-diagrams-div.test-trees-div .diagram {
+#tree-diagrams-div.test-trees-div .diagram-frame {
   margin: 0px auto 32px 0px;
 }
 
@@ -947,7 +854,7 @@ fieldset input[type=text] {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .spouse-img {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .spouse-img {
   fill: var(--foreground-color-highlight);
 }
 .person-details .tree-row {
@@ -1124,7 +1031,7 @@ fieldset input[type=text] {
   display: flex;
   flex-direction: row;
 }
-.dropdown .option-with-image:hover .person-small-image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .dropdown .option-with-image:hover .spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .dropdown .option-with-image:hover .spouse-img {
+.dropdown .option-with-image:hover .person-small-image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .dropdown .option-with-image:hover .spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .dropdown .option-with-image:hover .spouse-img {
   fill: var(--foreground-color-highlight);
 }
 .dropdown .option-with-image .person-name-span {

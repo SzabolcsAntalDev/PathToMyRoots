@@ -1,12 +1,17 @@
 ﻿const treeHtmlCreator = {
 
-    createDiagram(personId) {
+    createDiagramFrame() {
         const diagramSettings = $($('#diagram-settings-template').html());
 
         return $('<div>')
-            .attr('id', 'diagram-' + personId)
-            .attr('class', 'diagram')
+            .attr('class', 'diagram-frame')
             .append(diagramSettings);
+    },
+
+    createDiagram(personId) {
+        return $('<div>')
+            .attr('id', 'diagram-' + personId)
+            .attr('class', 'diagram');
     },
 
     createNodesDiv(generationsData) {

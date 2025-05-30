@@ -90,8 +90,8 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
 
     const tests = [
         'When a person has a three generation family, generations are displayed on three levels',
-        //'When child has biological and adoptive parents, biological and adoptive lines are drawn',
-        //'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
+        'When child has biological and adoptive parents, biological and adoptive lines are drawn',
+        'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
         //'When female is double married, both husbands are displayed',
         //'When male is double married, both wives are displayed',
         //'When extended marriages have secondary marriage, they are chained based on the second marriage',
@@ -123,8 +123,8 @@ async function addTest(treeDiagramsDiv, testsContext, testTitle) {
     await fadeInElement(titleOriginalTree);
     await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE);
 
-    const titleResultTree = createHiddenH3('Result tree');
-    treeDiagramsDiv.append(titleResultTree);
-    await fadeInElement(titleResultTree);
-    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType);
+    //const titleResultTree = createHiddenH3('Result tree');
+    //treeDiagramsDiv.append(titleResultTree);
+    //await fadeInElement(titleResultTree);
+    //await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType);
 }

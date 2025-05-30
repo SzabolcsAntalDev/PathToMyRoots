@@ -6,9 +6,9 @@
     }
 }
 
-function createContext(treeDiagramsDiv, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth) {
+function createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth) {
     return {
-        treeDiagramsDiv: treeDiagramsDiv,
+        treeDiagramFrame: treeDiagramFrame,
         loadingTextContainer: loadingTextContainer,
         personId: personId,
         treeDiagram: treeDiagram,
@@ -19,18 +19,24 @@ function createContext(treeDiagramsDiv, loadingTextContainer, personId, treeDiag
 }
 
 async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) {
-    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramsDiv);
-    treeDiagramsDiv.append(loadingTextContainer);
+    const treeDiagramFrame = treeHtmlCreator.createDiagramFrame();
+    hideElement(treeDiagramFrame);
+    treeDiagramsDiv.append(treeDiagramFrame);
+
+    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);
+    treeDiagramFrame.append(loadingTextContainer);
 
     const treeDiagram = treeHtmlCreator.createDiagram(personId);
     hideElement(treeDiagram);
-    treeDiagramsDiv.append(treeDiagram);
+    treeDiagramFrame.append(treeDiagram);
 
-    addSettingsEventListeners(createContext(treeDiagramsDiv, loadingTextContainer, personId, treeDiagram, treeType, 2, 2))
+    await fadeInElement(treeDiagramFrame);
+
+    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, 2, 2))
 }
 
 function addSettingsEventListeners(context) {
-    const treeTypesRadioButtons = context.treeDiagram.find('.tree-types-fieldset input[type="radio"]');
+    const treeTypesRadioButtons = context.treeDiagramFrame.find('.tree-types-fieldset input[type="radio"]');
 
     treeTypesRadioButtons.each((index, radioButton) => {
         radioButton.addEventListener('change', async () => {
@@ -56,7 +62,7 @@ async function showTree(context) {
     previousNodesContainer?.remove();
     previousLinesContainer?.remove();
 
-    const generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramsDiv);
+    const generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramFrame);
     const nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
     const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
