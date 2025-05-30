@@ -658,6 +658,7 @@ fieldset {
     .diagram-frame {
         position: relative;
         border: 1px solid var(--foreground-color);
+        margin: 0px auto;
 
         .settings-div {
             position: absolute;

@@ -519,6 +519,7 @@ fieldset input[type=text] {
 #tree-diagrams-div .diagram-frame {
   position: relative;
   border: 1px solid var(--foreground-color);
+  margin: 0px auto;
 }
 #tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;

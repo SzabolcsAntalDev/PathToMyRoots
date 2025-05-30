@@ -4,6 +4,8 @@
 @using System.Text.Json
 @model PathToMyRootsWebApp.Models.PersonModel
 
+@await Html.PartialAsync("_DiagramSettingsPartial")
+
 <h1>Person Details</h1>
 
 <div class="person-details">
@@ -41,6 +43,9 @@
 
     <script src="~/js/tree-builder/complete/creator-tree-complete-generations.js"></script>
     <script src="~/js/tree-builder/hourglass/creator-tree-hourglass-generations.js"></script>
+    <script src="~/js/tree-builder/hourglass/hourglass-biological.js"></script>
+    <script src="~/js/tree-builder/hourglass/hourglass-extended.js"></script>
+    <script src="~/js/tree-builder/hourglass/common.js"></script>
 
     <script src="~/js/person-details/creator-html.js"></script>
     <script src="~/js/person-details/creator-relatives-data.js"></script>

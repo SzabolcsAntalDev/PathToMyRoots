@@ -5,12 +5,10 @@ $(() => {
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
-        //await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
+        await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
         //await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
         //await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
         await addTreeTypeCompleteTests(treeDiagramsDiv);
-
-        addSettingsListeners();
     })();
 });
 

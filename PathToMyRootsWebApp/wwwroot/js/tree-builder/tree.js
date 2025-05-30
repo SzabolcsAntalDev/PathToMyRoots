@@ -32,10 +32,21 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) 
 
     await fadeInElement(treeDiagramFrame);
 
-    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, 2, 2))
+    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, 10, 10))
 }
 
 function addSettingsEventListeners(context) {
+
+    const settingsDiv = context.treeDiagramFrame.find('.settings-div');
+
+    const expandButtonDiv = $(settingsDiv).find('.expand-button-div');
+    const horizontalToggleableContainer = $(settingsDiv).find('.horizontal-toggleable-container');
+
+    expandButtonDiv.on('click', () => {
+        expandButtonDiv.toggleClass('expand-button-div-opened');
+        horizontalToggleableContainer.toggleClass('horizontal-toggleable-container-open');
+    });
+
     const treeTypesRadioButtons = context.treeDiagramFrame.find('.tree-types-fieldset input[type="radio"]');
 
     treeTypesRadioButtons.each((index, radioButton) => {
@@ -66,6 +77,13 @@ async function showTree(context) {
     const nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
     const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
+    $(document).on('wheel', function (event) {
+        if (event.ctrlKey) {
+            $(linesContainer).empty();
+            drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
+        }
+    });
+
     context.treeDiagram.append(nodesContainer);
     context.treeDiagram.append(linesContainer);
 
@@ -74,3 +92,4 @@ async function showTree(context) {
     await fadeInElement(context.treeDiagram);
     await loadingTextManager.fadeOut(context.loadingTextContainer);
 }
+
