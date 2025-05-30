@@ -24,11 +24,6 @@ async function createGenerationsData(personId, treeType, ancestorsDepth, desceda
 }
 
 // gets the largest -persons with available parents number- of all generations
-// numberOfAvailableParents:
-// for COMPLETE trees is adoptive + biological parents number
-// for HOURGLASS_EXTENDED trees is biological known and unknown parents number
-// Szabi
-// for HOURGLASS_WITH_ADOPTIVE tree is biological and adoptive parents number displayed in the tree (not necessarily all the parents ar displayed)
 function getLargestGenerationSize(generations) {
     let largestGenerationSize = 0;
     generations.forEach(generation => {

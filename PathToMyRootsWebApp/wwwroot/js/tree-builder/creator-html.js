@@ -1,9 +1,12 @@
 ﻿const treeHtmlCreator = {
 
     createDiagram(personId) {
+        const diagramSettings = $($('#diagram-settings-template').html());
+
         return $('<div>')
             .attr('id', 'diagram-' + personId)
-            .attr('class', 'diagram');
+            .attr('class', 'diagram')
+            .append(diagramSettings);
     },
 
     createNodesDiv(generationsData) {

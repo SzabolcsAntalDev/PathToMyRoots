@@ -1,0 +1,49 @@
+﻿<template id="diagram-settings-template">
+    <div class="settings-div">
+        <div class="expand-button-div flex-row">
+            <div class="expand-button-icon"></div>
+        </div>
+        <div class="horizontal-toggleable-container">
+            <div class="content-div">
+                <div class="content-inner-div">
+                    <fieldset class="input-date-fieldset">
+                        <label>
+                            <input type="radio" name="input-radio-tree-type" class="tree-type-biological" />
+                            Biological
+                        </label>
+                        <label>
+                            <input type="radio" name="input-radio-tree-type" class="tree-type-extended" />
+                            Extended
+                        </label>
+                        <label>
+                            <input type="radio" name="input-radio-tree-type" class="tree-type-complete" />
+                            Complete
+                        </label>
+                    </fieldset>
+                    <div class="flex-row">
+                        <div class="flex-column">
+                            <label>Ancestors depth</label>
+                            <fieldset class="ancestors-depth-fieldset">
+                                <label><input type="radio" />1</label>
+                                <label><input type="radio" />2</label>
+                                <label><input type="radio" />3</label>
+                                <label><input type="radio" />4</label>
+                            </fieldset>
+                        </div>
+                        <div class="flex-column">
+                            <label>Descedants depth</label>
+                            <fieldset class="descedants-depth-fieldset">
+                                <label><input type="radio" />1</label>
+                                <label><input type="radio" />2</label>
+                                <label><input type="radio" />3</label>
+                                <label><input type="radio" />4</label>
+                                <label><input type="radio" />5</label>
+                                <label><input type="radio" />6</label>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

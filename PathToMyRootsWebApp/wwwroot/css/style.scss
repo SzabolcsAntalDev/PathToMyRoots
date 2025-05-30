@@ -472,6 +472,7 @@ fieldset {
     input[type=radio] {
         appearance: none;
         margin: 0px;
+        margin-right: $thickness-extra-small;
         width: $font-size-small;
         height: $font-size-small;
         border-radius: 50%;
@@ -495,21 +496,34 @@ fieldset {
     }
 }
 
-.toggleable-container {
+.vertical-toggleable-container {
     display: grid;
     transition: grid-template-rows $toggle-transition;
 }
 
-.toggleable-container > div {
+.vertical-toggleable-container > div {
     overflow: hidden;
 }
 
-.toggleable-container > div.tooltip-container.overflowvisible {
+.vertical-toggleable-container > div.tooltip-container.overflowvisible {
     overflow: visible;
 }
 
-.toggleable-container-open {
+.vertical-toggleable-container-open {
     grid-template-rows: 1fr;
+}
+
+.horizontal-toggleable-container {
+    display: grid;
+    transition: grid-template-columns $toggle-transition;
+}
+
+.horizontal-toggleable-container > div {
+    overflow: hidden;
+}
+
+.horizontal-toggleable-container-open {
+    grid-template-columns: 1fr;
 }
 
 .nav-logo-container-hyperlink {
@@ -641,8 +655,157 @@ fieldset {
 
     .diagram {
         margin: 0px auto;
-        // needed for drawing the lines
+        padding: $thickness-large;
         position: relative;
+        border: 1px solid var(--foreground-color);
+
+        .settings-div {
+            position: absolute;
+            // display it on top of tree lines
+            z-index: 1;
+            display: flex;
+            width: fit-content;
+            top: $thickness-medium;
+            left: $thickness-medium;
+
+            .expand-button-div {
+                flex: 0;
+                cursor: pointer;
+                height: fit-content;
+                background-color: var(--background-color-nav);
+                padding: $thickness-medium;
+
+                .expand-button-icon {
+                    border-bottom: 6px solid transparent;
+                    border-left: 6px solid;
+                    border-top: 6px solid transparent;
+                    background-color: transparent;
+                    transition: transform $default-transition;
+                }
+            }
+
+            .expand-button-div-opened {
+                .expand-button-icon {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .content-div {
+
+                .content-inner-div {
+                    display: flex;
+                    flex: 1;
+                    flex-direction: column;
+                    background-color: var(--background-color-nav);
+                    /*border: 1px solid var(--foreground-color);
+                    border-radius: $border-radius;*/
+                    padding: $thickness-medium;
+
+                    label {
+                        white-space: nowrap;
+                    }
+                }
+            }
+            /*.dropdown {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: $thickness-medium;
+
+            .dropdown-header {
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+
+                .dropdown-header-selected-option {
+                    flex-grow: 1;
+                }
+
+                .dropdown-header-expand-button {
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-top: 6px solid;
+                    background-color: transparent;
+                    transition: transform $default-transition;
+                    align-self: center;
+                }
+
+                .dropdown-header-expand-button-opened {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .dropdown-header-opened {
+                color: var(--foreground-color-highlight);
+                background-color: var(--background-color-highlight);
+                border-color: var(--foreground-color-highlight);
+            }
+
+            .dropdown-menu-invisible-parent {
+                margin: -$thickness-medium $thickness-medium 0px 0px;
+                height: 0px;
+                position: relative;
+
+                .dropdown-menu {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    transition: opacity $default-transition;
+                    opacity: 0;
+                    height: 0;
+                    visibility: collapse;
+                    background-color: var(--background-color);
+
+                    .dropdown-menu-filter-input {
+                        margin: 0px;
+                        border: none;
+                        border-bottom: $border;
+                        border-bottom-left-radius: 0px;
+                        border-bottom-right-radius: 0px;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding: 0px;
+                        margin: 1px;
+                        max-height: 400px;
+                        overflow: auto;
+
+                        li {
+                            padding: $thickness-medium;
+                        }
+
+                        li.selected-option {
+                            background-color: var(--background-color-highlight);
+                        }
+                    }
+                }
+
+                .dropdown-menu-opened {
+                    opacity: 1;
+                    height: auto;
+                    visibility: visible;
+                }
+            }
+
+            .option-with-image {
+                display: flex;
+                flex-direction: row;
+
+                &:hover {
+                    .person-small-image {
+                        fill: var(--foreground-color-highlight);
+                    }
+                }
+
+                .person-name-span {
+                    flex-grow: 1;
+                    align-content: center;
+                    text-align: center;
+                }
+            }
+        }*/
+        }
+
 
         .nodes-div {
 

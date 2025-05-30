@@ -104,13 +104,13 @@ function updatePreviewImage() {
 
     // if image was removed
     if (!imageUrl) {
-        toggleablePreviewImageContainer.classList.remove('toggleable-container-open');
+        toggleablePreviewImageContainer.classList.remove('vertical-toggleable-container-open');
         removeImageButton.disabled = true;
         return;
     }
 
     // set image from hidden input into the preview
-    toggleablePreviewImageContainer.classList.add('toggleable-container-open');
+    toggleablePreviewImageContainer.classList.add('vertical-toggleable-container-open');
     previewImage.src = apiUrl + '/image/get/' + imageUrl;
     removeImageButton.removeAttribute('disabled');
 }

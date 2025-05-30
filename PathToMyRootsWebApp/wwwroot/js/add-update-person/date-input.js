@@ -7,7 +7,7 @@ function initCommonDateInputsListeners() {
 
     // setup elements on radio buttons changed
     inputDateFieldSets.forEach(fieldSet => {
-        const toggleableContainer = fieldSet.querySelector('.toggleable-container');
+        const toggleableContainer = fieldSet.querySelector('.vertical-toggleable-container');
 
         const inputRadioOngoing = fieldSet.querySelector('.input-radio-date-ongoing');
         const inputRadioUnknown = fieldSet.querySelector('.input-radio-date-unknown');
@@ -82,7 +82,7 @@ function setupForNonConcreteDate(
     inputConcreteDate,
     isInitialSetup) {
 
-    toggleableContainer.classList.remove('toggleable-container-open');
+    toggleableContainer.classList.remove('vertical-toggleable-container-open');
 
     // in the initial setup in case of a spouse if the start date is a concrete date
     // and the end date is not a concrete date then removing the class in the case of
@@ -107,7 +107,7 @@ function setupForConcreteDate(
     toggleableTooltipContainerParent,
     inputConcreteDate) {
 
-    toggleableContainer.classList.add('toggleable-container-open');
+    toggleableContainer.classList.add('vertical-toggleable-container-open');
 
     setTimeout(() => { addAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible'); }, getTransitionIntervalInSeconds() * 1000);
 

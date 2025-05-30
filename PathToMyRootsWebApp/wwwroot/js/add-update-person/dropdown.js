@@ -153,10 +153,10 @@ function toggleMarriageDatesContainer(spousePrefix) {
 
     // if any person is selected expand it
     if (personIsSelected) {
-        spouseMarriageDatesContainer.classList.add('toggleable-container-open');
+        spouseMarriageDatesContainer.classList.add('vertical-toggleable-container-open');
     }
     else {
-        spouseMarriageDatesContainer.classList.remove('toggleable-container-open');
+        spouseMarriageDatesContainer.classList.remove('vertical-toggleable-container-open');
 
         // select the default radio button
         const fieldSets = spouseMarriageDatesContainer.querySelectorAll('.input-date-fieldset');
