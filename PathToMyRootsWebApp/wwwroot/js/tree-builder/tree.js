@@ -42,16 +42,24 @@ function addSettingsEventListeners(context) {
     const expandButtonDiv = $(settingsDiv).find('.expand-button-div');
     const horizontalToggleableContainer = $(settingsDiv).find('.horizontal-toggleable-container');
 
-    expandButtonDiv.on('click', () => {
+    function toggleSettingsVisibility() {
         expandButtonDiv.toggleClass('expand-button-div-opened');
         horizontalToggleableContainer.toggleClass('horizontal-toggleable-container-open');
+    }
+    expandButtonDiv.on('click', () => {
+        toggleSettingsVisibility();
     });
 
     const treeTypesRadioButtons = context.treeDiagramFrame.find('.tree-types-fieldset input[type="radio"]');
 
     treeTypesRadioButtons.each((index, radioButton) => {
-        radioButton.addEventListener('change', async () => {
+        radioButton.addEventListener('change', async (event) => {
             context.treeType = getTreeTypeByIndex(parseInt(radioButton.dataset.treeTypeIndex, 10));
+
+            if (!event.detail.fromInitialization) {
+                toggleSettingsVisibility();
+            }
+
             await showTree(context);
         });
     });
@@ -61,7 +69,11 @@ function addSettingsEventListeners(context) {
     })[0];
 
     radioButton.checked = true;
-    radioButton.dispatchEvent(new Event('change', { bubbles: true }));
+    radioButton.dispatchEvent(new CustomEvent('change', {
+        detail: {
+            fromInitialization: true
+        }
+    }));
 }
 
 async function showTree(context) {
