@@ -36,7 +36,6 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType) 
 }
 
 function addSettingsEventListeners(context) {
-
     const settingsDiv = context.treeDiagramFrame.find('.settings-div');
 
     const expandButtonDiv = $(settingsDiv).find('.expand-button-div');
@@ -56,11 +55,24 @@ function addSettingsEventListeners(context) {
         radioButton.addEventListener('change', async (event) => {
             context.treeType = getTreeTypeByIndex(parseInt(radioButton.dataset.treeTypeIndex, 10));
 
-            if (!event.detail.fromInitialization) {
+            if (!event.detail?.fromInitialization) {
                 toggleSettingsVisibility();
             }
 
             await showTree(context);
+        });
+
+        $(document).on('click', function (event) {
+            if (event.ctrlKey) {
+                $(linesContainer).empty();
+                drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
+            }
+        });
+
+        $(document).on('click', function (event) {
+            if (!settingsDiv[0].contains(event.target) && horizontalToggleableContainer[0].classList.contains('horizontal-toggleable-container-open')) {
+                toggleSettingsVisibility();
+            }
         });
     });
 
