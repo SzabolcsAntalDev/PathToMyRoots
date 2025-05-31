@@ -3,7 +3,7 @@
         if (!biologicalFatherId && !adoptiveFatherId)
             return;
 
-        if (currentLevel < -context.ancestorsDepth) {
+        if (context.ancestorsDepth >= 0 && currentLevel < -context.ancestorsDepth) {
             return;
         }
 

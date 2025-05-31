@@ -119,7 +119,7 @@ async function addTest(treeDiagramsDiv, testsContext, testTitle) {
     const titleOriginalTree = createHiddenH3('Original tree');
     treeDiagramsDiv.append(titleOriginalTree);
     await fadeInElement(titleOriginalTree);
-    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE);
+    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE, -1, -1);
 
     //const titleResultTree = createHiddenH3('Result tree');
     //treeDiagramsDiv.append(titleResultTree);

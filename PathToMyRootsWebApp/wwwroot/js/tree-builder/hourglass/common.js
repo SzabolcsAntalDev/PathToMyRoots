@@ -131,7 +131,7 @@ async function createDescedants(context, person) {
         await createDescedantsRecursive(context, child.id, currentLevel + 1);
     }
 
-    if (currentLevel + 1 > context.descedantsDepth) {
+    if (context.descedantsDepth >= 0 && currentLevel + 1 > context.descedantsDepth) {
         return;
     }
 
@@ -145,7 +145,7 @@ async function createDescedantsRecursive(context, personId, currentLevel) {
         return;
     }
 
-    if (currentLevel > context.descedantsDepth) {
+    if (context.descedantsDepth >= 0 && currentLevel > context.descedantsDepth) {
         return;
     }
 
@@ -168,7 +168,7 @@ async function createDescedantsRecursive(context, personId, currentLevel) {
         await this.createDescedantsRecursive(context, child.id, currentLevel + 1);
     }
 
-    if (currentLevel + 1 > context.descedantsDepth) {
+    if (context.descedantsDepth >= 0 && currentLevel + 1 > context.descedantsDepth) {
         return;
     }
 

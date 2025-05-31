@@ -558,6 +558,12 @@ fieldset input[type=text] {
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label {
   white-space: nowrap;
 }
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button {
+  width: 50%;
+  margin-left: auto;
+  border: none;
+  border-radius: 0px;
+}
 #tree-diagrams-div .diagram-frame .diagram {
   min-width: 300px;
   min-height: 60px;

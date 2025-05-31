@@ -704,6 +704,13 @@ fieldset {
                     label {
                         white-space: nowrap;
                     }
+
+                    .apply-button{
+                        width: 50%;
+                        margin-left: auto;
+                        border: none;
+                        border-radius: 0px;
+                    }
                 }
             }
         }

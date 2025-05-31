@@ -8,6 +8,17 @@
             .append(diagramSettings);
     },
 
+    createRadioButtonWithLabel(name, dataId, dataValue, displayValue) {
+        const radioButton = $('<input>')
+            .attr('type', 'radio')
+            .attr('name', name)
+            .attr(dataId, dataValue);
+
+        return $('<label>')
+            .append(radioButton)
+            .append(displayValue);
+    },
+
     createDiagram(personId) {
         return $('<div>')
             .attr('id', 'diagram-' + personId)

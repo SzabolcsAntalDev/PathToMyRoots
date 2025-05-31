@@ -35,7 +35,7 @@ const completeTreeCreator = {
         if (!personId || context.processedPersonIds.has(personId))
             return;
 
-        if (currentLevel < -context.ancestorsDepth || currentLevel > context.descedantsDepth) {
+        if ((context.ancestorsDepth >= 0 && currentLevel < -context.ancestorsDepth) || (context.descedantsDepth >= 0) && currentLevel > context.descedantsDepth) {
             return;
         }
 
