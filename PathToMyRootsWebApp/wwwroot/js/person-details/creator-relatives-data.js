@@ -16,17 +16,17 @@ async function createRelativesData(person, relativesColumn) {
     loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading biological grandparents');
     relativesData.biologicalGrandParents = await getBiologicalGrandParents(person);
 
-    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading adoptive grandparents');
-    relativesData.adoptiveGrandParents = await getAdoptiveGrandParents(person);
-
     loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading biological parents');
     relativesData.biologicalParents = getBiologicalParents(person);
+
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading siblings by biological parents');
+    relativesData.siblingsByBiologicalParents = await getSiblingsByBiologicalParents(person);
 
     loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading adoptive parents');
     relativesData.adoptiveParents = getAdoptiveParents(person);
 
-    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading siblings');
-    relativesData.siblings = await getSiblings(person);
+    loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading siblings by adoptive parents');
+    relativesData.siblingsByAdoptiveParents = await getSiblingsByAdoptiveParents(person);
 
     loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading first cousins');
     relativesData.firstCousins = await getFirstCousins(relativesData, person.id);
@@ -54,7 +54,7 @@ async function createRelativesData(person, relativesColumn) {
     }
 
     loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading granchildren');
-    relativesData.grandChildren = await getGrandChildren(biologicalChildren, adoptiveChildren);
+    relativesData.grandChildren = await getGrandChildren(biologicalChildren);
 
     return relativesData;
 }
@@ -68,16 +68,6 @@ async function getBiologicalGrandParents(person) {
     return [biologicalGrandParent1, biologicalGrandParent2, biologicalGrandParent3, biologicalGrandParent4];
 }
 
-async function getAdoptiveGrandParents(person) {
-    const adoptiveGrandParent1 = await getPersonJson(person.adoptiveFather?.biologicalFatherId) ?? unknownMale;
-    const adoptiveGrandParent2 = await getPersonJson(person.adoptiveFather?.biologicalMotherId) ?? unknownFemale;
-    const adoptiveGrandParent3 = await getPersonJson(person.adoptiveMother?.biologicalFatherId) ?? unknownMale;
-    const adoptiveGrandParent4 = await getPersonJson(person.adoptiveMother?.biologicalMotherId) ?? unknownFemale;
-
-    const adoptiveGrandParents = [adoptiveGrandParent1, adoptiveGrandParent2, adoptiveGrandParent3, adoptiveGrandParent4];
-    return adoptiveGrandParents.some(grandParent => grandParent.id != -1) ? adoptiveGrandParents : [];
-}
-
 function getBiologicalParents(person) {
     return [
         person.biologicalFather ?? unknownMale,
@@ -86,7 +76,7 @@ function getBiologicalParents(person) {
 }
 
 function getAdoptiveParents(person) {
-    if (person.adoptiveFather || person.adoptiveMother) {
+    if (person.adoptiveFather) {
         return [
             person.adoptiveFather ?? unknownMale,
             person.adoptiveMother ?? unknownFemale
@@ -96,17 +86,23 @@ function getAdoptiveParents(person) {
     return [];
 }
 
-async function getSiblings(person) {
+async function getSiblingsByBiologicalParents(person) {
     const biologicalFather = await getPersonJson(person.biologicalFather?.id);
     const biologicalMother = await getPersonJson(person.biologicalMother?.id);
-    const adoptiveFather = await getPersonJson(person.adoptiveFather?.id);
-    const adoptiveMother = await getPersonJson(person.adoptiveMother?.id);
 
     const siblings = (biologicalFather?.inverseBiologicalFather ?? [])
         .concat(biologicalFather?.inverseAdoptiveFather ?? [])
         .concat(biologicalMother?.inverseBiologicalMother ?? [])
-        .concat(biologicalMother?.inverseAdoptiveMother ?? [])
-        .concat(adoptiveFather?.inverseBiologicalFather ?? [])
+        .concat(biologicalMother?.inverseAdoptiveMother ?? []);
+
+    return arrayRemoveDuplicatesWithSameId(siblings).filter(sibling => sibling.id != person.id);
+}
+
+async function getSiblingsByAdoptiveParents(person) {
+    const adoptiveFather = await getPersonJson(person.adoptiveFather?.id);
+    const adoptiveMother = await getPersonJson(person.adoptiveMother?.id);
+
+    const siblings = (adoptiveFather?.inverseBiologicalFather ?? [])
         .concat(adoptiveFather?.inverseAdoptiveFather ?? [])
         .concat(adoptiveMother?.inverseBiologicalMother ?? [])
         .concat(adoptiveMother?.inverseAdoptiveMother ?? []);
@@ -117,12 +113,11 @@ async function getSiblings(person) {
 async function getFirstCousins(relativesData, personId) {
     const grandParents =
         relativesData.biologicalGrandParents
-            .concat(relativesData.adoptiveGrandParents)
             .filter(grandParent => grandParent.id != -1);
 
     const grandChildren = await getGrandChildrenOfGrandParents(grandParents);
 
-    const siblingsIds = relativesData.siblings.map(sibling => sibling.id);
+    const siblingsIds = relativesData.siblingsByBiologicalParents.map(sibling => sibling.id);
     const nonFirstCousinIds = siblingsIds.concat([personId]);
 
     return arrayRemoveDuplicatesWithSameId(grandChildren)
@@ -132,7 +127,6 @@ async function getFirstCousins(relativesData, personId) {
 async function getSecondCousins(relativesData, personId) {
     const grandParents =
         relativesData.biologicalGrandParents
-            .concat(relativesData.adoptiveGrandParents)
             .filter(grandParent => grandParent.id != -1);
 
     // get parents of grand parents
@@ -140,8 +134,6 @@ async function getSecondCousins(relativesData, personId) {
     for (const grandParent of grandParents) {
         greatGrandParentsWithNulls.push(grandParent.biologicalFather);
         greatGrandParentsWithNulls.push(grandParent.biologicalMother);
-        greatGrandParentsWithNulls.push(grandParent.adoptiveFather);
-        greatGrandParentsWithNulls.push(grandParent.adoptiveMother);
     }
 
     const greatGrandParents =
@@ -154,8 +146,6 @@ async function getSecondCousins(relativesData, personId) {
         const greatGrandParentJson = await getPersonJson(greatGrandParent.id);
         extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalFather);
         extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalMother);
-        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseAdoptiveFather);
-        extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseAdoptiveMother);
     }
 
     const extendedGrandParentsShallowFlat =
@@ -173,7 +163,7 @@ async function getSecondCousins(relativesData, personId) {
 
     const greatGrandChildren = await getGrandChildrenOfGrandParents(extendedGrandParents);
 
-    const siblingsIds = relativesData.siblings.map(sibling => sibling.id);
+    const siblingsIds = relativesData.siblingsByBiologicalParents.map(sibling => sibling.id);
     const firstCousinIds = relativesData.firstCousins.map(firstCousin => firstCousin.id);
     const nonSecondCousinIds = firstCousinIds.concat(siblingsIds).concat([personId]);
 
@@ -187,8 +177,6 @@ async function getGrandChildrenOfGrandParents(grandParents) {
     grandParents.forEach(grandParent => {
         childrenNested.push(grandParent.inverseBiologicalFather);
         childrenNested.push(grandParent.inverseBiologicalMother);
-        childrenNested.push(grandParent.inverseAdoptiveFather);
-        childrenNested.push(grandParent.inverseAdoptiveMother);
     })
 
     const children = arrayRemoveDuplicatesWithSameId(childrenNested.flat());
@@ -198,8 +186,6 @@ async function getGrandChildrenOfGrandParents(grandParents) {
         const childJson = await getPersonJson(child.id);
         grandChildrenNested.push(childJson.inverseBiologicalFather);
         grandChildrenNested.push(childJson.inverseBiologicalMother);
-        grandChildrenNested.push(childJson.inverseAdoptiveFather);
-        grandChildrenNested.push(childJson.inverseAdoptiveMother);
     }
 
     return arrayRemoveDuplicatesWithSameId(grandChildrenNested.flat());
@@ -215,11 +201,6 @@ function getAdoptiveChildren(person) {
         .concat(person?.inverseAdoptiveMother ?? []);
 }
 
-function getAllChildren(person) {
-    return getBiologicalChildren(person)
-        .concat(getAdoptiveChildren(person));
-}
-
 function getBiologicalChildrenIds(person) {
     return getBiologicalChildren(person).map(child => child.id);
 }
@@ -232,14 +213,13 @@ function getCommonChildren(children, spouseChildrenIds) {
     return children.filter(child => spouseChildrenIds.includes(child.id));
 }
 
-async function getGrandChildren(biologicalChildren, adoptiveChildren) {
+async function getGrandChildren(biologicalChildren) {
     const grandChildrenNested = [];
-    const children = (biologicalChildren ?? []).concat(adoptiveChildren ?? []);
 
-    for (const child of children) {
+    for (const child of biologicalChildren) {
         const childJson = await getPersonJson(child.id);
 
-        const childrenOfChild = getAllChildren(childJson);
+        const childrenOfChild = getBiologicalChildren(childJson);
         for (const grandChild of childrenOfChild) {
             grandChildrenNested.push(grandChild);
         }

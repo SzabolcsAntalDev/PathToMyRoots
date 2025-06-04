@@ -1,4 +1,6 @@
-﻿async function createPersonDetails(personId) {
+﻿const MaximumNumberOfPersonsInRow = 4;
+
+async function createPersonDetails(personId) {
     const person = await getPersonJson(personId);
 
     createInfoColumn(person);
@@ -36,20 +38,14 @@ async function createRelativesColumn(person) {
 async function addRelativesToRelativesColumnContent(person, relativesColumnContent, relativesColumn) {
     const relativesData = await createRelativesData(person, relativesColumn);
 
-    addRelatives(
-        relativesColumnContent,
-        relativesData.adoptiveGrandParents.length > 0 ? 'Biological grandparents' : 'Grandparents',
-        relativesData.biologicalGrandParents);
+    addRelatives(relativesColumnContent, 'Grandparents', relativesData.biologicalGrandParents);
 
-    addRelatives(
-        relativesColumnContent,
-        relativesData.adoptiveParents ? 'Biological Parents' : 'Parents',
-        relativesData.biologicalParents);
+    addRelatives(relativesColumnContent, relativesData.adoptiveParents.length > 0 ? 'Biological parents' : 'Parents', relativesData.biologicalParents);
+    addRelatives(relativesColumnContent, relativesData.siblingsByAdoptiveParents.length > 0 ? 'Siblings by biological parents' : 'Siblings', relativesData.siblingsByBiologicalParents);
 
-    addRelatives(relativesColumnContent, 'Adoptive grandparents', relativesData.adoptiveGrandParents);
-    addRelatives(relativesColumnContent, 'Adoptive Parents', relativesData.adoptiveParents);
+    addRelatives(relativesColumnContent, 'Adoptive parents', relativesData.adoptiveParents);
+    addRelatives(relativesColumnContent, 'Siblings by adoptive parents', relativesData.siblingsByAdoptiveParents);
 
-    addRelatives(relativesColumnContent, 'Siblings', relativesData.siblings);
     addRelatives(relativesColumnContent, 'First cousins', relativesData.firstCousins);
     addRelatives(relativesColumnContent, 'Second cousins', relativesData.secondCousins);
 
@@ -62,25 +58,29 @@ async function addRelativesToRelativesColumnContent(person, relativesColumnConte
             person.firstMarriageEndDate);
         addRelatives(
             relativesColumnContent,
-            relativesData.firstMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+            relativesData.firstMarriageAdoptiveChildren.length > 0 ? 'Biological children' : 'Children',
             relativesData.firstMarriageBiologicalChildren);
-        addRelatives(relativesColumnContent, 'Adoptive Children', relativesData.firstMarriageAdoptiveChildren);
+        addRelatives(relativesColumnContent, 'Adoptive children', relativesData.firstMarriageAdoptiveChildren);
     }
 
     if (relativesData.secondSpouseId) {
-        addSpouse(relativesColumnContent, 'Second spouse', person.secondSpouse, person.secondMarriageStartDate, person.secondMarriageEndDate);
+        addSpouse(
+            relativesColumnContent,
+            'Second spouse',
+            person.secondSpouse,
+            person.secondMarriageStartDate,
+            person.secondMarriageEndDate);
         addRelatives(
             relativesColumnContent,
-            relativesData.secondMarriageAdoptiveChildren.length > 0 ? 'Biological Children' : 'Children',
+            relativesData.secondMarriageAdoptiveChildren.length > 0 ? 'Biological children' : 'Children',
             relativesData.secondMarriageBiologicalChildren);
-        addRelatives(relativesColumnContent, 'Adoptive Children', relativesData.secondMarriageAdoptiveChildren);
+        addRelatives(relativesColumnContent, 'Adoptive children', relativesData.secondMarriageAdoptiveChildren);
     }
 
     addRelatives(relativesColumnContent, 'Grandchildren', relativesData.grandChildren);
 }
 
 function addRelatives(relativesColumnContent, title, relatives) {
-
     if (!relatives || relatives.length == 0) {
         return
     }
@@ -91,14 +91,14 @@ function addRelatives(relativesColumnContent, title, relatives) {
     let horizontalRelativesDiv;
 
     relatives.forEach((relative, i) => {
-        if (i % 4 == 0) {
+        if (i % MaximumNumberOfPersonsInRow == 0) {
             horizontalRelativesDiv = personDetailsHtmlCreator.createHorizontalRelativesDiv();
             divWithTitle.append(horizontalRelativesDiv);
         }
 
         const nonSpouse = personDetailsHtmlCreator.createNonSpouse(relative);
-        if (i >= 4) {
-            $(nonSpouse).css("width", "25%");
+        if (i >= MaximumNumberOfPersonsInRow) {
+            $(nonSpouse).css('width', (100 / MaximumNumberOfPersonsInRow) + '%');
         }
 
         horizontalRelativesDiv.append(nonSpouse);
