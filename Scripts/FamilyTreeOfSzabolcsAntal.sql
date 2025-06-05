@@ -501,6 +501,133 @@ VALUES
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When person has siblings from multiple parents, only parents of biological parents are displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			@id + 4,	 		@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L2 Female',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 5,	 		@id + 6,			NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are second married and person does not have siblings, other spouses of parents are not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other spouse of mother side, other spouse of father is not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other spouse of father side, other spouse of mother is not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other sposes of parents, other spouses are displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are first married and person does not have siblings, other spouses of parents are not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other spouse of mother side, other spouse of father is not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other spouse of father side, other spouse of mother is not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other sposes of parents, other spouses are displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (

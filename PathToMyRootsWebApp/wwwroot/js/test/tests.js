@@ -6,8 +6,8 @@ $(() => {
         treeDiagramsDiv.addClass('test-trees-div');
 
         await addTreeTypeHourglassCommonTests(treeDiagramsDiv);
-        //await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
-        //await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
+        await addTreeTypeHourglassBiologicalTests(treeDiagramsDiv);
+        await addTreeTypeHourglassExtendedTests(treeDiagramsDiv);
         await addTreeTypeCompleteTests(treeDiagramsDiv);
     })();
 });
@@ -23,7 +23,7 @@ async function addTreeTypeHourglassCommonTests(treeDiagramsDiv) {
 
     const tests = [
         'Generation0 - When male has two wives, both wives are displayed, and husbands of wives are not displayed',
-        // 'Generation0 - When female has two husbands, both husbands are displayed, and wives of husbands are not displayed'
+        'Generation0 - When female has two husbands, both husbands are displayed, and wives of husbands are not displayed'
     ];
 
     for (const testTitle of tests) {
@@ -43,9 +43,18 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
     const tests = [
         'When only male ancestors are present, fake ancestors are added',
         'When only female ancestors are present, fake ancestors are added',
+        'When person has siblings from multiple parents, only parents of biological parents are displayed',
+        'When parents are second married and person does not have siblings, other spouses of parents are not displayed',
+        'When parents are second married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
+        'When parents are second married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
+        'When parents are second married and person has siblings from other sposes of parents, other spouses are diaplyed',
+        'When parents are first married and person does not have siblings, other spouses of parents are not displayed',
+        'When parents are first married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
+        'When parents are first married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
+        'When parents are first married and person has siblings from other sposes of parents, other spouses are diaplyed',
         'When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation',
         'When person has multiple children, children are sorted by their birthDates',
-        'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+        // 'When ancestors and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {
@@ -69,7 +78,7 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive descedants, its descedants are not displayed',
         'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates',
-        'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+        // 'When ancestors and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {
@@ -90,17 +99,17 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         'When a person has a three generation family, generations are displayed on three levels',
         'When child has biological and adoptive parents, biological and adoptive lines are drawn',
         'When sibling groups and siblings are not sorted when loaded, they are sorted after loading',
-        //'When female is double married, both husbands are displayed',
-        //'When male is double married, both wives are displayed',
-        //'When extended marriages have secondary marriage, they are chained based on the second marriage',
-        //'When second wife of male has first spouse, that first spouse is also displayed',
-        //'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage',
-        //'When older parents have younger children, children are sorted by parents first instead of birthDates',
-        //'When female is loaded first, her first husband is still loaded',
-        //'When children have common parents, they are displayed in separate sibling groups',
-        //'When parents are orphans on the second level, they are sorted by birthDates',
-        //'When extended marriage male has default birthDate, use female birthDate for sorting',
-        //'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
+        'When female is double married, both husbands are displayed',
+        'When male is double married, both wives are displayed',
+        'When extended marriages have secondary marriage, they are chained based on the second marriage',
+        'When second wife of male has first spouse, that first spouse is also displayed',
+        'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage',
+        'When older parents have younger children, children are sorted by parents first instead of birthDates',
+        'When female is loaded first, her first husband is still loaded',
+        'When children have common parents, they are displayed in separate sibling groups',
+        'When parents are orphans on the second level, they are sorted by birthDates',
+        'When extended marriage male has default birthDate, use female birthDate for sorting',
+        // 'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
     ];
 
     for (const testTitle of tests) {
@@ -119,10 +128,10 @@ async function addTest(treeDiagramsDiv, testsContext, testTitle) {
     const titleOriginalTree = createHiddenH3('Original tree');
     treeDiagramsDiv.append(titleOriginalTree);
     await fadeInElement(titleOriginalTree);
-    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE, -1, -1);
+    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, treeTypes.COMPLETE, allRelativesDepthIndex, allRelativesDepthIndex);
 
-    //const titleResultTree = createHiddenH3('Result tree');
-    //treeDiagramsDiv.append(titleResultTree);
-    //await fadeInElement(titleResultTree);
-    //await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType);
+    const titleResultTree = createHiddenH3('Result tree');
+    treeDiagramsDiv.append(titleResultTree);
+    await fadeInElement(titleResultTree);
+    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType, allRelativesDepthIndex, allRelativesDepthIndex);
 }

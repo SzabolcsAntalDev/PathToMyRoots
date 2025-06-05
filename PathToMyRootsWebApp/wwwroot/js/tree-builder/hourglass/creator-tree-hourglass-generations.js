@@ -16,9 +16,9 @@
 
         const context = this.createIterationContext(false, new Set([personId]), new Map(), new Map(), ancestorsDepth, descedantsDepth, loadingTextContainerParent);
 
-        await hourglassBiological.createKnownAncestorsRecursive(context, person.id, person.biologicalFatherId, -1);
+        await hourglassBiological.createKnownAncestors(context, person.id, person.biologicalFatherId, person.biologicalMotherId, -1);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
-        hourglassBiological.addUnknownAncestors(ancestorsGenerations);
+        await hourglassBiological.addUnknownAncestors(ancestorsGenerations, person);
 
         if (ancestorsGenerations.length) {
             for (const extendedMarriage of ancestorsGenerations[0].extendedMarriages) {
