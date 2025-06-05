@@ -18,7 +18,9 @@ async function addTreeTypeHourglassCommonTests(treeDiagramsDiv) {
         personIdBuffer: personIdBuffer,
         testIndex: 1,
         testPrefix: "HOURGLASS_COMMON",
-        treeType: treeTypes.HOURGLASS_BIOLOGICAL
+        treeType: treeTypes.HOURGLASS_BIOLOGICAL,
+        ancestorsDepth: allRelativesDepthIndex,
+        descedantsDepth: allRelativesDepthIndex
     };
 
     const tests = [
@@ -37,7 +39,9 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
         personIdBuffer: personIdBuffer,
         testIndex: 1,
         testPrefix: treeTypes.HOURGLASS_BIOLOGICAL.id,
-        treeType: treeTypes.HOURGLASS_BIOLOGICAL
+        treeType: treeTypes.HOURGLASS_BIOLOGICAL,
+        ancestorsDepth: allRelativesDepthIndex,
+        descedantsDepth: allRelativesDepthIndex
     };
 
     const tests = [
@@ -47,19 +51,26 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
         'When parents are second married and person does not have siblings, other spouses of parents are not displayed',
         'When parents are second married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
         'When parents are second married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
-        'When parents are second married and person has siblings from other sposes of parents, other spouses are diaplyed',
+        'When parents are second married and person has siblings from other sposes of parents, other spouses are displayed',
         'When parents are first married and person does not have siblings, other spouses of parents are not displayed',
         'When parents are first married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
         'When parents are first married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
-        'When parents are first married and person has siblings from other sposes of parents, other spouses are diaplyed',
+        'When parents are first married and person has siblings from other sposes of parents, other spouses are displayed',
         'When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation',
-        'When person has multiple children, children are sorted by their birthDates',
-        // 'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+        'When person has multiple children, children are sorted by their birthDates'
     ];
 
     for (const testTitle of tests) {
         await addTest(treeDiagramsDiv, testsContext, testTitle);
     }
+
+    testsContext.ancestorsDepth = 2;
+    testsContext.descedantsDepth = 2;
+    await addTest(treeDiagramsDiv, testsContext, 'When ancestors and descedants depth are both 2, generations until those levels are displayed');
+
+    testsContext.ancestorsDepth = 0;
+    testsContext.descedantsDepth = 0;
+    await addTest(treeDiagramsDiv, testsContext, 'When ancestors depth is 0, siblings of person are not displayed');
 }
 
 async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
@@ -68,7 +79,9 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         personIdBuffer: personIdBuffer,
         testIndex: 1,
         testPrefix: treeTypes.HOURGLASS_EXTENDED.id,
-        treeType: treeTypes.HOURGLASS_EXTENDED
+        treeType: treeTypes.HOURGLASS_EXTENDED,
+        ancestorsDepth: allRelativesDepthIndex,
+        descedantsDepth: allRelativesDepthIndex
     };
 
     const tests = [
@@ -77,13 +90,20 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         'When person has biological siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive descedants, its descedants are not displayed',
-        'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates',
-        // 'When ancestors and descedants depth are both 2, generations until those levels are displayed'
+        'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates'
     ];
 
     for (const testTitle of tests) {
         await addTest(treeDiagramsDiv, testsContext, testTitle);
     }
+
+    testsContext.ancestorsDepth = 2;
+    testsContext.descedantsDepth = 2;
+    await addTest(treeDiagramsDiv, testsContext, 'When ancestors and descedants depth are both 2, generations until those levels are displayed');
+
+    testsContext.ancestorsDepth = 0;
+    testsContext.descedantsDepth = 0;
+    await addTest(treeDiagramsDiv, testsContext, 'When ancestors depth is 0, siblings of person are not displayed');
 }
 
 async function addTreeTypeCompleteTests(treeDiagramsDiv) {
@@ -92,7 +112,9 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         personIdBuffer: personIdBuffer,
         testIndex: 1,
         testPrefix: treeTypes.COMPLETE.id,
-        treeType: treeTypes.COMPLETE
+        treeType: treeTypes.COMPLETE,
+        ancestorsDepth: allRelativesDepthIndex,
+        descedantsDepth: allRelativesDepthIndex
     };
 
     const tests = [
@@ -108,13 +130,16 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         'When female is loaded first, her first husband is still loaded',
         'When children have common parents, they are displayed in separate sibling groups',
         'When parents are orphans on the second level, they are sorted by birthDates',
-        'When extended marriage male has default birthDate, use female birthDate for sorting',
-        // 'When ancestors depth and descedants depth are both 2, generations until those levels are displayed'
+        'When extended marriage male has default birthDate, use female birthDate for sorting'
     ];
 
     for (const testTitle of tests) {
         await addTest(treeDiagramsDiv, testsContext, testTitle);
     }
+
+    testsContext.ancestorsDepth = 2;
+    testsContext.descedantsDepth = 2;
+    await addTest(treeDiagramsDiv, testsContext, 'When ancestors and descedants depth are both 2, generations until those levels are displayed');
 }
 
 async function addTest(treeDiagramsDiv, testsContext, testTitle) {
@@ -133,5 +158,5 @@ async function addTest(treeDiagramsDiv, testsContext, testTitle) {
     const titleResultTree = createHiddenH3('Result tree');
     treeDiagramsDiv.append(titleResultTree);
     await fadeInElement(titleResultTree);
-    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType, allRelativesDepthIndex, allRelativesDepthIndex);
+    await createAndDisplayTreeDiagram(treeDiagramsDiv, testsContext.personId, testsContext.treeType, testsContext.ancestorsDepth, testsContext.descedantsDepth);
 }

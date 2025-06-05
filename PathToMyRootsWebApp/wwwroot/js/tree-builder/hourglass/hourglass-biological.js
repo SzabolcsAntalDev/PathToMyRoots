@@ -451,10 +451,14 @@ const hourglassBiological = {
 
     // returns the biological siblings of the persons direct biological parents
     async createSingleSiblings(context, person) {
+        if (context.ancestorsDepth == 0) {
+            return [];
+        }
+
         if (!person.biologicalFatherId) {
             return [];
         }
-        // Szabi: here siblings are not drawn towards parents
+
         const biologicalFather = await getPersonJson(person.biologicalFatherId);
         const biologicalMother = await getPersonJson(person.biologicalMotherId);
 

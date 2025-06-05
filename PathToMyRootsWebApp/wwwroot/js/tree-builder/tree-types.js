@@ -1,5 +1,5 @@
 ﻿// treeType.BIOLOGICAL - contains:
-// - the actual person, his/her spouses and biologcal siblings
+// - the actual person, his/her spouses and biological siblings
 // - all his/her biological ancestors from the database + spouses of his/her parents if they have children together + fake ancestors until the last known genealogy level
 // - all his/her biological descedants and their spouses, recursively
 

@@ -228,6 +228,10 @@
 
     // returns the biological and adoptive siblings and their spouses
     async createSiblings(context, person) {
+        if (context.ancestorsDepth == 0) {
+            return [];
+        }
+
         if (!person.biologicalFatherId && !person.adoptiveFatherId) {
             return [];
         }

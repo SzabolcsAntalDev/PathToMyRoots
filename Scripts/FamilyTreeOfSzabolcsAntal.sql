@@ -675,6 +675,19 @@ VALUES
 		(	@id + 12,	'L6 Male',			NULL,			NULL,			NULL,			@id + 10, 			@id + 11,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 13,	'L6 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
+-- ==========================================================================================================================
+-- HOURGLASS_BIOLOGICAL - When ancestors depth is 0, siblings of person are not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
 
 
 -- ===================================================================================================================================================================
@@ -832,6 +845,19 @@ VALUES
 		(	@id + 14,	'L6 Adoptive Male',		NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 10,			@id + 11,			NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 15,	'L0 Adoptive Male',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 16, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 16,	'L0 Adoptive Female',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 15, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_EXTENDED - When ancestors depth is 0, siblings of person are not displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 
 
@@ -1034,7 +1060,7 @@ VALUES
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- COMPLETE - When ancestors depth and descedants depth are both 2, generations until those levels are displayed
+-- COMPLETE - When ancestors and descedants depth are both 2, generations until those levels are displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
