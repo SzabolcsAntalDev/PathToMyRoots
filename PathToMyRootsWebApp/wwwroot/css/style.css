@@ -535,16 +535,17 @@ fieldset input[type=text] {
   height: fit-content;
   background-color: var(--background-color-nav);
   padding: 8px;
-  transition: transform 0.3s linear 0s, color 0.3s linear 0s, background-color 0.3s linear 0s;
+  transition: color 0.3s linear 0s, background-color 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-div:hover {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-div .expand-button-icon {
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid;
-  border-top: 6px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid;
+  border-top: 4px solid transparent;
+  transition: transform 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-div-opened .expand-button-icon {
   transform: rotate(180deg);
@@ -554,8 +555,6 @@ fieldset input[type=text] {
   flex: 1;
   flex-direction: column;
   background-color: var(--background-color-nav);
-  /*border: 1px solid var(--foreground-color);
-  border-radius: $border-radius;*/
   padding: 8px;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label {
@@ -566,6 +565,21 @@ fieldset input[type=text] {
   margin-left: auto;
   border: none;
   border-radius: 0px;
+}
+#tree-diagrams-div .diagram-frame .diagram-info-div {
+  position: relative;
+  margin-left: 26px;
+}
+#tree-diagrams-div .diagram-frame .diagram-info-div .text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div .marriage-text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div .marriage-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .marriage-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .marriage-text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div .lived-text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div .lived-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .lived-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .lived-text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div .name-text, #tree-diagrams-div .diagram-frame .diagram-info-div .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div .name-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .name-text, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div #tree-diagrams-div .diagram-frame .diagram-info-div .name-text {
+  display: inline-block;
+  margin: 8px;
+  margin-right: 4px;
+}
+#tree-diagrams-div .diagram-frame .diagram-info-div .value {
+  display: inline-block;
+  margin: 8px;
+  margin-left: 0px;
+  font-weight: bold;
 }
 #tree-diagrams-div .diagram-frame .diagram {
   min-width: 300px;

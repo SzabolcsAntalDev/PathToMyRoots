@@ -675,7 +675,7 @@ fieldset {
                 height: fit-content;
                 background-color: var(--background-color-nav);
                 padding: $thickness-medium;
-                transition: transform $default-transition, color $default-transition, background-color $default-transition;
+                transition: color $default-transition, background-color $default-transition;
 
                 &:hover {
                     color: var(--foreground-color-highlight);
@@ -683,9 +683,10 @@ fieldset {
                 }
 
                 .expand-button-icon {
-                    border-bottom: 6px solid transparent;
-                    border-left: 6px solid;
-                    border-top: 6px solid transparent;
+                    border-bottom: $thickness-small solid transparent;
+                    border-left: $thickness-small solid;
+                    border-top: $thickness-small solid transparent;
+                    transition: transform $default-transition;
                 }
             }
 
@@ -701,8 +702,6 @@ fieldset {
                     flex: 1;
                     flex-direction: column;
                     background-color: var(--background-color-nav);
-                    /*border: 1px solid var(--foreground-color);
-                    border-radius: $border-radius;*/
                     padding: $thickness-medium;
 
                     label {
@@ -716,6 +715,24 @@ fieldset {
                         border-radius: 0px;
                     }
                 }
+            }
+        }
+
+        .diagram-info-div {
+            position: relative;
+            margin-left: calc($thickness-medium * 3 + $thickness-extra-small);
+
+            .text {
+                display: inline-block;
+                margin: $thickness-medium;
+                margin-right: $thickness-small;
+            }
+
+            .value {
+                display: inline-block;
+                margin: $thickness-medium;
+                margin-left: 0px;
+                font-weight: bold;
             }
         }
 

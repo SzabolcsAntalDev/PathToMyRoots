@@ -19,6 +19,26 @@
             .append(displayValue);
     },
 
+    createDiagramInfo() {
+        const treeTypeTextLabel = $('<label>').attr('class', 'text').text('Tree type:');
+        const treeTypeValueLabel = $('<label>').attr('class', 'value tree-type-value');
+
+        const ancestorsDepthTextLabel = $('<label>').attr('class', 'text').text('Ancestors depth:');
+        const ancestorsDepthValueLabel = $('<label>').attr('class', 'value ancestors-depth-value');
+
+        const descedantsDepthTextLabel = $('<label>').attr('class', 'text').text('Descedants depth:');
+        const descedantsDepthValueLabel = $('<label>').attr('class', 'value descedants-depth-value');
+
+        return $('<div>')
+            .attr('class', 'diagram-info-div')
+            .append(treeTypeTextLabel)
+            .append(treeTypeValueLabel)
+            .append(ancestorsDepthTextLabel)
+            .append(ancestorsDepthValueLabel)
+            .append(descedantsDepthTextLabel)
+            .append(descedantsDepthValueLabel);
+    },
+
     createDiagram(personId) {
         return $('<div>')
             .attr('id', 'diagram-' + personId)
