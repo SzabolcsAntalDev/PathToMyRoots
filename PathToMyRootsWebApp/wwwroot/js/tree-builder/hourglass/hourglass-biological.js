@@ -263,7 +263,7 @@ const hourglassBiological = {
                     mainMarriage: {
                         male: femalesSecondSpouse,
                         female: female,
-                        marriage: createMarriage(male, femalesSecondSpouse, true)
+                        marriage: createMarriage(femalesSecondSpouse, female, true)
                     },
                     numberOfAvailableParents: 1
                 });

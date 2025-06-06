@@ -51,11 +51,11 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
         'When parents are second married and person does not have siblings, other spouses of parents are not displayed',
         'When parents are second married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
         'When parents are second married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
-        'When parents are second married and person has siblings from other sposes of parents, other spouses are displayed',
+        'When parents are second married and person has siblings from other spouses of parents, other spouses are displayed',
         'When parents are first married and person does not have siblings, other spouses of parents are not displayed',
         'When parents are first married and person has siblings from other spouse of mother side, other spouse of father is not displayed',
         'When parents are first married and person has siblings from other spouse of father side, other spouse of mother is not displayed',
-        'When parents are first married and person has siblings from other sposes of parents, other spouses are displayed',
+        'When parents are first married and person has siblings from other spouses of parents, other spouses are displayed',
         'When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation',
         'When person has multiple children, children are sorted by their birthDates'
     ];
