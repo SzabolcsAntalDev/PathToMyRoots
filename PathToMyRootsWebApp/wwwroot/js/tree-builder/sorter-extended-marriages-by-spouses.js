@@ -1,7 +1,16 @@
-﻿// sorts the extended marriages so each first and second spouse follows each other
+﻿// generated with chat gpt
+// is sorts the extended marriages, so if there are two extended marriages:
+// 1. an extended marriage that has a main marriage referencing a female
+// 2. an extended marriage that has secondary marriage referencing the female from the first one
+// the 1. extended marriage will come before the 2., and no other extended marriage will be placed between them
+
 function sortExtendedMarriagesBySpouses(generations) {
     generations.forEach(generation => {
         const femaleIdToExtendedMarriage = new Map();
+        const marriageToNext = new Map(); // A → B
+        const marriageToPrev = new Map(); // B → A
+
+        // Step 1: Map female IDs to their main extended marriage
         generation.extendedMarriages.forEach(extendedMarriage => {
             const femaleId = extendedMarriage.mainMarriage?.female?.id;
             if (femaleId) {
@@ -9,64 +18,83 @@ function sortExtendedMarriagesBySpouses(generations) {
             }
         });
 
-        const secondaryToMainExtendedMarriageOfFemale = new Map();
-        generation.extendedMarriages.forEach(marriage => {
-            secondaryToMainExtendedMarriageOfFemale.set(marriage, new Set());
-        });
+        // Step 2: Identify dependencies (A → B)
+        generation.extendedMarriages.forEach(extendedMarriage => {
+            const secondary = extendedMarriage.secondaryMarriage;
+            const maleId = extendedMarriage.mainMarriage?.male?.id;
+            const hasOnlyMale = !!maleId && !extendedMarriage.mainMarriage?.female;
 
-        generation.extendedMarriages.forEach(secondaryExtendedMarriageOfFemale => {
-            const femaleIdFromSecondaryMarriage = secondaryExtendedMarriageOfFemale.secondaryMarriage?.femaleId;
-            if (femaleIdFromSecondaryMarriage) {
-                const mainExtendedMarriageOfFemale = femaleIdToExtendedMarriage.get(femaleIdFromSecondaryMarriage);
-                if (mainExtendedMarriageOfFemale && mainExtendedMarriageOfFemale !== secondaryExtendedMarriageOfFemale) {
-                    secondaryToMainExtendedMarriageOfFemale
-                        .get(secondaryExtendedMarriageOfFemale)
-                        .add(mainExtendedMarriageOfFemale);
+            if (secondary?.femaleId) {
+                const femaleSourceExtendedMarriage = femaleIdToExtendedMarriage.get(secondary.femaleId);
+
+                if (femaleSourceExtendedMarriage && femaleSourceExtendedMarriage !== extendedMarriage) {
+                    // Even if only male is present in mainMarriage, treat as dependency
+                    marriageToNext.set(femaleSourceExtendedMarriage, extendedMarriage);
+                    marriageToPrev.set(extendedMarriage, femaleSourceExtendedMarriage);
                 }
             }
         });
 
-        const sortedExtendedMarriages = [];
-        const visitedExtendedMarriages = new Set();
-        const tempExtendedMarriages = new Set();
+        // Step 3: Build chains of directly dependent extended marriages
+        const chains = [];
+        const visited = new Set();
 
-        generation.extendedMarriages.forEach(extendedMarriage =>
-            visitExtendedMarriage(
-                extendedMarriage,
-                secondaryToMainExtendedMarriageOfFemale,
-                visitedExtendedMarriages,
-                tempExtendedMarriages,
-                sortedExtendedMarriages));
+        for (const extendedMarriage of generation.extendedMarriages) {
+            if (visited.has(extendedMarriage)) {
+                continue;
+            }
 
-        generation.extendedMarriages = sortedExtendedMarriages;
+            // Walk backward to the root of the chain
+            let currentExtendedMarriage = extendedMarriage;
+            while (marriageToPrev.has(currentExtendedMarriage)) {
+                currentExtendedMarriage = marriageToPrev.get(currentExtendedMarriage);
+            }
+
+            // Walk forward through the chain
+            const chain = [];
+            while (currentExtendedMarriage && !visited.has(currentExtendedMarriage)) {
+                chain.push(currentExtendedMarriage);
+                visited.add(currentExtendedMarriage);
+                currentExtendedMarriage = marriageToNext.get(currentExtendedMarriage);
+            }
+
+            chains.push(chain);
+        }
+
+        // Step 4: Topologically sort chains
+        const chainDeps = new Map();
+        const chainMap = new Map();
+
+        chains.forEach(chain => {
+            chainDeps.set(chain, new Set());
+            chainMap.set(chain[0], chain);
+        });
+
+        for (const [from, to] of marriageToNext.entries()) {
+            const chainFrom = chainMap.get(from);
+            const chainTo = chainMap.get(to);
+            if (chainFrom && chainTo && chainFrom !== chainTo) {
+                chainDeps.get(chainTo).add(chainFrom);
+            }
+        }
+
+        const sortedChains = [];
+        const chainVisited = new Set();
+
+        for (const chain of chains) {
+            visitChain(chain, chainDeps, chainVisited, sortedChains);
+        }
+
+        // Step 5: Flatten chains into the final sorted list
+        generation.extendedMarriages = sortedChains.flat();
     });
 }
 
-function visitExtendedMarriage(
-    extendedMarriage,
-    secondaryToMainExtendedMarriageOfFemale,
-    visitedExtendedMarriages,
-    tempExtendedMarriages,
-    sortedExtendedMarriages) {
-    if (visitedExtendedMarriages.has(extendedMarriage)) {
-        return;
+function visitChain(chain, chainDeps, visited, result) {
+    if (visited.has(chain)) return;
+    visited.add(chain);
+    for (const dep of chainDeps.get(chain)) {
+        visitChain(dep, chainDeps, visited, result);
     }
-
-    if (tempExtendedMarriages.has(extendedMarriage)) {
-        throw new Error("Cycle detected in marriages");
-    }
-
-    tempExtendedMarriages.add(extendedMarriage);
-    for (const mainExtendedMarriage of secondaryToMainExtendedMarriageOfFemale.get(extendedMarriage)) {
-        visitExtendedMarriage(
-            mainExtendedMarriage,
-            secondaryToMainExtendedMarriageOfFemale,
-            visitedExtendedMarriages,
-            tempExtendedMarriages,
-            sortedExtendedMarriages
-        );
-    }
-    tempExtendedMarriages.delete(extendedMarriage);
-    visitedExtendedMarriages.add(extendedMarriage);
-    sortedExtendedMarriages.push(extendedMarriage);
+    result.push(chain);
 }
