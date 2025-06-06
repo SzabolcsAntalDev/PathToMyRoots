@@ -42,8 +42,8 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType, 
 function addSettingsEventListeners(context) {
     const settingsDiv = context.treeDiagramFrame.find('.settings-div');
 
-    const expandButtonDiv = $(settingsDiv).find('.expand-button-div');
-    const horizontalToggleableContainer = $(settingsDiv).find('.horizontal-toggleable-container');
+    const expandButtonDiv = settingsDiv.find('.expand-button-div');
+    const horizontalToggleableContainer = settingsDiv.find('.horizontal-toggleable-container');
 
     function toggleSettingsVisibility() {
         expandButtonDiv.toggleClass('expand-button-div-opened');
@@ -60,19 +60,27 @@ function addSettingsEventListeners(context) {
         }
     });
 
+    const radioButtonNameUid = Date.now();
+
+    // add unique names per settings to the tree types radio buttons
+    const treeTypesRadioButtons = settingsDiv.find('.tree-types-fieldset input[type="radio"]');
+    treeTypesRadioButtons.each((_, radioButton) => {
+        radioButton.name += `-${context.personId}-${radioButtonNameUid}`;
+    });
+
     const ancestorsDepthFieldset = settingsDiv.find('.ancestors-depth-fieldset');
-    ancestorsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel('input-radio-ancestors-depth', 'data-ancestors-depth', allRelativesDepthIndex, 'All'));
+    ancestorsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel(`input-radio-ancestors-depth-${context.personId}-${radioButtonNameUid}`, 'data-ancestors-depth', allRelativesDepthIndex, 'All'));
     for (let i = relativesMaxDepth; i >= relativesMinDepth; i--) {
-        // <label><input type="radio" name="input-radio-ancestors-depth" data-ancestors-depth="5" />5</label>
-        ancestorsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel('input-radio-ancestors-depth', 'data-ancestors-depth', i, i));
+        // <label><input type="radio" name="input-radio-ancestors-depth-0-1722960923456" data-ancestors-depth="5" />5</label>
+        ancestorsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel(`input-radio-ancestors-depth-${context.personId}-${radioButtonNameUid}`, 'data-ancestors-depth', i, i));
     }
 
     const descedantsDepthFieldset = settingsDiv.find('.descedants-depth-fieldset');
     for (let i = relativesMinDepth; i <= relativesMaxDepth; i++) {
-        // <label><input type="radio" name="input-radio-descedants-depth" data-descedants-depth="5" />5</label>
-        descedantsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel('input-radio-descedants-depth', 'data-descedants-depth', i, i));
+        // <label><input type="radio" name="input-radio-descedants-depth-0-1722960923456" data-descedants-depth="5" />5</label>
+        descedantsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel(`input-radio-descedants-depth-${context.personId}-${radioButtonNameUid}`, 'data-descedants-depth', i, i));
     }
-    descedantsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel('input-radio-descedants-depth', 'data-descedants-depth', allRelativesDepthIndex, 'All'));
+    descedantsDepthFieldset.append(treeHtmlCreator.createRadioButtonWithLabel(`input-radio-descedants-depth-${context.personId}-${radioButtonNameUid}`, 'data-descedants-depth', allRelativesDepthIndex, 'All'));
 
     const selectedTreeTypeRadioButton = settingsDiv.find('.tree-types-fieldset input[type="radio"]').filter(function () {
         return parseInt(this.dataset.treeTypeIndex, 10) === context.treeType.index;
