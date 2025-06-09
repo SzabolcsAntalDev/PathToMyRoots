@@ -17,7 +17,7 @@ async function addTreeTypeHourglassCommonTests(treeDiagramsDiv) {
         personId: 1000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: "HOURGLASS_COMMON",
+        testPrefix: "Hourglass-common",
         treeType: treeTypes.HOURGLASS_BIOLOGICAL,
         ancestorsDepth: allRelativesDepthIndex,
         descedantsDepth: allRelativesDepthIndex
@@ -38,7 +38,7 @@ async function addTreeTypeHourglassBiologicalTests(treeDiagramsDiv) {
         personId: 2000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.HOURGLASS_BIOLOGICAL.id,
+        testPrefix: treeTypes.HOURGLASS_BIOLOGICAL.displayName,
         treeType: treeTypes.HOURGLASS_BIOLOGICAL,
         ancestorsDepth: allRelativesDepthIndex,
         descedantsDepth: allRelativesDepthIndex
@@ -78,7 +78,7 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         personId: 3000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.HOURGLASS_EXTENDED.id,
+        testPrefix: treeTypes.HOURGLASS_EXTENDED.displayName,
         treeType: treeTypes.HOURGLASS_EXTENDED,
         ancestorsDepth: allRelativesDepthIndex,
         descedantsDepth: allRelativesDepthIndex
@@ -111,7 +111,7 @@ async function addTreeTypeCompleteTests(treeDiagramsDiv) {
         personId: 4000,
         personIdBuffer: personIdBuffer,
         testIndex: 1,
-        testPrefix: treeTypes.COMPLETE.id,
+        testPrefix: treeTypes.COMPLETE.displayName,
         treeType: treeTypes.COMPLETE,
         ancestorsDepth: allRelativesDepthIndex,
         descedantsDepth: allRelativesDepthIndex

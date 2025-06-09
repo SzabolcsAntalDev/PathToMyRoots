@@ -111,12 +111,15 @@ $popup-loading-bar-transition-interval: 8s;
 $popup-loading-bar-transition-function: $default-transition-function;
 $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
 
+$node-lines-vertical-offset: 10;
+
 :root.theme-light {
     @extend %theme-light;
     --default-transition-interval: #{$default-transition-interval};
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
+    --node-lines-vertical-offset: #{$node-lines-vertical-offset};
 }
 
 :root.theme-dark {
@@ -125,6 +128,7 @@ $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loa
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
+    --node-lines-vertical-offset: #{$node-lines-vertical-offset};
 }
 
 $font-size-small: 11px;

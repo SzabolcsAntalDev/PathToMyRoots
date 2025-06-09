@@ -2,6 +2,11 @@
     return getComputedStyle(document.documentElement).getPropertyValue('--' + propertyName);
 }
 
+function getNodeLinesVerticalOffset() {
+    const nodeLinesVerticalOffset = getPropertyValue('node-lines-vertical-offset');
+    return parseFloat(nodeLinesVerticalOffset);
+}
+
 function getIntervalInSeconds(propertyName) {
     const intervalInSecondsString = getPropertyValue(propertyName);
     return parseFloat(intervalInSecondsString);

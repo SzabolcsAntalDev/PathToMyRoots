@@ -1,21 +1,13 @@
-﻿function drawMarriagesChildrenLines(linesContainer, largestGenerationSize, childrenGeneration, marriageNodes, childNodes) {
+﻿function drawMarriagesChildrenLines(linesContainer, nodeLinesVerticalOffset, largestGenerationSize, childrenGeneration, marriageNodes, childNodes) {
     linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
-    const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * linesVerticalOffset };
+    const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * nodeLinesVerticalOffset };
 
     marriageNodes.filter('.marriage-node').each((_, marriageNode) => {
-        drawMarriageChildrenLines(linesContainer, offsetOnTop, marriageNode, childNodes);
+        drawMarriageChildrenLines(linesContainer, nodeLinesVerticalOffset, offsetOnTop, marriageNode, childNodes);
     });
 }
 
-function drawMarriagesLines(linesContainer, marriageNodes) {
-    linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
-
-    marriageNodes.filter('.floating-marriage-node').each((_, marriageNode) => {
-        drawMarriageLines(linesContainer, marriageNode);
-    });
-}
-
-function drawMarriageChildrenLines(linesContainer, offsetOnTop, marriageNode, childNodes) {
+function drawMarriageChildrenLines(linesContainer, nodeLinesVerticalOffset, offsetOnTop, marriageNode, childNodes) {
     const inversebiologicalParentIds = $(marriageNode).data('inverseBiologicalParentIds');
     const inverseAdoptiveParentIds = $(marriageNode).data('inverseAdoptiveParentIds');
     const inverseParentIds = inversebiologicalParentIds.concat(inverseAdoptiveParentIds);
@@ -41,15 +33,15 @@ function drawMarriageChildrenLines(linesContainer, offsetOnTop, marriageNode, ch
     const rightChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter > marriageNode.clientRectHorizontalCenter);
 
     leftChildNodes.forEach(childNode => {
-        drawMarriageChildLine(linesContainer, marriageNode, childNode, offsetOnTop.value += linesVerticalOffset);
+        drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodeLinesVerticalOffset);
     });
 
     rightChildNodes.reverse().forEach(childNode => {
-        drawMarriageChildLine(linesContainer, marriageNode, childNode, offsetOnTop.value += linesVerticalOffset);
+        drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodeLinesVerticalOffset);
     });
 }
 
-function drawMarriageChildLine(linesContainer, marriageNode, childNode, verticalOffset) {
+function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, verticalOffset) {
 
     let marriageNodeHorizontalCenter = marriageNode.clientRect.left + marriageNode.clientRect.width / 2 - linesContainer.clientRect.left;
     let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - linesContainer.clientRect.top;
@@ -69,7 +61,7 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
 
     if (hasBiologicalChildren && hasAdoptiveChildren) {
-        marriageNodeHorizontalCenter += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
+        marriageNodeHorizontalCenter += childNode.isBiological ? (-nodeLinesVerticalOffset / 2) : (nodeLinesVerticalOffset / 2);
     }
 
     // Szabi: what happens if child has only one parent?
@@ -77,7 +69,7 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
     const hasAdoptiveParents = $(childNode).data('adoptiveFatherId') != null && $(childNode).data('adoptiveMotherId') != null;
 
     if (hasBiologicalParents && hasAdoptiveParents) {
-        childNodeHorizontalCenter += childNode.isBiological ? (-linesVerticalOffset / 2) : (linesVerticalOffset / 2);
+        childNodeHorizontalCenter += childNode.isBiological ? (-nodeLinesVerticalOffset / 2) : (nodeLinesVerticalOffset / 2);
     }
 
     const pathData = `
@@ -88,6 +80,14 @@ function drawMarriageChildLine(linesContainer, marriageNode, childNode, vertical
     `;
 
     linesContainer.append(treeHtmlCreator.createMarriageChildLinePath(pathData, childNode.isBiological));
+}
+
+function drawMarriagesLines(linesContainer, marriageNodes) {
+    linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
+
+    marriageNodes.filter('.floating-marriage-node').each((_, marriageNode) => {
+        drawMarriageLines(linesContainer, marriageNode);
+    });
 }
 
 function drawMarriageLines(linesContainer, marriageNode) {

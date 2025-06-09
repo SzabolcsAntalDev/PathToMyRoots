@@ -47,6 +47,7 @@
   --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
+  --node-lines-vertical-offset: 10;
 }
 
 :root.theme-dark {
@@ -54,6 +55,7 @@
   --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
+  --node-lines-vertical-offset: 10;
 }
 
 html {

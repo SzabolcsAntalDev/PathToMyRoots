@@ -57,9 +57,11 @@
     },
 
     createGeneration(generation, largestGenerationSize, isLast) {
+        const nodeLinesVerticalOffset = getNodeLinesVerticalOffset();
+
         const generationDiv = $('<div>')
             .attr('class', 'generation')
-            .css('padding', isLast ? '0px' : '0px 0px ' + ((largestGenerationSize + 3) * linesVerticalOffset) + 'px 0px');
+            .css('padding', isLast ? '0px' : '0px 0px ' + ((largestGenerationSize + 3) * nodeLinesVerticalOffset) + 'px 0px');
 
         generation.siblingsChains.forEach(siblingsChain => {
             generationDiv.append(this.createSiblingsChain(siblingsChain));
