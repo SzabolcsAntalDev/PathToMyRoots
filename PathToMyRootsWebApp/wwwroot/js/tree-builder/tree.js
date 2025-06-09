@@ -6,7 +6,7 @@
     }
 }
 
-function createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth) {
+function createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth, viewMode) {
     return {
         treeDiagramFrame: treeDiagramFrame,
         loadingTextContainer: loadingTextContainer,
@@ -14,11 +14,12 @@ function createContext(treeDiagramFrame, loadingTextContainer, personId, treeDia
         treeDiagram: treeDiagram,
         treeType: treeType,
         ancestorsDepth: (ancestorsDepth < relativesMinDepth || ancestorsDepth > relativesMaxDepth ? allRelativesDepthIndex : ancestorsDepth),
-        descedantsDepth: (descedantsDepth < relativesMinDepth || descedantsDepth > relativesMaxDepth ? allRelativesDepthIndex : descedantsDepth)
+        descedantsDepth: (descedantsDepth < relativesMinDepth || descedantsDepth > relativesMaxDepth ? allRelativesDepthIndex : descedantsDepth),
+        viewMode: viewMode
     };
 }
 
-async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType, ancestorsDepth, descedantsDepth) {
+async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType, ancestorsDepth, descedantsDepth, viewMode) {
     const treeDiagramFrame = treeHtmlCreator.createDiagramFrame();
     hideElement(treeDiagramFrame);
     treeDiagramsDiv.append(treeDiagramFrame);
@@ -35,7 +36,7 @@ async function createAndDisplayTreeDiagram(treeDiagramsDiv, personId, treeType, 
 
     await fadeInElement(treeDiagramFrame);
 
-    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth))
+    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth, viewMode))
 }
 
 function addSettingsEventListeners(context) {
@@ -102,6 +103,11 @@ function addSettingsEventListeners(context) {
         allRelativesDepthIndex,
         getDepthDisplayText(allRelativesDepthIndex)));
 
+    const viewModesRadioButtons = settingsDiv.find('.view-modes-fieldset input[type="radio"]');
+    viewModesRadioButtons.each((_, radioButton) => {
+        radioButton.name += `-${context.personId}-${radioButtonNameUid}`;
+    });
+
     const selectedTreeTypeRadioButton = settingsDiv.find('.tree-types-fieldset input[type="radio"]').filter(function () {
         return parseInt(this.dataset.treeTypeIndex, 10) === context.treeType.index;
     })[0];
@@ -114,9 +120,14 @@ function addSettingsEventListeners(context) {
         return parseInt(this.dataset.descedantsDepth, 10) === context.descedantsDepth;
     })[0];
 
+    const selectedViewModeRadioButton = settingsDiv.find('.view-modes-fieldset input[type="radio"]').filter(function () {
+        return parseInt(this.dataset.viewModeIndex, 10) === context.viewMode.index;
+    })[0];
+
     selectedTreeTypeRadioButton.checked = true;
     selectedAncestorsDepthRadioButton.checked = true;
     selectedDescedantsDepthRadioButton.checked = true;
+    selectedViewModeRadioButton.checked = true;
 
     const applyButton = settingsDiv.find('.apply-button')[0];
     applyButton.addEventListener('click', async (event) => {
@@ -127,16 +138,18 @@ function addSettingsEventListeners(context) {
         const treeTypeRadioButton = settingsDiv.find('.tree-types-fieldset input[type="radio"]:checked');
         const ancestorsDepthRadioButton = settingsDiv.find('.ancestors-depth-fieldset input[type="radio"]:checked');
         const descedantsDepthRadioButton = settingsDiv.find('.descedants-depth-fieldset input[type="radio"]:checked');
+        const viewModeRadioButton = settingsDiv.find('.view-modes-fieldset input[type="radio"]:checked');
 
         context.treeType = getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
         context.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
         context.descedantsDepth = parseInt(descedantsDepthRadioButton[0].dataset.descedantsDepth, 10);
+        context.viewMode = getViewModeByIndex(parseInt(viewModeRadioButton[0].dataset.viewModeIndex, 10));
 
         treeTypeInfo.text(context.treeType.displayName);
         ancestorsDepthInfo.text(getDepthDisplayText(context.ancestorsDepth));
         descedantsDepthInfo.text(getDepthDisplayText(context.descedantsDepth));
 
-        await showTree(context);
+        await calculateDataAndDisplayTree(context);
     });
 
     applyButton.dispatchEvent(new CustomEvent('click', {
@@ -144,34 +157,46 @@ function addSettingsEventListeners(context) {
             fromInitialization: true
         }
     }));
+
+    const viewModeRadioButtons = settingsDiv.find('.view-modes-fieldset input[type="radio"]');
+    viewModeRadioButtons.each((_, radioButton) => {
+        $(radioButton).on('change', function () {
+            context.viewMode = getViewModeByIndex(parseInt(this.dataset.viewModeIndex, 10));
+            drawTree(context);
+        })
+    });
 }
 
-async function showTree(context) {
+async function calculateDataAndDisplayTree(context) {
     await loadingTextManager.fadeIn(context.loadingTextContainer);
     await fadeOutElement(context.treeDiagram);
 
+    context.generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramFrame);
+
+    $(document).on('wheel', function (event) {
+        if (event.ctrlKey) {
+            drawTree(context);
+        }
+    });
+
+    drawTree(context);
+
+    await fadeInElement(context.treeDiagram);
+    await loadingTextManager.fadeOut(context.loadingTextContainer);
+}
+
+function drawTree(context) {
     const previousNodesContainer = context.treeDiagram.find('.nodes-div');
     const previousLinesContainer = context.treeDiagram.find('.lines-svg');
     previousNodesContainer?.remove();
     previousLinesContainer?.remove();
 
-    const generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramFrame);
-    const nodesContainer = treeHtmlCreator.createNodesDiv(generationsData);
+    const nodesContainer = treeHtmlCreator.createNodesDiv(context.generationsData, context.viewMode);
     const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
-
-    $(document).on('wheel', function (event) {
-        if (event.ctrlKey) {
-            $(linesContainer).empty();
-            drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
-        }
-    });
 
     context.treeDiagram.append(nodesContainer);
     context.treeDiagram.append(linesContainer);
 
-    drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer);
-
-    await fadeInElement(context.treeDiagram);
-    await loadingTextManager.fadeOut(context.loadingTextContainer);
+    drawLinesOntoLinesContainer(context.generationsData, context.viewMode, nodesContainer, linesContainer);
 }
 

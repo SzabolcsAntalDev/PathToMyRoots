@@ -1,7 +1,7 @@
-﻿function drawLinesOntoLinesContainer(generationsData, nodesContainer, linesContainer) {
+﻿function drawLinesOntoLinesContainer(generationsData, viewMode, nodesContainer, linesContainer) {
     setSize(nodesContainer, linesContainer);
 
-    const nodeLinesVerticalOffset = getNodeLinesVerticalOffset();
+    const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(viewMode);
     const generationsHtmls = $(nodesContainer).find('.generation');
 
     drawMarriagesChildrenLinesInner(generationsData, nodesContainer, linesContainer, nodeLinesVerticalOffset, generationsHtmls);

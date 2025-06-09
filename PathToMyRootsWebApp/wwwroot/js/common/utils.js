@@ -2,8 +2,8 @@
     return getComputedStyle(document.documentElement).getPropertyValue('--' + propertyName);
 }
 
-function getNodeLinesVerticalOffset() {
-    const nodeLinesVerticalOffset = getPropertyValue('node-lines-vertical-offset');
+function getNodeLinesVerticalOffset(viewMode) {
+    const nodeLinesVerticalOffset = getPropertyValue(`node-lines-vertical-offset-${viewMode.id.toLowerCase()}`);
     return parseFloat(nodeLinesVerticalOffset);
 }
 

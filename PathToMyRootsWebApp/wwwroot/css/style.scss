@@ -111,7 +111,9 @@ $popup-loading-bar-transition-interval: 8s;
 $popup-loading-bar-transition-function: $default-transition-function;
 $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
 
-$node-lines-vertical-offset: 10;
+$node-lines-vertical-offset-small: 4;
+$node-lines-vertical-offset-medium: 8;
+$node-lines-vertical-offset-large: 12;
 
 :root.theme-light {
     @extend %theme-light;
@@ -119,7 +121,9 @@ $node-lines-vertical-offset: 10;
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
-    --node-lines-vertical-offset: #{$node-lines-vertical-offset};
+    --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
+    --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
+    --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
 }
 
 :root.theme-dark {
@@ -128,7 +132,9 @@ $node-lines-vertical-offset: 10;
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
-    --node-lines-vertical-offset: #{$node-lines-vertical-offset};
+    --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
+    --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
+    --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
 }
 
 $font-size-small: 11px;
@@ -708,13 +714,14 @@ fieldset {
                     background-color: var(--background-color-nav);
                     padding: $thickness-medium;
 
-                    label {
+                    label, h3 {
                         white-space: nowrap;
                     }
 
                     .apply-button {
                         width: 50%;
                         margin-left: auto;
+                        margin-right: 0px;
                         border: none;
                         border-radius: 0px;
                     }

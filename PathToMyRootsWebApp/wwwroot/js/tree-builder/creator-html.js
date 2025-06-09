@@ -45,19 +45,19 @@
             .attr('class', 'diagram');
     },
 
-    createNodesDiv(generationsData) {
+    createNodesDiv(generationsData, viewMode) {
         const nodesDiv = $('<div>')
             .attr('class', 'nodes-div');
 
         generationsData.generations.forEach((generation, index) => {
-            nodesDiv.append(this.createGeneration(generation, generationsData.largestGenerationSize, index == generationsData.generations.length - 1));
+            nodesDiv.append(this.createGeneration(generation, viewMode, generationsData.largestGenerationSize, index == generationsData.generations.length - 1));
         });
 
         return nodesDiv;
     },
 
-    createGeneration(generation, largestGenerationSize, isLast) {
-        const nodeLinesVerticalOffset = getNodeLinesVerticalOffset();
+    createGeneration(generation, viewMode, largestGenerationSize, isLast) {
+        const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(viewMode);
 
         const generationDiv = $('<div>')
             .attr('class', 'generation')

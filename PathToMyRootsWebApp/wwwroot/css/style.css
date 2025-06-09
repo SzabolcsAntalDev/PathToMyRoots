@@ -47,7 +47,9 @@
   --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
-  --node-lines-vertical-offset: 10;
+  --node-lines-vertical-offset-small: 4;
+  --node-lines-vertical-offset-medium: 8;
+  --node-lines-vertical-offset-large: 12;
 }
 
 :root.theme-dark {
@@ -55,7 +57,9 @@
   --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
-  --node-lines-vertical-offset: 10;
+  --node-lines-vertical-offset-small: 4;
+  --node-lines-vertical-offset-medium: 8;
+  --node-lines-vertical-offset-large: 12;
 }
 
 html {
@@ -559,12 +563,13 @@ fieldset input[type=text] {
   background-color: var(--background-color-nav);
   padding: 8px;
 }
-#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button {
   width: 50%;
   margin-left: auto;
+  margin-right: 0px;
   border: none;
   border-radius: 0px;
 }
