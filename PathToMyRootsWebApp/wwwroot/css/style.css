@@ -841,6 +841,13 @@ fieldset input[type=text] {
   padding: 0px 16px;
   overflow: auto;
 }
+.person-details .top-row .relatives-column .relatives-column-content {
+  display: flex;
+  flex-direction: column;
+}
+.person-details .top-row .relatives-column .relatives-column-content button {
+  margin-left: auto;
+}
 .person-details .top-row .relatives-column .relatives-column-content .div-with-title {
   margin: 8px 0px;
 }

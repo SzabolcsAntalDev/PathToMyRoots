@@ -27,6 +27,8 @@ async function createRelativesColumn(person) {
     const relativesColumnContent = personDetailsHtmlCreator.createRelativesColumnContent();
     hideElement(relativesColumnContent);
 
+    relativesColumnContent.append(personDetailsHtmlCreator.createEditPersonButton(person.id));
+
     await addRelativesToRelativesColumnContent(person, relativesColumnContent, relativesColumn);
 
     relativesColumn.append(relativesColumnContent);

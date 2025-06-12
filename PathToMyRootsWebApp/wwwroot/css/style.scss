@@ -1094,6 +1094,13 @@ fieldset {
             overflow: auto;
 
             .relatives-column-content {
+                display: flex;
+                flex-direction: column;
+
+                button {
+                    margin-left: auto;
+                }
+
                 .div-with-title {
                     margin: $thickness-medium 0px;
 

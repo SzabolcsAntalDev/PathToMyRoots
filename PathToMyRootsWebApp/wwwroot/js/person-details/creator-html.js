@@ -20,6 +20,15 @@
             .attr('class', 'relatives-column-content');
     },
 
+    createEditPersonButton(personId) {
+        return $('<button>')
+            .addClass('person-action-button')
+            .text('Edit')
+            .on('click', function () {
+                window.location.href = `/Person/UpdatePerson?id=${personId}`;
+            });
+    },
+
     createDivWithTitle() {
         return $('<div>')
             .attr('class', 'div-with-title');
