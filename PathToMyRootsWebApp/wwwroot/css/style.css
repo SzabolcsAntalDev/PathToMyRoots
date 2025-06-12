@@ -173,6 +173,10 @@ body {
   position: relative;
 }
 
+.transparent {
+  opacity: 0.9;
+}
+
 h1 {
   font-size: 28px;
   margin-top: 16px;
@@ -536,6 +540,7 @@ fieldset input[type=text] {
   width: fit-content;
   top: 8px;
   left: 8px;
+  transition: opacity 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-div {
   flex: 0;

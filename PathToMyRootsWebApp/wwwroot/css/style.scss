@@ -295,6 +295,10 @@ body {
     position: relative;
 }
 
+.transparent {
+    opacity: 0.9;
+}
+
 h1 {
     font-size: $font-size-extra-large;
     margin-top: $thickness-large;
@@ -696,6 +700,7 @@ fieldset {
             width: fit-content;
             top: $thickness-medium;
             left: $thickness-medium;
+            transition: opacity $default-transition;
 
             .expand-button-div {
                 flex: 0;

@@ -49,6 +49,8 @@ function addSettingsEventListeners(context) {
     const ancestorsDepthInfo = diagramInfoDiv.find('.ancestors-depth-value');
     const descedantsDepthInfo = diagramInfoDiv.find('.descedants-depth-value');
 
+    const viewModesFieldSet = settingsDiv.find('.view-modes-fieldset');
+
     function toggleSettingsVisibility() {
         expandButtonDiv.toggleClass('expand-button-div-opened');
         horizontalToggleableContainer.toggleClass('horizontal-toggleable-container-open');
@@ -59,8 +61,15 @@ function addSettingsEventListeners(context) {
     });
 
     $(document).on('click', function (event) {
-        if (!settingsDiv[0].contains(event.target) && horizontalToggleableContainer[0].classList.contains('horizontal-toggleable-container-open')) {
-            toggleSettingsVisibility();
+        const target = event.target;
+
+        if (!settingsDiv[0].contains(target) &&
+            horizontalToggleableContainer[0].classList.contains('horizontal-toggleable-container-open')) {
+                toggleSettingsVisibility();
+        }
+
+        if (!viewModesFieldSet[0].contains(target)) {
+            settingsDiv.removeClass('transparent');
         }
     });
 
@@ -152,9 +161,10 @@ function addSettingsEventListeners(context) {
         await calculateDataAndDisplayTree(context);
     });
 
-    const viewModeRadioButtons = settingsDiv.find('.view-modes-fieldset input[type="radio"]');
+    const viewModeRadioButtons = viewModesFieldSet.find('input[type="radio"]');
     viewModeRadioButtons.each((_, radioButton) => {
         $(radioButton).on('change', function () {
+            settingsDiv.addClass('transparent');
             context.viewMode = getViewModeByIndex(parseInt(this.dataset.viewModeIndex, 10));
 
             context.treeDiagramFrame[0].style.setProperty('--person-node-width', getPersonNodeWidth(context.viewMode));
