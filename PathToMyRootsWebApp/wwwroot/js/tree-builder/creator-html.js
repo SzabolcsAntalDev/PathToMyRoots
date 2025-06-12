@@ -29,6 +29,9 @@
         const descedantsDepthTextLabel = $('<label>').attr('class', 'text').text('Descedants depth:');
         const descedantsDepthValueLabel = $('<label>').attr('class', 'value descedants-depth-value');
 
+        const viewModeTextLabel = $('<label>').attr('class', 'text').text('View mode:');
+        const viewModeValueLabel = $('<label>').attr('class', 'value view-mode-value');
+
         return $('<div>')
             .attr('class', 'diagram-info-div')
             .append(treeTypeTextLabel)
@@ -36,7 +39,9 @@
             .append(ancestorsDepthTextLabel)
             .append(ancestorsDepthValueLabel)
             .append(descedantsDepthTextLabel)
-            .append(descedantsDepthValueLabel);
+            .append(descedantsDepthValueLabel)
+            .append(viewModeTextLabel)
+            .append(viewModeValueLabel);
     },
 
     createDiagram(personId) {

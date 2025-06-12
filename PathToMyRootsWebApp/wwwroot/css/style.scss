@@ -174,7 +174,6 @@ $thickness-super-large: 64px;
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
-$tree-diagram-min-width: 300px;
 $tree-diagram-min-height: 60px;
 
 $person-small-image-height: 40px;
@@ -771,7 +770,6 @@ fieldset {
         }
 
         .diagram {
-            min-width: $tree-diagram-min-width;
             min-height: $tree-diagram-min-height;
             position: relative;
             margin: 0px auto;

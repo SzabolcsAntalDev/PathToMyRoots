@@ -48,6 +48,7 @@ function addSettingsEventListeners(context) {
     const treeTypeInfo = diagramInfoDiv.find('.tree-type-value');
     const ancestorsDepthInfo = diagramInfoDiv.find('.ancestors-depth-value');
     const descedantsDepthInfo = diagramInfoDiv.find('.descedants-depth-value');
+    const viewModeInfo = diagramInfoDiv.find('.view-mode-value');
 
     const viewModesFieldSet = settingsDiv.find('.view-modes-fieldset');
 
@@ -157,6 +158,7 @@ function addSettingsEventListeners(context) {
         treeTypeInfo.text(context.treeType.displayName);
         ancestorsDepthInfo.text(getDepthDisplayText(context.ancestorsDepth));
         descedantsDepthInfo.text(getDepthDisplayText(context.descedantsDepth));
+        viewModeInfo.text(context.viewMode.displayName);
 
         await calculateDataAndDisplayTree(context);
     });
@@ -164,8 +166,10 @@ function addSettingsEventListeners(context) {
     const viewModeRadioButtons = viewModesFieldSet.find('input[type="radio"]');
     viewModeRadioButtons.each((_, radioButton) => {
         $(radioButton).on('change', function () {
-            settingsDiv.addClass('transparent');
             context.viewMode = getViewModeByIndex(parseInt(this.dataset.viewModeIndex, 10));
+
+            settingsDiv.addClass('transparent');
+            viewModeInfo.text(context.viewMode.displayName);
 
             context.treeDiagramFrame[0].style.setProperty('--person-node-width', getPersonNodeWidth(context.viewMode));
             context.treeDiagramFrame[0].style.setProperty('--marriage-node-width', getMarriageNodeWidth(context.viewMode));
