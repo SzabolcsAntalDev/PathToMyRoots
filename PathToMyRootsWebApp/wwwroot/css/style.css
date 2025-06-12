@@ -42,24 +42,26 @@
   --error-popup-background-color: red;
 }
 
-:root.theme-light {
+:root.theme-dark, :root.theme-light {
   --default-transition-interval: 0.3s;
   --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
   --popup-loading-bar-transition-function: linear;
-  --node-lines-vertical-offset-small: 4;
-  --node-lines-vertical-offset-medium: 8;
-  --node-lines-vertical-offset-large: 12;
-}
-
-:root.theme-dark {
-  --default-transition-interval: 0.3s;
-  --loading-text-letters-transition-interval: 0.2s;
-  --popup-loading-bar-transition-interval: 8s;
-  --popup-loading-bar-transition-function: linear;
-  --node-lines-vertical-offset-small: 4;
-  --node-lines-vertical-offset-medium: 8;
-  --node-lines-vertical-offset-large: 12;
+  --person-node-width-small: 80px;
+  --person-node-width-medium: 115px;
+  --person-node-width-large: 175px;
+  --person-node-width: 115px;
+  --marriage-node-width-small: 65px;
+  --marriage-node-width-medium: 90px;
+  --marriage-node-width-large: 150px;
+  --marriage-node-width: 90px;
+  --node-horizontal-margin-small: 5px;
+  --node-horizontal-margin-medium: 7px;
+  --node-horizontal-margin-large: 9px;
+  --node-horizontal-margin: 7px;
+  --node-lines-vertical-offset-small: 5;
+  --node-lines-vertical-offset-medium: 7;
+  --node-lines-vertical-offset-large: 10;
 }
 
 html {
@@ -601,12 +603,14 @@ fieldset input[type=text] {
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation {
   display: flex;
   white-space: nowrap;
+  transition: padding 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain {
   display: flex;
   padding: 0px;
   margin: 0px auto;
-  padding: 0px 20px;
+  padding: 0px calc(var(--node-horizontal-margin) * 2);
+  transition: padding 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling {
   display: flex;
@@ -615,11 +619,13 @@ fieldset input[type=text] {
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage {
   display: flex;
-  margin: 0px 10px;
+  margin: 0px var(--node-horizontal-margin);
   padding: 0px;
+  transition: margin 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage:has(.floating-and-hidden-marriage-nodes-div) {
-  margin-left: -10px;
+  margin-left: calc(var(--node-horizontal-margin) * -1);
+  transition: margin 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   display: flex;
@@ -651,12 +657,13 @@ fieldset input[type=text] {
   }
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
-  width: 100px;
-  margin: 0px 10px;
+  width: var(--marriage-node-width);
+  margin: 0px var(--node-horizontal-margin);
   font-size: 11px;
   color: var(--foreground-color-disabled);
   background-color: var(--marriage-color);
   border-color: var(--foreground-color-disabled);
+  transition: margin 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node.interactive, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .interactive.hidden-marriage-node {
   color: var(--foreground-color);
@@ -685,10 +692,10 @@ fieldset input[type=text] {
   display: flex;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
-  width: 170px;
+  width: var(--person-node-width);
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s, width 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image-div {
   width: 30px;

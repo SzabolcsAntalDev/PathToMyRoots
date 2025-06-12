@@ -111,30 +111,52 @@ $popup-loading-bar-transition-interval: 8s;
 $popup-loading-bar-transition-function: $default-transition-function;
 $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
 
-$node-lines-vertical-offset-small: 4;
-$node-lines-vertical-offset-medium: 8;
-$node-lines-vertical-offset-large: 12;
+$person-node-width-small: 80px;
+$person-node-width-medium: 115px;
+$person-node-width-large: 175px;
 
-:root.theme-light {
-    @extend %theme-light;
+$marriage-node-width-small: 65px;
+$marriage-node-width-medium: 90px;
+$marriage-node-width-large: 150px;
+
+$node-horizontal-margin-small: 5px;
+$node-horizontal-margin-medium: 7px;
+$node-horizontal-margin-large: 9px;
+
+$node-lines-vertical-offset-small: 5;
+$node-lines-vertical-offset-medium: 7;
+$node-lines-vertical-offset-large: 10;
+
+%theme-properties {
     --default-transition-interval: #{$default-transition-interval};
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
+    --person-node-width-small: #{$person-node-width-small};
+    --person-node-width-medium: #{$person-node-width-medium};
+    --person-node-width-large: #{$person-node-width-large};
+    --person-node-width: #{$person-node-width-medium};
+    --marriage-node-width-small: #{$marriage-node-width-small};
+    --marriage-node-width-medium: #{$marriage-node-width-medium};
+    --marriage-node-width-large: #{$marriage-node-width-large};
+    --marriage-node-width: #{$marriage-node-width-medium};
+    --node-horizontal-margin-small: #{$node-horizontal-margin-small};
+    --node-horizontal-margin-medium: #{$node-horizontal-margin-medium};
+    --node-horizontal-margin-large: #{$node-horizontal-margin-large};
+    --node-horizontal-margin: #{$node-horizontal-margin-medium};
     --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
     --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
     --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
 }
 
+:root.theme-light {
+    @extend %theme-light;
+    @extend %theme-properties;
+}
+
 :root.theme-dark {
     @extend %theme-dark;
-    --default-transition-interval: #{$default-transition-interval};
-    --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
-    --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
-    --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
-    --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
-    --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
-    --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
+    @extend %theme-properties;
 }
 
 $font-size-small: 11px;
@@ -154,10 +176,6 @@ $border-radius: $thickness-small;
 
 $tree-diagram-min-width: 300px;
 $tree-diagram-min-height: 60px;
-$person-node-width: 170px;
-$marriage-node-width: 100px;
-$node-margin-value: 10px;
-$node-margin: 0px $node-margin-value;
 
 $person-small-image-height: 40px;
 $person-small-image-width: $person-small-image-height * 0.75;
@@ -762,12 +780,14 @@ fieldset {
                 .generation {
                     display: flex;
                     white-space: nowrap;
+                    transition: padding $default-transition;
 
                     .siblings-chain {
                         display: flex;
                         padding: 0px;
                         margin: 0px auto;
-                        padding: 0px calc($node-margin-value * 2);
+                        padding: 0px calc(var(--node-horizontal-margin) * 2);
+                        transition: padding $default-transition;
 
                         .sibling {
                             display: flex;
@@ -776,11 +796,13 @@ fieldset {
 
                             .extended-marriage {
                                 display: flex;
-                                margin: $node-margin;
+                                margin: 0px var(--node-horizontal-margin);
                                 padding: 0px;
+                                transition: margin $default-transition;
 
                                 &:has(.floating-and-hidden-marriage-nodes-div) {
-                                    margin-left: calc($node-margin-value * -1);
+                                    margin-left: calc(var(--node-horizontal-margin) * -1);
+                                    transition: margin $default-transition;
                                 }
 
                                 .node {
@@ -819,12 +841,13 @@ fieldset {
 
                                 .marriage-node {
                                     @extend .node;
-                                    width: $marriage-node-width;
-                                    margin: $node-margin;
+                                    width: var(--marriage-node-width);
+                                    margin: 0px var(--node-horizontal-margin);
                                     font-size: $font-size-small;
                                     color: var(--foreground-color-disabled);
                                     background-color: var(--marriage-color);
                                     border-color: var(--foreground-color-disabled);
+                                    transition: margin $default-transition;
 
                                     .marriage-text {
                                         @extend %text;
@@ -865,10 +888,10 @@ fieldset {
 
                                     .person-node {
                                         @extend .node;
-                                        width: $person-node-width;
+                                        width: var(--person-node-width);
                                         color: var(--foreground-color-disabled);
                                         border-color: var(--foreground-color-disabled);
-                                        transition: color $default-transition, background-color $default-transition, border $default-transition;
+                                        transition: color $default-transition, background-color $default-transition, border $default-transition, width $default-transition;
 
                                         .image-div {
                                             width: $person-small-image-width;

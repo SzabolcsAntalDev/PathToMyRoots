@@ -2,6 +2,18 @@
     return getComputedStyle(document.documentElement).getPropertyValue('--' + propertyName);
 }
 
+function getPersonNodeWidth(viewMode) {
+    return getPropertyValue(`person-node-width-${viewMode.id.toLowerCase()}`);
+}
+
+function getMarriageNodeWidth(viewMode) {
+    return getPropertyValue(`marriage-node-width-${viewMode.id.toLowerCase()}`);
+}
+
+function getNodeHorizontalMargin(viewMode) {
+    return getPropertyValue(`node-horizontal-margin-${viewMode.id.toLowerCase()}`);
+}
+
 function getNodeLinesVerticalOffset(viewMode) {
     const nodeLinesVerticalOffset = getPropertyValue(`node-lines-vertical-offset-${viewMode.id.toLowerCase()}`);
     return parseFloat(nodeLinesVerticalOffset);

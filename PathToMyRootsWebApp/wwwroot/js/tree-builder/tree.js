@@ -152,18 +152,41 @@ function addSettingsEventListeners(context) {
         await calculateDataAndDisplayTree(context);
     });
 
+    const viewModeRadioButtons = settingsDiv.find('.view-modes-fieldset input[type="radio"]');
+    viewModeRadioButtons.each((_, radioButton) => {
+        $(radioButton).on('change', function () {
+            context.viewMode = getViewModeByIndex(parseInt(this.dataset.viewModeIndex, 10));
+
+            context.treeDiagramFrame[0].style.setProperty('--person-node-width', getPersonNodeWidth(context.viewMode));
+            context.treeDiagramFrame[0].style.setProperty('--marriage-node-width', getMarriageNodeWidth(context.viewMode));
+            context.treeDiagramFrame[0].style.setProperty('--node-horizontal-margin', getNodeHorizontalMargin(context.viewMode));
+
+            setGenerationsPadding(context);
+            drawLines(context);
+        })
+    });
+
     applyButton.dispatchEvent(new CustomEvent('click', {
         detail: {
             fromInitialization: true
         }
     }));
+}
 
-    const viewModeRadioButtons = settingsDiv.find('.view-modes-fieldset input[type="radio"]');
-    viewModeRadioButtons.each((_, radioButton) => {
-        $(radioButton).on('change', function () {
-            context.viewMode = getViewModeByIndex(parseInt(this.dataset.viewModeIndex, 10));
-            drawTree(context);
-        })
+function setGenerationsPadding(context) {
+    const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(context.viewMode);
+    const generations = context.treeDiagramFrame.find('.generation');
+
+    generations.each(function (index) {
+        const generation = $(this);
+        const isLast = index === generations.length - 1;
+        const bottomPaddingMultiplier = parseInt(generation.attr('data-bottom-padding-multiplier'), 10);
+
+        const paddingValue = isLast
+            ? '0px'
+            : `0px 0px ${bottomPaddingMultiplier * nodeLinesVerticalOffset}px 0px`;
+
+        generation.css('padding', paddingValue);
     });
 }
 
@@ -173,19 +196,13 @@ async function calculateDataAndDisplayTree(context) {
 
     context.generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramFrame);
 
+    // Szabi: added multiple times when method is called?
     $(document).on('wheel', function (event) {
         if (event.ctrlKey) {
-            drawTree(context);
+            drawLines(context);
         }
     });
 
-    drawTree(context);
-
-    await fadeInElement(context.treeDiagram);
-    await loadingTextManager.fadeOut(context.loadingTextContainer);
-}
-
-function drawTree(context) {
     const previousNodesContainer = context.treeDiagram.find('.nodes-div');
     const previousLinesContainer = context.treeDiagram.find('.lines-svg');
     previousNodesContainer?.remove();
@@ -194,9 +211,23 @@ function drawTree(context) {
     const nodesContainer = treeHtmlCreator.createNodesDiv(context.generationsData, context.viewMode);
     const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
+    context.nodesContainer = nodesContainer;
+    context.linesContainer = linesContainer;
+
+    drawLines(context);
+
     context.treeDiagram.append(nodesContainer);
     context.treeDiagram.append(linesContainer);
 
-    drawLinesOntoLinesContainer(context.generationsData, context.viewMode, nodesContainer, linesContainer);
+    await fadeInElement(context.treeDiagram);
+    await loadingTextManager.fadeOut(context.loadingTextContainer);
+}
+
+function drawLines(context) {
+    $(context.linesContainer).empty();
+    setTimeout(() => {
+        $(context.linesContainer).empty();
+        drawLinesOntoLinesContainer(context.generationsData, context.viewMode, context.nodesContainer, context.linesContainer);
+    }, getTransitionIntervalInSeconds() * 1500);
 }
 

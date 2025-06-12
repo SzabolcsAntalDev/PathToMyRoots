@@ -58,10 +58,12 @@
 
     createGeneration(generation, viewMode, largestGenerationSize, isLast) {
         const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(viewMode);
+        const bottomPaddingMultiplier = largestGenerationSize + 3;
 
         const generationDiv = $('<div>')
             .attr('class', 'generation')
-            .css('padding', isLast ? '0px' : '0px 0px ' + ((largestGenerationSize + 3) * nodeLinesVerticalOffset) + 'px 0px');
+            .attr('data-bottom-padding-multiplier', bottomPaddingMultiplier)
+            .css('padding', isLast ? '0px' : '0px 0px ' + (bottomPaddingMultiplier * nodeLinesVerticalOffset) + 'px 0px');
 
         generation.siblingsChains.forEach(siblingsChain => {
             generationDiv.append(this.createSiblingsChain(siblingsChain));
