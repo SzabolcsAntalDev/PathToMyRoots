@@ -238,6 +238,7 @@ function drawLines(context) {
     setTimeout(() => {
         $(context.linesContainer).empty();
         drawLinesOntoLinesContainer(context.generationsData, context.viewMode, context.nodesContainer, context.linesContainer);
-    }, getTransitionIntervalInSeconds() * 1500);
+        // delay drawing the lines so animations can finish
+    }, getTransitionIntervalInSeconds() * 1000 + 250);
 }
 
