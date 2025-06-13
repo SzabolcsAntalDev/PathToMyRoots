@@ -85,12 +85,13 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
     };
 
     const tests = [
-        'When ancestors have multiple spouses, their spouses are displayed', // Szabi: complete tree is not working well in this case
+        'When ancestors have multiple spouses, their spouses are displayed',
         'When ancestors have adoptive parents, the ancestors of the adoptive parents are not displayed', // Szabi: complete tree is not working well in this case
         'When person has biological siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive descedants, its descedants are not displayed',
-        'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates'
+        'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates',
+        'When parents of adoptive parents are displayed, lines are not drawn between them'
     ];
 
     for (const testTitle of tests) {

@@ -11,7 +11,7 @@
 function drawMarriagesChildrenLinesInner(generationsData, nodesContainer, linesContainer, nodeLinesVerticalOffset, generationsHtmls) {
     for (let i = 1; i < generationsHtmls.length; i++) {
         const marriageNodes = $(generationsHtmls[i - 1]).find('.marriage-node');
-        const childNodes = $(generationsHtmls[i]).find('.person-node');
+        const childNodes = $(generationsHtmls[i]).find('.person-node').filter((_, childNode) => !$(childNode).data('omitParents'));
 
         drawMarriagesChildrenLines(
             linesContainer,

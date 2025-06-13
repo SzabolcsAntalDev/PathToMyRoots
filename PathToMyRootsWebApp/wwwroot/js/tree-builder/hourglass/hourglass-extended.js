@@ -34,6 +34,16 @@
 
             for (const extendedMarriage of extendedMarriagesOfAdoptiveParents) {
                 extendedMarriage.numberOfAvailableParents = 0;
+
+                // if parents of adoptive parents are displayed
+                // for instance when the biological and adoptive parents are siblings
+                // then do not draw the lines between the adoptive parents and their parents
+                if (extendedMarriage.mainMarriage.male) {
+                    extendedMarriage.mainMarriage.male.omitParents = true;
+                }
+                if (extendedMarriage.mainMarriage.female) {
+                    extendedMarriage.mainMarriage.female.omitParents = true;
+                }
             }
 
             if (!context.ancestorsGenerationsMap.has(currentLevel)) {

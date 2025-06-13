@@ -782,6 +782,7 @@ VALUES
 		(	@id + 10,	'L1 Male z l',		NULL,			NULL,			NULL,			@id + 5, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
 		(	@id + 11,	'L1 Male z r',		NULL,			NULL,			NULL,			@id + 2, 			@id + 4,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
 
+-- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
@@ -800,6 +801,7 @@ VALUES
 		(	@id + 10,	'L1 Male z l',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 5, 			@id + 3,			NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
 		(	@id + 11,	'L1 Male z r',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 4,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
 
+-- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has adoptive descedants, its descedants are not displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
@@ -811,7 +813,7 @@ VALUES
 		(	@id + 3,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L2 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 		
-
+-- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has biological and adoptive descedants, they are all displayed and sorted by birthDates
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
@@ -824,6 +826,22 @@ VALUES
 		(	@id + 4,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 0,			@id + 1,			@id + 3,		@id + 5,		NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
 		(	@id + 5,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NUll,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
+-- ==========================================================================================================================
+-- HOURGLASS_EXTENDED - When parents of adoptive parents are displayed, lines are not drawn between them
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		
+		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			@id + 3,			@id + 4,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female y',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When ancestors and descedants depth are both 2, generations until those levels are displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
