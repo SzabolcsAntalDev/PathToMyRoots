@@ -155,10 +155,14 @@ function addSettingsEventListeners(context) {
         context.descedantsDepth = parseInt(descedantsDepthRadioButton[0].dataset.descedantsDepth, 10);
         context.viewMode = getViewModeByIndex(parseInt(viewModeRadioButton[0].dataset.viewModeIndex, 10));
 
+        context.treeDiagramFrame[0].style.setProperty('--person-node-width', getPersonNodeWidth(context.viewMode));
+        context.treeDiagramFrame[0].style.setProperty('--marriage-node-width', getMarriageNodeWidth(context.viewMode));
+        context.treeDiagramFrame[0].style.setProperty('--node-horizontal-margin', getNodeHorizontalMargin(context.viewMode));
+        setGenerationsPadding(context);
+
         treeTypeInfo.text(context.treeType.displayName);
         ancestorsDepthInfo.text(getDepthDisplayText(context.ancestorsDepth));
         descedantsDepthInfo.text(getDepthDisplayText(context.descedantsDepth));
-        viewModeInfo.text(context.viewMode.displayName);
 
         await calculateDataAndDisplayTree(context);
     });
@@ -174,8 +178,8 @@ function addSettingsEventListeners(context) {
             context.treeDiagramFrame[0].style.setProperty('--person-node-width', getPersonNodeWidth(context.viewMode));
             context.treeDiagramFrame[0].style.setProperty('--marriage-node-width', getMarriageNodeWidth(context.viewMode));
             context.treeDiagramFrame[0].style.setProperty('--node-horizontal-margin', getNodeHorizontalMargin(context.viewMode));
-
             setGenerationsPadding(context);
+
             drawLines(context);
         })
     });
