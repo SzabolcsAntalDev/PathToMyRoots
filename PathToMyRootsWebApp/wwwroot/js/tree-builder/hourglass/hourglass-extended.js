@@ -267,7 +267,7 @@
 
         for (const siblingId of uniqueSiblingIds) {
             const sibling = await getPersonJson(siblingId);
-            const siblingWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, sibling)
+            const siblingWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, sibling, true)
             extendedMarriages.push(...siblingWithSpousesExtendedMarriages);
         }
 

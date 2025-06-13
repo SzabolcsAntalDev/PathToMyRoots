@@ -4,7 +4,7 @@
         .map(([_, value]) => value);
 }
 
-function createMarriage(male, female, isStaticMarriage, isFake) {
+function createMarriage(male, female, isStaticMarriage, isFake, omitChildrenFromMarriage) {
     const marriage = {};
 
     marriage.isStaticMarriage = isStaticMarriage;
@@ -13,8 +13,8 @@ function createMarriage(male, female, isStaticMarriage, isFake) {
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
     marriage.maleId = male?.id;
     marriage.femaleId = female?.id;
-    marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);
-    marriage.inverseAdoptiveParentIds = getCommonAdoptiveChildren(male, female);
+    marriage.inverseBiologicalParentIds = omitChildrenFromMarriage ? [] : getCommonBiologicalChildren(male, female);
+    marriage.inverseAdoptiveParentIds = omitChildrenFromMarriage ? [] : getCommonAdoptiveChildren(male, female);
 
     return marriage;
 }

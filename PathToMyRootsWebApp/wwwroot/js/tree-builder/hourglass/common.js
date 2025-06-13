@@ -1,6 +1,7 @@
 ﻿// creates a generation with extended marriages with the persons first and second spouses
-// the numberOfAvailableParents is set to the number of biological parents of the couples
-async function createPersonWithSpousesExtendedMarriages(context, person) {
+// omitChildrenFromMarriage when marriage of the couple should not include the inverse parent ids
+// for instance in case an adoptive child should not be linked to his adoptive parents which are the siblings of his biological parents
+async function createPersonWithSpousesExtendedMarriages(context, person, omitChildrenFromMarriage, currentLevel) {
     let extendedMarriageLeft;
     let extendedMarriageRight;
 
@@ -8,10 +9,16 @@ async function createPersonWithSpousesExtendedMarriages(context, person) {
     context.processedPersonIds.add(person.firstSpouseId);
     context.processedPersonIds.add(person.secondSpouseId);
 
-    const numberOfAvailableParents =
+    let numberOfAvailableParents =
         context.includeAdoptive
             ? ((person.biologicalFatherId ? 1 : 0) + (person.adoptiveFatherId ? 1 : 0))
             : (person.biologicalFatherId ? 1 : 0);
+
+    // on the level 2 the child will always have only one parent
+    // if one of the siblings of his parents is his/her biological/adotptive parent, that line should not be drawn
+    if (currentLevel == 1) {
+        numberOfAvailableParents = (person.biologicalFatherId || person.adoptiveFatherId) ? 1 : 0;
+    }
 
     if (person.isMale) {
         const male = person;
@@ -32,7 +39,7 @@ async function createPersonWithSpousesExtendedMarriages(context, person) {
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
+                    marriage: createMarriage(male, female, true, false, omitChildrenFromMarriage)
                 },
                 numberOfAvailableParents: numberOfAvailableParents
             }
@@ -50,11 +57,11 @@ async function createPersonWithSpousesExtendedMarriages(context, person) {
             }
 
             extendedMarriageRight = {
-                secondaryMarriage: createMarriage(male, firstWife, false),
+                secondaryMarriage: createMarriage(male, firstWife, false, false, omitChildrenFromMarriage),
                 mainMarriage: {
                     male: male,
                     female: secondWife,
-                    marriage: createMarriage(male, secondWife, true)
+                    marriage: createMarriage(male, secondWife, true, false, omitChildrenFromMarriage)
                 },
                 numberOfAvailableParents: numberOfAvailableParents
             }
@@ -79,7 +86,7 @@ async function createPersonWithSpousesExtendedMarriages(context, person) {
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
+                    marriage: createMarriage(male, female, true, false, omitChildrenFromMarriage)
                 },
                 numberOfAvailableParents: numberOfAvailableParents
             }
@@ -93,13 +100,13 @@ async function createPersonWithSpousesExtendedMarriages(context, person) {
                 mainMarriage: {
                     male: secondHusband,
                     female: female,
-                    marriage: createMarriage(secondHusband, female, true)
+                    marriage: createMarriage(secondHusband, female, true, false, omitChildrenFromMarriage)
                 },
                 numberOfAvailableParents: numberOfAvailableParents
             }
 
             extendedMarriageRight = {
-                secondaryMarriage: createMarriage(firstHusband, female, false),
+                secondaryMarriage: createMarriage(firstHusband, female, false, false, omitChildrenFromMarriage),
                 mainMarriage: {
                     male: firstHusband,
                 },
@@ -150,7 +157,7 @@ async function createDescedantsRecursive(context, personId, currentLevel) {
     }
 
     const person = await getPersonJson(personId);
-    const personWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, person);
+    const personWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, person, false, currentLevel);
 
     if (!context.descedantsGenerationsMap.has(currentLevel)) {
         const newGeneration = {};
@@ -182,7 +189,7 @@ async function addAdoptiveChildrenToExtendedMarriages(context, person, currentLe
 
     for (const childId of adoptiveChildrenIds) {
         const child = await getPersonJson(childId);
-        const personWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, child);
+        const personWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, child, false, currentLevel);
 
         if (!context.descedantsGenerationsMap.has(currentLevel + 1)) {
             const newGeneration = {};
