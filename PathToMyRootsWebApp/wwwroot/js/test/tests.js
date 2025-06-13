@@ -91,7 +91,10 @@ async function addTreeTypeHourglassExtendedTests(treeDiagramsDiv) {
         'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates',
         'When person has adoptive descedants, its descedants are not displayed',
         'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates',
-        'When parents of adoptive parents are displayed, lines are not drawn between them'
+        'When parents of adoptive parents are displayed, lines are not drawn between them',
+        'When grandchild is adopted by siblings and first sibling is the biological parent, grandchild is displayed only once',
+        'When grandchild is adopted by siblings and first sibling is the adoptive parent, grandchild is displayed only once',
+        'When sibling is adopting child of person, adoptive line is omitted'
     ];
 
     for (const testTitle of tests) {

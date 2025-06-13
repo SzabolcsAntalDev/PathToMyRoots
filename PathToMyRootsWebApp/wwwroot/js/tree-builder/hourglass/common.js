@@ -191,6 +191,16 @@ async function addAdoptiveChildrenToExtendedMarriages(context, person, currentLe
         }
 
         const generation = context.descedantsGenerationsMap.get(currentLevel + 1);
-        generation.extendedMarriages.push(...personWithSpousesExtendedMarriages);
+
+        // when an adoptive child has his biological parents already displayed
+        // the adoptive child should not be added again to the generation
+        const extendedMarriageAlreadyExists = generation.extendedMarriages.some(extendedMarriage =>
+            extendedMarriage.mainMarriage.male?.id === childId ||
+            extendedMarriage.mainMarriage.female?.id === childId
+        );
+
+        if (!extendedMarriageAlreadyExists) {
+            generation.extendedMarriages.push(...personWithSpousesExtendedMarriages);
+        }
     }
 }
