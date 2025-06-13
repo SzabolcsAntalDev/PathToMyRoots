@@ -1,14 +1,18 @@
 ﻿const treeHtmlCreator = {
 
-    createDiagramFrame() {
+    createHiddenDiagramFrame(personId) {
         const diagramSettings = $($('#diagram-settings-template').html());
-
-        return $('<div>')
+        const treeDiagramFrame = $('<div>')
+            .attr('id', 'diagram-frame-' + personId)
             .attr('class', 'diagram-frame')
             .append(diagramSettings);
+
+        hideElement(treeDiagramFrame);
+
+        return treeDiagramFrame;
     },
 
-    createRadioButtonWithLabel(name, dataId, dataValue, displayValue) {
+    createRadioButton(name, dataId, dataValue, displayText) {
         const radioButton = $('<input>')
             .attr('type', 'radio')
             .attr('name', name)
@@ -16,7 +20,7 @@
 
         return $('<label>')
             .append(radioButton)
-            .append(displayValue);
+            .append(displayText);
     },
 
     createDiagramInfo() {
@@ -44,10 +48,13 @@
             .append(viewModeValueLabel);
     },
 
-    createDiagram(personId) {
-        return $('<div>')
-            .attr('id', 'diagram-' + personId)
+    createHiddenDiagram() {
+        const diagram = $('<div>')
             .attr('class', 'diagram');
+
+        hideElement(diagram);
+
+        return diagram;
     },
 
     createNodesDiv(generationsData, viewMode) {

@@ -20,7 +20,7 @@ $(() => {
 async function showTree(direction) {
     const currentPersonId = personIds[currentPersonIndex];
 
-    await removeTreeDiagram(treeDiagramsDiv, currentPersonId);
+    await removeTreeDiagramFrame(treeDiagramsDiv, currentPersonId);
     currentPersonIndex += direction;
 
     if (currentPersonIndex < 0) {
@@ -31,5 +31,5 @@ async function showTree(direction) {
     }
 
     const nextPersonId = personIds[currentPersonIndex];
-    createAndDisplayTreeDiagram(treeDiagramsDiv, nextPersonId, treeTypes.HOURGLASS_EXTENDED, 2, 2);
+    createAndDisplayTreeDiagramFrame(treeDiagramsDiv, nextPersonId, treeTypes.HOURGLASS_EXTENDED, 2, 2);
 }

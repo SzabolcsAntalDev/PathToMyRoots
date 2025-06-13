@@ -11,6 +11,7 @@
 // treeType.COMPLETE - contains:
 // - all the persons from the database that are related in any way to the actual person
 
+// Szabi: place all this into a treeTypes constant
 const relativesMinDepth = 0;
 const relativesMaxDepth = 5;
 const allRelativesDepthIndex = -1;
