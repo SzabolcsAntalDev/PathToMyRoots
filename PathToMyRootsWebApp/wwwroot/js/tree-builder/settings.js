@@ -1,22 +1,5 @@
-﻿function addSettingsEventListeners(treeContext) {
-    const settingsContext = {};
-
-    settingsContext.settingsDiv = treeContext.treeDiagramFrame.find('.settings-div');
-    settingsContext.expandButtonDiv = settingsContext.settingsDiv.find('.expand-button-div');
-    settingsContext.horizontalToggleableContainer = settingsContext.settingsDiv.find('.horizontal-toggleable-container');
-
-    const diagramInfoDiv = treeContext.treeDiagramFrame.find('.diagram-info-div');
-    settingsContext.treeTypeInfo = diagramInfoDiv.find('.tree-type-value');
-    settingsContext.ancestorsDepthInfo = diagramInfoDiv.find('.ancestors-depth-value');
-    settingsContext.descedantsDepthInfo = diagramInfoDiv.find('.descedants-depth-value');
-    settingsContext.viewModeInfo = diagramInfoDiv.find('.view-mode-value');
-
-    settingsContext.treeTypesFieldSet = settingsContext.settingsDiv.find('.tree-types-fieldset');
-    settingsContext.ancestorsDepthFieldSet = settingsContext.settingsDiv.find('.ancestors-depth-fieldset');
-    settingsContext.descedantsDepthFieldSet = settingsContext.settingsDiv.find('.descedants-depth-fieldset');
-
-    settingsContext.applyButton = settingsContext.settingsDiv.find('.apply-button');
-    settingsContext.viewModesFieldSet = settingsContext.settingsDiv.find('.view-modes-fieldset');
+﻿async function addSettingsEventListeners(treeContext) {
+    const settingsContext = createSettingsContext(treeContext);
 
     addTogglingListeners(settingsContext);
     setupRadioButtons(treeContext, settingsContext);
@@ -24,11 +7,30 @@
     addApplyButtonListener(treeContext, settingsContext);
     addViewModeRadioButtonsListeners(treeContext, settingsContext);
 
-    settingsContext.applyButton[0].dispatchEvent(new CustomEvent('click', {
-        detail: {
-            fromInitialization: true
-        }
-    }));
+    await apply(treeContext, settingsContext, true);
+}
+
+function createSettingsContext(treeContext) {
+    const settingsDiv = treeContext.treeDiagramFrame.find('.settings-div');
+    const diagramInfoDiv = treeContext.treeDiagramFrame.find('.diagram-info-div');
+
+    return {
+        settingsDiv: settingsDiv,
+        expandButtonDiv: settingsDiv.find('.expand-button-div'),
+        horizontalToggleableContainer: settingsDiv.find('.horizontal-toggleable-container'),
+
+        treeTypeInfo: diagramInfoDiv.find('.tree-type-value'),
+        ancestorsDepthInfo: diagramInfoDiv.find('.ancestors-depth-value'),
+        descedantsDepthInfo: diagramInfoDiv.find('.descedants-depth-value'),
+        viewModeInfo: diagramInfoDiv.find('.view-mode-value'),
+
+        treeTypesFieldSet: settingsDiv.find('.tree-types-fieldset'),
+        ancestorsDepthFieldSet: settingsDiv.find('.ancestors-depth-fieldset'),
+        descedantsDepthFieldSet: settingsDiv.find('.descedants-depth-fieldset'),
+
+        applyButton: settingsDiv.find('.apply-button'),
+        viewModesFieldSet: settingsDiv.find('.view-modes-fieldset'),
+    }
 }
 
 function addTogglingListeners(settingsContext) {
@@ -128,30 +130,32 @@ function selectDefaultSettings(treeContext, settingsContext) {
 }
 
 function addApplyButtonListener(treeContext, settingsContext) {
-    settingsContext.applyButton.on('click', async function (event) {
-        if (!event.originalEvent?.detail?.fromInitialization) {
-            toggleSettingsVisibility(settingsContext);
-        }
-        else {
-            // setup view mode on load
-            settingsContext.viewModeInfo.text(treeContext.viewMode.displayName);
-            setViewModeSizes(treeContext);
-        }
+    settingsContext.applyButton.on('click', () => apply(treeContext, settingsContext));
+}
 
-        const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
-        const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
-        const descedantsDepthRadioButton = settingsContext.descedantsDepthFieldSet.find('input[type="radio"]:checked');
+async function apply(treeContext, settingsContext, fromInitialization) {
+    if (!fromInitialization) {
+        toggleSettingsVisibility(settingsContext);
+    }
+    else {
+        // setup view mode on load
+        settingsContext.viewModeInfo.text(treeContext.viewMode.displayName);
+        setViewModeSizes(treeContext);
+    }
 
-        treeContext.treeType = getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
-        treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
-        treeContext.descedantsDepth = parseInt(descedantsDepthRadioButton[0].dataset.descedantsDepth, 10);
+    const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
+    const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
+    const descedantsDepthRadioButton = settingsContext.descedantsDepthFieldSet.find('input[type="radio"]:checked');
 
-        settingsContext.treeTypeInfo.text(treeContext.treeType.displayName);
-        settingsContext.ancestorsDepthInfo.text(getDepthDisplayText(treeContext.ancestorsDepth));
-        settingsContext.descedantsDepthInfo.text(getDepthDisplayText(treeContext.descedantsDepth));
+    treeContext.treeType = getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
+    treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
+    treeContext.descedantsDepth = parseInt(descedantsDepthRadioButton[0].dataset.descedantsDepth, 10);
 
-        await calculateDataAndDisplayTree(treeContext);
-    });
+    settingsContext.treeTypeInfo.text(treeContext.treeType.displayName);
+    settingsContext.ancestorsDepthInfo.text(getDepthDisplayText(treeContext.ancestorsDepth));
+    settingsContext.descedantsDepthInfo.text(getDepthDisplayText(treeContext.descedantsDepth));
+
+    await treeContext.calculateDataAndDisplayTree(treeContext);
 }
 
 function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
@@ -164,7 +168,7 @@ function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
             settingsContext.viewModeInfo.text(treeContext.viewMode.displayName);
             setViewModeSizes(treeContext);
 
-            drawLines(treeContext);
+            treeContext.redrawLines(treeContext);
         })
     });
 }

@@ -20,61 +20,72 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeT
 
     await fadeInElement(treeDiagramFrame);
 
-    addSettingsEventListeners(createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth, viewMode))
+    const treeContext = createTreeContext(
+        personId, treeDiagramFrame, loadingTextContainer,
+        treeType, ancestorsDepth, descedantsDepth, viewMode, treeDiagram,
+        calculateDataAndDisplayTree,
+        redrawLines);
+
+    addZoomingEventListener(treeContext);
+    await addSettingsEventListeners(treeContext);
 }
 
-function createContext(treeDiagramFrame, loadingTextContainer, personId, treeDiagram, treeType, ancestorsDepth, descedantsDepth, viewMode) {
+function createTreeContext(personId, treeDiagramFrame, loadingTextContainer, treeType, ancestorsDepth, descedantsDepth, viewMode, treeDiagram) {
     return {
+        personId: personId,
         treeDiagramFrame: treeDiagramFrame,
         loadingTextContainer: loadingTextContainer,
-        personId: personId,
-        treeDiagram: treeDiagram,
         treeType: treeType,
         ancestorsDepth: (ancestorsDepth < relativesMinDepth || ancestorsDepth > relativesMaxDepth ? allRelativesDepthIndex : ancestorsDepth),
         descedantsDepth: (descedantsDepth < relativesMinDepth || descedantsDepth > relativesMaxDepth ? allRelativesDepthIndex : descedantsDepth),
-        viewMode: viewMode
+        viewMode: viewMode,
+        treeDiagram: treeDiagram,
+        calculateDataAndDisplayTree: calculateDataAndDisplayTree,
+        redrawLines: redrawLines
     };
 }
 
-async function calculateDataAndDisplayTree(context) {
-    await loadingTextManager.fadeIn(context.loadingTextContainer);
-    await fadeOutElement(context.treeDiagram);
-
-    context.generationsData = await createGenerationsData(context.personId, context.treeType, context.ancestorsDepth, context.descedantsDepth, context.treeDiagramFrame);
-
-    // Szabi: added multiple times when method is called?
+function addZoomingEventListener(treeContext) {
     $(document).on('wheel', function (event) {
         if (event.ctrlKey) {
-            drawLines(context);
+            redrawLines(treeContext);
         }
     });
+}
 
-    const previousNodesContainer = context.treeDiagram.find('.nodes-div');
-    const previousLinesContainer = context.treeDiagram.find('.lines-svg');
+async function calculateDataAndDisplayTree(treeContext) {
+    await loadingTextManager.fadeIn(treeContext.loadingTextContainer);
+    await fadeOutElement(treeContext.treeDiagram);
+
+    treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+
+    const previousNodesContainer = treeContext.treeDiagram.find('.nodes-div');
+    const previousLinesContainer = treeContext.treeDiagram.find('.lines-svg');
     previousNodesContainer?.remove();
     previousLinesContainer?.remove();
 
-    const nodesContainer = treeHtmlCreator.createNodesDiv(context.generationsData, context.viewMode);
+    const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);
     const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
 
-    context.nodesContainer = nodesContainer;
-    context.linesContainer = linesContainer;
+    treeContext.nodesContainer = nodesContainer;
+    treeContext.linesContainer = linesContainer;
 
-    drawLines(context);
+    redrawLines(treeContext);
 
-    context.treeDiagram.append(nodesContainer);
-    context.treeDiagram.append(linesContainer);
+    treeContext.treeDiagram.append(nodesContainer);
+    treeContext.treeDiagram.append(linesContainer);
 
-    await fadeInElement(context.treeDiagram);
-    await loadingTextManager.fadeOut(context.loadingTextContainer);
+    await fadeInElement(treeContext.treeDiagram);
+    await loadingTextManager.fadeOut(treeContext.loadingTextContainer);
 }
 
-function drawLines(context) {
-    $(context.linesContainer).empty();
+function redrawLines(treeContext) {
+    $(treeContext.linesContainer).empty();
+
     setTimeout(() => {
-        $(context.linesContainer).empty();
-        drawLinesOntoLinesContainer(context.generationsData, context.viewMode, context.nodesContainer, context.linesContainer);
+        $(treeContext.linesContainer).empty();
+        drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
         // delay drawing the lines so animations can finish
-    }, getTransitionIntervalInSeconds() * 1000 + 250);
+    }, getTransitionIntervalInSeconds() * 1000 + delayMilliSecsBeforeDrawingTreeLines);
 }
 
