@@ -127,6 +127,8 @@ $node-lines-vertical-offset-small: 5;
 $node-lines-vertical-offset-medium: 7;
 $node-lines-vertical-offset-large: 10;
 
+$lines-draw-start-delay-after-transition: 0.2s;
+
 %theme-properties {
     --default-transition-interval: #{$default-transition-interval};
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
@@ -147,6 +149,7 @@ $node-lines-vertical-offset-large: 10;
     --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
     --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
     --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
+    --lines-draw-start-delay-after-transition: #{$lines-draw-start-delay-after-transition};
 }
 
 :root.theme-light {
@@ -994,13 +997,21 @@ fieldset {
     }
 }
 
+// the tree-diagrams-div also gets the class test-trees-div
 #tree-diagrams-div.test-trees-div {
     #tests-results-div {
+
+        %color-transition {
+            transition: color $default-transition;
+        }
+
         h3.success {
+            @extend %color-transition;
             color: var(--success-color);
         }
 
         h3.error {
+            @extend %color-transition;
             color: var(--error-color);
         }
     }

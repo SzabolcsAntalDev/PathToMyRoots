@@ -62,6 +62,7 @@
   --node-lines-vertical-offset-small: 5;
   --node-lines-vertical-offset-medium: 7;
   --node-lines-vertical-offset-large: 10;
+  --lines-draw-start-delay-after-transition: 0.2s;
 }
 
 html {
@@ -755,6 +756,9 @@ fieldset input[type=text] {
   stroke: forestgreen;
 }
 
+#tree-diagrams-div.test-trees-div #tests-results-div h3.error, #tree-diagrams-div.test-trees-div #tests-results-div h3.success {
+  transition: color 0.3s linear 0s;
+}
 #tree-diagrams-div.test-trees-div #tests-results-div h3.success {
   color: var(--success-color);
 }
