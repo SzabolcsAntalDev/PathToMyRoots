@@ -131,6 +131,7 @@ $lines-draw-start-delay-after-transition: 0.2s;
 
 %theme-properties {
     --default-transition-interval: #{$default-transition-interval};
+    --default-transition: #{$default-transition};
     --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
@@ -191,7 +192,7 @@ html {
     font-size: $font-size-small;
     font-family: $font-family-default;
     color: var(--foreground-color);
-    transition: color $default-transition;
+    transition: color var(--default-transition);
     height: 100%;
 }
 
@@ -212,7 +213,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color-nav);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
 }
 
 .right-container {
@@ -221,7 +222,7 @@ body {
     flex-direction: column;
     overflow: auto;
     background-color: var(--background-color);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
 }
 
 .top-container {
@@ -243,7 +244,7 @@ body {
     min-height: 6vh;
     display: flex;
     background-color: var(--background-color-footer);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
 }
 
 .grid-for-inputs {
@@ -326,7 +327,7 @@ button, select, option, a, input[type="text"], input[type="radio"], .dropdown-he
     font-family: inherit;
     cursor: pointer;
     outline: none;
-    transition: color $default-transition, background-color $default-transition, border $default-transition;
+    transition: color var(--default-transition), background-color var(--default-transition), border var(--default-transition);
 
     &:hover {
         color: var(--foreground-color-highlight);
@@ -409,17 +410,17 @@ input[type="text"]::placeholder {
 
 .male-background-color {
     background-color: var(--male-color);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
 }
 
 .female-background-color {
     background-color: var(--female-color);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
 }
 
 %svg-static {
     fill: var(--foreground-color);
-    transition: fill $default-transition;
+    transition: fill var(--default-transition);
 }
 
 %svg-hoverable {
@@ -478,7 +479,7 @@ input[type="text"]::placeholder {
     left: 25%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity $default-transition;
+    transition: opacity var(--default-transition);
 }
 
 .tooltip:hover .tooltip-text {
@@ -501,7 +502,7 @@ fieldset {
 
         &:hover {
             color: var(--foreground-color-highlight);
-            transition: color $default-transition;
+            transition: color var(--default-transition);
         }
     }
 
@@ -513,14 +514,14 @@ fieldset {
         height: $font-size-small;
         border-radius: 50%;
         background-color: var(--background-color);
-        transition: background-color $default-transition;
+        transition: background-color var(--default-transition);
         cursor: pointer;
     }
 
     input[type="radio"]:checked {
         background-color: var(--foreground-color);
         box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
-        transition: background-color $default-transition, box-shadow $default-transition;
+        transition: background-color var(--default-transition), box-shadow var(--default-transition);
 
         &:hover {
             background-color: var(--foreground-color-highlight);
@@ -591,7 +592,7 @@ fieldset {
 
 .nav-li.active {
     background-color: var(--background-color);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
     font-weight: bold;
 }
 
@@ -647,7 +648,7 @@ fieldset {
             right: 0;
             bottom: 0;
             background-color: var(--background-color-nav);
-            transition: background-color $default-transition, transform $default-transition-interval;
+            transition: background-color var(--default-transition), transform var(--default-transition-interval);
             border-radius: 13px;
 
             &:hover {
@@ -668,7 +669,7 @@ fieldset {
             bottom: 3px;
             border-radius: 50%;
             background-color: var(--foreground-color);
-            transition: background-color $default-transition, transform $default-transition-interval;
+            transition: background-color var(--default-transition), transform var(--default-transition-interval);
         }
 
         input:checked + .slider-rectangle:before {
@@ -702,7 +703,7 @@ fieldset {
             width: fit-content;
             top: $thickness-medium;
             left: $thickness-medium;
-            transition: opacity $default-transition;
+            transition: opacity var(--default-transition);
 
             .expand-button-div {
                 flex: 0;
@@ -710,7 +711,7 @@ fieldset {
                 height: fit-content;
                 background-color: var(--background-color-nav);
                 padding: $thickness-medium;
-                transition: color $default-transition, background-color $default-transition;
+                transition: color var(--default-transition), background-color var(--default-transition);
 
                 &:hover {
                     color: var(--foreground-color-highlight);
@@ -721,7 +722,7 @@ fieldset {
                     border-bottom: $thickness-small solid transparent;
                     border-left: $thickness-small solid;
                     border-top: $thickness-small solid transparent;
-                    transition: transform $default-transition;
+                    transition: transform var(--default-transition);
                 }
             }
 
@@ -786,14 +787,14 @@ fieldset {
                 .generation {
                     display: flex;
                     white-space: nowrap;
-                    transition: padding $default-transition;
+                    transition: padding var(--default-transition);
 
                     .siblings-chain {
                         display: flex;
                         padding: 0px;
                         margin: 0px auto;
                         padding: 0px calc(var(--node-horizontal-margin) * 2);
-                        transition: padding $default-transition;
+                        transition: padding var(--default-transition);
 
                         .sibling {
                             display: flex;
@@ -804,11 +805,11 @@ fieldset {
                                 display: flex;
                                 margin: 0px var(--node-horizontal-margin);
                                 padding: 0px;
-                                transition: margin $default-transition;
+                                transition: margin var(--default-transition);
 
                                 &:has(.floating-and-hidden-marriage-nodes-div) {
                                     margin-left: calc(var(--node-horizontal-margin) * -1);
-                                    transition: margin $default-transition;
+                                    transition: margin var(--default-transition);
                                 }
 
                                 .node {
@@ -817,7 +818,7 @@ fieldset {
                                     border: $border;
                                     border-radius: 0;
                                     padding: $thickness-small;
-                                    transition: background-color $default-transition, border $default-transition;
+                                    transition: background-color var(--default-transition), border var(--default-transition);
 
                                     .texts-div {
                                         display: flex;
@@ -853,7 +854,7 @@ fieldset {
                                     color: var(--foreground-color-disabled);
                                     background-color: var(--marriage-color);
                                     border-color: var(--foreground-color-disabled);
-                                    transition: color $default-transition, background-color $default-transition, border-color $default-transition, width $default-transition, margin $default-transition;
+                                    transition: color var(--default-transition), background-color var(--default-transition), border-color var(--default-transition), width var(--default-transition), margin var(--default-transition);
 
                                     .marriage-text {
                                         @extend %text;
@@ -897,7 +898,7 @@ fieldset {
                                         width: var(--person-node-width);
                                         color: var(--foreground-color-disabled);
                                         border-color: var(--foreground-color-disabled);
-                                        transition: color $default-transition, background-color $default-transition, border $default-transition, width $default-transition;
+                                        transition: color var(--default-transition), background-color var(--default-transition), border var(--default-transition), width var(--default-transition);
 
                                         .image-div {
                                             width: $person-small-image-width;
@@ -972,7 +973,7 @@ fieldset {
 
                 %line-svg {
                     stroke-width: 1px;
-                    transition: stroke $default-transition;
+                    transition: stroke var(--default-transition);
                     fill: transparent;
                 }
 
@@ -999,10 +1000,12 @@ fieldset {
 
 // the tree-diagrams-div also gets the class test-trees-div
 #tree-diagrams-div.test-trees-div {
+    --lines-draw-start-delay-after-transition: 1s;
+
     #tests-results-div {
 
         %color-transition {
-            transition: color $default-transition;
+            transition: color var(--default-transition);
         }
 
         h3.success {
@@ -1137,7 +1140,7 @@ fieldset {
                             width: 100%;
                             min-width: 0;
                             border: $thickness-extra-small solid var(--background-color);
-                            transition: color $default-transition, background-color $default-transition, border $default-transition;
+                            transition: color var(--default-transition), background-color var(--default-transition), border var(--default-transition);
                             box-sizing: border-box;
 
                             .texts-div {
@@ -1253,7 +1256,7 @@ fieldset {
             color: var(--foreground-color);
         }
 
-        transition: color $default-transition, background-color $default-transition, border $default-transition;
+        transition: color var(--default-transition), background-color var(--default-transition), border var(--default-transition);
     }
 
     th, td {
@@ -1263,14 +1266,14 @@ fieldset {
         text-overflow: ellipsis;
         align-content: center;
         border: $border;
-        transition: border $default-transition;
+        transition: border var(--default-transition);
         padding: $thickness-medium;
     }
 
     th {
         color: var(--foreground-color);
         background-color: var(--background-color);
-        transition: color $default-transition, background-color $default-transition, border $default-transition;
+        transition: color var(--default-transition), background-color var(--default-transition), border var(--default-transition);
     }
 
     tr:hover {
@@ -1327,7 +1330,7 @@ fieldset {
 
 .person-section {
     background-color: var(--background-color-nav);
-    transition: background-color $default-transition;
+    transition: background-color var(--default-transition);
     border-radius: $border-radius;
     padding: $thickness-medium;
     padding-left: calc($thickness-medium * 2);
@@ -1353,7 +1356,7 @@ fieldset {
             border-right: 6px solid transparent;
             border-top: 6px solid;
             background-color: transparent;
-            transition: transform $default-transition;
+            transition: transform var(--default-transition);
             align-self: center;
         }
 
@@ -1377,7 +1380,7 @@ fieldset {
             position: relative;
             display: flex;
             flex-direction: column;
-            transition: opacity $default-transition;
+            transition: opacity var(--default-transition);
             opacity: 0;
             height: 0;
             visibility: collapse;
@@ -1497,7 +1500,7 @@ fieldset {
             align-content: center;
             font-size: $font-size-large;
             margin-right: $thickness-medium;
-            transition: color $default-transition;
+            transition: color var(--default-transition);
         }
 
         .popup-close-button {
@@ -1519,7 +1522,7 @@ fieldset {
             width: 100%;
             height: 100%;
             background-color: var(--foreground-color-highlight);
-            transition: background-color $default-transition;
+            transition: background-color var(--default-transition);
         }
     }
 }
@@ -1572,11 +1575,11 @@ fieldset {
 .fade-in {
     visibility: visible;
     opacity: 1;
-    transition: opacity $default-transition;
+    transition: opacity var(--default-transition);
 }
 
 .fade-out {
     opacity: 0;
     visibility: hidden;
-    transition: opacity $default-transition, visibility 0s var(--default-transition-interval);
+    transition: opacity var(--default-transition), visibility 0s var(--default-transition-interval);
 }
