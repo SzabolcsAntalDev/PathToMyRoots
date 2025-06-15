@@ -28,8 +28,8 @@ function getTransitionIntervalInSeconds(element) {
     return getIntervalInSeconds('default-transition-interval', element);
 }
 
-function getLinesDrawStartDelayAfterTransitionInSeconds() {
-    return getIntervalInSeconds('lines-draw-start-delay-after-transition');
+function getTransitionBufferIntervalInSeconds() {
+    return getIntervalInSeconds('transition-buffer-interval');
 }
 
 function getPopupDisplayIntervalInSeconds() {

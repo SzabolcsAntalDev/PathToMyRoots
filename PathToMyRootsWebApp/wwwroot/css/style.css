@@ -61,7 +61,7 @@
   --node-lines-vertical-offset-small: 5;
   --node-lines-vertical-offset-medium: 7;
   --node-lines-vertical-offset-large: 10;
-  --lines-draw-start-delay-after-transition: 0.1s;
+  --transition-buffer-interval: 0.01s;
 }
 
 html {

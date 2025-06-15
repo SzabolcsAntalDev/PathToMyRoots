@@ -86,6 +86,6 @@ function redrawLines(treeContext) {
         $(treeContext.linesContainer).empty();
         drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
         // delay drawing the lines so animations can finish
-    }, (getTransitionIntervalInSeconds(treeContext.linesContainer) + getLinesDrawStartDelayAfterTransitionInSeconds()) * 1000);
+    }, (getTransitionIntervalInSeconds(treeContext.linesContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
 }
 

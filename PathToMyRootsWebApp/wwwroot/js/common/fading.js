@@ -10,7 +10,7 @@ async function fadeInElement(element) {
         await new Promise(resolve => {
             setTimeout(() => {
                 resolve();
-            }, getTransitionIntervalInSeconds(element) * 50);
+            }, getTransitionBufferIntervalInSeconds() * 1000);
         });
     }
 
