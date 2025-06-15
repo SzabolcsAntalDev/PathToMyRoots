@@ -33,9 +33,10 @@ function createHiddenH2(text) {
     return hiddenH2;
 }
 
-function createHiddenH3(text) {
+function createHiddenH3(text, id) {
     const hiddenH3 = $('<h3>')
-        .text(text);
+        .text(text)
+        .attr('id', id);
 
     hideElement(hiddenH3);
 

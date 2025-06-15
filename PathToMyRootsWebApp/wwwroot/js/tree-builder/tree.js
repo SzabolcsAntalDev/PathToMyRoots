@@ -6,8 +6,8 @@
     }
 }
 
-async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeType, ancestorsDepth, descedantsDepth, viewMode) {
-    const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(personId);
+async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeFrameIdSuffix, treeType, ancestorsDepth, descedantsDepth, viewMode) {
+    const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
     treeDiagramsDiv.append(treeDiagramFrame);
 
     const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);

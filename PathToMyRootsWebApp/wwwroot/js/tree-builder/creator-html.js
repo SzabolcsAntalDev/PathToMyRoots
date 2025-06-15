@@ -1,9 +1,9 @@
 ﻿const treeHtmlCreator = {
 
-    createHiddenDiagramFrame(personId) {
+    createHiddenDiagramFrame(idSuffix) {
         const diagramSettings = $($('#diagram-settings-template').html());
         const treeDiagramFrame = $('<div>')
-            .attr('id', 'diagram-frame-' + personId)
+            .attr('id', 'diagram-frame-' + idSuffix)
             .attr('class', 'diagram-frame')
             .append(diagramSettings);
 

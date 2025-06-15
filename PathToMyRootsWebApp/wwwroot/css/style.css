@@ -755,6 +755,12 @@ fieldset input[type=text] {
   stroke: forestgreen;
 }
 
+#tree-diagrams-div.test-trees-div #tests-results-div h3.success {
+  color: var(--success-color);
+}
+#tree-diagrams-div.test-trees-div #tests-results-div h3.error {
+  color: var(--error-color);
+}
 #tree-diagrams-div.test-trees-div .diagram-frame {
   margin: 0px auto 32px 0px;
 }

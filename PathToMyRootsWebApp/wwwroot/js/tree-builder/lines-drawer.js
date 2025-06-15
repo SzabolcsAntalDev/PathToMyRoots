@@ -73,14 +73,16 @@ function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriage
     }
 
     const pathData = `
-        M ${marriageNodeHorizontalCenter},${marriageNodeBottom}
-        L ${marriageNodeHorizontalCenter},${verticalCenter}
-        L ${childNodeHorizontalCenter},${verticalCenter}
-        L ${childNodeHorizontalCenter},${childNodeTop}
+        M ${r1(marriageNodeHorizontalCenter)},${r1(marriageNodeBottom)}
+        L ${r1(marriageNodeHorizontalCenter)},${r1(verticalCenter)}
+        L ${r1(childNodeHorizontalCenter)},${r1(verticalCenter)}
+        L ${r1(childNodeHorizontalCenter)},${r1(childNodeTop)}
     `;
 
     linesContainer.append(treeHtmlCreator.createMarriageChildLinePath(pathData, childNode.isBiological));
 }
+
+const r1 = v => v.toFixed(1);
 
 function drawMarriagesLines(linesContainer, marriageNodes) {
     linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
@@ -106,8 +108,8 @@ function drawMarriageLines(linesContainer, marriageNode) {
     const x4 = x3 + marginRight;
 
     const pathData = `
-        M ${x1},${y} L ${x2},${y}
-        M ${x3},${y} L ${x4},${y}
+        M ${r1(x1)},${r1(y)} L ${r1(x2)},${r1(y)}
+        M ${r1(x3)},${r1(y)} L ${r1(x4)},${r1(y)}
     `;
 
     linesContainer.append(treeHtmlCreator.createMarriageLinePath(pathData));

@@ -995,6 +995,16 @@ fieldset {
 }
 
 #tree-diagrams-div.test-trees-div {
+    #tests-results-div {
+        h3.success {
+            color: var(--success-color);
+        }
+
+        h3.error {
+            color: var(--error-color);
+        }
+    }
+
     .diagram-frame {
         margin: 0px auto $thickness-extra-large 0px;
     }
