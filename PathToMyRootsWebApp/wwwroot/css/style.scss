@@ -850,7 +850,7 @@ fieldset {
                                     color: var(--foreground-color-disabled);
                                     background-color: var(--marriage-color);
                                     border-color: var(--foreground-color-disabled);
-                                    transition: width $default-transition, margin $default-transition;
+                                    transition: color $default-transition, background-color $default-transition, border-color $default-transition, width $default-transition, margin $default-transition;
 
                                     .marriage-text {
                                         @extend %text;
