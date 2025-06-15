@@ -100,16 +100,10 @@ $default-transition-interval: 0.3s;
 $default-transition-function: linear;
 $default-transition: $default-transition-interval $default-transition-function 0s;
 
-$loading-text-letters-transition-interval: 0.2s;
-$loading-text-letters-transition: $loading-text-letters-transition-interval $default-transition-function 0s;
-
-$toggle-transition-interval: $default-transition-interval;
-$toggle-transition-function: ease-out;
-$toggle-transition: $toggle-transition-interval $toggle-transition-function 0s;
+$toggle-transition: $default-transition-interval ease-out 0s;
 
 $popup-loading-bar-transition-interval: 8s;
-$popup-loading-bar-transition-function: $default-transition-function;
-$popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loading-bar-transition-function 0s;
+$popup-loading-bar-transition: $popup-loading-bar-transition-interval $default-transition-function 0s;
 
 $person-node-width-small: 80px;
 $person-node-width-medium: 115px;
@@ -127,14 +121,12 @@ $node-lines-vertical-offset-small: 5;
 $node-lines-vertical-offset-medium: 7;
 $node-lines-vertical-offset-large: 10;
 
-$lines-draw-start-delay-after-transition: 0.2s;
+$lines-draw-start-delay-after-transition: 0.1s;
 
 %theme-properties {
     --default-transition-interval: #{$default-transition-interval};
     --default-transition: #{$default-transition};
-    --loading-text-letters-transition-interval: #{$loading-text-letters-transition-interval};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
-    --popup-loading-bar-transition-function: #{$popup-loading-bar-transition-function};
     --person-node-width-small: #{$person-node-width-small};
     --person-node-width-medium: #{$person-node-width-medium};
     --person-node-width-large: #{$person-node-width-large};
@@ -1000,7 +992,8 @@ fieldset {
 
 // the tree-diagrams-div also gets the class test-trees-div
 #tree-diagrams-div.test-trees-div {
-    --lines-draw-start-delay-after-transition: 1s;
+    --default-transition-interval: 0.1s;
+    --default-transition: 0.1s linear 0s;
 
     #tests-results-div {
 
@@ -1042,7 +1035,7 @@ fieldset {
         font-size: $font-size-large;
 
         span {
-            transition: $loading-text-letters-transition;
+            transition: $default-transition;
         }
 
         .highlighted {

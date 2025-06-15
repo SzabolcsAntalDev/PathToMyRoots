@@ -45,9 +45,7 @@
 :root.theme-dark, :root.theme-light {
   --default-transition-interval: 0.3s;
   --default-transition: 0.3s linear 0s;
-  --loading-text-letters-transition-interval: 0.2s;
   --popup-loading-bar-transition-interval: 8s;
-  --popup-loading-bar-transition-function: linear;
   --person-node-width-small: 80px;
   --person-node-width-medium: 115px;
   --person-node-width-large: 175px;
@@ -63,7 +61,7 @@
   --node-lines-vertical-offset-small: 5;
   --node-lines-vertical-offset-medium: 7;
   --node-lines-vertical-offset-large: 10;
-  --lines-draw-start-delay-after-transition: 0.2s;
+  --lines-draw-start-delay-after-transition: 0.1s;
 }
 
 html {
@@ -758,7 +756,8 @@ fieldset input[type=text] {
 }
 
 #tree-diagrams-div.test-trees-div {
-  --lines-draw-start-delay-after-transition: 1s;
+  --default-transition-interval: 0.1s;
+  --default-transition: 0.1s linear 0s;
 }
 #tree-diagrams-div.test-trees-div #tests-results-div h3.error, #tree-diagrams-div.test-trees-div #tests-results-div h3.success {
   transition: color var(--default-transition);
@@ -791,7 +790,7 @@ fieldset input[type=text] {
   font-size: 18px;
 }
 .loading-text-container .animated-loading-text-div span {
-  transition: 0.2s linear 0s;
+  transition: 0.3s linear 0s;
 }
 .loading-text-container .animated-loading-text-div .highlighted {
   color: var(--foreground-color-highlight);

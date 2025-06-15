@@ -47,15 +47,14 @@
         });
 
         const spans = animatedLoadingTextDiv.find('span');
+        const defaultTransitionIntervalInSeconds = getIntervalInSeconds('default-transition-interval');
         let i = -1;
-
-        const q = getIntervalInSeconds('loading-text-letters-transition-interval');
 
         const animation = setInterval(() => {
             spans[i]?.classList.remove('highlighted');
             i = (i + 1) % spans.length;
             spans[i].classList.add('highlighted');
-        }, getIntervalInSeconds('loading-text-letters-transition-interval') * 1000);
+        }, defaultTransitionIntervalInSeconds * 1000);
 
         this.animatedLoadingTextDivsToAnimations.set(animatedLoadingTextDiv[0], animation);
     },

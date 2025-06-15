@@ -10,7 +10,7 @@ async function fadeInElement(element) {
         await new Promise(resolve => {
             setTimeout(() => {
                 resolve();
-            }, getTransitionIntervalInSeconds() * 50);
+            }, getTransitionIntervalInSeconds(element) * 50);
         });
     }
 
@@ -19,7 +19,7 @@ async function fadeInElement(element) {
     await new Promise(resolve => {
         setTimeout(() => {
             resolve();
-        }, getTransitionIntervalInSeconds() * 1000);
+        }, getTransitionIntervalInSeconds(element) * 1000);
     });
 
     $(element).removeClass('fade-hidden');
@@ -33,6 +33,6 @@ async function fadeOutElement(element) {
     await new Promise(resolve => {
         setTimeout(() => {
             resolve();
-        }, getTransitionIntervalInSeconds() * 1000);
+        }, getTransitionIntervalInSeconds(element) * 1000);
     });
 }

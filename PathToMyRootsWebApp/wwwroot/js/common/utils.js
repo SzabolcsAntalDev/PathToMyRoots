@@ -1,5 +1,5 @@
-﻿function getPropertyValue(propertyName) {
-    return getComputedStyle(document.documentElement).getPropertyValue('--' + propertyName);
+﻿function getPropertyValue(propertyName, element = document.documentElement) {
+    return getComputedStyle($(element)[0]).getPropertyValue('--' + propertyName);
 }
 
 function getPersonNodeWidth(viewMode) {
@@ -19,13 +19,13 @@ function getNodeLinesVerticalOffset(viewMode) {
     return parseFloat(nodeLinesVerticalOffset);
 }
 
-function getIntervalInSeconds(propertyName) {
-    const intervalInSecondsString = getPropertyValue(propertyName);
+function getIntervalInSeconds(propertyName, element) {
+    const intervalInSecondsString = getPropertyValue(propertyName, element);
     return parseFloat(intervalInSecondsString);
 }
 
-function getTransitionIntervalInSeconds() {
-    return getIntervalInSeconds('default-transition-interval');
+function getTransitionIntervalInSeconds(element) {
+    return getIntervalInSeconds('default-transition-interval', element);
 }
 
 function getLinesDrawStartDelayAfterTransitionInSeconds() {
@@ -65,7 +65,7 @@ function showPopup(popupPrefix, message) {
 
         popupContainer.addEventListener('mouseleave', () => {
             const remainingSeconds = popupDisplayIntervalInSeconds / (popupContainer.clientWidth / popupLoadingBar.clientWidth);
-            popupLoadingBar.style.transition = 'width ' + remainingSeconds + 's ' + getPropertyValue('popup-loading-bar-transition-function');
+            popupLoadingBar.style.transition = 'width ' + remainingSeconds + 's ' + getPropertyValue('default-transition-function');
             popupLoadingBar.style.width = '0%';
 
             popupAutoClosingTimeout = setTimeout(() => {
