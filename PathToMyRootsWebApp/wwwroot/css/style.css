@@ -748,7 +748,6 @@ fieldset input[type=text] {
 }
 #tree-diagrams-div.test-trees-div #test-progress-bar-div #test-progress-bar-div-inner {
   background-color: var(--foreground-color);
-  width: 50%;
   height: 16px;
   transition: width var(--default-transition);
 }
