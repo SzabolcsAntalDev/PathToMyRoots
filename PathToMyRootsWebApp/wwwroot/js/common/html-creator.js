@@ -23,22 +23,3 @@ function onGetImageError(image, className) {
     imageDiv.append(svg);
     image.replaceWith(imageDiv[0]);
 }
-
-function createHiddenH2(text) {
-    const hiddenH2 = $('<h2>')
-        .text(text);
-
-    hideElement(hiddenH2);
-
-    return hiddenH2;
-}
-
-function createHiddenH3(text, id) {
-    const hiddenH3 = $('<h3>')
-        .text(text)
-        .attr('id', id);
-
-    hideElement(hiddenH3);
-
-    return hiddenH3;
-}

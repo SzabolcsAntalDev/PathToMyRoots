@@ -9,15 +9,6 @@
   --male-color: #2C333A;
   --female-color: #22272B;
   --marriage-color: #161A1D;
-  --adoptive-color: orange;
-  --success-color: forestgreen;
-  --error-color: red;
-  --success-popup-foreground-color: #C7D1DB;
-  --success-popup-foreground-color-highlight: white;
-  --success-popup-background-color: forestgreen;
-  --error-popup-foreground-color: #C7D1DB;
-  --error-popup-foreground-color-highlight: white;
-  --error-popup-background-color: red;
 }
 
 :root.theme-light {
@@ -31,15 +22,6 @@
   --male-color: #DEE4EA;
   --female-color: #F1F2F4;
   --marriage-color: #F7F8F9;
-  --adoptive-color: orange;
-  --success-color: forestgreen;
-  --error-color: red;
-  --success-popup-foreground-color: #C7D1DB;
-  --success-popup-foreground-color-highlight: white;
-  --success-popup-background-color: forestgreen;
-  --error-popup-foreground-color: #C7D1DB;
-  --error-popup-foreground-color-highlight: white;
-  --error-popup-background-color: red;
 }
 
 :root.theme-dark, :root.theme-light {
@@ -759,17 +741,38 @@ fieldset input[type=text] {
   --default-transition-interval: 0.1s;
   --default-transition: 0.1s linear 0s;
 }
-#tree-diagrams-div.test-trees-div #tests-results-div h3.error, #tree-diagrams-div.test-trees-div #tests-results-div h3.success {
-  transition: color var(--default-transition);
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div {
+  margin: 0 0 4px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
-#tree-diagrams-div.test-trees-div #tests-results-div h3.success {
-  color: var(--success-color);
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 2px;
 }
-#tree-diagrams-div.test-trees-div #tests-results-div h3.error {
-  color: var(--error-color);
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div svg {
+  width: 100%;
+  height: 100%;
+  fill: #C7D1DB;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
+  background-color: gray;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div {
+  background-color: forestgreen;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div {
+  background-color: red;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div p {
+  margin: 0;
 }
 #tree-diagrams-div.test-trees-div .diagram-frame {
-  margin: 0px auto 32px 0px;
+  margin: 0px auto 16px 0px;
 }
 
 .loading-text-container {
@@ -1185,37 +1188,37 @@ fieldset input[type=text] {
 }
 
 .success-popup-container {
-  color: var(--success-popup-foreground-color);
-  background-color: var(--success-popup-background-color);
+  color: #C7D1DB;
+  background-color: forestgreen;
 }
 .success-popup-container:hover {
-  color: var(--success-popup-foreground-color-highlight);
-  background-color: var(--success-popup-background-color);
+  color: white;
+  background-color: forestgreen;
 }
 .success-popup-container .popup-close-button {
-  color: var(--success-popup-foreground-color);
-  background-color: var(--success-popup-background-color);
+  color: #C7D1DB;
+  background-color: forestgreen;
 }
 .success-popup-container .popup-close-button:hover {
-  color: var(--success-popup-foreground-color-highlight);
-  background-color: var(--success-popup-background-color);
+  color: white;
+  background-color: forestgreen;
 }
 
 .error-popup-container {
-  color: var(--error-popup-foreground-color);
-  background-color: var(--error-popup-background-color);
+  color: #C7D1DB;
+  background-color: red;
 }
 .error-popup-container:hover {
-  color: var(--error-popup-foreground-color-highlight);
-  background-color: var(--error-popup-background-color);
+  color: white;
+  background-color: red;
 }
 .error-popup-container .popup-close-button {
-  color: var(--error-popup-foreground-color);
-  background-color: var(--error-popup-background-color);
+  color: #C7D1DB;
+  background-color: red;
 }
 .error-popup-container .popup-close-button:hover {
-  color: var(--error-popup-foreground-color-highlight);
-  background-color: var(--error-popup-background-color);
+  color: white;
+  background-color: red;
 }
 
 .fade-hidden {

@@ -1,0 +1,47 @@
+﻿const testsHtmlCreator = {
+    createHiddenH2(text) {
+        const hiddenH2 = $('<h2>')
+            .text(text);
+
+        hideElement(hiddenH2);
+
+        return hiddenH2;
+    },
+
+    createHiddenTestLineDiv(id) {
+        const hiddenDiv = $('<div>')
+            .attr('id', id)
+            .attr('class', 'test-line-div');
+
+        hideElement(hiddenDiv);
+
+        return hiddenDiv;
+    },
+
+    createIcon(id) {
+        const imageDiv = $('<div>')
+            .attr('class', id + '-svg-div');
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/icons/icons.svg#" + id);
+
+        svg.appendChild(use);
+        imageDiv.append(svg);
+        return imageDiv;
+    },
+
+    createP(text) {
+        return $('<p>')
+            .text(text);
+    },
+
+    createHiddenH3(text) {
+        const hiddenH3 = $('<h3>')
+            .text(text);
+
+        hideElement(hiddenH3);
+
+        return hiddenH3;
+    }
+}

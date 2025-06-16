@@ -1,5 +1,6 @@
 ﻿$font-family-default: 'Fira Sans', sans-serif;
 
+$pending-color-default: gray;
 $success-color-default: forestgreen;
 $error-color-default: red;
 $adoptive-color-default: orange;
@@ -18,16 +19,6 @@ $female-color-dark: $background-color-nav-dark;
 $marriage-color-dark: $background-color-dark;
 $adoptive-color-dark: $adoptive-color-default;
 
-$success-color-dark: $success-color-default;
-$error-color-dark: $error-color-default;
-
-$success-popup-foreground-color-dark: $foreground-color-dark;
-$success-popup-foreground-color-highlight-dark: $foreground-color-highlight-dark;
-$success-popup-background-color-dark: $success-color-dark;
-$error-popup-foreground-color-dark: $foreground-color-dark;
-$error-popup-foreground-color-highlight-dark: $foreground-color-highlight-dark;
-$error-popup-background-color-dark: $error-color-dark;
-
 $foreground-color-light: #22272B;
 $foreground-color-highlight-light: black;
 $foreground-color-disabled-light: #DCDFE4;
@@ -40,17 +31,6 @@ $background-color-highlight-light: $foreground-color-disabled-light;
 $male-color-light: $background-color-footer-light;
 $female-color-light: $background-color-nav-light;
 $marriage-color-light: $background-color-light;
-$adoptive-color-light: $adoptive-color-default;
-
-$success-color-light: $success-color-default;
-$error-color-light: $error-color-default;
-
-$success-popup-foreground-color-light: $foreground-color-dark;
-$success-popup-foreground-color-highlight-light: $foreground-color-highlight-dark;
-$success-popup-background-color-light: $success-color-light;
-$error-popup-foreground-color-light: $foreground-color-dark;
-$error-popup-foreground-color-highlight-light: $foreground-color-highlight-dark;
-$error-popup-background-color-light: $error-color-light;
 
 %theme-dark {
     --foreground-color: #{$foreground-color-dark};
@@ -63,15 +43,6 @@ $error-popup-background-color-light: $error-color-light;
     --male-color: #{$male-color-dark};
     --female-color: #{$female-color-dark};
     --marriage-color: #{$marriage-color-dark};
-    --adoptive-color: #{$adoptive-color-dark};
-    --success-color: #{$success-color-dark};
-    --error-color: #{$error-color-dark};
-    --success-popup-foreground-color: #{$success-popup-foreground-color-dark};
-    --success-popup-foreground-color-highlight: #{$success-popup-foreground-color-highlight-dark};
-    --success-popup-background-color: #{$success-popup-background-color-dark};
-    --error-popup-foreground-color: #{$error-popup-foreground-color-dark};
-    --error-popup-foreground-color-highlight: #{$error-popup-foreground-color-highlight-dark};
-    --error-popup-background-color: #{$error-popup-background-color-dark};
 }
 
 %theme-light {
@@ -85,15 +56,6 @@ $error-popup-background-color-light: $error-color-light;
     --male-color: #{$male-color-light};
     --female-color: #{$female-color-light};
     --marriage-color: #{$marriage-color-light};
-    --adoptive-color: #{$adoptive-color-light};
-    --success-color: #{$success-color-light};
-    --error-color: #{$error-color-light};
-    --success-popup-foreground-color: #{$success-popup-foreground-color-light};
-    --success-popup-foreground-color-highlight: #{$success-popup-foreground-color-highlight-light};
-    --success-popup-background-color: #{$success-popup-background-color-light};
-    --error-popup-foreground-color: #{$error-popup-foreground-color-light};
-    --error-popup-foreground-color-highlight: #{$error-popup-foreground-color-highlight-light};
-    --error-popup-background-color: #{$error-popup-background-color-light};
 }
 
 $default-transition-interval: 0.3s;
@@ -995,25 +957,51 @@ fieldset {
     --default-transition-interval: 0.1s;
     --default-transition: 0.1s linear 0s;
 
-    #tests-results-div {
+    #test-lines-div {
 
-        %color-transition {
-            transition: color var(--default-transition);
-        }
+        .test-line-div {
+            margin: 0 0 $thickness-small $thickness-large;
+            display: flex;
+            gap: $thickness-medium;
+            align-items: center;
 
-        h3.success {
-            @extend %color-transition;
-            color: var(--success-color);
-        }
+            .svg-div {
+                width: $svg-small-size;
+                height: $svg-small-size;
+                padding: $thickness-small;
+                box-sizing: border-box;
+                border-radius: $thickness-extra-small;
 
-        h3.error {
-            @extend %color-transition;
-            color: var(--error-color);
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    fill: $foreground-color-dark;
+                }
+            }
+
+            .pending-svg-div {
+                @extend .svg-div;
+                background-color: $pending-color-default;
+            }
+
+            .success-svg-div {
+                @extend .svg-div;
+                background-color: $success-color-default;
+            }
+
+            .error-svg-div {
+                @extend .svg-div;
+                background-color: $error-color-default;
+            }
+
+            p {
+                margin: 0;
+            }
         }
     }
 
     .diagram-frame {
-        margin: 0px auto $thickness-extra-large 0px;
+        margin: 0px auto $thickness-large 0px;
     }
 }
 
@@ -1521,41 +1509,41 @@ fieldset {
 }
 
 .success-popup-container {
-    color: var(--success-popup-foreground-color);
-    background-color: var(--success-popup-background-color);
+    color: $foreground-color-dark;
+    background-color: $success-color-default;
 
     &:hover {
-        color: var(--success-popup-foreground-color-highlight);
-        background-color: var(--success-popup-background-color);
+        color: $foreground-color-highlight-dark;
+        background-color: $success-color-default;
     }
 
     .popup-close-button {
-        color: var(--success-popup-foreground-color);
-        background-color: var(--success-popup-background-color);
+        color: $foreground-color-dark;
+        background-color: $success-color-default;
 
         &:hover {
-            color: var(--success-popup-foreground-color-highlight);
-            background-color: var(--success-popup-background-color);
+            color: $foreground-color-highlight-dark;
+            background-color: $success-color-default;
         }
     }
 }
 
 .error-popup-container {
-    color: var(--error-popup-foreground-color);
-    background-color: var(--error-popup-background-color);
+    color: $foreground-color-dark;
+    background-color: $error-color-default;
 
     &:hover {
-        color: var(--error-popup-foreground-color-highlight);
-        background-color: var(--error-popup-background-color);
+        color: $foreground-color-highlight-dark;
+        background-color: $error-color-default;
     }
 
     .popup-close-button {
-        color: var(--error-popup-foreground-color);
-        background-color: var(--error-popup-background-color);
+        color: $foreground-color-dark;
+        background-color: $error-color-default;
 
         &:hover {
-            color: var(--error-popup-foreground-color-highlight);
-            background-color: var(--error-popup-background-color);
+            color: $foreground-color-highlight-dark;
+            background-color: $error-color-default;
         }
     }
 }

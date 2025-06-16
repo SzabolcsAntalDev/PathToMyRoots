@@ -16,7 +16,8 @@ $(() => {
 
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
-        const testsResultsDiv = $('#tests-results-div');
+
+        const testLinesDiv = $('#test-lines-div');
 
         const hourglassCommonTestContexts = getHourglassCommonTestContexts();
         const hourglassBiologicalTestContexts = getHourglassBiologicalTestContexts();
@@ -24,10 +25,10 @@ $(() => {
         const completeTestContexts = getCompleteTestContexts();
 
         const testNumber = { value: 0 };
-        await addTestsList(testNumber, testsResultsDiv, hourglassCommonTestContexts);
-        await addTestsList(testNumber, testsResultsDiv, hourglassBiologicalTestContexts);
-        await addTestsList(testNumber, testsResultsDiv, hourglassExtendedTestContexts);
-        await addTestsList(testNumber, testsResultsDiv, completeTestContexts);
+        await addTestLines(testNumber, testLinesDiv, hourglassCommonTestContexts);
+        await addTestLines(testNumber, testLinesDiv, hourglassBiologicalTestContexts);
+        await addTestLines(testNumber, testLinesDiv, hourglassExtendedTestContexts);
+        await addTestLines(testNumber, testLinesDiv, completeTestContexts);
 
         testNumber.value = 0;
         for (const testContext of
@@ -35,7 +36,7 @@ $(() => {
                 .concat(hourglassBiologicalTestContexts)
                 .concat(hourglassExtendedTestContexts)
                 .concat(completeTestContexts)) {
-            await runTest(testNumber, treeDiagramsDiv, testsResultsDiv, testContext);
+            await runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext);
         }
 
         if (saveTestResults) {
@@ -49,16 +50,23 @@ $(() => {
     })();
 });
 
-async function addTestsList(testNumber, testsResultsDiv, testContexts) {
-    const testTitleH2 = createHiddenH2(testContexts[0].testPrefix);
-    testsResultsDiv.append(testTitleH2);
-    await fadeInElement(testTitleH2);
+async function addTestLines(testNumber, testLinesDiv, testContexts) {
+    const testGroupTitleH2 = testsHtmlCreator.createHiddenH2(testContexts[0].testPrefix);
+    testLinesDiv.append(testGroupTitleH2);
+    await fadeInElement(testGroupTitleH2);
 
     for (const testContext of testContexts) {
         testNumber.value++;
-        const testTitleH3 = createHiddenH3(`${testNumber.value}. ${testContext.testTitle}`, testContext.personId);
-        testsResultsDiv.append(testTitleH3);
-        await fadeInElement(testTitleH3);
+
+        const testLineDiv = testsHtmlCreator.createHiddenTestLineDiv(testContext.personId);
+        const testIcon = testsHtmlCreator.createIcon('pending');
+        const testTitleP = testsHtmlCreator.createP(`${testNumber.value}. ${testContext.testTitle}`);
+
+        testLineDiv.append(testIcon);
+        testLineDiv.append(testTitleP);
+        testLinesDiv.append(testLineDiv);
+
+        await fadeInElement(testLineDiv);
     };
 }
 
@@ -188,10 +196,10 @@ function createTestContext(testTitle, personId, testPrefix, treeType, ancestorsD
     };
 }
 
-async function runTest(testNumber, treeDiagramsDiv, testsResultsDiv, testContext) {
+async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext) {
     testNumber.value++;
     const orderedTestTitle = `${testNumber.value}. ${testContext.testPrefix} - ${testContext.testTitle}`;
-    const testTitleH2 = createHiddenH2(orderedTestTitle);
+    const testTitleH2 = testsHtmlCreator.createHiddenH2(orderedTestTitle);
     treeDiagramsDiv.append(testTitleH2);
     await fadeInElement(testTitleH2);
 
@@ -199,13 +207,13 @@ async function runTest(testNumber, treeDiagramsDiv, testsResultsDiv, testContext
     const resultDiagramFrameIdSuffix = testContext.personId + '-result';
 
     if (testContext.treeType != treeTypes.COMPLETE) {
-        const titleOriginalTree = createHiddenH3('Original tree');
+        const titleOriginalTree = testsHtmlCreator.createHiddenH3('Original tree');
         treeDiagramsDiv.append(titleOriginalTree);
         await fadeInElement(titleOriginalTree);
         await createAndDisplayTreeDiagramFrame(treeDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, allRelativesDepthIndex, allRelativesDepthIndex, viewModes.SMALL);
     }
 
-    const titleResultTree = createHiddenH3('Result tree');
+    const titleResultTree = testsHtmlCreator.createHiddenH3('Result tree');
     treeDiagramsDiv.append(titleResultTree);
     await fadeInElement(titleResultTree);
     await createAndDisplayTreeDiagramFrame(treeDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descedantsDepth, viewModes.SMALL);
@@ -218,8 +226,12 @@ async function runTest(testNumber, treeDiagramsDiv, testsResultsDiv, testContext
     }
     else {
         const expectedHtml = testsResultsMap.get(resultDiagramFrameIdSuffix);
+        const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
+        hideElement(resultIcon);
+        const pendingIcon = testLinesDiv.find('#' + testContext.personId).find('div.pending-svg-div');
 
-        const testTitleH3 = testsResultsDiv.find('#' + testContext.personId);
-        testTitleH3.addClass((expectedHtml == diagramHtml) ? 'success' : 'error');
+        await fadeOutElement(pendingIcon);
+        pendingIcon.replaceWith(resultIcon)
+        await fadeInElement(resultIcon);
     }
 }
