@@ -17,12 +17,36 @@ $(() => {
         const treeDiagramsDiv = $('#tree-diagrams-div');
         treeDiagramsDiv.addClass('test-trees-div');
 
+        const testProgressBarDivInner = $('#test-progress-bar-div-inner');
+        const numberOfPendingTestsH3 = $('#number-of-pending-tests');
+        const numberOfPassedTestsH3 = $('#number-of-passed-tests');
+        const numberOfFailedTestsH3 = $('#number-of-failed-tests');
+
         const testLinesDiv = $('#test-lines-div');
 
         const hourglassCommonTestContexts = getHourglassCommonTestContexts();
         const hourglassBiologicalTestContexts = getHourglassBiologicalTestContexts();
         const hourglassExtendedTestContexts = getHourglassExtendedTestContexts();
         const completeTestContexts = getCompleteTestContexts();
+
+        const totalNumberOfTests =
+            hourglassCommonTestContexts.length +
+            hourglassBiologicalTestContexts.length +
+            hourglassExtendedTestContexts.length +
+            completeTestContexts.length;
+
+        const testProgressContext =
+        {
+            totalNumberOfTests,
+            testProgressBarDivInner,
+            numberOfPendingTests: totalNumberOfTests,
+            numberOfPendingTestsH3,
+            numberOfPassedTests: 0,
+            numberOfPassedTestsH3,
+            numberOfFailedTests: 0,
+            numberOfFailedTestsH3
+        };
+        updateTestProgressData(testProgressContext, 0);
 
         const testNumber = { value: 0 };
         await addTestLines(testNumber, testLinesDiv, hourglassCommonTestContexts);
@@ -36,7 +60,7 @@ $(() => {
                 .concat(hourglassBiologicalTestContexts)
                 .concat(hourglassExtendedTestContexts)
                 .concat(completeTestContexts)) {
-            await runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext);
+            await runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, testProgressContext);
         }
 
         if (saveTestResults) {
@@ -196,7 +220,7 @@ function createTestContext(testTitle, personId, testPrefix, treeType, ancestorsD
     };
 }
 
-async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext) {
+async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, testProgressContext) {
     testNumber.value++;
     const orderedTestTitle = `${testNumber.value}. ${testContext.testPrefix} - ${testContext.testTitle}`;
     const testTitleH2 = testsHtmlCreator.createHiddenH2(orderedTestTitle);
@@ -226,6 +250,15 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext) {
     }
     else {
         const expectedHtml = testsResultsMap.get(resultDiagramFrameIdSuffix);
+
+        if (expectedHtml == diagramHtml) {
+            testProgressContext.numberOfPassedTests++;
+        }
+        else {
+            testProgressContext.numberOfFailedTests++;
+        }
+        testProgressContext.numberOfPendingTests--;
+
         const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
         hideElement(resultIcon);
         const pendingIcon = testLinesDiv.find('#' + testContext.personId).find('div.pending-svg-div');
@@ -233,5 +266,14 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext) {
         await fadeOutElement(pendingIcon);
         pendingIcon.replaceWith(resultIcon)
         await fadeInElement(resultIcon);
+
+        updateTestProgressData(testProgressContext, testNumber.value)
     }
+}
+
+function updateTestProgressData(testProgressContext, currentTestNumber) {
+    testProgressContext.testProgressBarDivInner.css('width', ((100 / testProgressContext.totalNumberOfTests) * currentTestNumber) + '%');
+    testProgressContext.numberOfPendingTestsH3.text(testProgressContext.numberOfPendingTests);
+    testProgressContext.numberOfPassedTestsH3.text(testProgressContext.numberOfPassedTests);
+    testProgressContext.numberOfFailedTestsH3.text(testProgressContext.numberOfFailedTests);
 }

@@ -957,8 +957,33 @@ fieldset {
     --default-transition-interval: 0.1s;
     --default-transition: 0.1s linear 0s;
 
-    #test-lines-div {
+    #test-progress-bar-div {
+        display: flex;
+        width: 500px;
+        border: $border;
 
+        #test-progress-bar-div-inner {
+            background-color: var(--foreground-color);
+            width: 50%;
+            height: $thickness-large;
+            transition: width var(--default-transition);
+        }
+    }
+
+    #test-progress-status-div {
+        display: flex;
+
+        div {
+            display: flex;
+            width: 100px;
+
+            .number {
+                margin-left: $thickness-small;
+            }
+        }
+    }
+
+    #test-lines-div {
         .test-line-div {
             margin: 0 0 $thickness-small $thickness-large;
             display: flex;

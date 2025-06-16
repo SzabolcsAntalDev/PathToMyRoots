@@ -741,6 +741,27 @@ fieldset input[type=text] {
   --default-transition-interval: 0.1s;
   --default-transition: 0.1s linear 0s;
 }
+#tree-diagrams-div.test-trees-div #test-progress-bar-div {
+  display: flex;
+  width: 500px;
+  border: 1px solid var(--foreground-color);
+}
+#tree-diagrams-div.test-trees-div #test-progress-bar-div #test-progress-bar-div-inner {
+  background-color: var(--foreground-color);
+  width: 50%;
+  height: 16px;
+  transition: width var(--default-transition);
+}
+#tree-diagrams-div.test-trees-div #test-progress-status-div {
+  display: flex;
+}
+#tree-diagrams-div.test-trees-div #test-progress-status-div div {
+  display: flex;
+  width: 100px;
+}
+#tree-diagrams-div.test-trees-div #test-progress-status-div div .number {
+  margin-left: 4px;
+}
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div {
   margin: 0 0 4px 16px;
   display: flex;
