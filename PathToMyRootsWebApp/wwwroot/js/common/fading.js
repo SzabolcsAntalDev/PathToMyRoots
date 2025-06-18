@@ -36,3 +36,7 @@ async function fadeOutElement(element) {
         }, getTransitionIntervalInSeconds(element) * 1000);
     });
 }
+
+function isVisibleElement(element) {
+    return $(element).css('visibility') == 'visible';
+}

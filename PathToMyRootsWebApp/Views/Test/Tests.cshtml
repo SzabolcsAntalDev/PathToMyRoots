@@ -4,27 +4,31 @@
 
 <h1>Tests</h1>
 
-<div id="tree-diagrams-div">
-    <div id="test-progress-bar-div">
-        <div id="test-progress-bar-div-inner">
+<div class="scrollable-area">
+    <button id="scroll-to-top-button">Scroll to top</button>
+    <div id="tree-diagrams-div">
+        <div id="test-progress-bar-div">
+            <div id="test-progress-bar-div-inner">
+            </div>
+        </div>
+        <div id="test-progress-status-div">
+            <div>
+                <h3>Pending:</h3>
+                <h3 id="number-of-pending-tests" class="number"></h3>
+            </div>
+            <div>
+                <h3>Passed:</h3>
+                <h3 id="number-of-passed-tests" class="number"></h3>
+            </div>
+            <div>
+                <h3>Failed:</h3>
+                <h3 id="number-of-failed-tests" class="number"></h3>
+            </div>
+        </div>
+        <div id="test-lines-div">
         </div>
     </div>
-    <div id="test-progress-status-div">
-        <div>
-            <h3>Pending:</h3>
-            <h3 id="number-of-pending-tests" class="number"></h3>
-        </div>
-        <div>
-            <h3>Passed:</h3>
-            <h3 id="number-of-passed-tests" class="number"></h3>
-        </div>
-        <div>
-            <h3>Failed:</h3>
-            <h3 id="number-of-failed-tests" class="number"></h3>
-        </div>
-    </div>
-    <div id="test-lines-div">
-    </div>
+    <button id="scroll-to-bottom-button">Scroll to bottom</button>
 </div>
 
 @section Scripts {

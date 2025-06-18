@@ -27,6 +27,8 @@
 :root.theme-dark, :root.theme-light {
   --default-transition-interval: 0.3s;
   --default-transition: 0.3s linear 0s;
+  --scroll-transition-interval: 1s;
+  --scroll-bar-size: 15px;
   --popup-loading-bar-transition-interval: 8s;
   --person-node-width-small: 80px;
   --person-node-width-medium: 115px;
@@ -505,10 +507,11 @@ fieldset input[type=text] {
 
 #tree-diagrams-div {
   position: relative;
+  height: 100%;
+  overflow: auto;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow: auto;
 }
 #tree-diagrams-div .diagram-frame {
   position: relative;
@@ -735,6 +738,23 @@ fieldset input[type=text] {
 }
 #tree-diagrams-div .diagram-frame .diagram .lines-svg .marriage-line-svg {
   stroke: forestgreen;
+}
+
+.scrollable-area {
+  position: relative;
+  overflow: hidden;
+}
+.scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button {
+  position: absolute;
+  right: 0px;
+  margin-right: 23px;
+  z-index: 2;
+}
+.scrollable-area #scroll-to-top-button {
+  top: 0px;
+}
+.scrollable-area #scroll-to-bottom-button {
+  bottom: 0px;
 }
 
 #tree-diagrams-div.test-trees-div {

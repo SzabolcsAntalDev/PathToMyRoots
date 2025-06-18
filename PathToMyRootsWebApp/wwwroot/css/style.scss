@@ -64,6 +64,9 @@ $default-transition: $default-transition-interval $default-transition-function 0
 
 $toggle-transition: $default-transition-interval ease-out 0s;
 
+$scroll-transition-interval: 1s;
+$scroll-bar-size: 15px;
+
 $popup-loading-bar-transition-interval: 8s;
 $popup-loading-bar-transition: $popup-loading-bar-transition-interval $default-transition-function 0s;
 
@@ -88,6 +91,8 @@ $transition-buffer-interval: 0.01s;
 %theme-properties {
     --default-transition-interval: #{$default-transition-interval};
     --default-transition: #{$default-transition};
+    --scroll-transition-interval: #{$scroll-transition-interval};
+    --scroll-bar-size: #{$scroll-bar-size};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --person-node-width-small: #{$person-node-width-small};
     --person-node-width-medium: #{$person-node-width-medium};
@@ -636,13 +641,13 @@ fieldset {
     }
 }
 
-
 #tree-diagrams-div {
     position: relative;
+    height: 100%;
+    overflow: auto;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow: auto;
 
     .diagram-frame {
         position: relative;
@@ -949,6 +954,28 @@ fieldset {
                 }
             }
         }
+    }
+}
+
+.scrollable-area {
+    position: relative;
+    overflow: hidden;
+
+    %scroll-to-button {
+        position: absolute;
+        right: 0px;
+        margin-right: calc($thickness-medium + $scroll-bar-size);
+        z-index: 2;
+    }
+
+    #scroll-to-top-button {
+        @extend %scroll-to-button;
+        top: 0px;
+    }
+
+    #scroll-to-bottom-button {
+        @extend %scroll-to-button;
+        bottom: 0px;
     }
 }
 

@@ -32,6 +32,14 @@ function getTransitionBufferIntervalInSeconds() {
     return getIntervalInSeconds('transition-buffer-interval');
 }
 
+function getScrollTransitionIntervalInSeconds() {
+    return getIntervalInSeconds('scroll-transition-interval');
+}
+
+function getScrollBarSize() {
+    return getPropertyValue('scroll-bar-size');
+}
+
 function getPopupDisplayIntervalInSeconds() {
     return getIntervalInSeconds('popup-loading-bar-transition-interval');
 }

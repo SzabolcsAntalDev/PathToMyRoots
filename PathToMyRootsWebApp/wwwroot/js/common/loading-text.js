@@ -47,7 +47,7 @@
         });
 
         const spans = animatedLoadingTextDiv.find('span');
-        const defaultTransitionIntervalInSeconds = getIntervalInSeconds('default-transition-interval');
+        const defaultTransitionIntervalInSeconds = getTransitionIntervalInSeconds();
         let i = -1;
 
         const animation = setInterval(() => {
