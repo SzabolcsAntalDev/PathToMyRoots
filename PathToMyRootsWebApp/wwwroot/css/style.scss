@@ -732,7 +732,7 @@ fieldset {
         position: relative;
         border: 1px solid var(--foreground-color);
         margin: 0px auto;
-        transition: opacity var(--fade-transition);
+        transition: opacity var(--fade-transition), border $color-transition;
 
         .settings-div {
             position: absolute;
@@ -764,6 +764,7 @@ fieldset {
                     flex-direction: column;
                     background-color: var(--background-color-nav);
                     padding: $thickness-medium;
+                    transition: background-color $color-transition;
 
                     label, h3 {
                         white-space: nowrap;
@@ -862,7 +863,7 @@ fieldset {
                                     }
                                 }
 
-                                .highlighted-node {
+                                .highlighted-node:not(:hover) {
                                     animation: colorFade 0.5s linear infinite alternate;
 
                                     @keyframes colorFade {

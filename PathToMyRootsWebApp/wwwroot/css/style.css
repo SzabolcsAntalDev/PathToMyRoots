@@ -569,7 +569,7 @@ fieldset input[type=text] {
   position: relative;
   border: 1px solid var(--foreground-color);
   margin: 0px auto;
-  transition: opacity var(--fade-transition);
+  transition: opacity var(--fade-transition), border 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;
@@ -594,6 +594,7 @@ fieldset input[type=text] {
   flex-direction: column;
   background-color: var(--background-color-nav);
   padding: 8px;
+  transition: background-color 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
@@ -677,7 +678,7 @@ fieldset input[type=text] {
   text-align: center;
   font-size: 11px;
 }
-#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node {
+#tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node:not(:hover) {
   animation: colorFade 0.5s linear infinite alternate;
 }
 @keyframes colorFade {
