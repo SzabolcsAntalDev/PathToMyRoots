@@ -782,6 +782,7 @@ fieldset {
         .diagram-info-div {
             position: relative;
             margin-left: calc($thickness-medium * 3 + $thickness-extra-small);
+            min-width: 550px;
 
             .text {
                 display: inline-block;
