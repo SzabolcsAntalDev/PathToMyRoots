@@ -30,6 +30,30 @@
 			ry="3" />
 	</symbol>
 
+	<symbol id="arrow-right" viewBox="0 0 8 8">
+		<path d="
+			  M1,0
+			  L7,4
+			  L1,8
+			  Z"/>
+	</symbol>
+
+	<symbol id="arrow-up" viewBox="0 0 8 8">
+		<path d="
+			  M0,7
+			  L4,1
+			  L8,7
+			  Z"/>
+	</symbol>
+
+	<symbol id="arrow-down" viewBox="0 0 8 8">
+		<path d="
+			  M0,1
+			  L4,7
+			  L8,1
+			  Z"/>
+	</symbol>
+	
 	<symbol id="pending" viewBox="0 0 8 8">
 		<path d="
 			  M3,0

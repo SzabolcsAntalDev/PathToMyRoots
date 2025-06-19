@@ -146,6 +146,7 @@ $person-medium-image-width: $person-small-image-width * 1.4;
 $person-medium-image-height: $person-small-image-height * 1.4;
 
 $svg-small-size: 20px;
+$svg-large-size: 32px;
 
 html {
     font-size: $font-size-small;
@@ -298,6 +299,61 @@ button, select, option, a, input[type="text"], input[type="radio"], .dropdown-he
 button, select, input[type="text"], .dropdown-header, .dropdown-menu {
     border: $border;
     border-radius: $border-radius;
+}
+
+.flat-button {
+    border: none;
+    border-radius: 0px;
+}
+
+%flat-button-with-svg {
+    @extend .flat-button;
+    background-color: var(--background-color-nav);
+    box-sizing: border-box;
+    transition: background-color $default-transition;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--foreground-color);
+        transition: fill $default-transition;
+    }
+
+    &:hover {
+        background-color: var(--background-color-highlight);
+
+        svg {
+            fill: var(--foreground-color-highlight);
+        }
+    }
+}
+
+.flat-button-small-with-svg {
+    @extend %flat-button-with-svg;
+    padding: $thickness-small;
+    width: $svg-small-size;
+    height: $svg-small-size;
+}
+
+.flat-button-large-with-svg {
+    @extend %flat-button-with-svg;
+    padding: $thickness-medium;
+    width: $svg-large-size;
+    height: $svg-large-size;
+}
+
+.svg-div {
+    width: $svg-small-size;
+    height: $svg-small-size;
+    padding: $thickness-small;
+    box-sizing: border-box;
+    border-radius: $thickness-extra-small;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        fill: $foreground-color-dark;
+    }
 }
 
 label {
@@ -664,29 +720,17 @@ fieldset {
             left: $thickness-medium;
             transition: opacity var(--default-transition);
 
-            .expand-button-div {
-                flex: 0;
-                cursor: pointer;
-                height: fit-content;
-                background-color: var(--background-color-nav);
-                padding: $thickness-medium;
-                transition: color var(--default-transition), background-color var(--default-transition);
+            .expand-button {
+                @extend .flat-button-small-with-svg;
+                margin: 0px;
 
-                &:hover {
-                    color: var(--foreground-color-highlight);
-                    background-color: var(--background-color-highlight);
-                }
-
-                .expand-button-icon {
-                    border-bottom: $thickness-small solid transparent;
-                    border-left: $thickness-small solid;
-                    border-top: $thickness-small solid transparent;
-                    transition: transform var(--default-transition);
+                svg {
+                    transition: fill $default-transition, transform $default-transition;
                 }
             }
 
-            .expand-button-div-opened {
-                .expand-button-icon {
+            .expand-button-opened {
+                svg {
                     transform: rotate(180deg);
                 }
             }
@@ -704,11 +748,10 @@ fieldset {
                     }
 
                     .apply-button {
+                        @extend .flat-button;
                         width: 50%;
                         margin-left: auto;
                         margin-right: 0px;
-                        border: none;
-                        border-radius: 0px;
                     }
                 }
             }
@@ -962,6 +1005,7 @@ fieldset {
     overflow: hidden;
 
     %scroll-to-button {
+        @extend .flat-button-large-with-svg;
         position: absolute;
         right: 0px;
         margin-right: calc($thickness-medium + $scroll-bar-size);
@@ -1015,20 +1059,6 @@ fieldset {
             display: flex;
             gap: $thickness-medium;
             align-items: center;
-
-            .svg-div {
-                width: $svg-small-size;
-                height: $svg-small-size;
-                padding: $thickness-small;
-                box-sizing: border-box;
-                border-radius: $thickness-extra-small;
-
-                svg {
-                    width: 100%;
-                    height: 100%;
-                    fill: $foreground-color-dark;
-                }
-            }
 
             .pending-svg-div {
                 @extend .svg-div;

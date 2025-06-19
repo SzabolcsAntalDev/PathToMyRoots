@@ -199,6 +199,54 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
   border-radius: 4px;
 }
 
+.flat-button, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .flat-button-large-with-svg, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-small-with-svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+  border: none;
+  border-radius: 0px;
+}
+
+.flat-button-large-with-svg, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-small-with-svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+  background-color: var(--background-color-nav);
+  box-sizing: border-box;
+  transition: background-color 0.3s linear 0s;
+}
+.flat-button-large-with-svg svg, .scrollable-area #scroll-to-bottom-button svg, .scrollable-area #scroll-to-top-button svg, .flat-button-small-with-svg svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--foreground-color);
+  transition: fill 0.3s linear 0s;
+}
+.flat-button-large-with-svg:hover, .scrollable-area #scroll-to-bottom-button:hover, .scrollable-area #scroll-to-top-button:hover, .flat-button-small-with-svg:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
+  background-color: var(--background-color-highlight);
+}
+.flat-button-large-with-svg:hover svg, .scrollable-area #scroll-to-bottom-button:hover svg, .scrollable-area #scroll-to-top-button:hover svg, .flat-button-small-with-svg:hover svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg {
+  fill: var(--foreground-color-highlight);
+}
+
+.flat-button-small-with-svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+  padding: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+.flat-button-large-with-svg, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button {
+  padding: 8px;
+  width: 32px;
+  height: 32px;
+}
+
+.svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+.svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div svg {
+  width: 100%;
+  height: 100%;
+  fill: #C7D1DB;
+}
+
 label {
   margin-top: 8px;
   margin-right: 8px;
@@ -527,25 +575,13 @@ fieldset input[type=text] {
   left: 8px;
   transition: opacity var(--default-transition);
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button-div {
-  flex: 0;
-  cursor: pointer;
-  height: fit-content;
-  background-color: var(--background-color-nav);
-  padding: 8px;
-  transition: color var(--default-transition), background-color var(--default-transition);
+#tree-diagrams-div .diagram-frame .settings-div .expand-button {
+  margin: 0px;
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button-div:hover {
-  color: var(--foreground-color-highlight);
-  background-color: var(--background-color-highlight);
+#tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
+  transition: fill 0.3s linear 0s, transform 0.3s linear 0s;
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button-div .expand-button-icon {
-  border-bottom: 4px solid transparent;
-  border-left: 4px solid;
-  border-top: 4px solid transparent;
-  transition: transform var(--default-transition);
-}
-#tree-diagrams-div .diagram-frame .settings-div .expand-button-div-opened .expand-button-icon {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg {
   transform: rotate(180deg);
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div {
@@ -562,8 +598,6 @@ fieldset input[type=text] {
   width: 50%;
   margin-left: auto;
   margin-right: 0px;
-  border: none;
-  border-radius: 0px;
 }
 #tree-diagrams-div .diagram-frame .diagram-info-div {
   position: relative;
@@ -786,18 +820,6 @@ fieldset input[type=text] {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
-  width: 20px;
-  height: 20px;
-  padding: 4px;
-  box-sizing: border-box;
-  border-radius: 2px;
-}
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div svg {
-  width: 100%;
-  height: 100%;
-  fill: #C7D1DB;
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
   background-color: gray;

@@ -5,7 +5,11 @@
 <h1>Tests</h1>
 
 <div class="scrollable-area">
-    <button id="scroll-to-top-button">Scroll to top</button>
+    <button id="scroll-to-top-button">
+        <svg>
+            <use xlink:href="@Url.Content("~/icons/icons.svg#arrow-up")"></use>
+        </svg>
+    </button>
     <div id="tree-diagrams-div">
         <div id="test-progress-bar-div">
             <div id="test-progress-bar-div-inner">
@@ -28,7 +32,11 @@
         <div id="test-lines-div">
         </div>
     </div>
-    <button id="scroll-to-bottom-button">Scroll to bottom</button>
+    <button id="scroll-to-bottom-button">
+        <svg>
+            <use xlink:href="@Url.Content("~/icons/icons.svg#arrow-down")"></use>
+        </svg>
+    </button>
 </div>
 
 @section Scripts {

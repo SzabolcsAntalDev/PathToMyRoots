@@ -16,7 +16,7 @@ function createSettingsContext(treeContext) {
 
     return {
         settingsDiv: settingsDiv,
-        expandButtonDiv: settingsDiv.find('.expand-button-div'),
+        expandButton: settingsDiv.find('.expand-button'),
         horizontalToggleableContainer: settingsDiv.find('.horizontal-toggleable-container'),
 
         treeTypeInfo: diagramInfoDiv.find('.tree-type-value'),
@@ -34,7 +34,7 @@ function createSettingsContext(treeContext) {
 }
 
 function addTogglingListeners(settingsContext) {
-    settingsContext.expandButtonDiv.on('click', () => {
+    settingsContext.expandButton.on('click', () => {
         toggleSettingsVisibility(settingsContext);
     });
 
@@ -56,7 +56,7 @@ function addTogglingListeners(settingsContext) {
 }
 
 function toggleSettingsVisibility(settingsContext) {
-    settingsContext.expandButtonDiv.toggleClass('expand-button-div-opened');
+    settingsContext.expandButton.toggleClass('expand-button-opened');
     settingsContext.horizontalToggleableContainer.toggleClass('horizontal-toggleable-container-open');
 }
 
