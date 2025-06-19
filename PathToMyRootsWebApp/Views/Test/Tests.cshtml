@@ -3,7 +3,6 @@
 @await Html.PartialAsync("_DiagramSettingsPartial")
 
 <h1>Tests</h1>
-<p style="font-style: italic; width: 500px;">Since the tests compare the HTML output of the result trees — which includes path coordinates connecting the nodes — they must be run in the browser at exactly 100% zoom level.</p>
 <div class="scrollable-area">
     <button id="scroll-to-top-button">
         <svg>
@@ -11,6 +10,7 @@
         </svg>
     </button>
     <div id="tree-diagrams-div">
+        <p style="font-style: italic; width: 500px;">Since the tests compare the HTML output of the result trees — which includes path coordinates connecting the nodes — they must be run in the browser at exactly 100% zoom level.</p>
         <div id="test-progress-bar-div">
             <div id="test-progress-bar-div-inner">
             </div>
