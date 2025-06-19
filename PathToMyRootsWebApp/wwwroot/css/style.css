@@ -28,8 +28,8 @@
   --color-transition-interval: 0.3s;
   --fade-transition-interval: 0.3s;
   --fade-transition: 0.3s linear 0s;
-  --tree-size-transition-interval: 0.3s;
-  --tree-size-transition: 0.3s linear 0s;
+  --tree-size-transition-interval: 1s;
+  --tree-size-transition: 1s ease 0s;
   --transition-buffer-interval: 0.01s;
   --scroll-transition-interval: 0.3s;
   --scroll-bar-size: 15px;
@@ -55,7 +55,7 @@ html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
   color: var(--foreground-color);
-  transition: color 0.3s linear 0s;
+  transition: color 0.3s ease 0s;
   height: 100%;
 }
 
@@ -76,7 +76,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .right-container {
@@ -85,7 +85,7 @@ body {
   flex-direction: column;
   overflow: auto;
   background-color: var(--background-color);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .top-container {
@@ -107,7 +107,7 @@ body {
   min-height: 6vh;
   display: flex;
   background-color: var(--background-color-footer);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .grid-for-inputs {
@@ -189,7 +189,7 @@ button, select, option, a, input[type=text], input[type=radio], .dropdown-header
   font-family: inherit;
   cursor: pointer;
   outline: none;
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s, opacity var(--fade-transition);
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s, opacity var(--fade-transition);
 }
 button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, input[type=radio]:hover, .dropdown-header:hover, .dropdown-menu li:hover {
   color: var(--foreground-color-highlight);
@@ -210,13 +210,13 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
 .flat-button-large-with-svg, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-small-with-svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
   background-color: var(--background-color-nav);
   box-sizing: border-box;
-  transition: background-color 0.3s linear 0s, opacity var(--fade-transition);
+  transition: background-color 0.3s ease 0s, opacity var(--fade-transition);
 }
 .flat-button-large-with-svg svg, .scrollable-area #scroll-to-bottom-button svg, .scrollable-area #scroll-to-top-button svg, .flat-button-small-with-svg svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
   width: 100%;
   height: 100%;
   fill: var(--foreground-color);
-  transition: fill 0.3s linear 0s;
+  transition: fill 0.3s ease 0s;
 }
 .flat-button-large-with-svg:hover, .scrollable-area #scroll-to-bottom-button:hover, .scrollable-area #scroll-to-top-button:hover, .flat-button-small-with-svg:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
   background-color: var(--background-color-highlight);
@@ -313,17 +313,17 @@ input[type=text]::placeholder {
 
 .male-background-color, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
   background-color: var(--male-color);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .female-background-color, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node {
   background-color: var(--female-color);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .person-details .top-row .info-column .image, .person-small-image, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, .svg-small, #persons-table .td-shrink .persons-action-svg, .info-svg {
   fill: var(--foreground-color);
-  transition: fill 0.3s linear 0s;
+  transition: fill 0.3s ease 0s;
 }
 
 .person-details .top-row .info-column .image:hover, .person-small-image:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover, .svg-small:hover, #persons-table .td-shrink .persons-action-svg:hover, .info-svg:hover {
@@ -393,7 +393,7 @@ fieldset label {
 }
 fieldset label:hover {
   color: var(--foreground-color-highlight);
-  transition: color 0.3s linear 0s;
+  transition: color 0.3s ease 0s;
 }
 fieldset input[type=radio] {
   appearance: none;
@@ -403,13 +403,13 @@ fieldset input[type=radio] {
   height: 11px;
   border-radius: 50%;
   background-color: var(--background-color);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
   cursor: pointer;
 }
 fieldset input[type=radio]:checked {
   background-color: var(--foreground-color);
   box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
-  transition: background-color 0.3s linear 0s, box-shadow 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
 }
 fieldset input[type=radio]:checked:hover {
   background-color: var(--foreground-color-highlight);
@@ -420,7 +420,7 @@ fieldset input[type=text] {
 
 .vertical-toggleable-container {
   display: grid;
-  transition: grid-template-rows 0.3s ease-out 0s;
+  transition: grid-template-rows 0.3s ease 0s;
 }
 
 .vertical-toggleable-container > div {
@@ -437,7 +437,7 @@ fieldset input[type=text] {
 
 .horizontal-toggleable-container {
   display: grid;
-  transition: grid-template-columns 0.3s ease-out 0s;
+  transition: grid-template-columns 0.3s ease 0s;
 }
 
 .horizontal-toggleable-container > div {
@@ -476,7 +476,7 @@ fieldset input[type=text] {
 
 .nav-li.active {
   background-color: var(--background-color);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
   font-weight: bold;
 }
 
@@ -530,7 +530,7 @@ fieldset input[type=text] {
   right: 0;
   bottom: 0;
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s linear 0s, transform 0.3s;
+  transition: background-color 0.3s ease 0s, transform 0.3s;
   border-radius: 13px;
 }
 .theme-switcher-container .switch-control .slider-rectangle:hover {
@@ -548,7 +548,7 @@ fieldset input[type=text] {
   bottom: 3px;
   border-radius: 50%;
   background-color: var(--foreground-color);
-  transition: background-color 0.3s linear 0s, transform 0.3s;
+  transition: background-color 0.3s ease 0s, transform 0.3s;
 }
 .theme-switcher-container .switch-control input:checked + .slider-rectangle:before {
   transform: translateX(22px);
@@ -569,7 +569,7 @@ fieldset input[type=text] {
   position: relative;
   border: 1px solid var(--foreground-color);
   margin: 0px auto;
-  transition: opacity var(--fade-transition), border 0.3s linear 0s;
+  transition: opacity var(--fade-transition), border 0.3s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;
@@ -578,12 +578,13 @@ fieldset input[type=text] {
   width: fit-content;
   top: 8px;
   left: 8px;
+  transition: opacity 0.3s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button {
   margin: 0px;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
-  transition: fill 0.3s linear 0s, transform 0.3s ease-out 0s;
+  transition: fill 0.3s ease 0s, transform 0.3s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg {
   transform: rotate(180deg);
@@ -594,7 +595,7 @@ fieldset input[type=text] {
   flex-direction: column;
   background-color: var(--background-color-nav);
   padding: 8px;
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
@@ -663,7 +664,7 @@ fieldset input[type=text] {
   border: 1px solid var(--foreground-color);
   border-radius: 0;
   padding: 4px;
-  transition: background-color 0.3s linear 0s, border 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s, border 0.3s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div {
   display: flex;
@@ -693,7 +694,7 @@ fieldset input[type=text] {
   color: var(--foreground-color-disabled);
   background-color: var(--marriage-color);
   border-color: var(--foreground-color-disabled);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border-color 0.3s linear 0s, width var(--tree-size-transition), margin var(--tree-size-transition);
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border-color 0.3s ease 0s, width var(--tree-size-transition), margin var(--tree-size-transition);
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node.interactive, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .interactive.hidden-marriage-node {
   color: var(--foreground-color);
@@ -725,7 +726,7 @@ fieldset input[type=text] {
   width: var(--person-node-width);
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s, width var(--tree-size-transition);
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s, width var(--tree-size-transition);
 }
 #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image-div, #tree-diagrams-div .diagram-frame .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image-div {
   width: 30px;
@@ -766,7 +767,7 @@ fieldset input[type=text] {
 }
 #tree-diagrams-div .diagram-frame .diagram .lines-svg .marriage-line-svg, #tree-diagrams-div .diagram-frame .diagram .lines-svg .adoptive-line-svg, #tree-diagrams-div .diagram-frame .diagram .lines-svg .biological-line-svg {
   stroke-width: 1px;
-  transition: stroke 0.3s linear 0s;
+  transition: stroke 0.3s ease 0s;
   fill: transparent;
 }
 #tree-diagrams-div .diagram-frame .diagram .lines-svg .biological-line-svg {
@@ -812,7 +813,7 @@ fieldset input[type=text] {
 #tree-diagrams-div.test-trees-div #test-progress-bar-div #test-progress-bar-div-inner {
   background-color: var(--foreground-color);
   height: 16px;
-  transition: width 0.3s ease-out 0s;
+  transition: width 0.3s ease 0s;
 }
 #tree-diagrams-div.test-trees-div #test-progress-status-div {
   display: flex;
@@ -846,6 +847,10 @@ fieldset input[type=text] {
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div p {
   margin: 0;
 }
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button {
+  margin: 0;
+  transition: opacity 0.3s linear 0s;
+}
 #tree-diagrams-div.test-trees-div .diagram-frame {
   margin: 0px auto 16px 0px;
 }
@@ -869,7 +874,7 @@ fieldset input[type=text] {
   font-size: 18px;
 }
 .loading-text-container .animated-loading-text-div span {
-  transition: color 0.3s linear 0s;
+  transition: color 0.3s ease 0s;
 }
 .loading-text-container .animated-loading-text-div .highlighted {
   color: var(--foreground-color-highlight);
@@ -955,7 +960,7 @@ fieldset input[type=text] {
   width: 100%;
   min-width: 0;
   border: 2px solid var(--background-color);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
   box-sizing: border-box;
 }
 .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div {
@@ -1029,7 +1034,7 @@ fieldset input[type=text] {
 #persons-table tr {
   display: flex;
   color: var(--foreground-color);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
 }
 #persons-table tr a {
   color: var(--foreground-color);
@@ -1041,13 +1046,13 @@ fieldset input[type=text] {
   text-overflow: ellipsis;
   align-content: center;
   border: 1px solid var(--foreground-color);
-  transition: border 0.3s linear 0s;
+  transition: border 0.3s ease 0s;
   padding: 8px;
 }
 #persons-table th {
   color: var(--foreground-color);
   background-color: var(--background-color);
-  transition: color 0.3s linear 0s, background-color 0.3s linear 0s, border 0.3s linear 0s;
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
 }
 #persons-table tr:hover {
   color: var(--foreground-color-highlight);
@@ -1093,7 +1098,7 @@ fieldset input[type=text] {
 
 .person-section {
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
   border-radius: 4px;
   padding: 8px;
   padding-left: 16px;
@@ -1118,7 +1123,7 @@ fieldset input[type=text] {
   border-right: 6px solid transparent;
   border-top: 6px solid;
   background-color: transparent;
-  transition: transform 0.3s ease-out 0s;
+  transition: transform 0.3s ease 0s;
   align-self: center;
 }
 .dropdown .dropdown-header .dropdown-header-expand-button-opened {
@@ -1138,7 +1143,7 @@ fieldset input[type=text] {
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: opacity 0.3s ease-out 0s;
+  transition: opacity 0.3s ease 0s;
   opacity: 0;
   height: 0;
   visibility: collapse;
@@ -1245,7 +1250,7 @@ fieldset input[type=text] {
   align-content: center;
   font-size: 18px;
   margin-right: 8px;
-  transition: color 0.3s linear 0s;
+  transition: color 0.3s ease 0s;
 }
 .success-popup-container .popup-message-and-close-button-container .popup-close-button, .error-popup-container .popup-message-and-close-button-container .popup-close-button {
   padding: 0px;
@@ -1262,7 +1267,7 @@ fieldset input[type=text] {
   width: 100%;
   height: 100%;
   background-color: var(--foreground-color-highlight);
-  transition: background-color 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s;
 }
 
 .success-popup-container {

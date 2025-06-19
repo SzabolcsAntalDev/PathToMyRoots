@@ -263,11 +263,18 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, t
 
         const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
         hideElement(resultIcon);
-        const pendingIcon = testLinesDiv.find('#' + testContext.personId).find('div.pending-svg-div');
 
+        const testLineDiv = testLinesDiv.find('#' + testContext.personId);
+
+        const pendingIcon = testLineDiv.find('div.pending-svg-div');
         await fadeOutElement(pendingIcon);
         pendingIcon.replaceWith(resultIcon)
         await fadeInElement(resultIcon);
+
+        const scrollToTestButton = testsHtmlCreator.createScrollToTestButton(treeDiagramsDiv, testTitleH2);
+        testLineDiv.append(scrollToTestButton);
+
+        fadeInElement(scrollToTestButton);
 
         updateTestProgressData(testProgressContext, testNumber.value)
     }

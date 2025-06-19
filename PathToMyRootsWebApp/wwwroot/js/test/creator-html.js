@@ -43,5 +43,33 @@
         hideElement(hiddenH3);
 
         return hiddenH3;
+    },
+
+    createScrollToTestButton(treeDiagramsDiv, testTitle) {
+        const button = $('<button>')
+            .addClass('flat-button-small-with-svg');
+
+        hideElement(button);
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/icons/icons.svg#arrow-down");
+
+        svg.appendChild(use);
+        button.append(svg);
+
+        button.on('click', function () {
+            const treeDiagramsDivTop = treeDiagramsDiv.offset().top;
+            const testTitleTop = testTitle.offset().top;
+            const scrollTop = treeDiagramsDiv.scrollTop();
+
+            const offset = testTitleTop - treeDiagramsDivTop + scrollTop;
+
+            treeDiagramsDiv.animate({
+                scrollTop: offset
+            }, getScrollTransitionIntervalInSeconds() * 1000);
+        });
+
+        return button;
     }
 }

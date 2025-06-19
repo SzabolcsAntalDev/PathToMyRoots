@@ -59,25 +59,25 @@ $marriage-color-light: $background-color-light;
 }
 
 $default-transition-interval: 0.3s;
-$default-transition-function: ease-out;
+$default-transition-function: ease;
 $default-transition: $default-transition-interval $default-transition-function 0s;
 
 $color-transition-interval: 0.3s;
-$color-transition-function: linear;
+$color-transition-function: ease;
 $color-transition: $color-transition-interval $color-transition-function 0s;
 
 $fade-transition-interval: 0.3s;
 $fade-transition-function: linear;
 $fade-transition: $fade-transition-interval $fade-transition-function 0s;
 
-$tree-size-transition-interval: 0.3s;
-$tree-size-transition-function: linear;
+$tree-size-transition-interval: 1s;
+$tree-size-transition-function: ease;
 $tree-size-transition: $tree-size-transition-interval $tree-size-transition-function 0s;
 
 $transition-buffer-interval: 0.01s;
 
 $toggle-transition-interval: 0.3s;
-$toggle-transition-function: ease-out;
+$toggle-transition-function: ease;
 $toggle-transition: $toggle-transition-interval $toggle-transition-function 0s;
 
 $tooltip-transition-interval: 0.3s;
@@ -741,6 +741,7 @@ fieldset {
             width: fit-content;
             top: $thickness-medium;
             left: $thickness-medium;
+            transition: opacity $fade-transition;
 
             .expand-button {
                 @extend .flat-button-small-with-svg;
@@ -1109,6 +1110,11 @@ fieldset {
 
             p {
                 margin: 0;
+            }
+
+            button {
+                margin: 0;
+                transition: opacity $fade-transition;
             }
         }
     }
