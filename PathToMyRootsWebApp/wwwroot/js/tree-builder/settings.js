@@ -168,7 +168,7 @@ function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
             settingsContext.viewModeInfo.text(treeContext.viewMode.displayName);
             setViewModeSizes(treeContext);
 
-            treeContext.redrawLines(treeContext);
+            treeContext.redrawLines(treeContext, true);
         })
     });
 }

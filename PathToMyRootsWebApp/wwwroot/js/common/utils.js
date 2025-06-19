@@ -1,50 +1,4 @@
-﻿function getPropertyValue(propertyName, element = document.documentElement) {
-    return getComputedStyle($(element)[0]).getPropertyValue('--' + propertyName);
-}
-
-function getPersonNodeWidth(viewMode) {
-    return getPropertyValue(`person-node-width-${viewMode.id.toLowerCase()}`);
-}
-
-function getMarriageNodeWidth(viewMode) {
-    return getPropertyValue(`marriage-node-width-${viewMode.id.toLowerCase()}`);
-}
-
-function getNodeHorizontalMargin(viewMode) {
-    return getPropertyValue(`node-horizontal-margin-${viewMode.id.toLowerCase()}`);
-}
-
-function getNodeLinesVerticalOffset(viewMode) {
-    const nodeLinesVerticalOffset = getPropertyValue(`node-lines-vertical-offset-${viewMode.id.toLowerCase()}`);
-    return parseFloat(nodeLinesVerticalOffset);
-}
-
-function getIntervalInSeconds(propertyName, element) {
-    const intervalInSecondsString = getPropertyValue(propertyName, element);
-    return parseFloat(intervalInSecondsString);
-}
-
-function getTransitionIntervalInSeconds(element) {
-    return getIntervalInSeconds('default-transition-interval', element);
-}
-
-function getTransitionBufferIntervalInSeconds() {
-    return getIntervalInSeconds('transition-buffer-interval');
-}
-
-function getScrollTransitionIntervalInSeconds() {
-    return getIntervalInSeconds('scroll-transition-interval');
-}
-
-function getScrollBarSize() {
-    return getPropertyValue('scroll-bar-size');
-}
-
-function getPopupDisplayIntervalInSeconds() {
-    return getIntervalInSeconds('popup-loading-bar-transition-interval');
-}
-
-function showPopup(popupPrefix, message) {
+﻿function showPopup(popupPrefix, message) {
     if (!message) {
         return;
     }
@@ -59,6 +13,7 @@ function showPopup(popupPrefix, message) {
 
     fadeInElement(popupContainer);
 
+    // Szabi: set timeout is needed?
     setTimeout(() => {
         let popupAutoClosingTimeout = setTimeout(() => {
             fadeOutElement(popupContainer);
@@ -86,7 +41,7 @@ function showPopup(popupPrefix, message) {
         };
 
         popupLoadingBar.style.width = "0%";
-    }, getTransitionIntervalInSeconds() * 1000);
+    }, getFadeTransitionIntervalInSeconds() * 1000);
 }
 
 function showSuccessPopup(successCode) {

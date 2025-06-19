@@ -109,7 +109,7 @@ function setupForConcreteDate(
 
     toggleableContainer.classList.add('vertical-toggleable-container-open');
 
-    setTimeout(() => { addAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible'); }, getTransitionIntervalInSeconds() * 1000);
+    setTimeout(() => { addAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible'); }, getTooltipTransitionIntervalInSeconds() * 1000);
 
     if (toggleableTooltipContainerParent) {
         addAndTrackClass(toggleableTooltipContainerParent, 'overflowvisible');

@@ -33,7 +33,7 @@ async function createRelativesColumn(person) {
 
     relativesColumn.append(relativesColumnContent);
 
-    await loadingTextManager.fadeOut(loadingTextContainer);
+    loadingTextManager.fadeOut(loadingTextContainer);
     await fadeInElement(relativesColumnContent);
 }
 

@@ -28,6 +28,9 @@
     },
 
     async fadeIn(loadingTextContainer) {
+        // set the custom text to empty, so when
+        // the control below it fades in the old text is not shown
+        this.setLoadingProgressText(loadingTextContainer.parent(), '');
         this.startAnimating($(loadingTextContainer));
         await fadeInElement($(loadingTextContainer));
     },
@@ -47,14 +50,14 @@
         });
 
         const spans = animatedLoadingTextDiv.find('span');
-        const defaultTransitionIntervalInSeconds = getTransitionIntervalInSeconds();
+        const colorTransitionIntervalInSeconds = getColorTransitionIntervalInSeconds();
         let i = -1;
 
         const animation = setInterval(() => {
             spans[i]?.classList.remove('highlighted');
             i = (i + 1) % spans.length;
             spans[i].classList.add('highlighted');
-        }, defaultTransitionIntervalInSeconds * 1000);
+        }, colorTransitionIntervalInSeconds * 1000);
 
         this.animatedLoadingTextDivsToAnimations.set(animatedLoadingTextDiv[0], animation);
     },

@@ -54,7 +54,7 @@ function addZoomingEventListener(treeContext) {
 }
 
 async function calculateDataAndDisplayTree(treeContext) {
-    await loadingTextManager.fadeIn(treeContext.loadingTextContainer);
+    loadingTextManager.fadeIn(treeContext.loadingTextContainer);
     await fadeOutElement(treeContext.treeDiagram);
 
     treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
@@ -70,22 +70,27 @@ async function calculateDataAndDisplayTree(treeContext) {
     treeContext.nodesContainer = nodesContainer;
     treeContext.linesContainer = linesContainer;
 
-    redrawLines(treeContext);
-
     treeContext.treeDiagram.append(nodesContainer);
     treeContext.treeDiagram.append(linesContainer);
 
+    redrawLines(treeContext);
+
+    loadingTextManager.fadeOut(treeContext.loadingTextContainer);
     await fadeInElement(treeContext.treeDiagram);
-    await loadingTextManager.fadeOut(treeContext.loadingTextContainer);
 }
 
-function redrawLines(treeContext) {
+function redrawLines(treeContext, redrawAfterTreeSizeTransition) {
     $(treeContext.linesContainer).empty();
 
-    setTimeout(() => {
-        $(treeContext.linesContainer).empty();
+    if (redrawAfterTreeSizeTransition) {
+        setTimeout(() => {
+            $(treeContext.linesContainer).empty();
+            drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+            resolve();
+        }, (getTreeSizeTransitionIntervalInSeconds(treeContext.linesContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
+    }
+    else {
         drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
-        // delay drawing the lines so animations can finish
-    }, (getTransitionIntervalInSeconds(treeContext.linesContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
+    }
 }
 
