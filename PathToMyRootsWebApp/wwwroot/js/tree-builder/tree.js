@@ -1,4 +1,6 @@
-﻿async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
+﻿const linesDrawingRequests = new Map();
+
+async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
     const treeDiagramFrame = treeDiagramsDiv.find('#diagram-frame-' + personId).get(0);
     if (treeDiagramFrame) {
         await fadeOutElement(treeDiagramFrame)
@@ -82,15 +84,30 @@ async function calculateDataAndDisplayTree(treeContext) {
 function redrawLines(treeContext, redrawAfterTreeSizeTransition) {
     $(treeContext.linesContainer).empty();
 
+    // used to skip the drawing in case another request came before the previous one finished
+    registerLinesDrawingRequest(treeContext);
+
     if (redrawAfterTreeSizeTransition) {
         setTimeout(() => {
-            $(treeContext.linesContainer).empty();
-            drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
-            resolve();
+            if (shouldDrawLines(treeContext)) {
+                drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+            }
         }, (getTreeSizeTransitionIntervalInSeconds(treeContext.linesContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
     }
     else {
-        drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+        if (shouldDrawLines(treeContext)) {
+            drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+        }
     }
 }
 
+function registerLinesDrawingRequest(treeContext) {
+    const currentCount = linesDrawingRequests.get(treeContext) || 0;
+    linesDrawingRequests.set(treeContext, currentCount + 1);
+}
+
+function shouldDrawLines(treeContext) {
+    const updatedCount = linesDrawingRequests.get(treeContext) - 1;
+    linesDrawingRequests.set(treeContext, updatedCount);
+    return updatedCount == 0;
+}
