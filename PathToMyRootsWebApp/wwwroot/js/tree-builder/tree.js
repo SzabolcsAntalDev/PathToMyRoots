@@ -12,6 +12,8 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
     const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
     treeDiagramsDiv.append(treeDiagramFrame);
 
+    registerTooltips();
+
     const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);
     const treeDiagramInfo = treeHtmlCreator.createDiagramInfo();
     const treeDiagram = treeHtmlCreator.createHiddenDiagram();

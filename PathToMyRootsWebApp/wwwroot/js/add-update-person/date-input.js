@@ -89,6 +89,7 @@ function setupForNonConcreteDate(
     // the end date would remove the class that was added by the start date thus the
     // tool tip becoming not entirely visible
     if (!isInitialSetup) {
+        // Szabi: these can be removed having the new tooltips
         removeAndTrackClass(toggleableTooltipContainerChild, 'overflowvisible');
 
         if (toggleableTooltipContainerParent) {

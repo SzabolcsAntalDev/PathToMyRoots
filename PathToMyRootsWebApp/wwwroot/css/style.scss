@@ -534,11 +534,6 @@ input[type="text"]::placeholder {
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip-text {
     background-color: var(--background-color);
     color: var(--foreground-color-highlight);
     padding: $thickness-medium;
@@ -546,16 +541,15 @@ input[type="text"]::placeholder {
     border-radius: $border-radius;
     white-space: nowrap;
     position: absolute;
-    top: 110%;
-    left: 25%;
+    z-index: 3;
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transition: opacity $tooltip-transition;
 }
 
-.tooltip:hover .tooltip-text {
-    visibility: visible;
+.tooltip-open {
     opacity: 1;
+    pointer-events: auto;
 }
 
 fieldset {
@@ -611,10 +605,6 @@ fieldset {
 
 .vertical-toggleable-container > div {
     overflow: hidden;
-}
-
-.vertical-toggleable-container > div.tooltip-container.overflowvisible {
-    overflow: visible;
 }
 
 .vertical-toggleable-container-open {
