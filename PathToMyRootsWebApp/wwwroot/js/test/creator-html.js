@@ -20,7 +20,7 @@
 
     createIcon(id) {
         const imageDiv = $('<div>')
-            .attr('class', id + '-svg-div');
+            .attr('class', 'svg-div-' + id);
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');

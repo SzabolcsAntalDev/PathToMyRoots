@@ -266,7 +266,7 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, t
 
         const testLineDiv = testLinesDiv.find('#' + testContext.personId);
 
-        const pendingIcon = testLineDiv.find('div.pending-svg-div');
+        const pendingIcon = testLineDiv.find('div.svg-div-pending');
         await fadeOutElement(pendingIcon);
         pendingIcon.replaceWith(resultIcon)
         await fadeInElement(resultIcon);

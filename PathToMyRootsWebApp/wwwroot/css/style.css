@@ -227,8 +227,8 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
 
 .flat-button-small-with-svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
   padding: 4px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .flat-button-large-with-svg, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button {
@@ -237,18 +237,44 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
   height: 32px;
 }
 
-.svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
-  width: 20px;
-  height: 20px;
+.svg-div-circle, .svg-div-info, .svg-div-rectangle, .svg-div-error, .svg-div-success, .svg-div-pending {
+  width: 18px;
+  height: 18px;
   padding: 4px;
   box-sizing: border-box;
-  border-radius: 2px;
   transition: opacity var(--fade-transition);
 }
-.svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div svg, #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div svg {
+.svg-div-circle svg, .svg-div-info svg, .svg-div-rectangle svg, .svg-div-error svg, .svg-div-success svg, .svg-div-pending svg {
   width: 100%;
   height: 100%;
   fill: #C7D1DB;
+}
+
+.svg-div-rectangle, .svg-div-error, .svg-div-success, .svg-div-pending {
+  border-radius: 2px;
+}
+
+.svg-div-circle, .svg-div-info {
+  border-radius: 9px;
+}
+
+.svg-div-pending {
+  background-color: gray;
+}
+
+.svg-div-success {
+  background-color: forestgreen;
+}
+
+.svg-div-error {
+  background-color: red;
+}
+
+.svg-div-info {
+  background-color: var(--foreground-color);
+}
+.svg-div-info svg {
+  fill: var(--background-color);
 }
 
 label {
@@ -331,8 +357,8 @@ input[type=text]::placeholder {
 }
 
 .svg-small, #persons-table .td-shrink .persons-action-svg, .info-svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin: 0px;
   vertical-align: middle;
 }
@@ -834,15 +860,6 @@ fieldset input[type=text] {
   gap: 8px;
   align-items: center;
   transition: opacity var(--fade-transition);
-}
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .pending-svg-div {
-  background-color: gray;
-}
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .success-svg-div {
-  background-color: forestgreen;
-}
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div .error-svg-div {
-  background-color: red;
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div p {
   margin: 0;
