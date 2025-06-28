@@ -249,6 +249,7 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, t
 
     if (saveTestResults) {
         testsResultsMap.set(resultDiagramFrameIdSuffix, diagramHtml);
+        testProgressContext.numberOfPendingTests--;
     }
     else {
         const expectedHtml = testsResultsMap.get(resultDiagramFrameIdSuffix);
@@ -275,9 +276,9 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, t
         testLineDiv.append(scrollToTestButton);
 
         fadeInElement(scrollToTestButton);
-
-        updateTestProgressData(testProgressContext, testNumber.value)
     }
+
+    updateTestProgressData(testProgressContext, testNumber.value)
 }
 
 function updateTestProgressData(testProgressContext, currentTestNumber) {

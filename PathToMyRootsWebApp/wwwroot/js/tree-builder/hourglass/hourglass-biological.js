@@ -69,6 +69,8 @@ const hourglassBiological = {
         await this.createKnownAncestorsRecursive(context, biologicalMother.biologicalFatherId, biologicalMother.biologicalMotherId, currentLevel - 1);
     },
 
+    // Szabi: childId is never used
+    // compare this with method with same name from extended and rename them, also check createPersonWithSpousesExtendedMarriages from common
     async getExtendedMarriagesOf(context, childId, male, female) {
         const extendedMarriages = [];
         const malesFirstSpouse = await getPersonJson(male.firstSpouseId);

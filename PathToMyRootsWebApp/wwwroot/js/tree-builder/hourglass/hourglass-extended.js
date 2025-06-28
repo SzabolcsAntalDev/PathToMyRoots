@@ -35,6 +35,7 @@
             for (const extendedMarriage of extendedMarriagesOfAdoptiveParents) {
                 extendedMarriage.numberOfAvailableParents = 0;
 
+                // Szabi: why not?
                 // if parents of adoptive parents are displayed
                 // for instance when the biological and adoptive parents are siblings
                 // then do not draw the lines between the adoptive parents and their parents
@@ -65,15 +66,8 @@
         const femalesFirstSpouse = await getPersonJson(female.firstSpouseId);
         const femalesSecondSpouse = await getPersonJson(female.secondSpouseId);
 
-        const malesNumberOfAvailableParents =
-            context.includeAdoptive
-                ? ((male.biologicalFatherId ? 1 : 0) + (male.adoptiveFatherId ? 1 : 0))
-                : ((male.biologicalFatherId ? 1 : 0));
-
-        const femalesNumberOfAvailableParents =
-            context.includeAdoptive
-                ? ((female.biologicalFatherId ? 1 : 0) + (female.adoptiveFatherId ? 1 : 0))
-                : ((female.biologicalFatherId ? 1 : 0));
+        const malesNumberOfAvailableParents = (male.biologicalFatherId ? 1 : 0) + (male.adoptiveFatherId ? 1 : 0);
+        const femalesNumberOfAvailableParents = (female.biologicalFatherId ? 1 : 0) + (female.adoptiveFatherId ? 1 : 0);
 
         const totalNumberOfAvailableParents = malesNumberOfAvailableParents + femalesNumberOfAvailableParents;
 
@@ -254,6 +248,10 @@
         const siblings =
             (biologicalFather?.inverseBiologicalFather ?? [])
                 .concat(biologicalMother?.inverseBiologicalMother ?? [])
+                .concat(biologicalFather?.inverseAdoptiveFather ?? [])
+                .concat(biologicalMother?.inverseAdoptiveMother ?? [])
+                .concat(adoptiveFather?.inverseBiologicalFather ?? [])
+                .concat(adoptiveMother?.inverseBiologicalMother ?? [])
                 .concat(adoptiveFather?.inverseAdoptiveFather ?? [])
                 .concat(adoptiveMother?.inverseAdoptiveMother ?? []);
 
