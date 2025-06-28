@@ -892,7 +892,16 @@ fieldset input[type=text] {
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button {
   margin: 0;
-  transition: opacity 0.3s linear 0s;
+  transition: background-color 0.3s ease 0s, opacity 0.3s linear 0s;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button svg {
+  transition: fill 0.3s ease 0s;
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button:hover {
+  background-color: var(--background-color-highlight);
+}
+#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button:hover svg {
+  fill: var(--foreground-color-highlight);
 }
 #tree-diagrams-div.test-trees-div .diagram-frame {
   margin: 0px auto 16px 0px;

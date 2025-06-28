@@ -1175,7 +1175,19 @@ fieldset {
 
             button {
                 margin: 0;
-                transition: opacity $fade-transition;
+                transition: background-color $color-transition, opacity $fade-transition;
+
+                svg {
+                    transition: fill $color-transition;
+                }
+
+                &:hover {
+                    background-color: var(--background-color-highlight);
+
+                    svg {
+                        fill: var(--foreground-color-highlight);
+                    }
+                }
             }
         }
     }
