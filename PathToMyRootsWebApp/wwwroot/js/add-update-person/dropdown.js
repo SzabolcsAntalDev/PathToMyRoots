@@ -173,11 +173,11 @@ function toggleMarriageDatesContainer(spousePrefix) {
 }
 
 function loadPersonImages() {
-    const personImages = document.querySelectorAll('.person-small-image');
+    const personImages = document.querySelectorAll('.person-image-small');
 
     personImages.forEach(image => {
         image.onerror = function () {
-            onGetImageError('person-small-image', this);
+            onGetImageError('person-image-small', this);
         };
 
         image.src = image.getAttribute('data-image-url');

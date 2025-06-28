@@ -1,4 +1,6 @@
 ﻿const viewModes = {
+    EXTRASMALL:
+        { index: -1, id: 'EXTRASMALL', displayName: 'Extra small' },
     SMALL:
         { index: 0, id: 'SMALL', displayName: 'Small' },
     MEDIUM:

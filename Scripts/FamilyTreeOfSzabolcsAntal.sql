@@ -27,7 +27,6 @@ CREATE TABLE Persons
 INSERT INTO Persons (
 			FirstName, 			LastName, 				MaidenName, 	OtherNames, 	BiologicalFatherID, BiologicalMotherID, AdoptiveFatherID, AdoptiveMotherID, FirstSpouseID,	SecondSpouseID, FirstMarriageStartDate,	FirstMarriageEndDate,	SecondMarriageStartDate,	IsMale, BirthDate, 		DeathDate, 		ImageUrl)
 VALUES
-
 /* 1   */ (	'András', 			'Antal', 				NULL, 			'Púj', 			7, 					8, 					NULL,				NULL,			2, 				NULL,			'+yyyymmdd',			NULL,					NULL, 						1, 		'+19580310', 	NULL, 			'a802a6f1-cf37-47f9-9384-dcac755b2596.png'	),
 /* 2   */ (	'Irénke', 			'Antal', 				'Korpos', 		'Rigó',			6, 					5, 					NULL,				NULL,			1, 				NULL,			'+yyyymmdd',			NULL,					NULL, 						0, 		'+19620501', 	NULL, 			'd4691786-9873-4f29-bf20-ec23359cd1ae.png'	),
 /* 3   */ (	'Szabolcs-Csongor', 'Antal', 				NULL, 			NULL, 			1, 					2, 					NULL,				NULL,			NULL, 			NULL,			NULL,					NULL,					NULL, 						1, 		'+19910816', 	NULL, 			'b045774e-7737-4c0b-b5b6-2b2a13abc112.png'	),
@@ -425,14 +424,123 @@ VALUES
 /* 395 */ (	'Tamara',			'Mihály',				NULL,	    	'Pendzsi',		388, 				389, 				NULL, 				NULL,			NULL, 			NULL, 			NULL,					NULL,					NULL, 						0, 		'+yyyymmdd',	NULL, 			'bf562941-39be-4fe3-bd98-6c0f07b9e4a9.png'	)
 
 
+
 -- ===================================================================================================================================================================
 -- ===================================================================================================================================================================
 -- ===================================================================================================================================================================
+
 
 
 SET IDENTITY_INSERT Persons ON;
 DECLARE @idBuffer INT = 40;
-DECLARE @id INT = 1000;
+DECLARE @id INT = 500;
+
+-- ==========================================================================================================================
+-- HOURGLASS-BIOLOGICAL tooltip
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L3 Male',			NULL,			NULL,			NULL,			@id + 9, 		@id + 10,				NULL,				NULL,				@id + 12, 		@id + 1,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L3 Female',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male1',			NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 2, 		@id + 3,				NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Female2',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L2 Male1',			NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 4, 		@id + 5,				NULL,				NULL,				@id + 8, 		@id + 10,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 6, 		@id + 7,				NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 11,	'L3 Male1',			NULL,			NULL,			NULL,			@id + 9, 		@id + 8,				NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 12,	'L3 Female2',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 13,	'L4 Male1',			NULL,			NULL,			NULL,			@id + 0, 		@id + 12,				NULL,				NULL,				@id + 14, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 14,	'L4 Female1',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 15,	'L4 Female2',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 16, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 16,	'L4 Male3',			NULL,			NULL,			NULL,			@id + 0, 		@id + 1,				NULL,				NULL,				@id + 15, 		@id + 17,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 17,	'L4 Female3',		NULL,			NULL,			NULL,			NULL, 			NULL,					NULL,				NULL,				@id + 16, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 18,	'L4 Male4',			NULL,			NULL,			NULL,			@id + 0, 		@id + 1,				NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 19,	'L0 Male1',			NULL,			NULL,			NULL,			@id + 13, 		@id + 14,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 20,	'L0 Male2',			NULL,			NULL,			NULL,			@id + 16, 		@id + 15,				NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 21,	'L0 Male3',			NULL,			NULL,			NULL,			@id + 16, 		@id + 17,				NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_EXTENDED tooltip
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L3 Female',		NULL,			NULL,			NULL,			@id + 14, 			@id + 15,			NULL,				NULL,				@id + 19,		@id + 1,		NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L3 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 7,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L0 Female3',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 9,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			@id + 6,			@id + 7,			@id + 8,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 11,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 10,		@id + 12,		NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 12,	'L1 Female3',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 11,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 13,	'L2 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 14,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 14,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 8, 			@id + 9,			NULL,				NULL,				@id + 13,		@id + 15,		NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 15,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 11, 			@id + 12,			NULL,				NULL,				@id + 14,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 16,	'L3 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 17,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 17,	'L3 Male2',			NULL,			NULL,			NULL,			@id + 14, 			@id + 13,			NULL,				NULL,				@id + 16,		@id + 18,		NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 18,	'L3 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 17,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 19,	'L3 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 20,	'L3 Male4',			NULL,			NULL,			NULL,			NULL,	 			NULL,				@id + 14, 			@id + 15,			NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 21,	'L4 Male1',			NULL,			NULL,			NULL,			@id + 1, 			@id + 0,			NULL,				NULL,				@id + 22,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 22,	'L4 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 21,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 23,	'L4 Male2',			NULL,			NULL,			NULL,			@id + 19, 			@id + 0,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 24,	'L4 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 19,			@id + 0,			@id + 25,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 25,	'L4 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 24,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 26,	'L5 Male1',			NULL,			NULL,			NULL,			@id + 21,			@id + 22,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 27,	'L5 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 21,			@id + 22,			NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- COMPLETE tooltip
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+(	@id + 0,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 7,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 1,			@id + 2,			@id + 6,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 3,			@id + 4,			NULL,				NULL,				@id + 5,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			NULL,				NULL,				@id + 0,		@id + 8,		NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 9,		@id + 7,		NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL	,			NULL,				NULL,				@id + 8,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Male4',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 11,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Female4',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 12,	'L2 Male1',			NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 13,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 14,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 14,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 13,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 15,	'L2 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 7,			@id + 0,			@id + 16,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 16,	'L2 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 15,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 17,	'L2 Male4',			NULL,			NULL,			NULL,			@id + 7,			@id + 8,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 18,	'L2 Female5',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 19,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 19,	'L2 Male6',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 9,			@id + 8,			@id + 18,		@id + 20,		NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 20,	'L2 Female6',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 21,	'L3 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 13,			@id + 14,			@id + 22,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 22,	'L3 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 23,		@id + 21,		NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 23,	'L3 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 22,		NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 24,	'L3 Male3',			NULL,			NULL,			NULL,			@id + 15,			@id + 16,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 25,	'L3 Male4',			NULL,			NULL,			NULL,			@id + 19,			@id + 20,			NULL,				NULL,				NULL,			NULL,			NULL, 					NULL,						1, 		'+yyyymmdd',	NULL,		NULL)
+
+
+
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+-- ===================================================================================================================================================================
+
+
+
+SET @id = 1000;
 
 -- ==========================================================================================================================
 -- HOURGLASS_COMMON - Generation0 - When male has two wives, both wives are displayed, and husbands of wives are not displayed
@@ -440,9 +548,8 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
-		(	@id + 0,	'L0 Male0',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		@id + 1,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female0',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		@id + 1,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		@id + 5,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
@@ -454,9 +561,8 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
-		(	@id + 0,	'L1 Female0',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Male0',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		@id + 0,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 0,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		@id + 0,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		@id + 5,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
@@ -502,15 +608,15 @@ VALUES
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When person has siblings from multiple parents, only parents of biological parents are displayed
+
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			@id + 4,	 		@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L2 Female',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Female',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
@@ -521,12 +627,11 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male3',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other spouse of mother side, other spouse of father is not displayed
@@ -534,13 +639,12 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other spouse of father side, other spouse of mother is not displayed
@@ -550,11 +654,11 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male3',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are second married and person has siblings from other spouses of parents, other spouses are displayed
@@ -564,12 +668,12 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Male r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Male3',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 4, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are first married and person does not have siblings, other spouses of parents are not displayed
@@ -579,10 +683,10 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other spouse of mother side, other spouse of father is not displayed
@@ -592,11 +696,11 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other spouse of father side, other spouse of mother is not displayed
@@ -606,11 +710,11 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When parents are first married and person has siblings from other spouses of parents, other spouses are displayed
@@ -620,12 +724,12 @@ INSERT INTO Persons (
 VALUES
 		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 2,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Male l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female r',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Male r',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		@id + 1,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		@id + 4,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When person has multiple spouses and siblings, they are all displayed and sorted in his/her generation
@@ -633,11 +737,10 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
-		(	@id + 0,	'L1 Malex',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 2, 			@id + 1,	NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Femalex',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,			NULL,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,			NULL,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Male',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 				NULL,		NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 2, 			@id + 1,	NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,			NULL,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,			NULL,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 				NULL,		NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
 		(	@id + 4,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 5,			NULL,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 5,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,			NULL,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
@@ -647,13 +750,12 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+1990mmdd',	NULL,		NULL)
+		(	@id + 2,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female2',		NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 4,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+1990mmdd',	NULL,		NULL)
 
 -- HOURGLASS_BIOLOGICAL - When ancestors and descedants depth are both 2, generations until those levels are displayed
 SET @id = @id + @idBuffer;
@@ -681,12 +783,11 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 
 
@@ -707,40 +808,40 @@ VALUES
 		(	@id + 0,	'L4 Male',			NULL,			NULL,			NULL,			@id + 1, 				@id + 2,		NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L3 Male',			NULL,			NULL,			NULL,			@id + 3, 				@id + 4,		NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L3 Female',		NULL,			NULL,			NULL,			@id + 5,				@id + 6,		NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L2 Male',			NULL,			NULL,			NULL,			@id + 7, 				@id + 8,		NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L2 Female',		NULL,			NULL,			NULL,			@id + 9,				@id + 10,		NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L2 Male',			NULL,			NULL,			NULL,			@id + 11,				@id + 12,		NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L2 Female',		NULL,			NULL,			NULL,			@id + 13,				@id + 14,		NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 7,	'L1 Male',			NULL,			NULL,			NULL,			@id + 15,				@id + 16,		NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 8,	'L1 Female',		NULL,			NULL,			NULL,			@id + 17,				@id + 18,		NULL,				NULL,				@id + 7,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 9,	'L1 Male',			NULL,			NULL,			NULL,			@id + 21,				@id + 22,		NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 10,	'L1 Female',		NULL,			NULL,			NULL,			@id + 24,				@id + 25,		NULL,				NULL,				@id + 9,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 11,	'L1 Male',			NULL,			NULL,			NULL,			@id + 29,				@id + 28,		NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 12,	'L1 Female',		NULL,			NULL,			NULL,			@id + 31,				@id + 30,		NULL,				NULL,				@id + 11,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 13,	'L1 Male',			NULL,			NULL,			NULL,			@id + 35,				@id + 34, 		NULL,				NULL,				@id + 14,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 14,	'L1 Female',		NULL,			NULL,			NULL,			NULL,					NULL,			NULL,				NULL,				@id + 13,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 15,	'L0 Malex1',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 16,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 16,	'L0 Femalex1',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 15,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 17,	'L0 Malex2',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 18,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 18,	'L0 Femalex2',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 19,		@id + 17,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 19,	'L0 Male2 r',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 18,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 20,	'L0 Female3 l',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 21,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 21,	'L0 Malex3',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 20,		@id + 22,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 22,	'L0 Femalex3',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 21,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 23,	'L0 Female4 l',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 24,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 24,	'L0 Malex4',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 23,		@id + 25,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 25,	'L0 Femalex4',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 26,		@id + 24,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 26,	'L0 Male4 r',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 25,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 27,	'L0 Male5',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 28,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 28,	'L0 Female5x',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 29,		@id + 27,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 29,	'L0 Male5x r',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 28,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 30,	'L0 Female6x l',	NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 31,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 31,	'L0 Male6x',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 30,		@id + 32,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 32,	'L0 Female6 ',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 31,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 33,	'L0 Male7l',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 34,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 34,	'L0 Female7x',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 35,		@id + 33,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 35,	'L0 Male7x',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 34,		@id + 36,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 36,	'L0 Female7r',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 35,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 3,	'L2 Male1',			NULL,			NULL,			NULL,			@id + 7, 				@id + 8,		NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L2 Female1',		NULL,			NULL,			NULL,			@id + 9,				@id + 10,		NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 11,				@id + 12,		NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 13,				@id + 14,		NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 15,				@id + 16,		NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 17,				@id + 18,		NULL,				NULL,				@id + 7,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 21,				@id + 22,		NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Female2',		NULL,			NULL,			NULL,			@id + 24,				@id + 25,		NULL,				NULL,				@id + 9,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 29,				@id + 28,		NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 12,	'L1 Female3',		NULL,			NULL,			NULL,			@id + 31,				@id + 30,		NULL,				NULL,				@id + 11,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 13,	'L1 Male4',			NULL,			NULL,			NULL,			@id + 35,				@id + 34, 		NULL,				NULL,				@id + 14,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 14,	'L1 Female4',		NULL,			NULL,			NULL,			NULL,					NULL,			NULL,				NULL,				@id + 13,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 15,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 16,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 16,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 15,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 17,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 18,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 18,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 19,		@id + 17,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 19,	'L0 Male3',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 18,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 20,	'L0 Female4',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 21,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 21,	'L0 Male5',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 20,		@id + 22,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 22,	'L0 Female5',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 21,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 23,	'L0 Female6',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 24,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 24,	'L0 Male7',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 23,		@id + 25,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 25,	'L0 Female7',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 26,		@id + 24,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 26,	'L0 Male8',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 25,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 27,	'L0 Male9',			NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 28,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 28,	'L0 Female9',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 29,		@id + 27,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 29,	'L0 Male10',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 28,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 30,	'L0 Female11',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 31,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 31,	'L0 Male12',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 30,		@id + 32,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 32,	'L0 Female12',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 31,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 33,	'L0 Male13',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 34,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 34,	'L0 Female13',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 35,		@id + 33,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 35,	'L0 Male14',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 34,		@id + 36,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 36,	'L0 Female14',		NULL,			NULL,			NULL,			NULL, 					NULL,			NULL,				NULL,				@id + 35,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When ancestors have adoptive parents, the ancestors of the adoptive parents are not displayed
@@ -749,19 +850,19 @@ INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
 		(	@id + 0,	'L3 Male',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			@id + 3,			@id + 4,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L2 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 6,			@id + 7,			@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L2 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L2 Male a',		NULL,			NULL,			NULL,			@id + 8,			@id + 9,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L2 Female a',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5,		@id + 3,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L2 Male a r',		NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Male',			NULL,			NULL,			NULL,			@id + 12,			@id + 13,			NULL,				NULL,				@id + 7,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 7,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 8,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 9,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 9,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 10,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 11,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 11,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L2 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 6,			@id + 7,			@id + 2,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L2 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 8,			@id + 9,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L2 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5,		@id + 3,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L2 Male3',			NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 12,			@id + 13,			NULL,				NULL,				@id + 7,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 9,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 11,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 12,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 13,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 13,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has biological siblings, they and their spouses and displayed and sorted by birthDates
@@ -769,18 +870,18 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 6,		@id + 1,		NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL, 				NULL,				@id + 0,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L0 Male r',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Female x l',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 7,	'L1 Female y l',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 8,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 7,		@id + 9,		NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 9,	'L1 Female y',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 10,	'L1 Male z l',		NULL,			NULL,			NULL,			@id + 5, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
-		(	@id + 11,	'L1 Male z r',		NULL,			NULL,			NULL,			@id + 2, 			@id + 4,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 6,		@id + 1,		NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL, 				NULL,				@id + 0,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Female4',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 7,		@id + 9,		NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Male5',			NULL,			NULL,			NULL,			@id + 5, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2, 			@id + 4,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates
@@ -788,18 +889,18 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L1 Male x',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 3,			@id + 6,		@id + 1,		NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L0 Female l',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L0 Male r',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Female x l',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 7,	'L1 Female y l',	NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 8,	'L1 Male y',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 3,			@id + 7,		@id + 9,		NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 9,	'L1 Female y',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 10,	'L1 Male z l',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 5, 			@id + 3,			NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
-		(	@id + 11,	'L1 Male z r',		NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 4,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 3,			@id + 6,		@id + 1,		NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Female4',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 3,			@id + 7,		@id + 9,		NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 9,	'L1 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 10,	'L1 Male5',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 5, 			@id + 3,			NULL,			NULL,			NULL,					NULL, 						1, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 11,	'L1 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 2, 			@id + 4,			NULL, 			NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When person has adoptive descedants, its descedants are not displayed
@@ -821,10 +922,10 @@ INSERT INTO Persons (
 VALUES
 		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL, 				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0,		NULL,			NULL, 					NULL,						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 0,			@id + 1,			@id + 3,		@id + 5,		NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NUll,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 2,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 0,			@id + 1,			@id + 3,		@id + 5,		NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NUll,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When parents of adoptive parents are displayed, lines are not drawn between them
@@ -832,12 +933,11 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			@id + 3,			@id + 4,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Female y',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 5,			@id + 6,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 5,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
@@ -847,13 +947,12 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L2 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L2 Female y',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L2 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L0 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			@id + 4,			@id + 5,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
@@ -862,13 +961,12 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L2 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L2 Female y',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L2 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L0 Male',			NULL,			NULL,			NULL,			@id + 4,			@id + 5,			@id + 2,			@id + 3,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
@@ -877,14 +975,42 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
-		(	@id + 0,	'L1 Male x',		NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L1 Female x',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L1 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male y',		NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Female y',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L0 Male',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			@id + 4,			@id + 5,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 4,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L2 Male',			NULL,			NULL,			NULL,			@id + 0,			@id + 1,			@id + 4,			@id + 5,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_EXTENDED - When person has adoptived and biological siblings, they are all displayed
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			@id + 3,			@id + 4,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 1,			@id + 2,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 3,			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L1 Male4',			NULL,			NULL,			NULL,			NULL,				NULL,				@id + 3,			@id + 4,			NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- HOURGLASS_EXTENDED - When adoptive grandparent has hidden biological child, adoptive line is horizontally centered
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L2 Male',			NULL,			NULL,			NULL,			@id + 3,			@id + 4,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 1,			@id + 2,			@id + 4,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 1,			@id + 2,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When ancestors and descedants depth are both 2, generations until those levels are displayed
@@ -894,8 +1020,8 @@ INSERT INTO Persons (
 VALUES
 		(	@id + 0,	'L3 Male',				NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 1,	'L3 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male',				NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',				NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male',				NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			@id + 15, 			@id + 16,			@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 5,	'L1 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L2 Male',				NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
@@ -904,11 +1030,11 @@ VALUES
 		(	@id + 9,	'L4 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 10,	'L5 Male',				NULL,			NULL,			NULL,			@id + 8, 			@id + 9,			NULL,				NULL,				@id + 11, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 11,	'L5 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 12,	'L6 Male',				NULL,			NULL,			NULL,			@id + 10, 			@id + 11,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 13,	'L6 Female',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 14,	'L6 Adoptive Male',		NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 10,			@id + 11,			NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 15,	'L0 Adoptive Male',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 16, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 16,	'L0 Adoptive Female',	NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 15, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 12,	'L6 Male1',				NULL,			NULL,			NULL,			@id + 10, 			@id + 11,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 13,	'L6 Female1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 14,	'L6 Male2',				NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 10,			@id + 11,			NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 15,	'L0 Male2',				NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 16, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 16,	'L0 Female2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 15, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When ancestors depth is 0, siblings of person are not displayed
@@ -916,12 +1042,11 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		
 		(	@id + 0,	'L1 Male',			NULL,			NULL,			NULL,			@id + 2,			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male l',		NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 1,		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 2,			@id + 1,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 
 
@@ -934,17 +1059,17 @@ VALUES
 SET @id = 4000;
 
 -- ==========================================================================================================================
--- COMPLETE - When a person has a three generaion family, generations are displayed on three levels
+-- COMPLETE - When a person has a three generation family, generations are displayed on three levels
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0, 	'L0 Male1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
-		(	@id + 1,	'L0 Female1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
-		(	@id + 2,	'L0 Male2', 		NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
-		(	@id + 3,	'L0 Female2', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 0, 	'L0 Male', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 1,	'L0 Female', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 2,	'L0 Male1', 		NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
+		(	@id + 3,	'L0 Female1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
 		(	@id + 4,	'L1 Male1', 		NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
-		(	@id + 5,	'L1 Female', 		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
+		(	@id + 5,	'L1 Female1', 		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		NULL, 		NULL,		NULL),
 		(	@id + 6,	'L2 Male',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL),
 		(	@id + 7,	'L1 Male2', 		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
 
@@ -954,10 +1079,10 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,				LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 BiologicalMale',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
-		(	@id + 1,	'L0 BiologicalFemale',	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
-		(	@id + 2,	'L0 AdoptoveMale',		NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
-		(	@id + 3,	'L0 AdoptiveFemale', 	NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
+		(	@id + 0,	'L0 Male',				NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
+		(	@id + 1,	'L0 Female',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
+		(	@id + 2,	'L0 Male1',				NULL,			NULL,			NULL, 			NULL, 				NULL, 				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL),
+		(	@id + 3,	'L0 Female1', 			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		NULL, 			NULL,	NULL),
 		(	@id + 4,	'L1 Male', 				NULL,			NULL,			NULL,			@id + 0, 			@id + 1, 			@id + 2,			@id + 3,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL, 			NULL,	NULL)
 
 -- ==========================================================================================================================
@@ -966,11 +1091,11 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L1 Female5',		NULL,			NULL,			NULL,			@id + 6, 			@id + 5,			NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		'+20080101',	NULL,	NULL),
-		(	@id + 1,	'L1 Male4',			NULL,			NULL,			NULL,			@id + 8, 			@id + 7,			NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		'+20070101',	NULL,	NULL),
-		(	@id + 2,	'L1 Female4', 		NULL,			NULL,			NULL, 			@id + 8, 			@id + 7,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						0, 		'+20060101',	NULL,	NULL),
-		(	@id + 3,	'L1 Female3', 		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+20050101',	NULL,	NULL),
-		(	@id + 4,	'L1 Male3', 		NULL,			NULL,			NULL,			@id + 8, 			@id + 7, 			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+20040101',	NULL,	NULL),
+		(	@id + 0,	'L1 Female',		NULL,			NULL,			NULL,			@id + 6, 			@id + 5,			NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		'+20080101',	NULL,	NULL),
+		(	@id + 1,	'L1 Male',			NULL,			NULL,			NULL,			@id + 8, 			@id + 7,			NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		'+20070101',	NULL,	NULL),
+		(	@id + 2,	'L1 Female2', 		NULL,			NULL,			NULL, 			@id + 8, 			@id + 7,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						0, 		'+20060101',	NULL,	NULL),
+		(	@id + 3,	'L1 Female1', 		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+20050101',	NULL,	NULL),
+		(	@id + 4,	'L1 Male1', 		NULL,			NULL,			NULL,			@id + 8, 			@id + 7, 			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+20040101',	NULL,	NULL),
 		(	@id + 5,	'L0 Female2', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+20030101',	NULL,	NULL),
 		(	@id + 6,	'L0 Male2', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+20020101',	NULL,	NULL),
 		(	@id + 7,	'L0 Female1', 		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+20010101',	NULL,	NULL),
@@ -982,9 +1107,9 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 1,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
-		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
-		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL)
+		(	@id + 0,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 1,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL)
 
 
 -- ==========================================================================================================================
@@ -993,9 +1118,9 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
-		(	@id + 1,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
-		(	@id + 2,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
+		(	@id + 0,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When extended marriages have secondary marriage, they are chained based on the second marriage
@@ -1003,8 +1128,8 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L1 Female4',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
-		(	@id + 1,	'L1 Male4',			NULL,			NULL,			NULL,			@id + 9, 			@id + 8,			NULL,				NULL,				@id + 2, 		@id + 0,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 0,	'L1 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,		NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
+		(	@id + 1,	'L1 Male',			NULL,			NULL,			NULL,			@id + 9, 			@id + 8,			NULL,				NULL,				@id + 2, 		@id + 0,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
 		(	@id + 2,	'L1 Female3',		NULL,			NULL,			NULL, 			NULL, 				NULL,				NULL,				NULL,				@id + 1,		@id + 3,	NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
 		(	@id + 3,	'L1 Male3', 		NULL,			NULL,			NULL,			@id + 11, 			@id + 10,			NULL,				NULL,				@id + 5, 		@id + 2,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
 		(	@id + 4,	'L1 Male2', 		NULL,			NULL,			NULL,			@id + 12, 			@id + 13, 			NULL,				NULL,				@id + 7, 		@id + 5,	NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
@@ -1027,8 +1152,8 @@ INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
 
-		(	@id + 0,	'L0 Male0',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		@id + 1,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female0',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 3, 		@id + 1,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4,		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0,		@id + 2,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
@@ -1041,9 +1166,9 @@ INSERT INTO Persons (
 VALUES
 		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		@id + 4,		NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
 		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL),
-		(	@id + 2,	'L1 BiologicalMale',NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
-		(	@id + 3,	'L1 AdoptiveMale',	NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 0,			@id + 1,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
-		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
+		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 3,	'L1 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				@id + 0,			@id + 1,			NULL, 			NULL,			NULL,					NULL, 						1, 		NULL,			NULL,		NULL),
+		(	@id + 4,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL, 				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		NULL,			NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When older parents have younger children, children are sorted by parents first instead of birthDates
@@ -1051,20 +1176,20 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
 		(	@id + 5,	'L1 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
 		(	@id + 6,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						1, 		'+1996mmdd',	NULL,		NULL),
 		(	@id + 7,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1997mmdd',	NULL,		NULL),
-		(	@id + 8,	'L2 Male1',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						1, 		'+1998mmdd',	NULL,		NULL),
-		(	@id + 9,	'L2 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+1999mmdd',	NULL,		NULL),
-		(	@id + 10,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 11, 		NULL,			NULL,					NULL, 						1, 		'+2000mmdd',	NULL,		NULL),
-		(	@id + 11,	'L2 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+2001mmdd',	NULL,		NULL),
-		(	@id + 12,	'L3 Male1',			NULL,			NULL,			NULL,			@id + 8, 			@id + 9,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+2002mmdd',	NULL,		NULL),
-		(	@id + 13,	'L3 Female1',		NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+2003mmdd',	NULL,		NULL)
+		(	@id + 8,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						1, 		'+1998mmdd',	NULL,		NULL),
+		(	@id + 9,	'L2 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						0, 		'+1999mmdd',	NULL,		NULL),
+		(	@id + 10,	'L2 Male1',			NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 11, 		NULL,			NULL,					NULL, 						1, 		'+2000mmdd',	NULL,		NULL),
+		(	@id + 11,	'L2 Female1',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						0, 		'+2001mmdd',	NULL,		NULL),
+		(	@id + 12,	'L3 Male',			NULL,			NULL,			NULL,			@id + 8, 			@id + 9,			NULL,				NULL,				@id + 13, 		NULL,			NULL,					NULL, 						1, 		'+2002mmdd',	NULL,		NULL),
+		(	@id + 13,	'L3 Female',		NULL,			NULL,			NULL,			@id + 10,			@id + 11,			NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+2003mmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When female is loaded first, her first husband is still loaded
@@ -1072,9 +1197,9 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When children have common parents, they are displayed in separate sibling groups
@@ -1082,10 +1207,10 @@ SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
 VALUES
-		(	@id + 0,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 1,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 2,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 3,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		@id + 0,		NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L0 Male1',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		@id + 3,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 5,	'L1 Male3',			NULL,			NULL,			NULL,			@id + 2, 			@id + 1,			NULL,				NULL,				NULL, 			NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 6,	'L1 Male5',			NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
@@ -1103,12 +1228,12 @@ VALUES
 		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+1990mmdd',	NULL,		NULL),
 		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1991mmdd',	NULL,		NULL),
-		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
-		(	@id + 5,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
-		(	@id + 6,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 7,	 	NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
-		(	@id + 7,	'L1 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Male3',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						1, 		'+1994mmdd',	NULL,		NULL),
+		(	@id + 5,	'L1 Female3',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						0, 		'+1995mmdd',	NULL,		NULL),
+		(	@id + 6,	'L1 Male2',			NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 7,	 	NULL,			NULL,					NULL, 						1, 		'+1992mmdd',	NULL,		NULL),
+		(	@id + 7,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						0, 		'+1993mmdd',	NULL,		NULL),
 		(	@id + 8,	'L2 Female1',		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 9,	'L2 Male1',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 8,	 	@id + 10,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 9,	'L2 Male2',			NULL,			NULL,			NULL,			@id + 4, 			@id + 5,			NULL,				NULL,				@id + 8,	 	@id + 10,		NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 10,	'L2 Female2',		NULL,			NULL,			NULL,			@id + 6, 			@id + 7,			NULL,				NULL,				@id + 9,	 	NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
@@ -1122,6 +1247,18 @@ VALUES
 		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L1 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 2, 		NULL,			NULL,					NULL, 						0, 		'+1990mmdd',	NULL,		NULL),
 		(	@id + 4,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+1991mmdd',	NULL,		NULL)
+
+-- ==========================================================================================================================
+-- COMPLETE - When single child is added before married child, their order is kept
+SET @id = @id + @idBuffer;
+INSERT INTO Persons (
+			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
+VALUES
+		(	@id + 0,	'L0 Male',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 1,	'L0 Female',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 0, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 2,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				NULL,	 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 3,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 0, 			@id + 1,			NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 4,	'L1 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3,	 	NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When ancestors and descedants depth are both 2, generations until those levels are displayed

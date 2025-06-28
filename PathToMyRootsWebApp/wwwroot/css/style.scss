@@ -91,21 +91,41 @@ $popup-loading-bar-transition: $popup-loading-bar-transition-interval $popup-loa
 $scroll-transition-interval: 0.3s;
 $scroll-bar-size: 15px;
 
+$person-node-width-extrasmall: 40px;
 $person-node-width-small: 80px;
 $person-node-width-medium: 115px;
 $person-node-width-large: 175px;
 
-$marriage-node-width-small: 60px;
-$marriage-node-width-medium: 90px;
-$marriage-node-width-large: 150px;
+$marriage-node-width-extrasmall: 24px;
+$marriage-node-height-extrasmall: 10px;
 
+$marriage-node-width-small: 60px;
+$marriage-node-height-small: 20px;
+
+$marriage-node-width-medium: 90px;
+$marriage-node-height-medium: 20px;
+
+$marriage-node-width-large: 150px;
+$marriage-node-height-large: 20px;
+
+$node-horizontal-margin-extrasmall: 3px;
 $node-horizontal-margin-small: 5px;
 $node-horizontal-margin-medium: 7px;
 $node-horizontal-margin-large: 9px;
 
+$node-lines-vertical-offset-extrasmall: 3;
 $node-lines-vertical-offset-small: 5;
 $node-lines-vertical-offset-medium: 7;
 $node-lines-vertical-offset-large: 10;
+
+$person-image-height-extrasmall: 15px;
+$person-image-width-extrasmall: $person-image-height-extrasmall * 0.75;
+
+$person-image-height-small: 40px;
+$person-image-width-small: $person-image-height-small * 0.75;
+
+$person-image-height-medium: 60px;
+$person-image-width-medium: $person-image-height-medium * 0.75;
 
 %theme-properties {
     --color-transition-interval: #{$color-transition-interval};
@@ -117,21 +137,37 @@ $node-lines-vertical-offset-large: 10;
     --scroll-transition-interval: #{$scroll-transition-interval};
     --scroll-bar-size: #{$scroll-bar-size};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
+    --person-node-width-extrasmall: #{$person-node-width-extrasmall};
     --person-node-width-small: #{$person-node-width-small};
     --person-node-width-medium: #{$person-node-width-medium};
     --person-node-width-large: #{$person-node-width-large};
     --person-node-width: #{$person-node-width-medium};
+    --marriage-node-width-extrasmall: #{$marriage-node-width-extrasmall};
+    --marriage-node-height-extrasmall: #{$marriage-node-height-extrasmall};
     --marriage-node-width-small: #{$marriage-node-width-small};
+    --marriage-node-height-small: #{$marriage-node-height-small};
     --marriage-node-width-medium: #{$marriage-node-width-medium};
+    --marriage-node-height-medium: #{$marriage-node-height-medium};
     --marriage-node-width-large: #{$marriage-node-width-large};
+    --marriage-node-height-large: #{$marriage-node-height-large};
     --marriage-node-width: #{$marriage-node-width-medium};
+    --marriage-node-height: #{$marriage-node-height-medium};
+    --node-horizontal-margin-extrasmall: #{$node-horizontal-margin-extrasmall};
     --node-horizontal-margin-small: #{$node-horizontal-margin-small};
     --node-horizontal-margin-medium: #{$node-horizontal-margin-medium};
     --node-horizontal-margin-large: #{$node-horizontal-margin-large};
     --node-horizontal-margin: #{$node-horizontal-margin-medium};
+    --node-lines-vertical-offset-extrasmall: #{$node-lines-vertical-offset-extrasmall};
     --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
     --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
     --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
+    --tree-person-image-width-extrasmall: #{$person-image-width-extrasmall};
+    --tree-person-image-height-extrasmall: #{$person-image-height-extrasmall};
+    --tree-person-image-width-small: #{$person-image-width-small};
+    --tree-person-image-height-small: #{$person-image-height-small};
+    --tree-person-image-width: #{$person-image-width-small};
+    --tree-person-image-height: #{$person-image-height-small};
+    --tree-node-texts-div-display: flex;
 }
 
 :root.theme-light {
@@ -147,13 +183,13 @@ $node-lines-vertical-offset-large: 10;
 $font-size-small: 11px;
 $font-size-medium: 14px;
 $font-size-large: 18px;
-$font-size-extra-large: 28px;
+$font-size-extralarge: 28px;
 
-$thickness-extra-small: 2px;
+$thickness-extrasmall: 2px;
 $thickness-small: 4px;
 $thickness-medium: 8px;
 $thickness-large: 16px;
-$thickness-extra-large: 32px;
+$thickness-extralarge: 32px;
 $thickness-super-large: 64px;
 
 $border: 1px solid var(--foreground-color);
@@ -161,14 +197,8 @@ $border-radius: $thickness-small;
 
 $tree-diagram-min-height: 60px;
 
-$person-small-image-height: 40px;
-$person-small-image-width: $person-small-image-height * 0.75;
-
-$person-medium-image-width: $person-small-image-width * 1.4;
-$person-medium-image-height: $person-small-image-height * 1.4;
-
-$svg-small-size: 18px;
-$svg-large-size: 32px;
+$svg-size-small: 18px;
+$svg-size-large: 32px;
 
 html {
     font-size: $font-size-small;
@@ -285,7 +315,7 @@ body {
 }
 
 h1 {
-    font-size: $font-size-extra-large;
+    font-size: $font-size-extralarge;
     margin-top: $thickness-large;
     margin-bottom: $thickness-large;
 }
@@ -350,42 +380,45 @@ button, select, input[type="text"], .dropdown-header, .dropdown-menu {
     }
 }
 
-.flat-button-small-with-svg {
+.flat-button-with-svg-small {
     @extend %flat-button-with-svg;
     padding: $thickness-small;
-    width: $svg-small-size;
-    height: $svg-small-size;
+    width: $svg-size-small;
+    height: $svg-size-small;
 }
 
-.flat-button-large-with-svg {
+.flat-button-with-svg-large {
     @extend %flat-button-with-svg;
     padding: $thickness-medium;
-    width: $svg-large-size;
-    height: $svg-large-size;
+    width: $svg-size-large;
+    height: $svg-size-large;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
 }
 
 %svg-div {
-    width: $svg-small-size;
-    height: $svg-small-size;
+    width: $svg-size-small;
+    height: $svg-size-small;
     padding: $thickness-small;
     box-sizing: border-box;
     transition: opacity var(--fade-transition);
 
     svg {
-        width: 100%;
-        height: 100%;
         fill: $foreground-color-dark;
     }
 }
 
 .svg-div-rectangle {
     @extend %svg-div;
-    border-radius: $thickness-extra-small;
+    border-radius: $thickness-extrasmall;
 }
 
 .svg-div-circle {
     @extend %svg-div;
-    border-radius: calc($svg-small-size / 2);
+    border-radius: calc($svg-size-small / 2);
 }
 
 .svg-div-pending {
@@ -410,6 +443,28 @@ button, select, input[type="text"], .dropdown-header, .dropdown-menu {
     svg {
         fill: var(--background-color);
     }
+}
+
+%svg-hoverable {
+    aspect-ratio: 3/4;
+    fill: var(--foreground-color);
+    transition: fill $color-transition;
+
+    &:hover {
+        fill: var(--foreground-color-highlight);
+    }
+}
+
+.person-image-small {
+    @extend %svg-hoverable;
+    width: $person-image-width-small;
+    height: $person-image-height-small;
+}
+
+.person-image-medium {
+    @extend %svg-hoverable;
+    width: $person-image-width-medium;
+    height: $person-image-height-medium;
 }
 
 label {
@@ -489,58 +544,16 @@ input[type="text"]::placeholder {
     transition: background-color $color-transition;
 }
 
-%svg-static {
-    fill: var(--foreground-color);
-    transition: fill $color-transition;
-}
-
-%svg-hoverable {
-    @extend %svg-static;
-
-    &:hover {
-        fill: var(--foreground-color-highlight);
-    }
-}
-
-.svg-small {
-    @extend %svg-hoverable;
-    width: $svg-small-size;
-    height: $svg-small-size;
-    margin: 0px;
-    vertical-align: middle;
-}
-
-.info-svg {
-    @extend .svg-small;
-    margin: $thickness-medium $thickness-medium 0 calc($thickness-small * -1);
-}
-
-.person-small-image {
-    @extend %svg-hoverable;
-    width: $person-small-image-width;
-    height: $person-small-image-height;
-}
-
-.phantom-image-div {
-    aspect-ratio: 3 / 4;
-
-    .phantom-svg {
-        width: 100%;
-        height: 100%;
-
-        .phantom-use {
-        }
-    }
-}
-
 .tooltip {
+    max-width: 600px;
+    overflow: hidden;
     background-color: var(--background-color);
     color: var(--foreground-color-highlight);
     padding: $thickness-medium;
     border: $border;
     border-radius: $border-radius;
-    white-space: nowrap;
     position: absolute;
+    display: flex;
     z-index: 3;
     opacity: 0;
     pointer-events: none;
@@ -574,7 +587,7 @@ fieldset {
     input[type=radio] {
         appearance: none;
         margin: 0px;
-        margin-right: $thickness-extra-small;
+        margin-right: $thickness-extrasmall;
         width: $font-size-small;
         height: $font-size-small;
         border-radius: 50%;
@@ -767,7 +780,7 @@ fieldset {
             transition: opacity $fade-transition;
 
             .expand-button {
-                @extend .flat-button-small-with-svg;
+                @extend .flat-button-with-svg-small;
                 margin: 0px;
 
                 svg {
@@ -806,7 +819,7 @@ fieldset {
 
         .diagram-info-div {
             position: relative;
-            margin-left: calc($thickness-medium * 3 + $thickness-extra-small);
+            margin-left: calc($thickness-medium * 3 + $thickness-extrasmall);
             min-width: 550px;
 
             .text {
@@ -822,229 +835,269 @@ fieldset {
                 font-weight: bold;
             }
         }
+    }
+}
 
-        .diagram {
-            min-height: $tree-diagram-min-height;
-            position: relative;
-            margin: 0px auto;
-            padding: $thickness-large;
-            transition: opacity var(--fade-transition);
+.tree-type-tooltip-content {
+    .description-div {
+        .title-div {
+            font-weight: bold;
+        }
 
-            .nodes-div {
-                .generation, .generation * {
-                    box-sizing: border-box;
+        .text-div {
+            p {
+                margin-left: $thickness-small;
+                margin-bottom: $thickness-medium;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 0 $thickness-medium;
+
+                li {
+                    margin-bottom: $thickness-small;
                 }
 
-                .generation {
+                li.indented {
+                    margin-left: $thickness-medium;
+                }
+            }
+        }
+    }
+
+    .tree-div {
+        // bring it closer to the tooltip edge
+        margin: 0 calc(-1 * var(--node-horizontal-margin));
+    }
+
+    .text-span {
+        margin-top: $thickness-medium;
+        text-align: center;
+        font-style: italic;
+    }
+}
+
+.diagram {
+    z-index: 1;
+    min-height: $tree-diagram-min-height;
+    position: relative;
+    margin: 0px auto;
+    padding: $thickness-large;
+    transition: opacity var(--fade-transition);
+
+    .nodes-div {
+        .generation, .generation * {
+            box-sizing: border-box;
+        }
+
+        .generation {
+            display: flex;
+            white-space: nowrap;
+            transition: padding var(--tree-size-transition);
+
+            .siblings-chain {
+                display: flex;
+                padding: 0px;
+                margin: 0px auto;
+                padding: 0px calc(var(--node-horizontal-margin) * 2);
+                transition: padding var(--tree-size-transition);
+
+                .sibling {
                     display: flex;
-                    white-space: nowrap;
-                    transition: padding var(--tree-size-transition);
+                    margin: 0px;
+                    padding: 0px;
 
-                    .siblings-chain {
+                    .extended-marriage {
                         display: flex;
+                        margin: 0px var(--node-horizontal-margin);
                         padding: 0px;
-                        margin: 0px auto;
-                        padding: 0px calc(var(--node-horizontal-margin) * 2);
-                        transition: padding var(--tree-size-transition);
+                        transition: margin var(--tree-size-transition);
 
-                        .sibling {
+                        &:has(.floating-and-hidden-marriage-nodes-div) {
+                            margin-left: calc(var(--node-horizontal-margin) * -1);
+                            transition: margin var(--tree-size-transition);
+                        }
+
+                        .node {
                             display: flex;
-                            margin: 0px;
-                            padding: 0px;
+                            align-items: center;
+                            border: $border;
+                            border-radius: 0;
+                            padding: $thickness-small;
+                            transition: background-color $color-transition, border $color-transition;
 
-                            .extended-marriage {
-                                display: flex;
-                                margin: 0px var(--node-horizontal-margin);
-                                padding: 0px;
-                                transition: margin var(--tree-size-transition);
+                            .texts-div {
+                                display: var(--tree-node-texts-div-display);
+                                flex-grow: 1;
+                                flex-direction: column;
+                                overflow: hidden;
 
-                                &:has(.floating-and-hidden-marriage-nodes-div) {
-                                    margin-left: calc(var(--node-horizontal-margin) * -1);
-                                    transition: margin var(--tree-size-transition);
-                                }
-
-                                .node {
-                                    display: flex;
-                                    align-items: center;
-                                    border: $border;
-                                    border-radius: 0;
-                                    padding: $thickness-small;
-                                    transition: background-color $color-transition, border $color-transition;
-
-                                    .texts-div {
-                                        display: flex;
-                                        flex-grow: 1;
-                                        flex-direction: column;
-                                        overflow: hidden;
-
-                                        %text {
-                                            overflow: hidden;
-                                            text-overflow: ellipsis;
-                                            white-space: nowrap;
-                                            text-align: center;
-                                            font-size: $font-size-small;
-                                        }
-                                    }
-                                }
-
-                                .highlighted-node:not(:hover) {
-                                    animation: colorFade 0.5s linear infinite alternate;
-
-                                    @keyframes colorFade {
-                                        to {
-                                            background-color: var(--background-color-highlight);
-                                        }
-                                    }
-                                }
-
-                                .marriage-node {
-                                    @extend .node;
-                                    width: var(--marriage-node-width);
-                                    margin: 0px var(--node-horizontal-margin);
+                                %text {
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    text-align: center;
                                     font-size: $font-size-small;
-                                    color: var(--foreground-color-disabled);
-                                    background-color: var(--marriage-color);
-                                    border-color: var(--foreground-color-disabled);
-                                    transition: color $color-transition, background-color $color-transition, border-color $color-transition, width var(--tree-size-transition), margin var(--tree-size-transition);
+                                }
+                            }
+                        }
 
-                                    .marriage-text {
-                                        @extend %text;
+                        .highlighted-node:not(:hover) {
+                            animation: colorFade 0.5s linear infinite alternate;
+
+                            @keyframes colorFade {
+                                to {
+                                    background-color: var(--background-color-highlight);
+                                }
+                            }
+                        }
+
+                        .marriage-node {
+                            @extend .node;
+                            width: var(--marriage-node-width);
+                            height: var(--marriage-node-height);
+                            margin: 0px var(--node-horizontal-margin);
+                            font-size: $font-size-small;
+                            color: var(--foreground-color-disabled);
+                            background-color: var(--marriage-color);
+                            border-color: var(--foreground-color-disabled);
+                            transition: color $color-transition, background-color $color-transition, border-color $color-transition, width var(--tree-size-transition), margin var(--tree-size-transition);
+
+                            .marriage-text {
+                                @extend %text;
+                            }
+                        }
+
+                        .marriage-node.interactive {
+                            color: var(--foreground-color);
+                            border-color: var(--foreground-color);
+                        }
+
+                        .floating-and-hidden-marriage-nodes-div {
+                            position: relative;
+                            display: flex;
+                            flex-direction: column;
+
+                            .floating-marriage-node {
+                                margin-top: auto;
+                                margin-bottom: auto;
+                            }
+
+                            .hidden-marriage-node {
+                                @extend .marriage-node;
+                                margin-bottom: 0;
+                                visibility: hidden;
+                            }
+                        }
+
+                        .main-marriage {
+                            display: flex;
+                            flex-direction: column;
+                            padding: 0px;
+                            align-items: center;
+
+                            .couple {
+                                display: flex;
+                            }
+
+                            .person-node {
+                                @extend .node;
+                                width: var(--person-node-width);
+                                color: var(--foreground-color-disabled);
+                                border-color: var(--foreground-color-disabled);
+                                transition: color $color-transition, background-color $color-transition, border $color-transition, width var(--tree-size-transition);
+                                // disabled by default, .interactive colors it
+                                .image {
+                                    @extend .person-image-small;
+                                    // override this from .person-image-small so it can be changed from js
+                                    width: var(--tree-person-image-width);
+                                    height: var(--tree-person-image-height);
+                                    fill: var(--foreground-color-disabled);
+                                    margin-right: $thickness-small;
+
+                                    &:hover {
+                                        fill: var(--foreground-color-disabled);
                                     }
                                 }
 
-                                .marriage-node.interactive {
-                                    color: var(--foreground-color);
-                                    border-color: var(--foreground-color);
+                                .name-text {
+                                    @extend %text;
+                                    font-weight: bold;
                                 }
 
-                                .floating-and-hidden-marriage-nodes-div {
-                                    position: relative;
-                                    display: flex;
-                                    flex-direction: column;
+                                .lived-text {
+                                    @extend %text;
+                                }
+                            }
 
-                                    .floating-marriage-node {
-                                        margin-top: auto;
-                                        margin-bottom: auto;
-                                    }
+                            .person-node.interactive {
+                                color: var(--foreground-color);
+                                border-color: var(--foreground-color);
 
-                                    .hidden-marriage-node {
-                                        @extend .marriage-node;
-                                        margin-bottom: 0;
-                                        visibility: hidden;
-                                    }
+                                .image {
+                                    fill: var(--foreground-color);
                                 }
 
-                                .main-marriage {
-                                    display: flex;
-                                    flex-direction: column;
-                                    padding: 0px;
-                                    align-items: center;
+                                &:hover {
+                                    color: var(--foreground-color-highlight);
+                                    background-color: var(--background-color-highlight);
+                                    border-color: var(--foreground-color-highlight);
+                                    cursor: pointer;
 
-                                    .couple {
-                                        display: flex;
-                                    }
-
-                                    .person-node {
-                                        @extend .node;
-                                        width: var(--person-node-width);
-                                        color: var(--foreground-color-disabled);
-                                        border-color: var(--foreground-color-disabled);
-                                        transition: color $color-transition, background-color $color-transition, border $color-transition, width var(--tree-size-transition);
-
-                                        .image-div {
-                                            width: $person-small-image-width;
-                                            height: $person-small-image-height;
-                                        }
-
-                                        .image {
-                                            @extend .person-small-image;
-                                            fill: var(--foreground-color-disabled);
-                                            margin-right: $thickness-small;
-
-                                            &:hover {
-                                                fill: var(--foreground-color-disabled);
-                                            }
-                                        }
-
-                                        .name-text {
-                                            @extend %text;
-                                            font-weight: bold;
-                                        }
-
-                                        .lived-text {
-                                            @extend %text;
-                                        }
-                                    }
-
-                                    .person-node.interactive {
-                                        color: var(--foreground-color);
-                                        border-color: var(--foreground-color);
-
-                                        .image {
-                                            fill: var(--foreground-color);
-                                        }
-
-                                        &:hover {
-                                            color: var(--foreground-color-highlight);
-                                            background-color: var(--background-color-highlight);
-                                            border-color: var(--foreground-color-highlight);
-                                            cursor: pointer;
-
-                                            .image {
-                                                fill: var(--foreground-color-highlight);
-                                            }
-                                        }
-                                    }
-
-                                    .male-node {
-                                        @extend .person-node;
-                                        @extend .male-background-color;
-                                    }
-
-                                    .female-node {
-                                        @extend .person-node;
-                                        @extend .female-background-color;
-                                    }
-
-                                    .static-marriage-node {
+                                    .image {
+                                        fill: var(--foreground-color-highlight);
                                     }
                                 }
+                            }
+
+                            .male-node {
+                                @extend .person-node;
+                                @extend .male-background-color;
+                            }
+
+                            .female-node {
+                                @extend .person-node;
+                                @extend .female-background-color;
+                            }
+
+                            .static-marriage-node {
                             }
                         }
                     }
                 }
             }
+        }
+    }
 
-            .lines-svg {
-                position: absolute;
-                top: 0;
-                left: 0;
-                pointer-events: none;
-                background-color: transparent;
+    .lines-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-color: transparent;
 
-                %line-svg {
-                    stroke-width: 1px;
-                    transition: stroke $color-transition;
-                    fill: transparent;
-                }
+        %line-svg {
+            stroke-width: 1px;
+            transition: stroke $color-transition;
+            fill: transparent;
+        }
 
-                .biological-line-svg {
-                    @extend %line-svg;
-                    stroke: var(--foreground-color);
-                    stroke-dasharray: 4,4;
-                }
+        .biological-line-svg {
+            @extend %line-svg;
+            stroke: var(--foreground-color);
+            stroke-dasharray: 4,4;
+        }
 
-                .adoptive-line-svg {
-                    @extend %line-svg;
-                    stroke-dasharray: 6,6;
-                    stroke: $adoptive-line-color-default;
-                }
+        .adoptive-line-svg {
+            @extend %line-svg;
+            stroke-dasharray: 6,6;
+            stroke: $adoptive-line-color-default;
+        }
 
-                .marriage-line-svg {
-                    @extend %line-svg;
-                    stroke: $marriage-line-color-default;
-                }
-            }
+        .marriage-line-svg {
+            @extend %line-svg;
+            stroke: $marriage-line-color-default;
         }
     }
 }
@@ -1054,7 +1107,7 @@ fieldset {
     overflow: hidden;
 
     %scroll-to-button {
-        @extend .flat-button-large-with-svg;
+        @extend .flat-button-with-svg-large;
         position: absolute;
         right: 0px;
         margin-right: calc($thickness-medium + $scroll-bar-size);
@@ -1249,7 +1302,7 @@ fieldset {
                             display: flex;
                             width: 100%;
                             min-width: 0;
-                            border: $thickness-extra-small solid var(--background-color);
+                            border: $thickness-extrasmall solid var(--background-color);
                             transition: color $color-transition, background-color $color-transition, border $color-transition;
                             box-sizing: border-box;
 
@@ -1282,8 +1335,7 @@ fieldset {
                                 }
                             }
 
-                            .non-spouse-img {
-                                @extend .person-small-image;
+                            %spouse-non-spouse-image {
                                 // cancel hovering effect
                                 &:hover {
                                     fill: var(--foreground-color);
@@ -1292,16 +1344,14 @@ fieldset {
                                 flex-shrink: 0;
                             }
 
-                            .spouse-img {
-                                @extend .person-small-image;
-                                // cancel hovering effect
-                                &:hover {
-                                    fill: var(--foreground-color);
-                                }
+                            .non-spouse-img {
+                                @extend .person-image-small;
+                                @extend %spouse-non-spouse-image;
+                            }
 
-                                width: ($person-small-image-width * 1.4);
-                                height: ($person-small-image-height * 1.4);
-                                flex-shrink: 0;
+                            .spouse-img {
+                                @extend .person-image-medium;
+                                @extend %spouse-non-spouse-image;
                             }
                         }
 
@@ -1313,7 +1363,7 @@ fieldset {
                                 color: var(--foreground-color-highlight);
                                 background-color: var(--background-color-highlight);
 
-                                .person-small-image {
+                                .person-image-small {
                                     fill: var(--foreground-color-highlight);
                                 }
                             }
@@ -1410,7 +1460,8 @@ fieldset {
         }
 
         .persons-action-svg {
-            @extend .svg-small;
+            // Szabi?
+            // @extend .svg-small;
             margin: 0px $thickness-small;
         }
     }
@@ -1429,8 +1480,8 @@ fieldset {
     }
 
     .persons-image {
-        width: $person-small-image-width;
-        height: $person-small-image-height;
+        width: $person-image-width-small;
+        height: $person-image-height-small;
     }
 }
 
@@ -1444,7 +1495,7 @@ fieldset {
     border-radius: $border-radius;
     padding: $thickness-medium;
     padding-left: calc($thickness-medium * 2);
-    margin-bottom: $thickness-extra-large;
+    margin-bottom: $thickness-extralarge;
 }
 
 .dropdown {
@@ -1533,7 +1584,7 @@ fieldset {
         flex-direction: row;
 
         &:hover {
-            .person-small-image {
+            .person-image-small {
                 fill: var(--foreground-color-highlight);
             }
         }
@@ -1617,14 +1668,14 @@ fieldset {
         .popup-close-button {
             padding: 0px;
             margin: 0px;
-            font-size: $font-size-extra-large;
+            font-size: $font-size-extralarge;
             border: none;
         }
     }
 
     .popup-loading-bar {
         width: 100%;
-        height: $thickness-extra-small;
+        height: $thickness-extrasmall;
         transition: width $popup-loading-bar-transition;
         // div used to set the background-color transition
         // this way we're able to edit the width transition on the parent

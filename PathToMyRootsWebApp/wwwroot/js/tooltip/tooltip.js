@@ -2,28 +2,47 @@
 //$(function () {
 //});
 
+// tooltips work the following way:
+//
+// to the tooltip source element assign:
+// - the id for the data-tooltip-id attribute (data-tooltip-id="hourglass-biological")
+// - the class tooltip-source
+//
+// to the tooltip element assign:
+// - the id for the data-tooltip-id attribute (data-tooltip-id="hourglass-biological")
+// - the class tooltip
+//
+// the tooltip will automatically become invisible by having opacity 0
+// finally call the registerTooltips method
+// each tooltip is moved to the body - needed to overflow its original container
+// and an event handler is added the tooltip to be shown in the middle below the source element
+// registerTooltips can be called multiple times, it will assign the tooltips only to the uninitialized sources
+// duplicated tooltips (tests page for instance) will be omitted
 function registerTooltips() {
-    const body = $('body');
-    const tooltipHtmlsAlreadyInBody = new Set();
+    const tooltipContentIdsInBody = new Set();
 
-    // get all tooltip elements that are direct children of body
-    $('.tooltip').filter(function () {
+    // get all tooltip ids that are already in the body
+    $('.tooltip').each(function () {
         const tooltip = $(this);
-        return tooltip.parent()[0] === document.body;
-    }).each(function () {
-        tooltipHtmlsAlreadyInBody.add($(this).html());
+        if (tooltip.parent()[0] === document.body) {
+            const id = tooltip.data('tooltip-id');
+            tooltipContentIdsInBody.add(id);
+        }
     });
 
-    // get all tooltips not already in body and unique by HTML content
-    const uniqueTooltipsToAddToBody = $('.tooltip').filter(function () {
+    // ove tooltips to body or remove if because it's a duplicate
+    $('.tooltip').each(function () {
         const tooltip = $(this);
-        return tooltip.parent()[0] !== document.body && !tooltipHtmlsAlreadyInBody.has(tooltip.html());
-    });
+        const tooltipId = tooltip.data('tooltip-id');
 
-    // move unique tooltips to body
-    uniqueTooltipsToAddToBody.each(function () {
-        const tooltip = $(this);
-        tooltip.prependTo(body);
+        // remove duplicate tooltip
+        if (tooltip.parent()[0] !== document.body && tooltipContentIdsInBody.has(tooltipId)) {
+            tooltip.remove();
+        } else if (!tooltipContentIdsInBody.has(tooltipId)) {
+            // move it to the body if it's the first tooltip-content with its id
+            tooltip.prependTo(document.body);
+            tooltipContentIdsInBody.add(tooltipId);
+        }
     });
 
     const tooltipSourceToTooltip = new Map();
@@ -32,7 +51,7 @@ function registerTooltips() {
     // add event listeners only
     tooltipSources.each(function () {
         const tooltipSource = $(this);
-        if (tooltipSource.data('tooltip-initialized')) {
+        if (tooltipSource.data('tooltip-source-initialized')) {
             return;
         }
 
@@ -46,7 +65,7 @@ function registerTooltips() {
         tooltipSourceToTooltip.set(tooltipSource[0], tooltip.get(0));
 
         tooltipSource.on('mouseenter', function () {
-            const tooltipSourceInner= this;
+            const tooltipSourceInner = this;
             const tooltipInner = tooltipSourceToTooltip.get(tooltipSourceInner);
 
             const rect = tooltipSourceInner.getBoundingClientRect();
@@ -62,6 +81,6 @@ function registerTooltips() {
             $(tooltipInner).removeClass('tooltip-open');
         });
 
-        tooltipSource.data('tooltip-initialized', true);
+        tooltipSource.data('tooltip-source-initialized', true);
     });
 }

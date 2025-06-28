@@ -47,7 +47,7 @@
 
     createScrollToTestButton(treeDiagramsDiv, testTitle) {
         const button = $('<button>')
-            .addClass('flat-button-small-with-svg');
+            .addClass('flat-button-with-svg-small');
 
         hideElement(button);
 

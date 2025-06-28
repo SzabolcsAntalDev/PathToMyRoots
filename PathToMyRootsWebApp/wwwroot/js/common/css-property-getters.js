@@ -10,8 +10,20 @@ function getMarriageNodeWidth(viewMode) {
     return getPropertyValue(`marriage-node-width-${viewMode.id.toLowerCase()}`);
 }
 
+function getMarriageNodeHeight(viewMode) {
+    return getPropertyValue(`marriage-node-height-${viewMode.id.toLowerCase()}`);
+}
+
 function getNodeHorizontalMargin(viewMode) {
     return getPropertyValue(`node-horizontal-margin-${viewMode.id.toLowerCase()}`);
+}
+
+function getTreePersonImageWidth(viewMode) {
+    return getPropertyValue(`tree-person-image-width-${viewMode.id.toLowerCase()}`);
+}
+
+function getTreePersonImageHeight(viewMode) {
+    return getPropertyValue(`tree-person-image-height-${viewMode.id.toLowerCase()}`);
 }
 
 function getNodeLinesVerticalOffset(viewMode) {
