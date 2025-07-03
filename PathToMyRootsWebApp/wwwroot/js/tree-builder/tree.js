@@ -12,6 +12,7 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
     const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
     treeDiagramsDiv.append(treeDiagramFrame);
 
+    await fillTreeTypeTooltipsWithTrees();
     registerTooltips();
 
     const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);
@@ -40,8 +41,8 @@ function createTreeContext(personId, treeDiagramFrame, loadingTextContainer, tre
         treeDiagramFrame: treeDiagramFrame,
         loadingTextContainer: loadingTextContainer,
         treeType: treeType,
-        ancestorsDepth: (ancestorsDepth < relativesMinDepth || ancestorsDepth > relativesMaxDepth ? allRelativesDepthIndex : ancestorsDepth),
-        descedantsDepth: (descedantsDepth < relativesMinDepth || descedantsDepth > relativesMaxDepth ? allRelativesDepthIndex : descedantsDepth),
+        ancestorsDepth: (ancestorsDepth < relativesDepth.MIN.index || ancestorsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : ancestorsDepth),
+        descedantsDepth: (descedantsDepth < relativesDepth.MIN.index || descedantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descedantsDepth),
         viewMode: viewMode,
         treeDiagram: treeDiagram,
         calculateDataAndDisplayTree: calculateDataAndDisplayTree,
@@ -62,6 +63,9 @@ async function calculateDataAndDisplayTree(treeContext) {
     await fadeOutElement(treeContext.treeDiagram);
 
     treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+
+    // debug: result string for tree tooltip contents
+    const jsonString = JSON.stringify(treeContext.generationsData, null, 2);
 
     const previousNodesContainer = treeContext.treeDiagram.find('.nodes-div');
     const previousLinesContainer = treeContext.treeDiagram.find('.lines-svg');

@@ -206,7 +206,6 @@
             .attr('id', person.id)
             .attr('class', nodeClass)
             .attr('title', `${personNameText}\n${personLivedText}`)
-            .data('omitParents', person.omitParents)
             .data('biologicalFatherId', person.biologicalFatherId)
             .data('biologicalMotherId', person.biologicalMotherId)
             .data('adoptiveFatherId', person.adoptiveFatherId)

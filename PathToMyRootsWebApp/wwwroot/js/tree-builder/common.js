@@ -4,7 +4,7 @@
         .map(([_, value]) => value);
 }
 
-function createMarriage(male, female, isStaticMarriage, isFake, omitChildrenFromMarriage) {
+function createMarriage(male, female, isStaticMarriage, includeAdoptive, isFake) {
     const marriage = {};
 
     marriage.isStaticMarriage = isStaticMarriage;
@@ -13,40 +13,20 @@ function createMarriage(male, female, isStaticMarriage, isFake, omitChildrenFrom
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
     marriage.maleId = male?.id;
     marriage.femaleId = female?.id;
-    marriage.inverseBiologicalParentIds = omitChildrenFromMarriage ? [] : getCommonBiologicalChildren(male, female);
-    marriage.inverseAdoptiveParentIds = omitChildrenFromMarriage ? [] : getCommonAdoptiveChildren(male, female);
+    marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);
+    marriage.inverseAdoptiveParentIds = includeAdoptive ? getCommonAdoptiveChildren(male, female) : [];
 
     return marriage;
 }
 
 function getCommonBiologicalChildren(male, female) {
     return male.inverseBiologicalFather
-        .filter(maleChild => female.inverseBiologicalMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .filter(maleChild => female.inverseBiologicalMother.some(femaleChild => maleChild.id == femaleChild.id))
         .map(child => child.id);
 }
 
 function getCommonAdoptiveChildren(male, female) {
     return male.inverseAdoptiveFather
-        .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id === femaleChild.id))
+        .filter(maleChild => female.inverseAdoptiveMother.some(femaleChild => maleChild.id == femaleChild.id))
         .map(child => child.id);
-}
-
-function getNumberOfAvailableParents(extendedMarriage) {
-    return this.getNumberOfParents(extendedMarriage.mainMarriage?.male) +
-        this.getNumberOfParents(extendedMarriage.mainMarriage?.female) +
-        this.getNumberOfParents(extendedMarriage.secondaryMarriage?.male) +
-        this.getNumberOfParents(extendedMarriage.secondaryMarriage?.female);
-}
-
-function getNumberOfParents(person) {
-    if (person == null) {
-        return null;
-    }
-
-    let number = 0;
-
-    number += person.biologicalFatherId || person.biologicalMotherId ? 1 : 0;
-    number += person.adoptiveFatherId || person.adoptiveMotherId ? 1 : 0;
-
-    return number;
 }

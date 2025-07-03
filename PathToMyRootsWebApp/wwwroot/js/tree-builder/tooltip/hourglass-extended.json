@@ -219,8 +219,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -439,8 +438,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -544,8 +542,7 @@
               "inverseBiologicalFather": [],
               "inverseBiologicalMother": [],
               "inverseFirstSpouse": [],
-              "inverseSecondSpouse": [],
-              "omitParents": true
+              "inverseSecondSpouse": []
             },
             "female": {
               "id": 587,
@@ -647,8 +644,7 @@
               "inverseBiologicalFather": [],
               "inverseBiologicalMother": [],
               "inverseFirstSpouse": [],
-              "inverseSecondSpouse": [],
-              "omitParents": true
+              "inverseSecondSpouse": []
             },
             "marriage": {
               "isStaticMarriage": true,
@@ -661,8 +657,7 @@
                 589
               ]
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         }
       ],
       "siblings": [
@@ -884,8 +879,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -1106,8 +1100,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -1213,8 +1206,7 @@
                 "inverseBiologicalFather": [],
                 "inverseBiologicalMother": [],
                 "inverseFirstSpouse": [],
-                "inverseSecondSpouse": [],
-                "omitParents": true
+                "inverseSecondSpouse": []
               },
               "female": {
                 "id": 587,
@@ -1316,8 +1308,7 @@
                 "inverseBiologicalFather": [],
                 "inverseBiologicalMother": [],
                 "inverseFirstSpouse": [],
-                "inverseSecondSpouse": [],
-                "omitParents": true
+                "inverseSecondSpouse": []
               },
               "marriage": {
                 "isStaticMarriage": true,
@@ -1330,8 +1321,7 @@
                   589
                 ]
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ]
       ],
@@ -1555,8 +1545,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -1779,8 +1768,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -1888,8 +1876,7 @@
                   "inverseBiologicalFather": [],
                   "inverseBiologicalMother": [],
                   "inverseFirstSpouse": [],
-                  "inverseSecondSpouse": [],
-                  "omitParents": true
+                  "inverseSecondSpouse": []
                 },
                 "female": {
                   "id": 587,
@@ -1991,8 +1978,7 @@
                   "inverseBiologicalFather": [],
                   "inverseBiologicalMother": [],
                   "inverseFirstSpouse": [],
-                  "inverseSecondSpouse": [],
-                  "omitParents": true
+                  "inverseSecondSpouse": []
                 },
                 "marriage": {
                   "isStaticMarriage": true,
@@ -2005,8 +1991,7 @@
                     589
                   ]
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ]
@@ -6511,7 +6496,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 581,
@@ -6527,7 +6511,6 @@
         {
           "secondaryMarriage": {
             "isStaticMarriage": false,
-            "isFake": false,
             "startDate": null,
             "endDate": null,
             "maleId": 599,
@@ -6755,7 +6738,6 @@
         {
           "secondaryMarriage": {
             "isStaticMarriage": false,
-            "isFake": false,
             "startDate": null,
             "endDate": null,
             "maleId": 597,
@@ -6999,7 +6981,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 597,
@@ -7495,7 +7476,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 581,
@@ -7511,7 +7491,6 @@
           {
             "secondaryMarriage": {
               "isStaticMarriage": false,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 599,
@@ -7741,7 +7720,6 @@
           {
             "secondaryMarriage": {
               "isStaticMarriage": false,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 597,
@@ -7985,7 +7963,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 597,
@@ -8183,7 +8160,6 @@
             {
               "secondaryMarriage": {
                 "isStaticMarriage": false,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 597,
@@ -8427,7 +8403,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 597,
@@ -8819,7 +8794,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 581,
@@ -8835,7 +8809,6 @@
             {
               "secondaryMarriage": {
                 "isStaticMarriage": false,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 599,
@@ -9446,7 +9419,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 601,
@@ -9454,9 +9426,7 @@
               "inverseBiologicalParentIds": [
                 606
               ],
-              "inverseAdoptiveParentIds": [
-                607
-              ]
+              "inverseAdoptiveParentIds": []
             }
           },
           "numberOfAvailableParents": 1
@@ -9770,7 +9740,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 604,
@@ -10128,7 +10097,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 601,
@@ -10136,9 +10104,7 @@
                 "inverseBiologicalParentIds": [
                   606
                 ],
-                "inverseAdoptiveParentIds": [
-                  607
-                ]
+                "inverseAdoptiveParentIds": []
               }
             },
             "numberOfAvailableParents": 1
@@ -10456,7 +10422,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 604,
@@ -10816,7 +10781,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 601,
@@ -10824,9 +10788,7 @@
                   "inverseBiologicalParentIds": [
                     606
                   ],
-                  "inverseAdoptiveParentIds": [
-                    607
-                  ]
+                  "inverseAdoptiveParentIds": []
                 }
               },
               "numberOfAvailableParents": 1
@@ -11146,7 +11108,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 604,
@@ -11268,111 +11229,6 @@
             }
           },
           "numberOfAvailableParents": 1
-        },
-        {
-          "mainMarriage": {
-            "male": {
-              "id": 607,
-              "nobleTitle": null,
-              "firstName": "L5 Male2",
-              "lastName": null,
-              "maidenName": null,
-              "otherNames": null,
-              "isMale": true,
-              "birthDate": "+yyyymmdd",
-              "deathDate": null,
-              "biologicalFatherId": null,
-              "biologicalMotherId": null,
-              "adoptiveFatherId": 601,
-              "adoptiveMotherId": 602,
-              "firstSpouseId": null,
-              "secondSpouseId": null,
-              "firstMarriageStartDate": null,
-              "firstMarriageEndDate": null,
-              "secondMarriageStartDate": null,
-              "secondMarriageEndDate": null,
-              "imageUrl": null,
-              "adoptiveFather": {
-                "id": 601,
-                "nobleTitle": null,
-                "firstName": "L4 Male1",
-                "lastName": null,
-                "maidenName": null,
-                "otherNames": null,
-                "isMale": true,
-                "birthDate": "+yyyymmdd",
-                "deathDate": null,
-                "biologicalFatherId": 581,
-                "biologicalMotherId": 580,
-                "adoptiveFatherId": null,
-                "adoptiveMotherId": null,
-                "firstSpouseId": null,
-                "secondSpouseId": null,
-                "firstMarriageStartDate": null,
-                "firstMarriageEndDate": null,
-                "secondMarriageStartDate": null,
-                "secondMarriageEndDate": null,
-                "imageUrl": null,
-                "adoptiveFather": null,
-                "adoptiveMother": null,
-                "biologicalFather": null,
-                "biologicalMother": null,
-                "firstSpouse": null,
-                "secondSpouse": null,
-                "inverseAdoptiveFather": [],
-                "inverseAdoptiveMother": [],
-                "inverseBiologicalFather": [],
-                "inverseBiologicalMother": [],
-                "inverseFirstSpouse": [],
-                "inverseSecondSpouse": []
-              },
-              "adoptiveMother": {
-                "id": 602,
-                "nobleTitle": null,
-                "firstName": "L4 Female1",
-                "lastName": null,
-                "maidenName": null,
-                "otherNames": null,
-                "isMale": false,
-                "birthDate": "+yyyymmdd",
-                "deathDate": null,
-                "biologicalFatherId": null,
-                "biologicalMotherId": null,
-                "adoptiveFatherId": null,
-                "adoptiveMotherId": null,
-                "firstSpouseId": null,
-                "secondSpouseId": null,
-                "firstMarriageStartDate": null,
-                "firstMarriageEndDate": null,
-                "secondMarriageStartDate": null,
-                "secondMarriageEndDate": null,
-                "imageUrl": null,
-                "adoptiveFather": null,
-                "adoptiveMother": null,
-                "biologicalFather": null,
-                "biologicalMother": null,
-                "firstSpouse": null,
-                "secondSpouse": null,
-                "inverseAdoptiveFather": [],
-                "inverseAdoptiveMother": [],
-                "inverseBiologicalFather": [],
-                "inverseBiologicalMother": [],
-                "inverseFirstSpouse": [],
-                "inverseSecondSpouse": []
-              },
-              "biologicalFather": null,
-              "biologicalMother": null,
-              "firstSpouse": null,
-              "secondSpouse": null,
-              "inverseAdoptiveFather": [],
-              "inverseAdoptiveMother": [],
-              "inverseBiologicalFather": [],
-              "inverseBiologicalMother": [],
-              "inverseFirstSpouse": [],
-              "inverseSecondSpouse": []
-            }
-          },
-          "numberOfAvailableParents": 1
         }
       ],
       "siblings": [
@@ -11470,113 +11326,6 @@
                   "inverseFirstSpouse": [],
                   "inverseSecondSpouse": []
                 },
-                "firstSpouse": null,
-                "secondSpouse": null,
-                "inverseAdoptiveFather": [],
-                "inverseAdoptiveMother": [],
-                "inverseBiologicalFather": [],
-                "inverseBiologicalMother": [],
-                "inverseFirstSpouse": [],
-                "inverseSecondSpouse": []
-              }
-            },
-            "numberOfAvailableParents": 1
-          }
-        ],
-        [
-          {
-            "mainMarriage": {
-              "male": {
-                "id": 607,
-                "nobleTitle": null,
-                "firstName": "L5 Male2",
-                "lastName": null,
-                "maidenName": null,
-                "otherNames": null,
-                "isMale": true,
-                "birthDate": "+yyyymmdd",
-                "deathDate": null,
-                "biologicalFatherId": null,
-                "biologicalMotherId": null,
-                "adoptiveFatherId": 601,
-                "adoptiveMotherId": 602,
-                "firstSpouseId": null,
-                "secondSpouseId": null,
-                "firstMarriageStartDate": null,
-                "firstMarriageEndDate": null,
-                "secondMarriageStartDate": null,
-                "secondMarriageEndDate": null,
-                "imageUrl": null,
-                "adoptiveFather": {
-                  "id": 601,
-                  "nobleTitle": null,
-                  "firstName": "L4 Male1",
-                  "lastName": null,
-                  "maidenName": null,
-                  "otherNames": null,
-                  "isMale": true,
-                  "birthDate": "+yyyymmdd",
-                  "deathDate": null,
-                  "biologicalFatherId": 581,
-                  "biologicalMotherId": 580,
-                  "adoptiveFatherId": null,
-                  "adoptiveMotherId": null,
-                  "firstSpouseId": null,
-                  "secondSpouseId": null,
-                  "firstMarriageStartDate": null,
-                  "firstMarriageEndDate": null,
-                  "secondMarriageStartDate": null,
-                  "secondMarriageEndDate": null,
-                  "imageUrl": null,
-                  "adoptiveFather": null,
-                  "adoptiveMother": null,
-                  "biologicalFather": null,
-                  "biologicalMother": null,
-                  "firstSpouse": null,
-                  "secondSpouse": null,
-                  "inverseAdoptiveFather": [],
-                  "inverseAdoptiveMother": [],
-                  "inverseBiologicalFather": [],
-                  "inverseBiologicalMother": [],
-                  "inverseFirstSpouse": [],
-                  "inverseSecondSpouse": []
-                },
-                "adoptiveMother": {
-                  "id": 602,
-                  "nobleTitle": null,
-                  "firstName": "L4 Female1",
-                  "lastName": null,
-                  "maidenName": null,
-                  "otherNames": null,
-                  "isMale": false,
-                  "birthDate": "+yyyymmdd",
-                  "deathDate": null,
-                  "biologicalFatherId": null,
-                  "biologicalMotherId": null,
-                  "adoptiveFatherId": null,
-                  "adoptiveMotherId": null,
-                  "firstSpouseId": null,
-                  "secondSpouseId": null,
-                  "firstMarriageStartDate": null,
-                  "firstMarriageEndDate": null,
-                  "secondMarriageStartDate": null,
-                  "secondMarriageEndDate": null,
-                  "imageUrl": null,
-                  "adoptiveFather": null,
-                  "adoptiveMother": null,
-                  "biologicalFather": null,
-                  "biologicalMother": null,
-                  "firstSpouse": null,
-                  "secondSpouse": null,
-                  "inverseAdoptiveFather": [],
-                  "inverseAdoptiveMother": [],
-                  "inverseBiologicalFather": [],
-                  "inverseBiologicalMother": [],
-                  "inverseFirstSpouse": [],
-                  "inverseSecondSpouse": []
-                },
-                "biologicalFather": null,
-                "biologicalMother": null,
                 "firstSpouse": null,
                 "secondSpouse": null,
                 "inverseAdoptiveFather": [],
@@ -11699,117 +11448,10 @@
               },
               "numberOfAvailableParents": 1
             }
-          ],
-          [
-            {
-              "mainMarriage": {
-                "male": {
-                  "id": 607,
-                  "nobleTitle": null,
-                  "firstName": "L5 Male2",
-                  "lastName": null,
-                  "maidenName": null,
-                  "otherNames": null,
-                  "isMale": true,
-                  "birthDate": "+yyyymmdd",
-                  "deathDate": null,
-                  "biologicalFatherId": null,
-                  "biologicalMotherId": null,
-                  "adoptiveFatherId": 601,
-                  "adoptiveMotherId": 602,
-                  "firstSpouseId": null,
-                  "secondSpouseId": null,
-                  "firstMarriageStartDate": null,
-                  "firstMarriageEndDate": null,
-                  "secondMarriageStartDate": null,
-                  "secondMarriageEndDate": null,
-                  "imageUrl": null,
-                  "adoptiveFather": {
-                    "id": 601,
-                    "nobleTitle": null,
-                    "firstName": "L4 Male1",
-                    "lastName": null,
-                    "maidenName": null,
-                    "otherNames": null,
-                    "isMale": true,
-                    "birthDate": "+yyyymmdd",
-                    "deathDate": null,
-                    "biologicalFatherId": 581,
-                    "biologicalMotherId": 580,
-                    "adoptiveFatherId": null,
-                    "adoptiveMotherId": null,
-                    "firstSpouseId": null,
-                    "secondSpouseId": null,
-                    "firstMarriageStartDate": null,
-                    "firstMarriageEndDate": null,
-                    "secondMarriageStartDate": null,
-                    "secondMarriageEndDate": null,
-                    "imageUrl": null,
-                    "adoptiveFather": null,
-                    "adoptiveMother": null,
-                    "biologicalFather": null,
-                    "biologicalMother": null,
-                    "firstSpouse": null,
-                    "secondSpouse": null,
-                    "inverseAdoptiveFather": [],
-                    "inverseAdoptiveMother": [],
-                    "inverseBiologicalFather": [],
-                    "inverseBiologicalMother": [],
-                    "inverseFirstSpouse": [],
-                    "inverseSecondSpouse": []
-                  },
-                  "adoptiveMother": {
-                    "id": 602,
-                    "nobleTitle": null,
-                    "firstName": "L4 Female1",
-                    "lastName": null,
-                    "maidenName": null,
-                    "otherNames": null,
-                    "isMale": false,
-                    "birthDate": "+yyyymmdd",
-                    "deathDate": null,
-                    "biologicalFatherId": null,
-                    "biologicalMotherId": null,
-                    "adoptiveFatherId": null,
-                    "adoptiveMotherId": null,
-                    "firstSpouseId": null,
-                    "secondSpouseId": null,
-                    "firstMarriageStartDate": null,
-                    "firstMarriageEndDate": null,
-                    "secondMarriageStartDate": null,
-                    "secondMarriageEndDate": null,
-                    "imageUrl": null,
-                    "adoptiveFather": null,
-                    "adoptiveMother": null,
-                    "biologicalFather": null,
-                    "biologicalMother": null,
-                    "firstSpouse": null,
-                    "secondSpouse": null,
-                    "inverseAdoptiveFather": [],
-                    "inverseAdoptiveMother": [],
-                    "inverseBiologicalFather": [],
-                    "inverseBiologicalMother": [],
-                    "inverseFirstSpouse": [],
-                    "inverseSecondSpouse": []
-                  },
-                  "biologicalFather": null,
-                  "biologicalMother": null,
-                  "firstSpouse": null,
-                  "secondSpouse": null,
-                  "inverseAdoptiveFather": [],
-                  "inverseAdoptiveMother": [],
-                  "inverseBiologicalFather": [],
-                  "inverseBiologicalMother": [],
-                  "inverseFirstSpouse": [],
-                  "inverseSecondSpouse": []
-                }
-              },
-              "numberOfAvailableParents": 1
-            }
           ]
         ]
       ],
-      "generationSize": 2
+      "generationSize": 1
     }
   ],
   "largestGenerationSize": 3

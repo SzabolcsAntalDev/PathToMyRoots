@@ -12,9 +12,20 @@ function sortExtendedMarriagesByBirthDate(generations) {
 
 function getValidOrNullBirthDate(extendedMarriage) {
     const maleBirthDate = extendedMarriage.mainMarriage?.male?.birthDate;
-    return maleBirthDate == null || maleBirthDate == DatabaseDateUnknown
-        ? extendedMarriage.mainMarriage?.female?.birthDate
-        : maleBirthDate;
+    const femaleBirthDate = extendedMarriage.mainMarriage?.female?.birthDate;
+
+    // will be null only of male is null
+    if (maleBirthDate == null) {
+        return femaleBirthDate;
+    }
+
+    if (maleBirthDate == DatabaseDateUnknown &&
+        femaleBirthDate != null &&
+        femaleBirthDate != DatabaseDateUnknown) {
+        return femaleBirthDate;
+    }
+
+    return maleBirthDate;
 }
 
 function sortDates(date1, date2) {

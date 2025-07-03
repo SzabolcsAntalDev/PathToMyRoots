@@ -1,6 +1,4 @@
-﻿
-
-const completeTreeCreator = {
+﻿const completeTreeCreator = {
     async createCompleteTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
         const generations = await this.createGenerationsWithExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
 
@@ -12,6 +10,14 @@ const completeTreeCreator = {
         return generations;
     },
 
+    async createGenerationsWithExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        const generationsMap = new Map();
+        const context = this.createIterationContext(personId, new Set(), generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent)
+
+        await this.createGenerationsRecursive(context, personId, 0);
+        return sortByLevelAndConvertToArray(generationsMap);
+    },
+
     createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
         return {
             sourcePersonId: sourcePersonId,
@@ -21,14 +27,6 @@ const completeTreeCreator = {
             descedantsDepth: descedantsDepth,
             loadingTextContainerParent: loadingTextContainerParent
         };
-    },
-
-    async createGenerationsWithExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
-        const generationsMap = new Map();
-        const context = this.createIterationContext(personId, new Set(), generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent)
-
-        await this.createGenerationsRecursive(context, personId, 0);
-        return sortByLevelAndConvertToArray(generationsMap);
     },
 
     async createGenerationsRecursive(context, personId, currentLevel) {
@@ -52,7 +50,7 @@ const completeTreeCreator = {
         if (person.isMale) {
             const male = person;
 
-            if (male.firstSpouseId == null && male.secondSpouseId == null) { // | MALE | -----
+            if (male.firstSpouseId == null && male.secondSpouseId == null) { // MALE
                 mainMarriage.male = male;
                 context.processedPersonIds.add(male.id);
             }
@@ -61,11 +59,11 @@ const completeTreeCreator = {
                 const firstWifeId = male.firstSpouseId;
                 const firstWife = await getPersonJson(firstWifeId);
 
-                if (firstWife.firstSpouseId != null && firstWife.secondSpouseId == null) { // | MALE | female | -----
+                if (firstWife.firstSpouseId != null && firstWife.secondSpouseId == null) { // MALE female
 
                     mainMarriage.male = male;
                     mainMarriage.female = firstWife;
-                    mainMarriage.marriage = createMarriage(male, firstWife, true);
+                    mainMarriage.marriage = createMarriage(male, firstWife, true, true);
 
                     context.processedPersonIds.add(male.id);
                     context.processedPersonIds.add(firstWife.id);
@@ -73,41 +71,41 @@ const completeTreeCreator = {
 
                 if (firstWife.firstSpouseId != null && firstWife.secondSpouseId != null) { // single married male with double married female
 
-                    if (firstWife.firstSpouseId == male.id) { // | ???? | ???? | -  l l - | MALE | -----
-                        extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false);
+                    if (firstWife.firstSpouseId == male.id) { // ? ? - MALE
+                        extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false, true);
                         mainMarriage.male = male;
 
                         context.processedPersonIds.add(male.id);
                         // firstWife should be processed in a later iteration
                     }
 
-                    if (firstWife.secondSpouseId == male.id) { // | MALE | female | - l l - | ???? | -----
+                    if (firstWife.secondSpouseId == male.id) { // MALE female - ?
                         mainMarriage.male = male;
                         mainMarriage.female = firstWife;
-                        mainMarriage.marriage = createMarriage(male, firstWife, true);
+                        mainMarriage.marriage = createMarriage(male, firstWife, true, true);
 
                         context.processedPersonIds.add(male.id);
                         context.processedPersonIds.add(firstWife.id);
 
-                        // if | MALE | female | - l l - | male | then firstWife's firstSpouse should be created inclusively
+                        // if MALE female - male then firstWife's firstSpouse should be created inclusively
                         firstWifesFirstSpouseId = firstWife.firstSpouseId;
                     }
                 }
             }
-            if (male.firstSpouseId != null && male.secondSpouseId != null) { // | ???? | - l l - | MALE | female | -----
+            if (male.firstSpouseId != null && male.secondSpouseId != null) { // ? - MALE female
                 const firstWife = await getPersonJson(male.firstSpouseId);
                 const secondWife = await getPersonJson(male.secondSpouseId);
 
-                extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false);
+                extendedMarriage.secondaryMarriage = createMarriage(male, firstWife, false, true);
 
                 mainMarriage.male = male;
                 mainMarriage.female = secondWife;
-                mainMarriage.marriage = createMarriage(male, secondWife, true);
+                mainMarriage.marriage = createMarriage(male, secondWife, true, true);
 
                 context.processedPersonIds.add(male.id);
                 context.processedPersonIds.add(secondWife.id);
 
-                // if - l l - | MALE | female | - l l - | male | then secondWife's firstSpouse should be created inclusively
+                // if - MALE female - male then secondWife's firstSpouse should be created inclusively
                 secondWifesFirstSpouseId = secondWife.firstSpouseId;
             }
 
@@ -115,7 +113,7 @@ const completeTreeCreator = {
         else {
             const female = person;
 
-            if (female.firstSpouseId == null && female.secondSpouseId == null) { // | FEMALE | -----
+            if (female.firstSpouseId == null && female.secondSpouseId == null) { // FEMALE
                 mainMarriage.female = female;
                 context.processedPersonIds.add(female.id);
             }
@@ -124,26 +122,26 @@ const completeTreeCreator = {
                 const husbandId = female.firstSpouseId;
                 const husband = await getPersonJson(husbandId);
 
-                if (husband.firstSpouseId != null && husband.secondSpouseId == null) { // | male | FEMALE | -----
+                if (husband.firstSpouseId != null && husband.secondSpouseId == null) { // male FEMALE
                     mainMarriage.male = husband;
                     mainMarriage.female = female;
-                    mainMarriage.marriage = createMarriage(husband, female, true);
+                    mainMarriage.marriage = createMarriage(husband, female, true, true);
 
                     context.processedPersonIds.add(female.id);
                     context.processedPersonIds.add(husband.id);
                 }
 
-                if (husband.firstSpouseId == female.id && husband.secondSpouseId != null) { // | FEMALE | - l l - | ???? | ???? | -----
+                if (husband.firstSpouseId == female.id && husband.secondSpouseId != null) { // FEMALE - ? ?
                     mainMarriage.female = female;
                     context.processedPersonIds.add(female.id);
                 }
 
-                if (husband.firstSpouseId != null && husband.secondSpouseId == female.id) { // | ???? | - l l - | m??? | FEM??? | -----
+                if (husband.firstSpouseId != null && husband.secondSpouseId == female.id) { // ? - m? FEM?
                     // female will be added in the husbands iteration
                 }
             }
 
-            if (female.firstSpouseId != null && female.secondSpouseId != null) { // | m??? | FEM??? | - l l - | ???? | -----
+            if (female.firstSpouseId != null && female.secondSpouseId != null) { // m? FEM? - ?
                 // female will be added in the husbands iteration
             }
         }
@@ -154,16 +152,12 @@ const completeTreeCreator = {
             }
 
             if (!context.generationsMap.has(currentLevel)) {
-                const newGeneration = {};
-                newGeneration.extendedMarriages = [];
-                context.generationsMap.set(currentLevel, newGeneration);
+                context.generationsMap.set(currentLevel, { extendedMarriages : [] });
             }
 
             const generation = context.generationsMap.get(currentLevel);
             generation.extendedMarriages.push(extendedMarriage);
         }
-
-        extendedMarriage.numberOfAvailableParents = getNumberOfAvailableParents(extendedMarriage);
 
         loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 

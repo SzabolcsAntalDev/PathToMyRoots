@@ -291,8 +291,7 @@
                 625
               ]
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -511,8 +510,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         }
       ],
       "siblings": [
@@ -806,8 +804,7 @@
                   625
                 ]
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -1028,8 +1025,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ]
       ],
@@ -1325,8 +1321,7 @@
                     625
                   ]
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -1549,8 +1544,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ]

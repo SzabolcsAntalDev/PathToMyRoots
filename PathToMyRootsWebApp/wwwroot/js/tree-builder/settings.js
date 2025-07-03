@@ -76,32 +76,32 @@ function setupRadioButtons(treeContext, settingsContext) {
     // Ancestors radio buttons
     settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
         `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
-        'data-ancestors-depth', allRelativesDepthIndex,
-        getDepthDisplayText(allRelativesDepthIndex)));
+        'data-ancestors-depth', relativesDepth.ALL.index,
+        relativesDepth.getDisplayText(relativesDepth.ALL.index)));
 
-    for (let i = relativesMaxDepth; i >= relativesMinDepth; i--) {
+    for (let i = relativesDepth.MAX.index; i >= relativesDepth.MIN.index; i--) {
         // <label><input type="radio" name="input-radio-ancestors-depth-0-1722960923456" data-ancestors-depth="5" />5</label>
 
         settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
             `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
             'data-ancestors-depth', i,
-            getDepthDisplayText(i)));
+            relativesDepth.getDisplayText(i)));
     }
 
     // Descedants radio buttons
-    for (let i = relativesMinDepth; i <= relativesMaxDepth; i++) {
+    for (let i = relativesDepth.MIN.index; i <= relativesDepth.MAX.index; i++) {
         // <label><input type="radio" name="input-radio-descedants-depth-0-1722960923456" data-descedants-depth="5" />5</label>
 
         settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
             `input-radio-descedants-depth-${treeContext.personId}-${radioButtonNameUid}`,
             'data-descedants-depth', i,
-            getDepthDisplayText(i)));
+            relativesDepth.getDisplayText(i)));
     }
 
     settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
         `input-radio-descedants-depth-${treeContext.personId}-${radioButtonNameUid}`,
-        'data-descedants-depth', allRelativesDepthIndex,
-        getDepthDisplayText(allRelativesDepthIndex)));
+        'data-descedants-depth', relativesDepth.ALL.index,
+        relativesDepth.getDisplayText(relativesDepth.ALL.index)));
 
     const viewModesRadioButtons = settingsContext.viewModesFieldSet.find('input[type="radio"]');
     viewModesRadioButtons.each((_, radioButton) => {
@@ -147,13 +147,13 @@ async function apply(treeContext, settingsContext, fromInitialization) {
     const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
     const descedantsDepthRadioButton = settingsContext.descedantsDepthFieldSet.find('input[type="radio"]:checked');
 
-    treeContext.treeType = getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
+    treeContext.treeType = treeTypes.getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
     treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
     treeContext.descedantsDepth = parseInt(descedantsDepthRadioButton[0].dataset.descedantsDepth, 10);
 
     settingsContext.treeTypeInfo.text(treeContext.treeType.displayName);
-    settingsContext.ancestorsDepthInfo.text(getDepthDisplayText(treeContext.ancestorsDepth));
-    settingsContext.descedantsDepthInfo.text(getDepthDisplayText(treeContext.descedantsDepth));
+    settingsContext.ancestorsDepthInfo.text(relativesDepth.getDisplayText(treeContext.ancestorsDepth));
+    settingsContext.descedantsDepthInfo.text(relativesDepth.getDisplayText(treeContext.descedantsDepth));
 
     await treeContext.calculateDataAndDisplayTree(treeContext);
 }

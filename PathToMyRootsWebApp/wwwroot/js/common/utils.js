@@ -1,4 +1,5 @@
-﻿function showPopup(popupPrefix, message) {
+﻿// Szabi: move this to its own class
+function showPopup(popupPrefix, message) {
     if (!message) {
         return;
     }
@@ -59,6 +60,7 @@ function showErrorPopup(errorCode) {
 
 }
 
+// Szabi: maybe these are not needed with the new tooltips
 function addAndTrackClass(element, className) {
     let count = element.dataset[className] ? parseInt(element.dataset[className]) : 0;
     element.dataset[className] = count + 1;

@@ -26,11 +26,13 @@
                                             <div class="text-div">
                                                 <p>Displays:</p>
                                                 <ul>
-                                                    <li>- the person, his/her spouses and biological siblings</li>
-                                                    <li>- his/her biological ancestors, plus:</li>
-                                                    <li class="indented">- his/her parents' spouses if they have children together</li>
-                                                    <li class="indented">- placeholder ancestors up to the last known generation</li>
-                                                    <li>- his/her biological descendants and their spouses, recursively</li>
+                                                    <li>- the person</li>
+                                                    <li>- his/her spouses with whom he/she has common children</li>
+                                                    <li>- his/her biological siblings</li>
+                                                    <li>- his/her biological parents and their other spouses if they have children together</li>
+                                                    <li>- his/her biological ancestors starting from grandparents</li>
+                                                    <li>- placeholder ancestors up to the last known generation</li>
+                                                    <li>- his/her biological descendants and their spouses with whom they have common biological children</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -60,9 +62,11 @@
                                             <div class="text-div">
                                                 <p>Displays:</p>
                                                 <ul>
-                                                    <li>- the person, his/her spouses and both biological and adoptive siblings and their spouses</li>
-                                                    <li>- all his/her biological and adoptive ancestors and their spouses, excluding the parents of adoptive parents</li>
-                                                    <li>- all his/her biological/adoptive descedants and their spouses, excluding descedants of adoptive descedants</li>
+                                                    <li>- the person</li>
+                                                    <li>- his/her spouses</li>
+                                                    <li>- his/her biological and adoptive siblings and their spouses</li>
+                                                    <li>- his/her biological and adoptive ancestors and their spouses recursively, excluding ancesotrs of adoptive ancestors</li>
+                                                    <li>- his/her biological and adoptive descedants and their spouses recursively, excluding descedants of adoptive descedants</li>
                                                 </ul>
                                             </div>
                                         </div>

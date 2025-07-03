@@ -1,27 +1,34 @@
 ﻿const hourglassExtended = {
-    async createKnownAncestorsRecursive(context, biologicalFatherId, biologicalMotherId, adoptiveFatherId, adoptiveMotherId, currentLevel) {
-        if (!biologicalFatherId && !adoptiveFatherId)
-            return;
+    async createKnownAncestorsOf(context) {
+        await hourglassExtended.createKnownAncestorsRecursive(context, context.person.biologicalFatherId, context.person.biologicalMotherId, context.person.adoptiveFatherId, context.person.adoptiveMotherId, -1);
+    },
 
-        if (context.ancestorsDepth >= 0 && currentLevel < -context.ancestorsDepth) {
+    async createKnownAncestorsRecursive(context, biologicalFatherId, biologicalMotherId, adoptiveFatherId, adoptiveMotherId, currentLevel) {
+        if (context.ancestorsDepth != relativesDepth.ALL.index && currentLevel < -context.ancestorsDepth) {
+            return;
+        }
+
+        if (!biologicalFatherId && !adoptiveFatherId) {
             return;
         }
 
         if (biologicalFatherId) {
             const biologicalFather = await getPersonJson(biologicalFatherId);
             const biologicalMother = await getPersonJson(biologicalMotherId);
-            const extendedMarriagesOfBiologicalParents = await this.getExtendedMarriagesOf(context, biologicalFather, biologicalMother);
+
+            context.processedPersonIds.add(biologicalFather.id);
+            context.processedPersonIds.add(biologicalMother.id);
+
+            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+            const extendedMarriagesOfBiologicalParents = await this.createExtendedMarriagesOfPersons(context, biologicalFather, biologicalMother);
 
             if (!context.ancestorsGenerationsMap.has(currentLevel)) {
-                const newGeneration = {};
-                newGeneration.extendedMarriages = [];
-                context.ancestorsGenerationsMap.set(currentLevel, newGeneration);
+                context.ancestorsGenerationsMap.set(currentLevel, { extendedMarriages: [] });
             }
 
             const generation = context.ancestorsGenerationsMap.get(currentLevel);
             generation.extendedMarriages.push(...extendedMarriagesOfBiologicalParents);
-
-            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 
             await this.createKnownAncestorsRecursive(context, biologicalFather.biologicalFatherId, biologicalFather.biologicalMotherId, biologicalFather.adoptiveFatherId, biologicalFather.adoptiveMotherId, currentLevel - 1);
             await this.createKnownAncestorsRecursive(context, biologicalMother.biologicalFatherId, biologicalMother.biologicalMotherId, biologicalMother.adoptiveFatherId, biologicalMother.adoptiveMotherId, currentLevel - 1);
@@ -30,27 +37,16 @@
         if (adoptiveFatherId) {
             const adoptiveFather = await getPersonJson(adoptiveFatherId);
             const adoptiveMother = await getPersonJson(adoptiveMotherId);
-            const extendedMarriagesOfAdoptiveParents = await this.getExtendedMarriagesOf(context, adoptiveFather, adoptiveMother);
 
-            for (const extendedMarriage of extendedMarriagesOfAdoptiveParents) {
-                extendedMarriage.numberOfAvailableParents = 0;
+            context.processedPersonIds.add(adoptiveFather.id);
+            context.processedPersonIds.add(adoptiveMother.id);
 
-                // Szabi: why not?
-                // if parents of adoptive parents are displayed
-                // for instance when the biological and adoptive parents are siblings
-                // then do not draw the lines between the adoptive parents and their parents
-                if (extendedMarriage.mainMarriage.male) {
-                    extendedMarriage.mainMarriage.male.omitParents = true;
-                }
-                if (extendedMarriage.mainMarriage.female) {
-                    extendedMarriage.mainMarriage.female.omitParents = true;
-                }
-            }
+            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+            const extendedMarriagesOfAdoptiveParents = await this.createExtendedMarriagesOfPersons(context, adoptiveFather, adoptiveMother);
 
             if (!context.ancestorsGenerationsMap.has(currentLevel)) {
-                const newGeneration = {};
-                newGeneration.extendedMarriages = [];
-                context.ancestorsGenerationsMap.set(currentLevel, newGeneration);
+                context.ancestorsGenerationsMap.set(currentLevel, { extendedMarriages: [] });
             }
 
             const generation = context.ancestorsGenerationsMap.get(currentLevel);
@@ -58,192 +54,282 @@
         }
     },
 
-    // returns the extended marriage the contains the first and second spouses of the father and mother
-    async getExtendedMarriagesOf(context, male, female) {
+    async createExtendedMarriagesOfPersons(context, male, female) {
         const extendedMarriages = [];
-        const malesFirstSpouse = await getPersonJson(male.firstSpouseId);
-        const malesSecondSpouse = await getPersonJson(male.secondSpouseId);
-        const femalesFirstSpouse = await getPersonJson(female.firstSpouseId);
-        const femalesSecondSpouse = await getPersonJson(female.secondSpouseId);
-
-        const malesNumberOfAvailableParents = (male.biologicalFatherId ? 1 : 0) + (male.adoptiveFatherId ? 1 : 0);
-        const femalesNumberOfAvailableParents = (female.biologicalFatherId ? 1 : 0) + (female.adoptiveFatherId ? 1 : 0);
-
-        const totalNumberOfAvailableParents = malesNumberOfAvailableParents + femalesNumberOfAvailableParents;
-
-        context.processedPersonIds.add(male.id);
-        context.processedPersonIds.add(female.id);
-        context.processedPersonIds.add(malesFirstSpouse?.id);
-        context.processedPersonIds.add(malesSecondSpouse?.id);
-        context.processedPersonIds.add(femalesFirstSpouse?.id);
-        context.processedPersonIds.add(femalesSecondSpouse?.id);
 
         if (male.firstSpouseId == female.id && male.secondSpouseId == null &&
             female.firstSpouseId == male.id && female.secondSpouseId == null) { // MALE FEMALE
 
-            extendedMarriages.push({
+            extendedMarriages.push({ // MALE FEMALE
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
-                },
-                numberOfAvailableParents: totalNumberOfAvailableParents
+                    marriage: createMarriage(male, female, true, true)
+                }
             });
         }
 
         else if (male.firstSpouseId == female.id && male.secondSpouseId == null &&
-            female.firstSpouseId != male.id && female.secondSpouseId == male.id) { // MALE FEMALE - male
+            female.firstSpouseId != male.id && female.secondSpouseId == male.id) { // MALE FEMALE - firstHusband
 
-            extendedMarriages.push({
+            extendedMarriages.push({ // MALE FEMALE
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
-                },
-                numberOfAvailableParents: totalNumberOfAvailableParents
+                    marriage: createMarriage(male, female, true, true)
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(femalesFirstSpouse, female, false),
+            const firstHusband = await getPersonJson(female.firstSpouseId);
+
+            extendedMarriages.push({ // - firstHusband
+                secondaryMarriage: createMarriage(firstHusband, female, false, true),
                 mainMarriage: {
-                    male: femalesFirstSpouse
-                },
-                numberOfAvailableParents: 0
+                    male: firstHusband
+                }
             });
         }
 
         else if (male.firstSpouseId != female.id && male.secondSpouseId == female.id &&
-            female.firstSpouseId == male.id && female.secondSpouseId == null) { // female - MALE FEMALE
+            female.firstSpouseId == male.id && female.secondSpouseId == null) { // firstWife - MALE FEMALE
 
-            extendedMarriages.push({
+            const firstWife = await getPersonJson(male.firstSpouseId);
+
+            extendedMarriages.push({ // firstWife
                 mainMarriage: {
-                    female: malesFirstSpouse
-                },
-                numberOfAvailableParents: 0
+                    female: firstWife
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(male, malesFirstSpouse, false),
+            extendedMarriages.push({ // - MALE FEMALE
+                secondaryMarriage: createMarriage(male, firstWife, false, true),
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
-                },
-                numberOfAvailableParents: totalNumberOfAvailableParents
+                    marriage: createMarriage(male, female, true, true)
+                }
             });
         }
 
         else if (male.firstSpouseId != female.id && male.secondSpouseId == female.id &&
-            female.firstSpouseId != male.id && female.secondSpouseId == male.id) { // female - MALE FEMALE - male
+            female.firstSpouseId != male.id && female.secondSpouseId == male.id) { // firstWife - MALE FEMALE - firstHusband
 
-            extendedMarriages.push({
+            const firstWife = await getPersonJson(male.firstSpouseId);
+
+            extendedMarriages.push({ // firstWife
                 mainMarriage: {
-                    female: malesFirstSpouse
-                },
-                numberOfAvailableParents: 0
+                    female: firstWife
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(male, malesFirstSpouse, false),
+            extendedMarriages.push({ // - MALE FEMALE
+                secondaryMarriage: createMarriage(male, firstWife, false, true),
                 mainMarriage: {
                     male: male,
                     female: female,
-                    marriage: createMarriage(male, female, true)
+                    marriage: createMarriage(male, female, true, true)
                 },
-                numberOfAvailableParents: totalNumberOfAvailableParents
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(femalesFirstSpouse, female, false),
+            const firstHusband = await getPersonJson(female.firstSpouseId);
+
+            extendedMarriages.push({ // - firstHusband
+                secondaryMarriage: createMarriage(firstHusband, female, false, true),
                 mainMarriage: {
-                    male: femalesFirstSpouse
-                },
-                numberOfAvailableParents: 0
+                    male: firstHusband
+                }
             });
         }
 
         else if (male.firstSpouseId == female.id && male.secondSpouseId == null &&
-            female.firstSpouseId == male.id && female.secondSpouseId != male.id) { // male FEMALE - MALE
+            female.firstSpouseId == male.id && female.secondSpouseId != male.id) { // secondHusband FEMALE - MALE
 
-            extendedMarriages.push({
+            const secondHusband = await getPersonJson(female.secondSpouseId);
+
+            extendedMarriages.push({ // secondHusband FEMALE
                 mainMarriage: {
-                    male: femalesSecondSpouse,
+                    male: secondHusband,
                     female: female,
-                    marriage: createMarriage(femalesSecondSpouse, female, true)
-                },
-                numberOfAvailableParents: femalesNumberOfAvailableParents
+                    marriage: createMarriage(secondHusband, female, true, true)
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(male, female, false),
+            extendedMarriages.push({ // - MALE
+                secondaryMarriage: createMarriage(male, female, false, true),
                 mainMarriage: {
                     male: male
-                },
-                numberOfAvailableParents: malesNumberOfAvailableParents
+                }
             });
         }
 
         else if (male.firstSpouseId == female.id && male.secondSpouseId != female.id &&
-            female.firstSpouseId == male.id && female.secondSpouseId == null) { // FEMALE - MALE female
+            female.firstSpouseId == male.id && female.secondSpouseId == null) { // FEMALE - MALE secondWife
 
-            extendedMarriages.push({
+            extendedMarriages.push({ // FEMALE
                 mainMarriage: {
                     female: female
-                },
-                numberOfAvailableParents: femalesNumberOfAvailableParents
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(male, female, false),
+            const secondWife = await getPersonJson(male.secondSpouseId);
+
+            extendedMarriages.push({ // - MALE secondWife
+                secondaryMarriage: createMarriage(male, female, false, true),
                 mainMarriage: {
                     male: male,
-                    female: malesSecondSpouse,
-                    marriage: createMarriage(male, malesSecondSpouse, true)
-                },
-                numberOfAvailableParents: malesNumberOfAvailableParents
+                    female: secondWife,
+                    marriage: createMarriage(male, secondWife, true, true)
+                }
             });
         }
 
         else if (male.firstSpouseId == female.id && male.secondSpouseId != female.id &&
-            female.firstSpouseId == male.id && female.secondSpouseId != female.id) { // male FEMALE - MALE female
+            female.firstSpouseId == male.id && female.secondSpouseId != female.id) { // secondHusband FEMALE - MALE secondWife
 
-            extendedMarriages.push({
+            const secondHusband = await getPersonJson(female.secondSpouseId);
+
+            extendedMarriages.push({ // secondHusband FEMALE
                 mainMarriage: {
-                    male: femalesSecondSpouse,
+                    male: secondHusband,
                     female: female,
-                    marriage: createMarriage(femalesSecondSpouse, female, true)
-                },
-                numberOfAvailableParents: femalesNumberOfAvailableParents
+                    marriage: createMarriage(secondHusband, female, true, true)
+                }
             });
 
-            extendedMarriages.push({
-                secondaryMarriage: createMarriage(male, female, false),
+            const secondWife = await getPersonJson(male.secondSpouseId);
+
+            extendedMarriages.push({ // - MALE secondWife
+                secondaryMarriage: createMarriage(male, female, false, true),
                 mainMarriage: {
                     male: male,
-                    female: malesSecondSpouse,
-                    marriage: createMarriage(male, malesSecondSpouse, true)
-                },
-                numberOfAvailableParents: malesNumberOfAvailableParents
+                    female: secondWife,
+                    marriage: createMarriage(male, secondWife, true, true)
+                }
             });
         }
+
+        context.processedPersonIds.add(male.firstSpouseId);
+        context.processedPersonIds.add(male.secondSpouseId);
+        context.processedPersonIds.add(female.firstSpouseId);
+        context.processedPersonIds.add(female.secondSpouseId);
+
+        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 
         return extendedMarriages;
     },
 
-    // returns the biological and adoptive siblings and their spouses
-    async createSiblings(context, person) {
+    async createExtendedMarriagesOfPerson(context, person) {
+        const extendedMarriages = [];
+
+        if (person.isMale) {
+            const male = person;
+
+            if (male.firstSpouseId == null && male.secondSpouseId == null) { // MALE
+                extendedMarriages.push({ // MALE
+                    mainMarriage: {
+                        male: male
+                    }
+                });
+            }
+
+            else if (male.firstSpouseId != null && male.secondSpouseId == null) { // MALE female
+                const female = await getPersonJson(male.firstSpouseId);
+
+                extendedMarriages.push({
+                    mainMarriage: {
+                        male: male,
+                        female: female,
+                        marriage: createMarriage(male, female, true, true)
+                    }
+                });
+            }
+
+            else if (male.firstSpouseId != null && male.secondSpouseId != null) { // firstWife - MALE secondWife
+                const firstWife = await getPersonJson(male.firstSpouseId);
+                const secondWife = await getPersonJson(male.secondSpouseId);
+
+                extendedMarriages.push({ // firstWife
+                    mainMarriage: {
+                        female: firstWife
+                    }
+                });
+
+                extendedMarriages.push({ // - MALE secondWife
+                    secondaryMarriage: createMarriage(male, firstWife, false, true),
+                    mainMarriage: {
+                        male: male,
+                        female: secondWife,
+                        marriage: createMarriage(male, secondWife, true, true)
+                    }
+                });
+            }
+        }
+        else {
+            const female = person;
+
+            if (female.firstSpouseId == null && female.secondSpouseId == null) { // FEMALE
+                extendedMarriages.push({ // FEMALE
+                    mainMarriage: {
+                        female: female
+                    }
+                });
+            }
+
+            else if (female.firstSpouseId != null && female.secondSpouseId == null) { // FEMALE male
+                const male = await getPersonJson(female.firstSpouseId);
+
+                extendedMarriages.push({ // FEMALE male
+                    mainMarriage: {
+                        male: male,
+                        female: female,
+                        marriage: createMarriage(male, female, true, true)
+                    }
+                });
+            }
+
+            else if (female.firstSpouseId != null && female.secondSpouseId != null) { // secondHusband FEMALE - firstHusband
+                const firstHusband = await getPersonJson(female.firstSpouseId);
+                const secondHusband = await getPersonJson(female.secondSpouseId);
+
+                extendedMarriages.push({ // secondHusband FEMALE
+                    mainMarriage: {
+                        male: secondHusband,
+                        female: female,
+                        marriage: createMarriage(secondHusband, female, true, true)
+                    }
+                });
+
+                extendedMarriages.push({ // - firstHusband
+                    secondaryMarriage: createMarriage(firstHusband, female, false, true),
+                    mainMarriage: {
+                        male: firstHusband,
+                    }
+                });
+            }
+        }
+
+        context.processedPersonIds.add(person.firstSpouseId);
+        context.processedPersonIds.add(person.secondSpouseId);
+
+        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+        return extendedMarriages;
+    },
+
+    async createSiblingsOf(context) {
         if (context.ancestorsDepth == 0) {
             return [];
         }
 
-        if (!person.biologicalFatherId && !person.adoptiveFatherId) {
+        if (!context.person.biologicalFatherId && !context.person.adoptiveFatherId) {
             return [];
         }
 
-        const biologicalFather = await getPersonJson(person.biologicalFatherId);
-        const biologicalMother = await getPersonJson(person.biologicalMotherId);
-        const adoptiveFather = await getPersonJson(person.adoptiveFatherId);
-        const adoptiveMother = await getPersonJson(person.adoptiveMotherId);
+        const biologicalFather = await getPersonJson(context.person.biologicalFatherId);
+        const biologicalMother = await getPersonJson(context.person.biologicalMotherId);
+        const adoptiveFather = await getPersonJson(context.person.adoptiveFatherId);
+        const adoptiveMother = await getPersonJson(context.person.adoptiveMotherId);
+        // no need to change loading text here, parents were already loaded previously
 
         const siblings =
             (biologicalFather?.inverseBiologicalFather ?? [])
@@ -255,22 +341,91 @@
                 .concat(adoptiveFather?.inverseAdoptiveFather ?? [])
                 .concat(adoptiveMother?.inverseAdoptiveMother ?? []);
 
-        // Szabi: why can't the id be removed from the equation?
         const uniqueSiblingIds =
             arrayRemoveDuplicatesWithSameId(siblings)
-                .filter(sibling => sibling.id != person.id)
+                .filter(sibling => sibling.id != context.person.id)
                 .map(sibling => sibling.id);
 
         const extendedMarriages = [];
 
         for (const siblingId of uniqueSiblingIds) {
             const sibling = await getPersonJson(siblingId);
-            const siblingWithSpousesExtendedMarriages = await createPersonWithSpousesExtendedMarriages(context, sibling, true)
-            extendedMarriages.push(...siblingWithSpousesExtendedMarriages);
+
+            context.processedPersonIds.add(sibling.id);
+            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+            const extendedMarriagesOfSibling = await this.createExtendedMarriagesOfPerson(context, sibling)
+            extendedMarriages.push(...extendedMarriagesOfSibling);
         }
 
+        return extendedMarriages;
+    },
+
+    async createDescedantsOf(context) {
+        if (context.descedantsDepth == 0) {
+            return;
+        }
+
+        const currentLevel = 0;
+
+        const biologicalChildren = (context.person.inverseBiologicalFather ?? []).concat(context.person.inverseBiologicalMother ?? []);
+        for (const child of biologicalChildren) {
+            await this.createDescedantsOfRecursive(context, child.id, currentLevel + 1);
+        }
+
+        if (context.descedantsDepth != relativesDepth.ALL.index == currentLevel + 1 > context.descedantsDepth) {
+            return;
+        }
+
+        await this.addAdoptiveChildrenOf(context, context.person, currentLevel);
+    },
+
+    async createDescedantsOfRecursive(context, personId, currentLevel) {
+        if (context.descedantsDepth != relativesDepth.ALL.index && currentLevel > context.descedantsDepth) {
+            return;
+        }
+
+        const person = await getPersonJson(personId);
+        context.processedPersonIds.add(person.id);
         loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
 
-        return extendedMarriages;
-    }
+        const personWithSpousesExtendedMarriages = await this.createExtendedMarriagesOfPerson(context, person);
+
+        if (!context.descedantsGenerationsMap.has(currentLevel)) {
+            context.descedantsGenerationsMap.set(currentLevel, { extendedMarriages: [] });
+        }
+
+        const generation = context.descedantsGenerationsMap.get(currentLevel);
+        generation.extendedMarriages.push(...personWithSpousesExtendedMarriages);
+
+        const biologicalChildren = (person.inverseBiologicalFather ?? []).concat(person.inverseBiologicalMother ?? []);
+        for (const child of biologicalChildren) {
+            await this.createDescedantsOfRecursive(context, child.id, currentLevel + 1);
+        }
+
+        if (currentLevel + 1 > context.descedantsDepth) {
+            return;
+        }
+
+        await this.addAdoptiveChildrenOf(context, person, currentLevel);
+    },
+
+    async addAdoptiveChildrenOf(context, person, currentLevel) {
+        const adoptiveChildrenIds = (person.inverseAdoptiveFather ?? []).concat(person.inverseAdoptiveMother ?? []).map(child => child.id);
+
+        for (const childId of adoptiveChildrenIds) {
+            const child = await getPersonJson(childId);
+            context.processedPersonIds.add(child.id);
+            loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.size}`);
+
+            const personWithSpousesExtendedMarriages = await this.createExtendedMarriagesOfPerson(context, child);
+
+            if (!context.descedantsGenerationsMap.has(currentLevel + 1)) {
+                context.descedantsGenerationsMap.set(currentLevel + 1, { extendedMarriages: [] });
+            }
+
+            const generation = context.descedantsGenerationsMap.get(currentLevel + 1);
+            generation.extendedMarriages.push(...personWithSpousesExtendedMarriages);
+        }
+    },
 }

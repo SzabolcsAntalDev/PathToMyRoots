@@ -91,6 +91,7 @@
             <fieldset class="input-date-fieldset">
                 <label>
                     <input type="radio" class="input-radio-date-unknown" name="input-radio-birth-date"
+                    @* Szabi: can BirthDate be null? *@
                     @if (Model.BirthDate == null || Model.BirthDate == DateHelper.ServerDateUnknown)
                     {
                         @:checked

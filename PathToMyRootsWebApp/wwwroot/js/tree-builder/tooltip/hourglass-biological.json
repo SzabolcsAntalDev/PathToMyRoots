@@ -38,8 +38,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -77,8 +76,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -297,8 +295,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         },
         {
           "mainMarriage": {
@@ -336,8 +333,7 @@
               ],
               "inverseAdoptiveParentIds": []
             }
-          },
-          "numberOfAvailableParents": 0
+          }
         }
       ],
       "siblings": [
@@ -378,8 +374,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -419,8 +414,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -641,8 +635,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ],
         [
@@ -682,8 +675,7 @@
                 ],
                 "inverseAdoptiveParentIds": []
               }
-            },
-            "numberOfAvailableParents": 0
+            }
           }
         ]
       ],
@@ -726,8 +718,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -769,8 +760,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -993,8 +983,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ],
@@ -1036,8 +1025,7 @@
                   ],
                   "inverseAdoptiveParentIds": []
                 }
-              },
-              "numberOfAvailableParents": 0
+              }
             }
           ]
         ]
@@ -2694,7 +2682,6 @@
         },
         {
           "secondaryMarriage": {
-            "isStaticMarriage": false,
             "startDate": null,
             "endDate": null,
             "maleId": 549,
@@ -3234,7 +3221,6 @@
           },
           {
             "secondaryMarriage": {
-              "isStaticMarriage": false,
               "startDate": null,
               "endDate": null,
               "maleId": 549,
@@ -3776,7 +3762,6 @@
             },
             {
               "secondaryMarriage": {
-                "isStaticMarriage": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 549,
@@ -4320,8 +4305,6 @@
         },
         {
           "secondaryMarriage": {
-            "isStaticMarriage": false,
-            "isFake": false,
             "startDate": null,
             "endDate": null,
             "maleId": 540,
@@ -4740,7 +4723,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 540,
@@ -4906,8 +4888,6 @@
           },
           {
             "secondaryMarriage": {
-              "isStaticMarriage": false,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 540,
@@ -5326,7 +5306,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 540,
@@ -5540,8 +5519,6 @@
             },
             {
               "secondaryMarriage": {
-                "isStaticMarriage": false,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 540,
@@ -5960,7 +5937,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 540,
@@ -6255,7 +6231,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 553,
@@ -6377,8 +6352,6 @@
         },
         {
           "secondaryMarriage": {
-            "isStaticMarriage": false,
-            "isFake": false,
             "startDate": null,
             "endDate": null,
             "maleId": 556,
@@ -6728,7 +6701,6 @@
             },
             "marriage": {
               "isStaticMarriage": true,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 556,
@@ -7123,7 +7095,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 553,
@@ -7247,8 +7218,6 @@
           },
           {
             "secondaryMarriage": {
-              "isStaticMarriage": false,
-              "isFake": false,
               "startDate": null,
               "endDate": null,
               "maleId": 556,
@@ -7598,7 +7567,6 @@
               },
               "marriage": {
                 "isStaticMarriage": true,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 556,
@@ -7997,7 +7965,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 553,
@@ -8123,8 +8090,6 @@
             },
             {
               "secondaryMarriage": {
-                "isStaticMarriage": false,
-                "isFake": false,
                 "startDate": null,
                 "endDate": null,
                 "maleId": 556,
@@ -8474,7 +8439,6 @@
                 },
                 "marriage": {
                   "isStaticMarriage": true,
-                  "isFake": false,
                   "startDate": null,
                   "endDate": null,
                   "maleId": 556,
