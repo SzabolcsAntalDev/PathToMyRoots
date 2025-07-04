@@ -10,9 +10,11 @@
                 <div class="content-inner-div">
                     <h3>Tree layout</h3>
                     <fieldset class="tree-types-fieldset">
-                        <label>
-                            <input type="radio" name="input-radio-tree-type" data-tree-type-index="0" />
-                            <span>Hourglass-biological</span>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-tree-type" data-tree-type-index="0" />
+                                Hourglass-biological
+                            </label>
                             <div data-tooltip-id="hourglass-biological" class="svg-div-info tooltip-source">
                                 <svg>
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
@@ -45,10 +47,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </label>
-                        <label>
-                            <input type="radio" name="input-radio-tree-type" data-tree-type-index="1" />
-                            <span>Hourglass-extended</span>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-tree-type" data-tree-type-index="1" />
+                                Hourglass-extended
+                            </label>
                             <div data-tooltip-id="hourglass-extended" class="svg-div-info tooltip-source">
                                 <svg>
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
@@ -79,10 +83,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </label>
-                        <label>
-                            <input type="radio" name="input-radio-tree-type" data-tree-type-index="2" />
-                            <span>Complete</span>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-tree-type" data-tree-type-index="2" />
+                                Complete
+                            </label>
                             <div data-tooltip-id="complete" class="svg-div-info tooltip-source">
                                 <svg>
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
@@ -109,7 +115,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </label>
+                        </div>
                     </fieldset>
                     <div class="flex-row">
                         <div class="flex-column">
@@ -126,18 +132,24 @@
                     </div>
                     <h3>View mode</h3>
                     <fieldset class="view-modes-fieldset">
-                        <label>
-                            <input type="radio" name="input-radio-view-mode" data-view-mode-index="0" />
-                            Small
-                        </label>
-                        <label>
-                            <input type="radio" name="input-radio-view-mode" data-view-mode-index="1" />
-                            Medium
-                        </label>
-                        <label>
-                            <input type="radio" name="input-radio-view-mode" data-view-mode-index="2" />
-                            Large
-                        </label>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-view-mode" data-view-mode-index="0" />
+                                Small
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-view-mode" data-view-mode-index="1" />
+                                Medium
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="input-radio-view-mode" data-view-mode-index="2" />
+                                Large
+                            </label>
+                        </div>
                     </fieldset>
                 </div>
             </div>

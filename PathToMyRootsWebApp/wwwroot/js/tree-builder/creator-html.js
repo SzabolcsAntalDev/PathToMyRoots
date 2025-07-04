@@ -12,15 +12,19 @@
         return treeDiagramFrame;
     },
 
-    createRadioButton(name, dataId, dataValue, displayText) {
-        const radioButton = $('<input>')
+    createOption(name, dataId, dataValue, displayText) {
+        const radioInput = $('<input>')
             .attr('type', 'radio')
             .attr('name', name)
             .attr(dataId, dataValue);
 
-        return $('<label>')
-            .append(radioButton)
+        const label = $('<label>')
+            .append(radioInput)
             .append(displayText);
+
+        return $('<div>')
+            .attr('class', 'option')
+            .append(label);
     },
 
     createDiagramInfo() {

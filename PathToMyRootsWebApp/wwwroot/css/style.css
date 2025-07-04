@@ -198,7 +198,7 @@ h3 {
   margin-bottom: 4px;
 }
 
-button, select, option, a, input[type=text], input[type=radio], .dropdown-header, .dropdown-menu li {
+button, select, option, a, input[type=text], .dropdown-header, .dropdown-menu li {
   color: var(--foreground-color);
   background-color: var(--background-color);
   font-size: inherit;
@@ -207,7 +207,7 @@ button, select, option, a, input[type=text], input[type=radio], .dropdown-header
   outline: none;
   transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s, opacity var(--fade-transition);
 }
-button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, input[type=radio]:hover, .dropdown-header:hover, .dropdown-menu li:hover {
+button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, .dropdown-header:hover, .dropdown-menu li:hover {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
   border-color: var(--foreground-color-highlight);
@@ -408,42 +408,49 @@ input[type=text]::placeholder {
 
 fieldset {
   padding: 0px;
+  margin-top: 4px;
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   border: none;
 }
-fieldset label {
+fieldset div.option {
   display: flex;
   align-items: center;
-  gap: 4px;
-  cursor: pointer;
+  margin-bottom: 4px;
 }
-fieldset label:hover {
-  color: var(--foreground-color-highlight);
+fieldset div.option label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 8px 2px 0;
+  cursor: pointer;
   transition: color 0.3s ease 0s;
 }
-fieldset input[type=radio] {
+fieldset div.option label:hover {
+  color: var(--foreground-color-highlight);
+}
+fieldset div.option label input[type=radio] {
   appearance: none;
   margin: 0px;
-  margin-right: 2px;
   width: 11px;
   height: 11px;
   border-radius: 50%;
   background-color: var(--background-color);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
   cursor: pointer;
 }
-fieldset input[type=radio]:checked {
+fieldset div.option label input[type=radio]:hover {
+  color: var(--foreground-color-highlight);
+  background-color: var(--background-color-highlight);
+  border-color: var(--foreground-color-highlight);
+}
+fieldset div.option label input[type=radio]:checked {
   background-color: var(--foreground-color);
   box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
-  transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
 }
-fieldset input[type=radio]:checked:hover {
+fieldset div.option label input[type=radio]:checked:hover {
   background-color: var(--foreground-color-highlight);
-}
-fieldset input[type=text] {
-  margin-bottom: 0px;
 }
 
 .vertical-toggleable-container {

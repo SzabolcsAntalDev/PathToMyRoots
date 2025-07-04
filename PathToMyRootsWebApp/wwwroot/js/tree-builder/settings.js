@@ -74,7 +74,7 @@ function setupRadioButtons(treeContext, settingsContext) {
     });
 
     // Ancestors radio buttons
-    settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
+    settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createOption(
         `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
         'data-ancestors-depth', relativesDepth.ALL.index,
         relativesDepth.getDisplayText(relativesDepth.ALL.index)));
@@ -82,7 +82,7 @@ function setupRadioButtons(treeContext, settingsContext) {
     for (let i = relativesDepth.MAX.index; i >= relativesDepth.MIN.index; i--) {
         // <label><input type="radio" name="input-radio-ancestors-depth-0-1722960923456" data-ancestors-depth="5" />5</label>
 
-        settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
+        settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createOption(
             `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
             'data-ancestors-depth', i,
             relativesDepth.getDisplayText(i)));
@@ -92,13 +92,13 @@ function setupRadioButtons(treeContext, settingsContext) {
     for (let i = relativesDepth.MIN.index; i <= relativesDepth.MAX.index; i++) {
         // <label><input type="radio" name="input-radio-descedants-depth-0-1722960923456" data-descedants-depth="5" />5</label>
 
-        settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
+        settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createOption(
             `input-radio-descedants-depth-${treeContext.personId}-${radioButtonNameUid}`,
             'data-descedants-depth', i,
             relativesDepth.getDisplayText(i)));
     }
 
-    settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createRadioButton(
+    settingsContext.descedantsDepthFieldSet.append(treeHtmlCreator.createOption(
         `input-radio-descedants-depth-${treeContext.personId}-${radioButtonNameUid}`,
         'data-descedants-depth', relativesDepth.ALL.index,
         relativesDepth.getDisplayText(relativesDepth.ALL.index)));
