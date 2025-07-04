@@ -25,13 +25,13 @@
 }
 
 :root.theme-dark, :root.theme-light {
-  --color-transition-interval: 0.3s;
-  --fade-transition-interval: 0.3s;
-  --fade-transition: 0.3s linear 0s;
+  --color-transition-interval: 2s;
+  --fade-transition-interval: 2s;
+  --fade-transition: 2s linear 0s;
   --tree-size-transition-interval: 1s;
   --tree-size-transition: 1s ease 0s;
   --transition-buffer-interval: 0.01s;
-  --scroll-transition-interval: 0.3s;
+  --scroll-transition-interval: 2s;
   --scroll-bar-size: 15px;
   --popup-loading-bar-transition-interval: 8s;
   --person-node-width-extrasmall: 40px;
@@ -71,7 +71,7 @@ html {
   font-size: 11px;
   font-family: "Fira Sans", sans-serif;
   color: var(--foreground-color);
-  transition: color 0.3s ease 0s;
+  transition: color 2s ease 0s;
   height: 100%;
 }
 
@@ -92,7 +92,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .right-container {
@@ -101,7 +101,7 @@ body {
   flex-direction: column;
   overflow: auto;
   background-color: var(--background-color);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .top-container {
@@ -123,7 +123,7 @@ body {
   min-height: 6vh;
   display: flex;
   background-color: var(--background-color-footer);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .grid-for-inputs {
@@ -205,7 +205,7 @@ button, select, option, a, input[type=text], .dropdown-header, .dropdown-menu li
   font-family: inherit;
   cursor: pointer;
   outline: none;
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s, opacity var(--fade-transition);
+  transition: color 2s ease 0s, background-color 2s ease 0s, border 2s ease 0s, opacity var(--fade-transition);
 }
 button:hover, select:hover, option:hover, a:hover, input[type=text]:hover, .dropdown-header:hover, .dropdown-menu li:hover {
   color: var(--foreground-color-highlight);
@@ -226,13 +226,13 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
 .flat-button-with-svg-large, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
   background-color: var(--background-color-nav);
   box-sizing: border-box;
-  transition: background-color 0.3s ease 0s, opacity var(--fade-transition);
+  transition: background-color 2s ease 0s, opacity var(--fade-transition);
 }
 .flat-button-with-svg-large svg, .scrollable-area #scroll-to-bottom-button svg, .scrollable-area #scroll-to-top-button svg, .flat-button-with-svg-small svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
   width: 100%;
   height: 100%;
   fill: var(--foreground-color);
-  transition: fill 0.3s ease 0s;
+  transition: fill 2s ease 0s;
 }
 .flat-button-with-svg-large:hover, .scrollable-area #scroll-to-bottom-button:hover, .scrollable-area #scroll-to-top-button:hover, .flat-button-with-svg-small:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
   background-color: var(--background-color-highlight);
@@ -263,10 +263,11 @@ svg {
   height: 18px;
   padding: 4px;
   box-sizing: border-box;
-  transition: opacity var(--fade-transition);
+  transition: background-color 2s ease 0s, opacity var(--fade-transition);
 }
 .svg-div-circle svg, .svg-div-info svg, .svg-div-rectangle svg, .svg-div-error svg, .svg-div-success svg, .svg-div-pending svg {
   fill: #C7D1DB;
+  transition: fill 2s ease 0s;
 }
 
 .svg-div-rectangle, .svg-div-error, .svg-div-success, .svg-div-pending {
@@ -299,7 +300,7 @@ svg {
 .person-details .top-row .info-column .image, .person-image-medium, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-image-small, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   aspect-ratio: 3/4;
   fill: var(--foreground-color);
-  transition: fill 0.3s ease 0s;
+  transition: fill 2s ease 0s;
 }
 .person-details .top-row .info-column .image:hover, .person-image-medium:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-image-small:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover {
   fill: var(--foreground-color-highlight);
@@ -377,12 +378,12 @@ input[type=text]::placeholder {
 
 .male-background-color, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node {
   background-color: var(--male-color);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .female-background-color, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node {
   background-color: var(--female-color);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .tooltip {
@@ -398,7 +399,7 @@ input[type=text]::placeholder {
   z-index: 3;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s linear 0s;
+  transition: opacity 2s linear 0s;
 }
 
 .tooltip-open {
@@ -425,7 +426,7 @@ fieldset div.option label {
   gap: 6px;
   margin: 2px 8px 2px 0;
   cursor: pointer;
-  transition: color 0.3s ease 0s;
+  transition: color 2s ease 0s;
 }
 fieldset div.option label:hover {
   color: var(--foreground-color-highlight);
@@ -437,7 +438,7 @@ fieldset div.option label input[type=radio] {
   height: 11px;
   border-radius: 50%;
   background-color: var(--background-color);
-  transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
+  transition: background-color 2s ease 0s, box-shadow 2s ease 0s;
   cursor: pointer;
 }
 fieldset div.option label input[type=radio]:hover {
@@ -455,7 +456,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 
 .vertical-toggleable-container {
   display: grid;
-  transition: grid-template-rows 0.3s ease 0s;
+  transition: grid-template-rows 2s ease 0s;
 }
 
 .vertical-toggleable-container > div {
@@ -468,7 +469,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 
 .horizontal-toggleable-container {
   display: grid;
-  transition: grid-template-columns 0.3s ease 0s;
+  transition: grid-template-columns 2s ease 0s;
 }
 
 .horizontal-toggleable-container > div {
@@ -507,7 +508,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 
 .nav-li.active {
   background-color: var(--background-color);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
   font-weight: bold;
 }
 
@@ -561,7 +562,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   right: 0;
   bottom: 0;
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s ease 0s, transform 0.3s;
+  transition: background-color 2s ease 0s, transform 2s;
   border-radius: 13px;
 }
 .theme-switcher-container .switch-control .slider-rectangle:hover {
@@ -579,7 +580,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   bottom: 3px;
   border-radius: 50%;
   background-color: var(--foreground-color);
-  transition: background-color 0.3s ease 0s, transform 0.3s;
+  transition: background-color 2s ease 0s, transform 2s;
 }
 .theme-switcher-container .switch-control input:checked + .slider-rectangle:before {
   transform: translateX(22px);
@@ -600,7 +601,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   position: relative;
   border: 1px solid var(--foreground-color);
   margin: 0px auto;
-  transition: opacity var(--fade-transition), border 0.3s ease 0s;
+  transition: opacity var(--fade-transition), border 2s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;
@@ -609,13 +610,13 @@ fieldset div.option label input[type=radio]:checked:hover {
   width: fit-content;
   top: 8px;
   left: 8px;
-  transition: opacity 0.3s linear 0s;
+  transition: opacity 2s linear 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button {
   margin: 0px;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
-  transition: fill 0.3s ease 0s, transform 0.3s ease 0s;
+  transition: fill 2s ease 0s, transform 2s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg {
   transform: rotate(180deg);
@@ -626,7 +627,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   flex-direction: column;
   background-color: var(--background-color-nav);
   padding: 8px;
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
@@ -724,7 +725,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   border: 1px solid var(--foreground-color);
   border-radius: 0;
   padding: 4px;
-  transition: background-color 0.3s ease 0s, border 0.3s ease 0s;
+  transition: background-color 2s ease 0s, border 2s ease 0s;
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .node .texts-div, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .texts-div, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .texts-div, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .texts-div, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node .texts-div, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node .texts-div {
   display: var(--tree-node-texts-div-display);
@@ -755,7 +756,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   color: var(--foreground-color-disabled);
   background-color: var(--marriage-color);
   border-color: var(--foreground-color-disabled);
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border-color 0.3s ease 0s, width var(--tree-size-transition), margin var(--tree-size-transition);
+  transition: color 2s ease 0s, background-color 2s ease 0s, border-color 2s ease 0s, width var(--tree-size-transition), margin var(--tree-size-transition);
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node.interactive, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .interactive.hidden-marriage-node {
   color: var(--foreground-color);
@@ -787,7 +788,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   width: var(--person-node-width);
   color: var(--foreground-color-disabled);
   border-color: var(--foreground-color-disabled);
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s, width var(--tree-size-transition);
+  transition: color 2s ease 0s, background-color 2s ease 0s, border 2s ease 0s, width var(--tree-size-transition);
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   width: var(--tree-person-image-width);
@@ -826,7 +827,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 }
 .diagram .lines-svg .marriage-line-svg, .diagram .lines-svg .adoptive-line-svg, .diagram .lines-svg .biological-line-svg {
   stroke-width: 1px;
-  transition: stroke 0.3s ease 0s;
+  transition: stroke 2s ease 0s;
   fill: transparent;
 }
 .diagram .lines-svg .biological-line-svg {
@@ -872,7 +873,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 #tree-diagrams-div.test-trees-div #test-progress-bar-div #test-progress-bar-div-inner {
   background-color: var(--foreground-color);
   height: 16px;
-  transition: width 0.3s ease 0s;
+  transition: width 2s ease 0s;
 }
 #tree-diagrams-div.test-trees-div #test-progress-status-div {
   display: flex;
@@ -899,10 +900,10 @@ fieldset div.option label input[type=radio]:checked:hover {
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button {
   margin: 0;
-  transition: background-color 0.3s ease 0s, opacity 0.3s linear 0s;
+  transition: background-color 2s ease 0s, opacity 2s linear 0s;
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button svg {
-  transition: fill 0.3s ease 0s;
+  transition: fill 2s ease 0s;
 }
 #tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button:hover {
   background-color: var(--background-color-highlight);
@@ -933,7 +934,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   font-size: 18px;
 }
 .loading-text-container .animated-loading-text-div span {
-  transition: color 0.3s ease 0s;
+  transition: color 2s ease 0s;
 }
 .loading-text-container .animated-loading-text-div .highlighted {
   color: var(--foreground-color-highlight);
@@ -1019,7 +1020,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   width: 100%;
   min-width: 0;
   border: 2px solid var(--background-color);
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
+  transition: color 2s ease 0s, background-color 2s ease 0s, border 2s ease 0s;
   box-sizing: border-box;
 }
 .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .texts-div, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .texts-div {
@@ -1085,7 +1086,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 #persons-table tr {
   display: flex;
   color: var(--foreground-color);
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
+  transition: color 2s ease 0s, background-color 2s ease 0s, border 2s ease 0s;
 }
 #persons-table tr a {
   color: var(--foreground-color);
@@ -1097,13 +1098,13 @@ fieldset div.option label input[type=radio]:checked:hover {
   text-overflow: ellipsis;
   align-content: center;
   border: 1px solid var(--foreground-color);
-  transition: border 0.3s ease 0s;
+  transition: border 2s ease 0s;
   padding: 8px;
 }
 #persons-table th {
   color: var(--foreground-color);
   background-color: var(--background-color);
-  transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
+  transition: color 2s ease 0s, background-color 2s ease 0s, border 2s ease 0s;
 }
 #persons-table tr:hover {
   color: var(--foreground-color-highlight);
@@ -1149,7 +1150,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 
 .person-section {
   background-color: var(--background-color-nav);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
   border-radius: 4px;
   padding: 8px;
   padding-left: 16px;
@@ -1174,7 +1175,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   border-right: 6px solid transparent;
   border-top: 6px solid;
   background-color: transparent;
-  transition: transform 0.3s ease 0s;
+  transition: transform 2s ease 0s;
   align-self: center;
 }
 .dropdown .dropdown-header .dropdown-header-expand-button-opened {
@@ -1194,7 +1195,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: opacity 0.3s ease 0s;
+  transition: opacity 2s ease 0s;
   opacity: 0;
   height: 0;
   visibility: collapse;
@@ -1301,7 +1302,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   align-content: center;
   font-size: 18px;
   margin-right: 8px;
-  transition: color 0.3s ease 0s;
+  transition: color 2s ease 0s;
 }
 .success-popup-container .popup-message-and-close-button-container .popup-close-button, .error-popup-container .popup-message-and-close-button-container .popup-close-button {
   padding: 0px;
@@ -1318,7 +1319,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   width: 100%;
   height: 100%;
   background-color: var(--foreground-color-highlight);
-  transition: background-color 0.3s ease 0s;
+  transition: background-color 2s ease 0s;
 }
 
 .success-popup-container {
