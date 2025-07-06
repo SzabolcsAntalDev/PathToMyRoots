@@ -799,23 +799,33 @@ fieldset div.option label input[type=radio]:checked:hover {
   top: 0;
   left: 0;
   pointer-events: none;
-  background-color: transparent;
 }
-.diagram .lines-svg .marriage-line-svg, .diagram .lines-svg .adoptive-line-svg, .diagram .lines-svg .biological-line-svg {
-  stroke-width: 1px;
-  transition: stroke 0.3s ease 0s;
-  fill: transparent;
+.diagram .lines-svg .path-interactive {
+  stroke-width: 10;
+  fill: none;
+  pointer-events: stroke;
 }
-.diagram .lines-svg .biological-line-svg {
+.diagram .lines-svg .marriage-path, .diagram .lines-svg .adoptive-path, .diagram .lines-svg .biological-path {
+  pointer-events: none;
+  stroke-width: 1;
+  fill: none;
+  transition: stroke 0.3s ease 0s, stroke-width 0.3s linear 0s;
+}
+.diagram .lines-svg .biological-path {
   stroke: var(--foreground-color);
   stroke-dasharray: 4, 4;
 }
-.diagram .lines-svg .adoptive-line-svg {
-  stroke-dasharray: 6, 6;
+.diagram .lines-svg .adoptive-path {
   stroke: orange;
+  stroke-dasharray: 6, 6;
 }
-.diagram .lines-svg .marriage-line-svg {
+.diagram .lines-svg .marriage-path {
   stroke: forestgreen;
+  stroke-dasharray: 0;
+}
+.diagram .lines-svg .path-interactive:hover + .biological-path,
+.diagram .lines-svg .path-interactive:hover + .adoptive-path {
+  stroke-width: 4;
 }
 
 .tree-type-tooltip-content .description-div .title-div {

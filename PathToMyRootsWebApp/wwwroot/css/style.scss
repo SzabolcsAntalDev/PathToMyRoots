@@ -3,8 +3,17 @@
 $pending-color-default: gray;
 $success-color-default: forestgreen;
 $error-color-default: red;
+
+$path-width: 1;
+$path-interactive-width: 10;
+$path-hovered-width: 4;
+
 $marriage-line-color-default: forestgreen;
 $adoptive-line-color-default: orange;
+
+$biological-path-stroke-dasharray: 4, 4;
+$adoptive-path-stroke-dasharray: 6, 6;
+$marriage-path-stroke-dasharray: 0;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
@@ -1056,29 +1065,41 @@ fieldset {
         top: 0;
         left: 0;
         pointer-events: none;
-        background-color: transparent;
 
-        %line-svg {
-            stroke-width: 1px;
-            transition: stroke $color-transition;
-            fill: transparent;
+        .path-interactive {
+            stroke-width: $path-interactive-width;
+            fill: none;
+            pointer-events: stroke;
         }
 
-        .biological-line-svg {
-            @extend %line-svg;
+        %path {
+            pointer-events: none;
+            stroke-width: $path-width;
+            fill: none;
+            transition: stroke $color-transition, stroke-width $fade-transition;
+        }
+
+        .biological-path {
+            @extend %path;
             stroke: var(--foreground-color);
-            stroke-dasharray: 4,4;
+            stroke-dasharray: $biological-path-stroke-dasharray;
         }
 
-        .adoptive-line-svg {
-            @extend %line-svg;
-            stroke-dasharray: 6,6;
+        .adoptive-path {
+            @extend %path;
             stroke: $adoptive-line-color-default;
+            stroke-dasharray: $adoptive-path-stroke-dasharray;
         }
 
-        .marriage-line-svg {
-            @extend %line-svg;
+        .marriage-path {
+            @extend %path;
             stroke: $marriage-line-color-default;
+            stroke-dasharray: $marriage-path-stroke-dasharray;
+        }
+        // when hovering the interactive, add style to the other ones
+        .path-interactive:hover + .biological-path,
+        .path-interactive:hover + .adoptive-path {
+            stroke-width: $path-hovered-width;
         }
     }
 }
@@ -1174,7 +1195,6 @@ fieldset {
         bottom: 0px;
     }
 }
-
 // the tree-diagrams-div also gets the class test-trees-div
 #tree-diagrams-div.test-trees-div {
     --fade-transition-interval: 0.1s;

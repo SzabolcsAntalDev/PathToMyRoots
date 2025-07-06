@@ -277,19 +277,19 @@
             .attr('class', 'lines-svg');
     },
 
-    createMarriageChildLinePath(pathData, isBiological) {
+    createMarriageChildPath(pathData, isBiological) {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
         return $(path)
             .attr('d', pathData)
-            .attr('class', isBiological ? 'biological-line-svg' : 'adoptive-line-svg');
+            .attr('class', isBiological ? 'biological-path' : 'adoptive-path');
     },
 
-    createMarriageLinePath(pathData) {
+    createMarriagePath(pathData) {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
         return $(path)
             .attr('d', pathData)
-            .attr('class', 'marriage-line-svg');
+            .attr('class', 'marriage-path');
     },
 }

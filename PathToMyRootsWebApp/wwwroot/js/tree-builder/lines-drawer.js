@@ -79,7 +79,16 @@ function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriage
         L ${r1(childNodeHorizontalCenter)},${r1(childNodeTop)}
     `;
 
-    linesContainer.append(treeHtmlCreator.createMarriageChildLinePath(pathData, childNode.isBiological));
+    // create the actual path
+    // and another thicker one to be used for hovering
+    const marriageChildPath = treeHtmlCreator.createMarriageChildPath(pathData, childNode.isBiological);
+    const marriageChildPathInteractive =
+        marriageChildPath
+            .clone()
+            .attr('class', 'path-interactive');
+    
+    linesContainer.append(marriageChildPathInteractive);
+    linesContainer.append(marriageChildPath);
 }
 
 const r1 = v => v.toFixed(1);
@@ -112,5 +121,5 @@ function drawMarriageLines(linesContainer, marriageNode) {
         M ${r1(x3)},${r1(y)} L ${r1(x4)},${r1(y)}
     `;
 
-    linesContainer.append(treeHtmlCreator.createMarriageLinePath(pathData));
+    linesContainer.append(treeHtmlCreator.createMarriagePath(pathData));
 }
