@@ -137,12 +137,27 @@
                 .attr('class', 'texts-div')
                 .append(marriageSpan);
 
+        const tooltipContent =
+            $('<div>')
+                .attr('class', 'marriage-tooltip-content')
+                .append(textsDiv.clone());
+
+        const tooltipDataId = 'marriage-tooltip-id-' + marriage.maleId + marriage.femaleId
+        const tooltip =
+            $('<div>')
+                .attr('class', 'tooltip')
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltipContent);
+
+        const marriageNodeClass = `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'} tooltip-source`;
+
         const marriageNode = $('<div>')
-            .attr('class', `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'}`)
-            .attr('title', marriageText)
+            .attr('class', marriageNodeClass)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
-            .append(textsDiv);
+            .data('tooltip-id', tooltipDataId)
+            .append(textsDiv)
+            .append(tooltip);
 
         if (marriage.isStaticMarriage) {
             return marriageNode;
@@ -204,18 +219,32 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
-        const nodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''}`;
+        const personNodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''} tooltip-source`;
+
+        const tooltipContent =
+            $('<div>')
+                .attr('class', 'person-tooltip-content flex-column')
+                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                .append(textsDiv.clone());
+
+        const tooltipDataId = 'person-tooltip-id-' + person.id;
+        const tooltip =
+            $('<div>')
+                .attr('class', 'tooltip')
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltipContent);
 
         return $('<div>')
             .attr('id', person.id)
-            .attr('class', nodeClass)
-            .attr('title', `${personNameText}\n${personLivedText}`)
+            .attr('class', personNodeClass)
             .data('biologicalFatherId', person.biologicalFatherId)
             .data('biologicalMotherId', person.biologicalMotherId)
             .data('adoptiveFatherId', person.adoptiveFatherId)
             .data('adoptiveMotherId', person.adoptiveMotherId)
+            .data('tooltip-id', tooltipDataId)
             .append(image)
             .append(textsDiv)
+            .append(tooltip)
             .on('click', function () {
                 if (person.fakeId) {
                     return;

@@ -118,14 +118,21 @@ $node-lines-vertical-offset-small: 5;
 $node-lines-vertical-offset-medium: 7;
 $node-lines-vertical-offset-large: 10;
 
+// used in tree types tooltips
 $person-image-height-extrasmall: 15px;
 $person-image-width-extrasmall: $person-image-height-extrasmall * 0.75;
 
+// used in diagrams and person details non spouses
 $person-image-height-small: 40px;
 $person-image-width-small: $person-image-height-small * 0.75;
 
+// used in person details spouses
 $person-image-height-medium: 60px;
 $person-image-width-medium: $person-image-height-medium * 0.75;
+
+// used in tree person tooltips
+$person-image-height-large: 300px;
+$person-image-width-large: $person-image-height-large * 0.75;
 
 %theme-properties {
     --color-transition-interval: #{$color-transition-interval};
@@ -549,7 +556,7 @@ input[type="text"]::placeholder {
     max-width: 600px;
     overflow: hidden;
     background-color: var(--background-color);
-    color: var(--foreground-color-highlight);
+    color: var(--foreground-color);
     padding: $thickness-medium;
     border: $border;
     border-radius: $border-radius;
@@ -646,6 +653,35 @@ fieldset {
     grid-template-columns: 1fr;
 }
 
+.texts-div {
+    display: var(--tree-node-texts-div-display);
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    min-width: 0;
+    padding: $thickness-small;
+
+    %text {
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: $font-size-small;
+    }
+
+    .name-text {
+        @extend %text;
+        font-weight: bold;
+    }
+
+    .lived-text {
+        @extend %text;
+    }
+
+    .marriage-text {
+        @extend %text;
+    }
+}
 .nav-logo-container-hyperlink {
     height: auto;
     display: flex;
@@ -847,46 +883,6 @@ fieldset {
     }
 }
 
-.tree-type-tooltip-content {
-    .description-div {
-        .title-div {
-            font-weight: bold;
-        }
-
-        .text-div {
-            p {
-                margin-left: $thickness-small;
-                margin-bottom: $thickness-medium;
-            }
-
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0 0 0 $thickness-medium;
-
-                li {
-                    margin-bottom: $thickness-small;
-                }
-
-                li.indented {
-                    margin-left: $thickness-medium;
-                }
-            }
-        }
-    }
-
-    .tree-div {
-        // bring it closer to the tooltip edge
-        margin: 0 calc(-1 * var(--node-horizontal-margin));
-    }
-
-    .text-span {
-        margin-top: $thickness-medium;
-        text-align: center;
-        font-style: italic;
-    }
-}
-
 .diagram {
     z-index: 1;
     min-height: $tree-diagram-min-height;
@@ -935,21 +931,6 @@ fieldset {
                             border-radius: 0;
                             padding: $thickness-small;
                             transition: background-color $color-transition, border $color-transition;
-
-                            .texts-div {
-                                display: var(--tree-node-texts-div-display);
-                                flex-grow: 1;
-                                flex-direction: column;
-                                overflow: hidden;
-
-                                %text {
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    text-align: center;
-                                    font-size: $font-size-small;
-                                }
-                            }
                         }
 
                         .highlighted-node:not(:hover) {
@@ -972,10 +953,6 @@ fieldset {
                             background-color: var(--marriage-color);
                             border-color: var(--foreground-color-disabled);
                             transition: color $color-transition, background-color $color-transition, border-color $color-transition, width var(--tree-size-transition), margin var(--tree-size-transition);
-
-                            .marriage-text {
-                                @extend %text;
-                            }
                         }
 
                         .marriage-node.interactive {
@@ -1028,15 +1005,6 @@ fieldset {
                                     &:hover {
                                         fill: var(--foreground-color-disabled);
                                     }
-                                }
-
-                                .name-text {
-                                    @extend %text;
-                                    font-weight: bold;
-                                }
-
-                                .lived-text {
-                                    @extend %text;
                                 }
                             }
 
@@ -1107,6 +1075,75 @@ fieldset {
         .marriage-line-svg {
             @extend %line-svg;
             stroke: $marriage-line-color-default;
+        }
+    }
+}
+
+.tree-type-tooltip-content {
+    .description-div {
+        .title-div {
+            font-weight: bold;
+        }
+
+        .text-div {
+            p {
+                margin-left: $thickness-small;
+                margin-bottom: $thickness-medium;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 0 $thickness-medium;
+
+                li {
+                    margin-bottom: $thickness-small;
+                }
+
+                li.indented {
+                    margin-left: $thickness-medium;
+                }
+            }
+        }
+    }
+
+    .tree-div {
+        // bring it closer to the tooltip edge
+        margin: 0 calc(-1 * var(--node-horizontal-margin));
+    }
+
+    .text-span {
+        margin-top: $thickness-medium;
+        text-align: center;
+        font-style: italic;
+    }
+}
+
+.person-tooltip-content {
+    .texts-div {
+        padding: 0px;
+        margin-top: $thickness-small;
+
+        %text {
+            font-size: $font-size-medium;
+            margin-top: $thickness-small;
+        }
+    }
+
+    .image {
+        @extend %svg-hoverable;
+        margin: 0 auto;
+        width: $person-image-width-large;
+        height: $person-image-height-large;
+    }
+}
+
+.marriage-tooltip-content {
+    .texts-div {
+        padding: 0px;
+
+        %text {
+            font-size: $font-size-medium;
         }
     }
 }
@@ -1326,35 +1363,6 @@ fieldset {
                             border: $thickness-extrasmall solid var(--background-color);
                             transition: color $color-transition, background-color $color-transition, border $color-transition;
                             box-sizing: border-box;
-
-                            .texts-div {
-                                flex-grow: 1;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                                min-width: 0;
-                                padding: $thickness-small;
-
-                                .text {
-                                    text-align: center;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    overflow: hidden;
-                                }
-
-                                .name-text {
-                                    @extend .text;
-                                    font-weight: bold;
-                                }
-
-                                .lived-text {
-                                    @extend .text;
-                                }
-
-                                .marriage-text {
-                                    @extend .text;
-                                }
-                            }
 
                             %spouse-non-spouse-image {
                                 // cancel hovering effect

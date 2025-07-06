@@ -80,6 +80,7 @@ async function calculateDataAndDisplayTree(treeContext) {
 
     treeContext.treeDiagram.append(nodesContainer);
     treeContext.treeDiagram.append(linesContainer);
+    registerTooltips();
 
     redrawLines(treeContext);
 

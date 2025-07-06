@@ -66,15 +66,28 @@
 
         const image = createPersonImageWithFallbackSvg(person.imageUrl, 'non-spouse-img');
 
-        const classes =
-            (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
-            (person.isMale ? 'male-background-color' : 'female-background-color');
+        const tooltipContent =
+            $('<div>')
+                .attr('class', 'person-tooltip-content flex-column')
+                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                .append(textsDiv.clone());
+
+        const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;
+        const tooltip =
+            $('<div>')
+                .attr('class', 'tooltip')
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltipContent);
+
+        const nonSpouseClass = `${person.id !== -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'} tooltip-source`;
 
         return $('<div>')
-            .attr('class', classes)
+            .attr('class', nonSpouseClass)
             .attr('title', `${personNameText}\n${personLivedText}`)
+            .data('tooltip-id', tooltipDataId)
             .append(textsDiv)
             .append(image)
+            .append(tooltip)
             .on('click', function () {
                 if (person.id == -1) {
                     return;
@@ -112,15 +125,27 @@
 
         const image = createPersonImageWithFallbackSvg(person.imageUrl, 'spouse-img');
 
-        const classes =
-            (person.id !== -1 ? 'relative-interactive' : 'relative') + ' ' +
-            (person.isMale ? 'male-background-color' : 'female-background-color');
+        const tooltipContent =
+            $('<div>')
+                .attr('class', 'person-tooltip-content flex-column')
+                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                .append(textsDiv.clone());
+
+        const tooltipDataId = 'spouse-tooltip-id-' + person.id;
+        const tooltip =
+            $('<div>')
+                .attr('class', 'tooltip')
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltipContent);
+
+        const spouseClass = `${person.id != -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'} tooltip-source`;
 
         return $('<div>')
-            .attr('class', classes)
-            .attr('title', `${personNameText}\n${personLivedText}\n${personMarriageText}`)
+            .attr('class', spouseClass)
+            .data('tooltip-id', tooltipDataId)
             .append(textsDiv)
             .append(image)
+            .append(tooltip)
             .on('click', function () {
                 if (person.id == -1) {
                     return;
