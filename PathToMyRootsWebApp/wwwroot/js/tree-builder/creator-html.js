@@ -137,27 +137,34 @@
                 .attr('class', 'texts-div')
                 .append(marriageSpan);
 
-        const tooltipContent =
-            $('<div>')
-                .attr('class', 'marriage-tooltip-content')
-                .append(textsDiv.clone());
-
-        const tooltipDataId = 'marriage-tooltip-id-' + marriage.maleId + marriage.femaleId
-        const tooltip =
-            $('<div>')
-                .attr('class', 'tooltip')
-                .data('tooltip-id', tooltipDataId)
-                .append(tooltipContent);
-
-        const marriageNodeClass = `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'} tooltip-source`;
+        const marriageNodeClass = `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'}`;
 
         const marriageNode = $('<div>')
             .attr('class', marriageNodeClass)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
-            .data('tooltip-id', tooltipDataId)
-            .append(textsDiv)
-            .append(tooltip);
+            .append(textsDiv);
+
+        // add tooltip is necessary
+        if (!marriage.isFake) {
+
+            const tooltipContent =
+                $('<div>')
+                    .attr('class', 'marriage-tooltip-content')
+                    .append(textsDiv.clone());
+
+            const tooltipDataId = 'marriage-tooltip-id-' + marriage.maleId + marriage.femaleId
+            const tooltip =
+                $('<div>')
+                    .attr('class', 'tooltip')
+                    .data('tooltip-id', tooltipDataId)
+                    .append(tooltipContent);
+
+            marriageNode.addClass('tooltip-source');
+            marriageNode
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltip);
+        }
 
         if (marriage.isStaticMarriage) {
             return marriageNode;
@@ -219,39 +226,48 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
-        const personNodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''} tooltip-source`;
+        const personNodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''}`;
 
-        const tooltipContent =
+        const personNode =
             $('<div>')
-                .attr('class', 'person-tooltip-content flex-column')
-                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
-                .append(textsDiv.clone());
+                .attr('id', person.id)
+                .attr('class', personNodeClass)
+                .data('biologicalFatherId', person.biologicalFatherId)
+                .data('biologicalMotherId', person.biologicalMotherId)
+                .data('adoptiveFatherId', person.adoptiveFatherId)
+                .data('adoptiveMotherId', person.adoptiveMotherId)
+                .append(image)
+                .append(textsDiv)
+                .on('click', function () {
+                    if (person.fakeId) {
+                        return;
+                    }
+                    const url = `/Person/PersonDetails?id=${person.id}`;
+                    window.location.href = url;
+                });
 
-        const tooltipDataId = 'person-tooltip-id-' + person.id;
-        const tooltip =
-            $('<div>')
-                .attr('class', 'tooltip')
+        // add tooltip if necessary
+        if (!person.fakeId) {
+            const tooltipDataId = 'person-tooltip-id-' + person.id;
+            const tooltipContent =
+                $('<div>')
+                    .attr('class', 'person-tooltip-content flex-column')
+                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(textsDiv.clone());
+
+            const tooltip =
+                $('<div>')
+                    .attr('class', 'tooltip')
+                    .data('tooltip-id', tooltipDataId)
+                    .append(tooltipContent);
+
+            personNode.addClass('tooltip-source');
+            personNode
                 .data('tooltip-id', tooltipDataId)
-                .append(tooltipContent);
+                .append(person.fakeId ? null : tooltip);
+        }
 
-        return $('<div>')
-            .attr('id', person.id)
-            .attr('class', personNodeClass)
-            .data('biologicalFatherId', person.biologicalFatherId)
-            .data('biologicalMotherId', person.biologicalMotherId)
-            .data('adoptiveFatherId', person.adoptiveFatherId)
-            .data('adoptiveMotherId', person.adoptiveMotherId)
-            .data('tooltip-id', tooltipDataId)
-            .append(image)
-            .append(textsDiv)
-            .append(tooltip)
-            .on('click', function () {
-                if (person.fakeId) {
-                    return;
-                }
-                const url = `/Person/PersonDetails?id=${person.id}`;
-                window.location.href = url;
-            });
+        return personNode;
     },
 
     createEmptyLinesSvg() {

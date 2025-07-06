@@ -66,34 +66,43 @@
 
         const image = createPersonImageWithFallbackSvg(person.imageUrl, 'non-spouse-img');
 
-        const tooltipContent =
-            $('<div>')
-                .attr('class', 'person-tooltip-content flex-column')
-                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
-                .append(textsDiv.clone());
+        const nonSpouseClass = `${person.id !== -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'}`;
 
-        const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;
-        const tooltip =
+        const nonSpouse =
             $('<div>')
-                .attr('class', 'tooltip')
+                .attr('class', nonSpouseClass)
+                .append(textsDiv)
+                .append(image)
+                .on('click', function () {
+                    if (person.id == -1) {
+                        return;
+                    }
+
+                    window.location.href = `/Person/PersonDetails?id=${person.id}`;
+                });
+
+        // add tooltip if necessary
+        if (person.id != -1) {
+            const tooltipContent =
+                $('<div>')
+                    .attr('class', 'person-tooltip-content flex-column')
+                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(textsDiv.clone());
+
+            const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;
+            const tooltip =
+                $('<div>')
+                    .attr('class', 'tooltip')
+                    .data('tooltip-id', tooltipDataId)
+                    .append(tooltipContent);
+
+            nonSpouse.addClass('tooltip-source');
+            nonSpouse
                 .data('tooltip-id', tooltipDataId)
-                .append(tooltipContent);
+                .append(tooltip);
+        }
 
-        const nonSpouseClass = `${person.id !== -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'} tooltip-source`;
-
-        return $('<div>')
-            .attr('class', nonSpouseClass)
-            .data('tooltip-id', tooltipDataId)
-            .append(textsDiv)
-            .append(image)
-            .append(tooltip)
-            .on('click', function () {
-                if (person.id == -1) {
-                    return;
-                }
-
-                window.location.href = `/Person/PersonDetails?id=${person.id}`;
-            });
+        return nonSpouse;
     },
 
     createSpouse(person, marriageStartDate, marriageEndDate) {
@@ -137,19 +146,41 @@
                 .data('tooltip-id', tooltipDataId)
                 .append(tooltipContent);
 
-        const spouseClass = `${person.id != -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'} tooltip-source`;
+        const spouseClass = `${person.id != -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'}`;
 
-        return $('<div>')
-            .attr('class', spouseClass)
-            .data('tooltip-id', tooltipDataId)
-            .append(textsDiv)
-            .append(image)
-            .append(tooltip)
-            .on('click', function () {
-                if (person.id == -1) {
-                    return;
-                }
-                window.location.href = `/Person/PersonDetails?id=${person.id}`;
-            });
+        const spouse =
+            $('<div>')
+                .attr('class', spouseClass)
+                .append(textsDiv)
+                .append(image)
+                .on('click', function () {
+                    if (person.id == -1) {
+                        return;
+                    }
+                    window.location.href = `/Person/PersonDetails?id=${person.id}`;
+                });
+
+        // add tooltip if necessary
+        if (person.id != -1) {
+            const tooltipContent =
+                $('<div>')
+                    .attr('class', 'person-tooltip-content flex-column')
+                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(textsDiv.clone());
+
+            const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;
+            const tooltip =
+                $('<div>')
+                    .attr('class', 'tooltip')
+                    .data('tooltip-id', tooltipDataId)
+                    .append(tooltipContent);
+
+            spouse.addClass('tooltip-source');
+            spouse
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltip);
+        }
+
+        return spouse;
     }
 }
