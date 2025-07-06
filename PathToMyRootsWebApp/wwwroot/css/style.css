@@ -65,6 +65,7 @@
   --tree-person-image-width: 30px;
   --tree-person-image-height: 40px;
   --tree-node-texts-div-display: flex;
+  --tooltip-offset: 3;
 }
 
 html {

@@ -134,6 +134,8 @@ $person-image-width-medium: $person-image-height-medium * 0.75;
 $person-image-height-large: 300px;
 $person-image-width-large: $person-image-height-large * 0.75;
 
+$tooltip-offset: 3;
+
 %theme-properties {
     --color-transition-interval: #{$color-transition-interval};
     --fade-transition-interval: #{$fade-transition-interval};
@@ -175,6 +177,7 @@ $person-image-width-large: $person-image-height-large * 0.75;
     --tree-person-image-width: #{$person-image-width-small};
     --tree-person-image-height: #{$person-image-height-small};
     --tree-node-texts-div-display: flex;
+    --tooltip-offset: #{$tooltip-offset};
 }
 
 :root.theme-light {

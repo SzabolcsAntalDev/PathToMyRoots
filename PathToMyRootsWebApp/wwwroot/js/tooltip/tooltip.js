@@ -68,9 +68,24 @@ function registerTooltips() {
             const tooltipSourceInner = this;
             const tooltipInner = tooltipSourceToTooltip.get(tooltipSourceInner);
 
-            const rect = tooltipSourceInner.getBoundingClientRect();
-            tooltipInner.style.left = `${(rect.left + (rect.width / 2)) + window.scrollX}px`;
-            tooltipInner.style.top = `${rect.bottom + window.scrollY + 3}px`;
+            const tooltipSourceClientRect = tooltipSourceInner.getBoundingClientRect();
+            const windowScrollX = window.scrollX;
+            const windowScrollY = window.scrollY;
+
+            const tooltipHeight = tooltipInner.offsetHeight;
+            const spaceBelow = window.innerHeight - tooltipSourceClientRect.bottom;
+
+            tooltipInner.style.left = `${(tooltipSourceClientRect.left + (tooltipSourceClientRect.width / 2)) + windowScrollX}px`;
+
+            const tooltipOffset = getTooltipOffset();
+
+            // position tooltip below target below if possibe
+            const top = (spaceBelow >= tooltipHeight + tooltipOffset)
+                ? tooltipInner.style.top = `${tooltipSourceClientRect.bottom + windowScrollY + tooltipOffset}px`
+                : tooltipInner.style.top = `${tooltipSourceClientRect.top + windowScrollY - tooltipHeight - tooltipOffset}px`;
+
+            tooltipInner.style.top = top;
+
             $(tooltipInner).addClass('tooltip-open');
         });
 

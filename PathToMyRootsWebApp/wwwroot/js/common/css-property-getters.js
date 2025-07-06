@@ -67,3 +67,8 @@ function getScrollTransitionIntervalInSeconds() {
 function getScrollBarSize() {
     return getPropertyValue('scroll-bar-size');
 }
+
+function getTooltipOffset() {
+    const tooltipOffset = getPropertyValue('tooltip-offset');
+    return parseFloat(tooltipOffset);
+}

@@ -83,7 +83,6 @@
 
         return $('<div>')
             .attr('class', nonSpouseClass)
-            .attr('title', `${personNameText}\n${personLivedText}`)
             .data('tooltip-id', tooltipDataId)
             .append(textsDiv)
             .append(image)
