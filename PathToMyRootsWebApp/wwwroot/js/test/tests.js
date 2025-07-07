@@ -258,7 +258,7 @@ async function runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, t
         const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
         hideElement(resultIcon);
 
-        const testCaseDiv = testCasessDiv.find('#' + testContext.personId);
+        const testCaseDiv = testCasesDiv.find('#' + testContext.personId);
 
         const pendingIcon = testCaseDiv.find('div.svg-div-pending');
         await fadeOutElement(pendingIcon);
