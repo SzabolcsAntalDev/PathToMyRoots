@@ -976,7 +976,7 @@ VALUES
 		(	@id + 13,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- HOURGLASS_EXTENDED - When parents of adoptive parents are displayed, lines are drawn between them
+-- HOURGLASS_EXTENDED - When parents of adoptive parents are displayed, paths are displayed between them
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -990,7 +990,7 @@ VALUES
 		(	@id + 6,	'L0 Female',		NULL,			NULL,			NULL,			NULL,				NULL,				NULL,				NULL,				@id + 5,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- HOURGLASS_EXTENDED - When adoptive grandparent has hidden biological child, adoptive line is horizontally centered
+-- HOURGLASS_EXTENDED - When adoptive grandparent has hidden biological child, adoptive path is horizontally centered
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -1094,7 +1094,7 @@ VALUES
 		(	@id + 5,	'L1 Female2',		NULL,			NULL,			NULL,			NULL,				NUll,				NULL,				NULL,				@id + 4,		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- HOURGLASS_EXTENDED - When sibling is adopting child of person, adoptive line is drawn
+-- HOURGLASS_EXTENDED - When sibling is adopting child of person, adoptive path is displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
@@ -1187,7 +1187,7 @@ VALUES
 		(	@id + 7,	'L1 Male2', 		NULL,			NULL,			NULL,			@id + 2, 			@id + 3,			NULL,				NULL,				NULL,			NULL,			NULL,					NULL, 						1, 		NULL, 		NULL,		NULL)
 
 -- ==========================================================================================================================
--- COMPLETE - When child has biological and adoptive parents, biological and adoptive lines are drawn
+-- COMPLETE - When child has biological and adoptive parents, biological and adoptive paths are displayed
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,				LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,	DeathDate,	ImageUrl)
@@ -1272,7 +1272,7 @@ VALUES
 		(	@id + 4,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1,		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
--- COMPLETE - When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage
+-- COMPLETE - When secondary marriage has biological and adoptive children, biological and adoptive paths are displayed from secondary marriage
 SET @id = @id + @idBuffer;
 INSERT INTO Persons (
 			ID,			FirstName,			LastName,		MaidenName,		OtherNames,		BiologicalFatherID,	BiologicalMotherID,	AdoptiveFatherID,	AdoptiveMotherID,	FirstSpouseID,	SecondSpouseID,	FirstMarriageStartDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,	ImageUrl)
