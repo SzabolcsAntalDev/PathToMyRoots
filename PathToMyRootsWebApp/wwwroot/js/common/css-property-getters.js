@@ -26,9 +26,9 @@ function getTreePersonImageHeight(viewMode) {
     return getPropertyValue(`tree-person-image-height-${viewMode.id.toLowerCase()}`);
 }
 
-function getNodeLinesVerticalOffset(viewMode) {
-    const nodeLinesVerticalOffset = getPropertyValue(`node-lines-vertical-offset-${viewMode.id.toLowerCase()}`);
-    return parseFloat(nodeLinesVerticalOffset);
+function getNodePathsVerticalOffset(viewMode) {
+    const nodePathsVerticalOffset = getPropertyValue(`node-paths-vertical-offset-${viewMode.id.toLowerCase()}`);
+    return parseFloat(nodePathsVerticalOffset);
 }
 
 function getIntervalInSeconds(propertyName, element) {

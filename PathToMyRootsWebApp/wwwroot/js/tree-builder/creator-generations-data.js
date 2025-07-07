@@ -24,7 +24,7 @@
 }
 
 // reduces the inverseBiologicalParentIds and inverseAdoptiveParentIds
-// to the ids of the available children, so biological and adoptive lines can be drawn correctly horizontally
+// to the ids of the available children, so biological and adoptive paths can be displayed correctly horizontally
 function reduceMarriageInverseParentIds(generations) {
     for (let i = 0; i < generations.length - 1; i++) {
         const parentsGeneration = generations[i];
@@ -66,7 +66,7 @@ function reduceMarriageInverseParentIds(generations) {
     }
 }
 
-// sets the number of lines (numberOfAvailableParents) to each extended marriage that should be drawn towards it
+// sets the number of paths (numberOfAvailableParents) to each extended marriage that should be drawn towards it
 function setNumberOfAvailableParents(generations) {
     for (let i = 0; i < generations.length - 1; i++) {
         const parentsGeneration = generations[i];
@@ -109,7 +109,7 @@ function getNumberOfAvailableParents(maleId, femaleId, parentsGeneration) {
     return numberOfAvailableParents;
 }
 
-// sets the number of lines (generationSize) that should be drawn towards the generation
+// sets the number of paths (generationSize) that should be drawn towards the generation
 function setGenerationsSize(generations) {
     generations.forEach(generation => {
         generation.generationSize = generation.extendedMarriages

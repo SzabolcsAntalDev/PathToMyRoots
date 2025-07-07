@@ -32,12 +32,12 @@ async function fillTreeTypeTooltipsWithTree(treeType) {
     const generationsData = await response.json();
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(generationsData, viewMode);
-    const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
+    const pathsContainer = treeHtmlCreator.createEmptyPathsSvg();
 
     diagram.append(nodesContainer);
-    diagram.append(linesContainer);
+    diagram.append(pathsContainer);
 
-    drawLinesOntoLinesContainer(generationsData, viewMode, nodesContainer, linesContainer);
+    drawPathsOntoPathsContainer(generationsData, viewMode, nodesContainer, pathsContainer);
 
     await fadeInElement(diagram);
 }

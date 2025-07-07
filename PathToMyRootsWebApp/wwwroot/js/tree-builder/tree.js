@@ -1,4 +1,4 @@
-﻿const linesDrawingRequests = new Map();
+﻿const pathsDrawingRequests = new Map();
 
 async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
     const treeDiagramFrame = treeDiagramsDiv.find('#diagram-frame-' + personId).get(0);
@@ -29,7 +29,7 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
         personId, treeDiagramFrame, loadingTextContainer,
         treeType, ancestorsDepth, descedantsDepth, viewMode, treeDiagram,
         calculateDataAndDisplayTree,
-        redrawLines);
+        redrawPaths);
 
     addZoomingEventListener(treeContext);
     await addSettingsEventListeners(treeContext);
@@ -46,14 +46,14 @@ function createTreeContext(personId, treeDiagramFrame, loadingTextContainer, tre
         viewMode: viewMode,
         treeDiagram: treeDiagram,
         calculateDataAndDisplayTree: calculateDataAndDisplayTree,
-        redrawLines: redrawLines
+        redrawPaths: redrawPaths
     };
 }
 
 function addZoomingEventListener(treeContext) {
     $(document).on('wheel', function (event) {
         if (event.ctrlKey) {
-            redrawLines(treeContext);
+            redrawPaths(treeContext);
         }
     });
 }
@@ -68,53 +68,53 @@ async function calculateDataAndDisplayTree(treeContext) {
     const jsonString = JSON.stringify(treeContext.generationsData, null, 2);
 
     const previousNodesContainer = treeContext.treeDiagram.find('.nodes-div');
-    const previousLinesContainer = treeContext.treeDiagram.find('.lines-svg');
+    const previousPathsContainer = treeContext.treeDiagram.find('.paths-svg');
     previousNodesContainer?.remove();
-    previousLinesContainer?.remove();
+    previousPathsContainer?.remove();
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);
-    const linesContainer = treeHtmlCreator.createEmptyLinesSvg();
+    const pathsContainer = treeHtmlCreator.createEmptyPathsSvg();
 
     treeContext.nodesContainer = nodesContainer;
-    treeContext.linesContainer = linesContainer;
+    treeContext.pathsContainer = pathsContainer;
 
     treeContext.treeDiagram.append(nodesContainer);
-    treeContext.treeDiagram.append(linesContainer);
+    treeContext.treeDiagram.append(pathsContainer);
     registerTooltips();
 
-    redrawLines(treeContext);
+    redrawPaths(treeContext);
 
     loadingTextManager.fadeOut(treeContext.loadingTextContainer);
     await fadeInElement(treeContext.treeDiagram);
 }
 
-function redrawLines(treeContext, redrawAfterTreeSizeTransition) {
-    $(treeContext.linesContainer).empty();
+function redrawPaths(treeContext, redrawAfterTreeSizeTransition) {
+    $(treeContext.pathsContainer).empty();
 
     // used to skip the drawing in case another request came before the previous one finished
-    registerLinesDrawingRequest(treeContext);
+    registerPathsDrawingRequest(treeContext);
 
     if (redrawAfterTreeSizeTransition) {
         setTimeout(() => {
-            if (shouldDrawLines(treeContext)) {
-                drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+            if (shouldDrawPaths(treeContext)) {
+                drawPathsOntoPathsContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.pathsContainer);
             }
-        }, (getTreeSizeTransitionIntervalInSeconds(treeContext.linesContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
+        }, (getTreeSizeTransitionIntervalInSeconds(treeContext.pathsContainer) + getTransitionBufferIntervalInSeconds()) * 1000);
     }
     else {
-        if (shouldDrawLines(treeContext)) {
-            drawLinesOntoLinesContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.linesContainer);
+        if (shouldDrawPaths(treeContext)) {
+            drawPathsOntoPathsContainer(treeContext.generationsData, treeContext.viewMode, treeContext.nodesContainer, treeContext.pathsContainer);
         }
     }
 }
 
-function registerLinesDrawingRequest(treeContext) {
-    const currentCount = linesDrawingRequests.get(treeContext) || 0;
-    linesDrawingRequests.set(treeContext, currentCount + 1);
+function registerPathsDrawingRequest(treeContext) {
+    const currentCount = pathsDrawingRequests.get(treeContext) || 0;
+    pathsDrawingRequests.set(treeContext, currentCount + 1);
 }
 
-function shouldDrawLines(treeContext) {
-    const updatedCount = linesDrawingRequests.get(treeContext) - 1;
-    linesDrawingRequests.set(treeContext, updatedCount);
+function shouldDrawPaths(treeContext) {
+    const updatedCount = pathsDrawingRequests.get(treeContext) - 1;
+    pathsDrawingRequests.set(treeContext, updatedCount);
     return updatedCount == 0;
 }

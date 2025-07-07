@@ -168,7 +168,7 @@ function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
             settingsContext.viewModeInfo.text(treeContext.viewMode.displayName);
             setViewModeSizes(treeContext);
 
-            treeContext.redrawLines(treeContext, true);
+            treeContext.redrawPaths(treeContext, true);
         })
     });
 }
@@ -178,7 +178,7 @@ function setViewModeSizes(treeContext) {
     treeContext.treeDiagramFrame.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
     treeContext.treeDiagramFrame.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
 
-    const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(treeContext.viewMode);
+    const nodePathsVerticalOffset = getNodePathsVerticalOffset(treeContext.viewMode);
     const generations = treeContext.treeDiagramFrame.find('.generation');
 
     generations.each((index, elem) => {
@@ -188,7 +188,7 @@ function setViewModeSizes(treeContext) {
 
         const paddingValue = isLast
             ? '0px'
-            : `0px 0px ${bottomPaddingMultiplier * nodeLinesVerticalOffset}px 0px`;
+            : `0px 0px ${bottomPaddingMultiplier * nodePathsVerticalOffset}px 0px`;
 
         generation.css('padding', paddingValue);
     });

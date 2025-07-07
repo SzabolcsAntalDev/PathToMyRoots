@@ -73,13 +73,13 @@
     },
 
     createGeneration(generation, viewMode, largestGenerationSize, isLast) {
-        const nodeLinesVerticalOffset = getNodeLinesVerticalOffset(viewMode);
+        const nodePathsVerticalOffset = getNodePathsVerticalOffset(viewMode);
         const bottomPaddingMultiplier = largestGenerationSize + 3;
 
         const generationDiv = $('<div>')
             .attr('class', 'generation')
             .attr('data-bottom-padding-multiplier', bottomPaddingMultiplier)
-            .css('padding', isLast ? '0px' : '0px 0px ' + (bottomPaddingMultiplier * nodeLinesVerticalOffset) + 'px 0px');
+            .css('padding', isLast ? '0px' : '0px 0px ' + (bottomPaddingMultiplier * nodePathsVerticalOffset) + 'px 0px');
 
         generation.siblingsChains.forEach(siblingsChain => {
             generationDiv.append(this.createSiblingsChain(siblingsChain));
@@ -270,11 +270,11 @@
         return personNode;
     },
 
-    createEmptyLinesSvg() {
+    createEmptyPathsSvg() {
         // no jquery creational method for this
-        const linesSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        return $(linesSvg)
-            .attr('class', 'lines-svg');
+        const pathsSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        return $(pathsSvg)
+            .attr('class', 'paths-svg');
     },
 
     createMarriageChildPath(pathData, isBiological) {

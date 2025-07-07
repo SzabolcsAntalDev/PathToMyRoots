@@ -8,8 +8,8 @@ $path-width: 1;
 $path-interactive-width: 10;
 $path-hovered-width: 4;
 
-$marriage-line-color-default: forestgreen;
-$adoptive-line-color-default: orange;
+$marriage-path-color-default: forestgreen;
+$adoptive-path-color-default: orange;
 
 $biological-path-stroke-dasharray: 4, 4;
 $adoptive-path-stroke-dasharray: 6, 6;
@@ -122,10 +122,10 @@ $node-horizontal-margin-small: 5px;
 $node-horizontal-margin-medium: 7px;
 $node-horizontal-margin-large: 9px;
 
-$node-lines-vertical-offset-extrasmall: 3;
-$node-lines-vertical-offset-small: 5;
-$node-lines-vertical-offset-medium: 7;
-$node-lines-vertical-offset-large: 10;
+$node-paths-vertical-offset-extrasmall: 3;
+$node-paths-vertical-offset-small: 5;
+$node-paths-vertical-offset-medium: 7;
+$node-paths-vertical-offset-large: 10;
 
 // used in tree types tooltips
 $person-image-height-extrasmall: 15px;
@@ -175,10 +175,10 @@ $tooltip-offset: 3;
     --node-horizontal-margin-medium: #{$node-horizontal-margin-medium};
     --node-horizontal-margin-large: #{$node-horizontal-margin-large};
     --node-horizontal-margin: #{$node-horizontal-margin-medium};
-    --node-lines-vertical-offset-extrasmall: #{$node-lines-vertical-offset-extrasmall};
-    --node-lines-vertical-offset-small: #{$node-lines-vertical-offset-small};
-    --node-lines-vertical-offset-medium: #{$node-lines-vertical-offset-medium};
-    --node-lines-vertical-offset-large: #{$node-lines-vertical-offset-large};
+    --node-paths-vertical-offset-extrasmall: #{$node-paths-vertical-offset-extrasmall};
+    --node-paths-vertical-offset-small: #{$node-paths-vertical-offset-small};
+    --node-paths-vertical-offset-medium: #{$node-paths-vertical-offset-medium};
+    --node-paths-vertical-offset-large: #{$node-paths-vertical-offset-large};
     --tree-person-image-width-extrasmall: #{$person-image-width-extrasmall};
     --tree-person-image-height-extrasmall: #{$person-image-height-extrasmall};
     --tree-person-image-width-small: #{$person-image-width-small};
@@ -1060,7 +1060,7 @@ fieldset {
         }
     }
 
-    .lines-svg {
+    .paths-svg {
         position: absolute;
         top: 0;
         left: 0;
@@ -1087,13 +1087,13 @@ fieldset {
 
         .adoptive-path {
             @extend %path;
-            stroke: $adoptive-line-color-default;
+            stroke: $adoptive-path-color-default;
             stroke-dasharray: $adoptive-path-stroke-dasharray;
         }
 
         .marriage-path {
             @extend %path;
-            stroke: $marriage-line-color-default;
+            stroke: $marriage-path-color-default;
             stroke-dasharray: $marriage-path-stroke-dasharray;
         }
         // when hovering the interactive, add style to the other ones
@@ -1227,12 +1227,12 @@ fieldset {
         }
     }
 
-    #test-lines-div {
+    #test-cases-div {
         h2 {
             transition: opacity var(--fade-transition);
         }
 
-        .test-line-div {
+        .test-case-div {
             margin: 0 0 $thickness-small $thickness-large;
             display: flex;
             gap: $thickness-medium;

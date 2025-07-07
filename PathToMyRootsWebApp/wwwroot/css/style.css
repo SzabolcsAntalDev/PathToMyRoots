@@ -54,10 +54,10 @@
   --node-horizontal-margin-medium: 7px;
   --node-horizontal-margin-large: 9px;
   --node-horizontal-margin: 7px;
-  --node-lines-vertical-offset-extrasmall: 3;
-  --node-lines-vertical-offset-small: 5;
-  --node-lines-vertical-offset-medium: 7;
-  --node-lines-vertical-offset-large: 10;
+  --node-paths-vertical-offset-extrasmall: 3;
+  --node-paths-vertical-offset-small: 5;
+  --node-paths-vertical-offset-medium: 7;
+  --node-paths-vertical-offset-large: 10;
   --tree-person-image-width-extrasmall: 11.25px;
   --tree-person-image-height-extrasmall: 15px;
   --tree-person-image-width-small: 30px;
@@ -794,37 +794,37 @@ fieldset div.option label input[type=radio]:checked:hover {
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover .image {
   fill: var(--foreground-color-highlight);
 }
-.diagram .lines-svg {
+.diagram .paths-svg {
   position: absolute;
   top: 0;
   left: 0;
   pointer-events: none;
 }
-.diagram .lines-svg .path-interactive {
+.diagram .paths-svg .path-interactive {
   stroke-width: 10;
   fill: none;
   pointer-events: stroke;
 }
-.diagram .lines-svg .marriage-path, .diagram .lines-svg .adoptive-path, .diagram .lines-svg .biological-path {
+.diagram .paths-svg .marriage-path, .diagram .paths-svg .adoptive-path, .diagram .paths-svg .biological-path {
   pointer-events: none;
   stroke-width: 1;
   fill: none;
   transition: stroke 0.3s ease 0s, stroke-width 0.3s linear 0s;
 }
-.diagram .lines-svg .biological-path {
+.diagram .paths-svg .biological-path {
   stroke: var(--foreground-color);
   stroke-dasharray: 4, 4;
 }
-.diagram .lines-svg .adoptive-path {
+.diagram .paths-svg .adoptive-path {
   stroke: orange;
   stroke-dasharray: 6, 6;
 }
-.diagram .lines-svg .marriage-path {
+.diagram .paths-svg .marriage-path {
   stroke: forestgreen;
   stroke-dasharray: 0;
 }
-.diagram .lines-svg .path-interactive:hover + .biological-path,
-.diagram .lines-svg .path-interactive:hover + .adoptive-path {
+.diagram .paths-svg .path-interactive:hover + .biological-path,
+.diagram .paths-svg .path-interactive:hover + .adoptive-path {
   stroke-width: 4;
 }
 
@@ -919,30 +919,30 @@ fieldset div.option label input[type=radio]:checked:hover {
 #tree-diagrams-div.test-trees-div #test-progress-status-div div .number {
   margin-left: 4px;
 }
-#tree-diagrams-div.test-trees-div #test-lines-div h2 {
+#tree-diagrams-div.test-trees-div #test-cases-div h2 {
   transition: opacity var(--fade-transition);
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div {
   margin: 0 0 4px 16px;
   display: flex;
   gap: 8px;
   align-items: center;
   transition: opacity var(--fade-transition);
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div p {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div p {
   margin: 0;
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button {
   margin: 0;
   transition: background-color 0.3s ease 0s, opacity 0.3s linear 0s;
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button svg {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button svg {
   transition: fill 0.3s ease 0s;
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button:hover {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button:hover {
   background-color: var(--background-color-highlight);
 }
-#tree-diagrams-div.test-trees-div #test-lines-div .test-line-div button:hover svg {
+#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button:hover svg {
   fill: var(--foreground-color-highlight);
 }
 #tree-diagrams-div.test-trees-div .diagram-frame {

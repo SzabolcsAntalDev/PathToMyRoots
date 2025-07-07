@@ -24,7 +24,7 @@ $(() => {
         const numberOfPassedTestsH3 = $('#number-of-passed-tests');
         const numberOfFailedTestsH3 = $('#number-of-failed-tests');
 
-        const testLinesDiv = $('#test-lines-div');
+        const testCasesDiv = $('#test-cases-div');
 
         const hourglassBiologicalTestContexts = getHourglassBiologicalTestContexts();
         const hourglassExtendedTestContexts = getHourglassExtendedTestContexts();
@@ -49,16 +49,16 @@ $(() => {
         updateTestProgressData(testProgressContext, 0);
 
         const testNumber = { value: 0 };
-        await addTestLines(testNumber, testLinesDiv, hourglassBiologicalTestContexts);
-        await addTestLines(testNumber, testLinesDiv, hourglassExtendedTestContexts);
-        await addTestLines(testNumber, testLinesDiv, completeTestContexts);
+        await addTestCases(testNumber, testCasesDiv, hourglassBiologicalTestContexts);
+        await addTestCases(testNumber, testCasesDiv, hourglassExtendedTestContexts);
+        await addTestCases(testNumber, testCasesDiv, completeTestContexts);
 
         testNumber.value = 0;
         for (const testContext of
             hourglassBiologicalTestContexts
                 .concat(hourglassExtendedTestContexts)
                 .concat(completeTestContexts)) {
-            await runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, testProgressContext);
+            await runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, testProgressContext);
         }
 
         if (saveTestResults) {
@@ -73,23 +73,23 @@ $(() => {
     })();
 });
 
-async function addTestLines(testNumber, testLinesDiv, testContexts) {
+async function addTestCases(testNumber, testCasesDiv, testContexts) {
     const testGroupTitleH2 = testsHtmlCreator.createHiddenH2(testContexts[0].testPrefix);
-    testLinesDiv.append(testGroupTitleH2);
+    testCasesDiv.append(testGroupTitleH2);
     await fadeInElement(testGroupTitleH2);
 
     for (const testContext of testContexts) {
         testNumber.value++;
 
-        const testLineDiv = testsHtmlCreator.createHiddenTestLineDiv(testContext.personId);
+        const testCaseDiv = testsHtmlCreator.createHiddenTestCaseDiv(testContext.personId);
         const testIcon = testsHtmlCreator.createIcon('pending');
         const testTitleP = testsHtmlCreator.createP(`${testNumber.value}. ${testContext.testTitle}`);
 
-        testLineDiv.append(testIcon);
-        testLineDiv.append(testTitleP);
-        testLinesDiv.append(testLineDiv);
+        testCaseDiv.append(testIcon);
+        testCaseDiv.append(testTitleP);
+        testCasesDiv.append(testCaseDiv);
 
-        await fadeInElement(testLineDiv);
+        await fadeInElement(testCaseDiv);
     };
 }
 
@@ -149,15 +149,15 @@ function getHourglassExtendedTestContexts() {
     const testsData = [
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When ancestors have multiple spouses, their spouses are displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When ancestors have adoptive parents, the ancestors of the adoptive parents are not displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of adoptive parents are displayed, lines are drawn between them' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When adoptive grandparent has hidden biological child, adoptive line is horizontally centered' }, // Szabi
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of adoptive parents are displayed, paths are displayed between them' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When adoptive grandparent has hidden biological child, adoptive path is horizontally centered' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has biological siblings, they and their spouses and displayed and sorted by birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive and biological siblings, they are all displayed' },
         { ancestorsDepth: 0, descedantsDepth: 0, testTitle: 'When ancestors depth is 0, siblings of person are not displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive descedants, its descedants are not displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling is adopting child of person, adoptive line is drawn' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling is adopting child of person, adoptive path is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When grandchild is adopted by siblings and first sibling is the biological parent, grandchild is displayed only once' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and have children, they are displayed only once and married' },
         { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' }
@@ -180,13 +180,13 @@ function getCompleteTestContexts() {
 
     const testsData = [
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When a person has a three generation family, generations are displayed on three levels' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When child has biological and adoptive parents, biological and adoptive lines are drawn' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When child has biological and adoptive parents, biological and adoptive paths are displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling groups and siblings are not sorted when loaded, they are sorted after loading' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female is double married, both husbands are displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When male is double married, both wives are displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When extended marriages have secondary marriage, they are chained based on the second marriage' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When second wife of male has first spouse, that first spouse is also displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When secondary marriage has biological and adoptive children, biological and adoptive lines are drawn from secondary marriage' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When secondary marriage has biological and adoptive children, biological and adoptive paths are displayed from secondary marriage' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When older parents have younger children, children are sorted by parents first instead of birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female is loaded first, her first husband is still loaded' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children have common parents, they are displayed in separate sibling groups' },
@@ -215,7 +215,7 @@ function createTestContext(testTitle, personId, testPrefix, treeType, ancestorsD
     };
 }
 
-async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, testProgressContext) {
+async function runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, testProgressContext) {
     testNumber.value++;
     const orderedTestTitle = `${testNumber.value}. ${testContext.testPrefix} - ${testContext.testTitle}`;
     const testTitleH2 = testsHtmlCreator.createHiddenH2(orderedTestTitle);
@@ -258,15 +258,15 @@ async function runTest(testNumber, treeDiagramsDiv, testLinesDiv, testContext, t
         const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
         hideElement(resultIcon);
 
-        const testLineDiv = testLinesDiv.find('#' + testContext.personId);
+        const testCaseDiv = testCasessDiv.find('#' + testContext.personId);
 
-        const pendingIcon = testLineDiv.find('div.svg-div-pending');
+        const pendingIcon = testCaseDiv.find('div.svg-div-pending');
         await fadeOutElement(pendingIcon);
         pendingIcon.replaceWith(resultIcon)
         await fadeInElement(resultIcon);
 
         const scrollToTestButton = testsHtmlCreator.createScrollToTestButton(treeDiagramsDiv, testTitleH2);
-        testLineDiv.append(scrollToTestButton);
+        testCaseDiv.append(scrollToTestButton);
 
         fadeInElement(scrollToTestButton);
     }

@@ -1,13 +1,13 @@
-﻿function drawMarriagesChildrenLines(linesContainer, nodeLinesVerticalOffset, largestGenerationSize, childrenGeneration, marriageNodes, childNodes) {
-    linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
-    const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * nodeLinesVerticalOffset };
+﻿function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, childrenGeneration, marriageNodes, childNodes) {
+    pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
+    const offsetOnTop = { value: (1 + ((largestGenerationSize - childrenGeneration.generationSize) * 0.5)) * nodePathsVerticalOffset };
 
     marriageNodes.filter('.marriage-node').each((_, marriageNode) => {
-        drawMarriageChildrenLines(linesContainer, nodeLinesVerticalOffset, offsetOnTop, marriageNode, childNodes);
+        drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageNode, childNodes);
     });
 }
 
-function drawMarriageChildrenLines(linesContainer, nodeLinesVerticalOffset, offsetOnTop, marriageNode, childNodes) {
+function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageNode, childNodes) {
     const inversebiologicalParentIds = $(marriageNode).data('inverseBiologicalParentIds');
     const inverseAdoptiveParentIds = $(marriageNode).data('inverseAdoptiveParentIds');
     const inverseParentIds = inversebiologicalParentIds.concat(inverseAdoptiveParentIds);
@@ -33,25 +33,25 @@ function drawMarriageChildrenLines(linesContainer, nodeLinesVerticalOffset, offs
     const rightChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter > marriageNode.clientRectHorizontalCenter);
 
     leftChildNodes.forEach(childNode => {
-        drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodeLinesVerticalOffset);
+        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
     });
 
     rightChildNodes.reverse().forEach(childNode => {
-        drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodeLinesVerticalOffset);
+        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
     });
 }
 
-function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriageNode, childNode, verticalOffset) {
+function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, verticalOffset) {
 
-    let marriageNodeHorizontalCenter = marriageNode.clientRect.left + marriageNode.clientRect.width / 2 - linesContainer.clientRect.left;
-    let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - linesContainer.clientRect.top;
-    let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - linesContainer.clientRect.left;
-    let childNodeTop = childNode.clientRect.top - linesContainer.clientRect.top;
+    let marriageNodeHorizontalCenter = marriageNode.clientRect.left + marriageNode.clientRect.width / 2 - pathsContainer.clientRect.left;
+    let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - pathsContainer.clientRect.top;
+    let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - pathsContainer.clientRect.left;
+    let childNodeTop = childNode.clientRect.top - pathsContainer.clientRect.top;
 
     let verticalCenter;
     if ($(marriageNode).hasClass('floating-marriage-node')) {
         const hiddenMarriageNodeClientRect = $(marriageNode).siblings('.hidden-marriage-node').get(0).getBoundingClientRect();
-        const hiddenMarriageNodeBottom = hiddenMarriageNodeClientRect.top + hiddenMarriageNodeClientRect.height - linesContainer.clientRect.top
+        const hiddenMarriageNodeBottom = hiddenMarriageNodeClientRect.top + hiddenMarriageNodeClientRect.height - pathsContainer.clientRect.top
         verticalCenter = hiddenMarriageNodeBottom + verticalOffset;
     } else {
         verticalCenter = marriageNodeBottom + verticalOffset;
@@ -61,7 +61,7 @@ function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriage
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
 
     if (hasBiologicalChildren && hasAdoptiveChildren) {
-        marriageNodeHorizontalCenter += childNode.isBiological ? (-nodeLinesVerticalOffset / 2) : (nodeLinesVerticalOffset / 2);
+        marriageNodeHorizontalCenter += childNode.isBiological ? (-nodePathsVerticalOffset / 2) : (nodePathsVerticalOffset / 2);
     }
 
     // Szabi: what happens if child has only one parent?
@@ -69,7 +69,7 @@ function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriage
     const hasAdoptiveParents = $(childNode).data('adoptiveFatherId') != null && $(childNode).data('adoptiveMotherId') != null;
 
     if (hasBiologicalParents && hasAdoptiveParents) {
-        childNodeHorizontalCenter += childNode.isBiological ? (-nodeLinesVerticalOffset / 2) : (nodeLinesVerticalOffset / 2);
+        childNodeHorizontalCenter += childNode.isBiological ? (-nodePathsVerticalOffset / 2) : (nodePathsVerticalOffset / 2);
     }
 
     const pathData = `
@@ -87,33 +87,33 @@ function drawMarriageChildLine(linesContainer, nodeLinesVerticalOffset, marriage
             .clone()
             .attr('class', 'path-interactive');
     
-    linesContainer.append(marriageChildPathInteractive);
-    linesContainer.append(marriageChildPath);
+    pathsContainer.append(marriageChildPathInteractive);
+    pathsContainer.append(marriageChildPath);
 }
 
 const r1 = v => v.toFixed(1);
 
-function drawMarriagesLines(linesContainer, marriageNodes) {
-    linesContainer.clientRect = linesContainer.get(0).getBoundingClientRect();
+function drawMarriagesPaths(pathsContainer, marriageNodes) {
+    pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
 
     marriageNodes.filter('.floating-marriage-node').each((_, marriageNode) => {
-        drawMarriageLines(linesContainer, marriageNode);
+        drawMarriagePaths(pathsContainer, marriageNode);
     });
 }
 
-function drawMarriageLines(linesContainer, marriageNode) {
+function drawMarriagePaths(pathsContainer, marriageNode) {
     const marriageClientRect = marriageNode.getBoundingClientRect();
 
     const marriageNodeStyle = window.getComputedStyle(marriageNode);
     const marginLeft = parseFloat(marriageNodeStyle.marginLeft) || 0;
     const marginRight = parseFloat(marriageNodeStyle.marginRight) || 0;
 
-    const y = marriageClientRect.top + marriageClientRect.height / 2 - linesContainer.clientRect.top;
+    const y = marriageClientRect.top + marriageClientRect.height / 2 - pathsContainer.clientRect.top;
 
-    const x1 = marriageClientRect.left - marginLeft - linesContainer.clientRect.left;
+    const x1 = marriageClientRect.left - marginLeft - pathsContainer.clientRect.left;
     const x2 = x1 + marginLeft;
 
-    const x3 = marriageClientRect.left + marriageClientRect.width - linesContainer.clientRect.left;
+    const x3 = marriageClientRect.left + marriageClientRect.width - pathsContainer.clientRect.left;
     const x4 = x3 + marginRight;
 
     const pathData = `
@@ -121,5 +121,5 @@ function drawMarriageLines(linesContainer, marriageNode) {
         M ${r1(x3)},${r1(y)} L ${r1(x4)},${r1(y)}
     `;
 
-    linesContainer.append(treeHtmlCreator.createMarriagePath(pathData));
+    pathsContainer.append(treeHtmlCreator.createMarriagePath(pathData));
 }

@@ -8,10 +8,10 @@
         return hiddenH2;
     },
 
-    createHiddenTestLineDiv(id) {
+    createHiddenTestCaseDiv(id) {
         const hiddenDiv = $('<div>')
             .attr('id', id)
-            .attr('class', 'test-line-div');
+            .attr('class', 'test-case-div');
 
         hideElement(hiddenDiv);
 
