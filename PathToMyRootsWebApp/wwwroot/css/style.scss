@@ -10,10 +10,12 @@ $path-hovered-width: 4;
 
 $marriage-path-color-default: forestgreen;
 $adoptive-path-color-default: orange;
+$duplicated-path-color-default: yellow;
 
 $biological-path-stroke-dasharray: 4, 4;
 $adoptive-path-stroke-dasharray: 6, 6;
 $marriage-path-stroke-dasharray: 0;
+$duplicated-path-stroke-dasharray: 10 4;
 
 $foreground-color-dark: #C7D1DB;
 $foreground-color-highlight-dark: white;
@@ -944,6 +946,7 @@ fieldset {
                             border-radius: 0;
                             padding: $thickness-small;
                             transition: background-color $color-transition, border $color-transition;
+                            z-index: 1;
                         }
 
                         .highlighted-node:not(:hover) {
@@ -1051,6 +1054,10 @@ fieldset {
                                 @extend .female-background-color;
                             }
 
+                            .duplicated-node {
+                                border-color: $duplicated-path-color-default !important;
+                            }
+
                             .static-marriage-node {
                             }
                         }
@@ -1096,9 +1103,16 @@ fieldset {
             stroke: $marriage-path-color-default;
             stroke-dasharray: $marriage-path-stroke-dasharray;
         }
+
+        .duplicated-path {
+            @extend %path;
+            stroke: $duplicated-path-color-default;
+            stroke-dasharray: $duplicated-path-stroke-dasharray;
+        }
         // when hovering the interactive, add style to the other ones
         .path-interactive:hover + .biological-path,
-        .path-interactive:hover + .adoptive-path {
+        .path-interactive:hover + .adoptive-path,
+        .path-interactive:hover + .duplicated-path {
             stroke-width: $path-hovered-width;
         }
     }

@@ -1,4 +1,6 @@
 ﻿async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+
+    clearCachedPersonsStates();
     let generations;
 
     if (treeType == treeTypes.HOURGLASS_BIOLOGICAL) {

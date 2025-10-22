@@ -226,7 +226,13 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
-        const personNodeClass = `person-node ${person.isMale ? 'male-node' : 'female-node'} ${person.fakeId ? '' : 'interactive'} ${person.isHighlighted ? 'highlighted-node' : ''}`;
+        const personNodeClass = [
+            'person-node',
+            person.isMale ? 'male-node' : 'female-node',
+            person.fakeId ? '' : 'interactive',
+            person.isHighlighted ? 'highlighted-node' : '',
+            person.isDuplicated ? 'duplicated-node' : ''
+        ].filter(Boolean).join(' ');
 
         const personNode =
             $('<div>')
@@ -291,5 +297,13 @@
         return $(path)
             .attr('d', pathData)
             .attr('class', 'marriage-path');
+    },
+
+    createDuplicatedPersonPath(pathData) {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+        return $(path)
+            .attr('d', pathData)
+            .attr('class', 'duplicated-path');
     },
 }

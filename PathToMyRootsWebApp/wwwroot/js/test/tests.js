@@ -2,6 +2,10 @@
 let testsResultsMap;
 const saveTestResults = false;
 
+const runBiologicalTests = true;
+const runExtendedTests = true;
+const runCompleteTests = true;
+
 $(() => {
     (async () => {
 
@@ -26,9 +30,9 @@ $(() => {
 
         const testCasesDiv = $('#test-cases-div');
 
-        const hourglassBiologicalTestContexts = getHourglassBiologicalTestContexts();
-        const hourglassExtendedTestContexts = getHourglassExtendedTestContexts();
-        const completeTestContexts = getCompleteTestContexts();
+        const hourglassBiologicalTestContexts = runBiologicalTests ? getHourglassBiologicalTestContexts() : [];
+        const hourglassExtendedTestContexts = runExtendedTests ? getHourglassExtendedTestContexts() : [];
+        const completeTestContexts = runCompleteTests ? getCompleteTestContexts() : [];
 
         const totalNumberOfTests =
             hourglassBiologicalTestContexts.length +
@@ -49,15 +53,17 @@ $(() => {
         updateTestProgressData(testProgressContext, 0);
 
         const testNumber = { value: 0 };
-        await addTestCases(testNumber, testCasesDiv, hourglassBiologicalTestContexts);
-        await addTestCases(testNumber, testCasesDiv, hourglassExtendedTestContexts);
-        await addTestCases(testNumber, testCasesDiv, completeTestContexts);
+        if (runBiologicalTests) { await addTestCases(testNumber, testCasesDiv, hourglassBiologicalTestContexts); }
+        if (runExtendedTests) { await addTestCases(testNumber, testCasesDiv, hourglassExtendedTestContexts); }
+        if (runCompleteTests) { await addTestCases(testNumber, testCasesDiv, completeTestContexts); }
+
+        const testsContexts =
+            (runBiologicalTests ? hourglassBiologicalTestContexts : []).concat
+                (runExtendedTests ? hourglassExtendedTestContexts : []).concat
+                (runCompleteTests ? completeTestContexts : []);
 
         testNumber.value = 0;
-        for (const testContext of
-            hourglassBiologicalTestContexts
-                .concat(hourglassExtendedTestContexts)
-                .concat(completeTestContexts)) {
+        for (const testContext of testsContexts) {
             await runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, testProgressContext);
         }
 
@@ -193,7 +199,8 @@ function getCompleteTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When parents are orphans on the second level, they are sorted by birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When extended marriage male has default birthDate, use female birthDate for sorting' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When marriage with male having unknown birthDate and null female, use unknown birthDate of male instead of null from female for sorting' },
-        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' }
+        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When persons are duplicated on different levels, they are marked and connected to each other' },
     ];
 
     testsData.forEach(testData => {

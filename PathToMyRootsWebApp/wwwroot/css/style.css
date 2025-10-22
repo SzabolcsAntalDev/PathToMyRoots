@@ -718,6 +718,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   border-radius: 0;
   padding: 4px;
   transition: background-color 0.3s ease 0s, border 0.3s ease 0s;
+  z-index: 1;
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node:not(:hover) {
   animation: colorFade 0.5s linear infinite alternate;
@@ -794,6 +795,9 @@ fieldset div.option label input[type=radio]:checked:hover {
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node.interactive:hover .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.female-node:hover .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .interactive.male-node:hover .image {
   fill: var(--foreground-color-highlight);
 }
+.diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .duplicated-node {
+  border-color: yellow !important;
+}
 .diagram .paths-svg {
   position: absolute;
   top: 0;
@@ -805,7 +809,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   fill: none;
   pointer-events: stroke;
 }
-.diagram .paths-svg .marriage-path, .diagram .paths-svg .adoptive-path, .diagram .paths-svg .biological-path {
+.diagram .paths-svg .duplicated-path, .diagram .paths-svg .marriage-path, .diagram .paths-svg .adoptive-path, .diagram .paths-svg .biological-path {
   pointer-events: none;
   stroke-width: 1;
   fill: none;
@@ -823,8 +827,13 @@ fieldset div.option label input[type=radio]:checked:hover {
   stroke: forestgreen;
   stroke-dasharray: 0;
 }
+.diagram .paths-svg .duplicated-path {
+  stroke: yellow;
+  stroke-dasharray: 10 4;
+}
 .diagram .paths-svg .path-interactive:hover + .biological-path,
-.diagram .paths-svg .path-interactive:hover + .adoptive-path {
+.diagram .paths-svg .path-interactive:hover + .adoptive-path,
+.diagram .paths-svg .path-interactive:hover + .duplicated-path {
   stroke-width: 4;
 }
 

@@ -81,16 +81,10 @@ function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriage
 
     // create the actual path
     // and another thicker one to be used for hovering
-    const marriageChildPath = treeHtmlCreator.createMarriageChildPath(pathData, childNode.isBiological);
-    const marriageChildPathInteractive =
-        marriageChildPath
-            .clone()
-            .attr('class', 'path-interactive');
-    
-    pathsContainer.append(marriageChildPathInteractive);
-    pathsContainer.append(marriageChildPath);
+    createPathAndInteractive(treeHtmlCreator.createMarriageChildPath(pathData, childNode.isBiological), pathsContainer);
 }
 
+// Szabi: rename this
 const r1 = v => v.toFixed(1);
 
 function drawMarriagesPaths(pathsContainer, marriageNodes) {
@@ -122,4 +116,48 @@ function drawMarriagePaths(pathsContainer, marriageNode) {
     `;
 
     pathsContainer.append(treeHtmlCreator.createMarriagePath(pathData));
+}
+
+function drawDuplicatedPersonPaths(pathsContainer, duplicatedPersonNodes) {
+    pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
+    for (const [id, nodes] of duplicatedPersonNodes.entries()) {
+
+        for (let i = 0; i < nodes.length - 1; i++) {
+            let nodeTop = nodes[i];
+            let nodeBottom = nodes[i + 1];
+
+            if (nodeTop.getBoundingClientRect().top > nodeBottom.getBoundingClientRect().top) {
+                nodeTop = nodes[i + 1];
+                nodeBottom = nodes[i];
+            }
+
+            const rectTop = nodeTop.getBoundingClientRect();
+            const rectBottom = nodeBottom.getBoundingClientRect();
+
+            // Calculate center points relative to pathsContainer
+            const containerRect = pathsContainer.clientRect;
+
+            const x1 = rectTop.left + rectTop.width / 2 - containerRect.left;
+            const y1 = rectTop.bottom - containerRect.top;
+
+            const x2 = rectBottom.left + rectBottom.width / 2 - containerRect.left;
+            const y2 = rectBottom.top - containerRect.top;
+
+            // Create simple line path from (x1,y1) to (x2,y2)
+            const pathData = `M ${x1},${y1} L ${x2},${y2}`;
+            createPathAndInteractive(treeHtmlCreator.createDuplicatedPersonPath(pathData), pathsContainer);
+        }
+    }
+}
+
+function createPathAndInteractive(path, pathsContainer) {
+    // create the actual path
+    // and another thicker one to be used for hovering
+    const interactivePath =
+        path
+            .clone()
+            .attr('class', 'path-interactive');
+
+    pathsContainer.append(interactivePath);
+    pathsContainer.append(path);
 }
