@@ -66,15 +66,26 @@
             .attr('class', 'nodes-div');
 
         generationsData.generations.forEach((generation, index) => {
-            nodesDiv.append(this.createGeneration(generation, viewMode, generationsData.largestGenerationSize, index == generationsData.generations.length - 1));
+            nodesDiv.append(
+                this.createGeneration(
+                    generation,
+                    viewMode,
+                    generationsData.largestGenerationSize,
+                    generationsData.largestDuplicatedGroupsOnSameLevelCount,
+                    index == generationsData.generations.length - 1));
         });
 
         return nodesDiv;
     },
 
-    createGeneration(generation, viewMode, largestGenerationSize, isLast) {
+    createGeneration(
+        generation,
+        viewMode,
+        largestGenerationSize,
+        largestDuplicatedGroupsOnSameLevelCount,
+        isLast) {
         const nodePathsVerticalOffset = getNodePathsVerticalOffset(viewMode);
-        const bottomPaddingMultiplier = largestGenerationSize + 3;
+        const bottomPaddingMultiplier = largestGenerationSize + largestDuplicatedGroupsOnSameLevelCount + 3;
 
         const generationDiv = $('<div>')
             .attr('class', 'generation')
@@ -230,8 +241,7 @@
             'person-node',
             person.isMale ? 'male-node' : 'female-node',
             person.fakeId ? '' : 'interactive',
-            person.isHighlighted ? 'highlighted-node' : '',
-            person.isDuplicated ? 'duplicated-node' : ''
+            person.isHighlighted ? 'highlighted-node' : ''
         ].filter(Boolean).join(' ');
 
         const personNode =

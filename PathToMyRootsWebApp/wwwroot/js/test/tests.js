@@ -126,15 +126,31 @@ function getHourglassBiologicalTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female has two husbands, but has children only with the second husband, only the second husband and children is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female has two husbands, and has children with both, both husbands and children are displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female has two husbands, but has children with none of them, none of them is displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling with spouses, he is displayed without his spouses and siblings are sorted' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling with spouses, sibling is displayed without his spouses and siblings are sorted' },
         { ancestorsDepth: 0, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When ancestors depth is 0, siblings of person are not displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has multiple children, children are sorted by their birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with spouse and they do not have children, child without spouse is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with spouse and they have children, child with spouse and their children is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When person has child with spouse, they have children and descedants depth is 1, children without spouse is displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and do not have children, they are displayed only once and separately' },
+        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' },
+        // ancestors depth 4 is enough, because in this case there will be already duplicated ancestors on 3 levels, this covers testing duplicates on a tree with 6 levels
+        { ancestorsDepth: 4, descedantsDepth: 0, testTitle: 'When ancestors are duplicated, they are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling from his father and female sibling, duplicated female siblings are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with his own sibling, sibling and child are displayed only once' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and do not have children, they are displayed only once and married' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and have children, they are displayed only once and married' },
-        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' }
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married and do have children, they are displayed only once and married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated male siblings are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated female siblings are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated children of person are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When two children and one duplicated pair are in the same generation, horizontal children and duplicated paths are displayed correctly' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When three children and one duplicated pair are in the same generation, horizontal children and duplicated paths are displayed correctly' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When four children and two duplicated pairs are in the same generation, horizontal children and duplicated paths are displayed correctly' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When different duplicated persons are in different generations, duplicated persons in same generations are connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When duplicated persons are in same and different generations, duplicated persons in same and different generations are connected to each other' }
     ];
 
     testsData.forEach(testData => {
@@ -166,7 +182,20 @@ function getHourglassExtendedTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling is adopting child of person, adoptive path is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When grandchild is adopted by siblings and first sibling is the biological parent, grandchild is displayed only once' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and have children, they are displayed only once and married' },
-        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' }
+        { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' },
+        // ancestors depth 4 is enough, because in this case there will be already duplicated ancestors on 3 levels, this covers testing duplicates on a tree with 6 levels
+        { ancestorsDepth: 4, descedantsDepth: 0, testTitle: 'When ancestors are duplicated, they are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling from his father and female sibling, duplicated father and female siblings are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with his own sibling, sibling and child are displayed only once' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and do not have children, they are displayed only once and separately' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and have children, they are displayed only once and married' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and not married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and not married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married and do have children, they are displayed only once and not married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated male sibling and persons child are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated female sibling and persons child are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated children of person are marked and connected to each other' }
     ];
 
     testsData.forEach(testData => {
@@ -200,7 +229,19 @@ function getCompleteTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When extended marriage male has default birthDate, use female birthDate for sorting' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When marriage with male having unknown birthDate and null female, use unknown birthDate of male instead of null from female for sorting' },
         { ancestorsDepth: 2, descedantsDepth: 2, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When persons are duplicated on different levels, they are marked and connected to each other' },
+        // ancestors depth 4 is enough, because in this case there will be already duplicated ancestors on 3 levels, this covers testing duplicates on a tree with 6 levels
+        { ancestorsDepth: 4, descedantsDepth: 0, testTitle: 'When ancestors are duplicated, they are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling from his father and female sibling, duplicated female siblings are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with his own sibling, sibling and child are displayed only once' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and do not have children, they are displayed only once and married' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descedants are married and have children, they are displayed only once and married' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: 1, testTitle: 'When children are married and do have children, they are displayed only once and married, with descedants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descedants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated child of person are marked and connected to each other' }
     ];
 
     testsData.forEach(testData => {

@@ -796,7 +796,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   fill: var(--foreground-color-highlight);
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .duplicated-node {
-  border-color: yellow !important;
+  border-color: royalblue !important;
 }
 .diagram .paths-svg {
   position: absolute;
@@ -828,7 +828,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   stroke-dasharray: 0;
 }
 .diagram .paths-svg .duplicated-path {
-  stroke: yellow;
+  stroke: royalblue;
   stroke-dasharray: 10 4;
 }
 .diagram .paths-svg .path-interactive:hover + .biological-path,

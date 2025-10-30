@@ -11,11 +11,71 @@
     },
 
     async createGenerationsWithExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+        const processedPersonIds = createProcessedPersonIds();
         const generationsMap = new Map();
-        const context = this.createIterationContext(personId, createProcessedPersonIds(), generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent)
 
+        const context = this.createIterationContext(personId, processedPersonIds, generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent)
         await this.createGenerationsRecursive(context, personId, 0);
-        return sortByLevelAndConvertToArray(generationsMap);
+
+        const generations = sortByLevelAndConvertToArray(generationsMap);
+        const duplicatedPersonIds = processedPersonIds.getDuplicatedPersonIds();
+
+        return this.removeDuplicatedPersonsFromDifferentLevels(generations, duplicatedPersonIds);
+    },
+
+    // removes the persons which are single and do not have parents
+    // also removes generations which become empty, for instance when a person
+    // is duplicated and alone on the very top level
+    removeDuplicatedPersonsFromDifferentLevels(generations, duplicatedPersonIds) {
+        for (let i = 0; i < generations.length; i++) {
+            const parentsGeneration = generations[i - 1];
+            const childrenGeneration = generations[i];
+
+            if (childrenGeneration) {
+                let childIdsInParentsGeneration = null;
+
+                childrenGeneration.extendedMarriages = childrenGeneration.extendedMarriages.filter(extendedMarriage => {
+                    // if secondary marriage exists or main marriage has two persons
+                    if (extendedMarriage.secondaryMarriage || (extendedMarriage.mainMarriage?.male && extendedMarriage.mainMarriage?.female)) {
+                        return true;
+                    }
+
+                    const person = extendedMarriage.mainMarriage?.male ?? extendedMarriage.mainMarriage?.female;
+
+                    // if person is not duplicated
+                    if (!duplicatedPersonIds.has(person?.id)) {
+                        return true;
+                    }
+
+                    childIdsInParentsGeneration = childIdsInParentsGeneration ?? this.getChildIdsInParentsGeneration(parentsGeneration);
+                    return childIdsInParentsGeneration.has(person.id);
+                });
+            }
+        }
+
+        return generations.filter(generation => generation.extendedMarriages.length > 0);
+    },
+
+    getChildIdsInParentsGeneration(parentsGeneration) {
+        const childIdsInParentsGeneration = new Set();
+
+        for (const extendedMarriage of parentsGeneration?.extendedMarriages ?? []) {
+            const mainMarriage = extendedMarriage.mainMarriage?.marriage;
+            const secondaryMarriage = extendedMarriage.secondaryMarriage;
+
+            const childIds = [
+                ...(mainMarriage?.inverseBiologicalParentIds ?? []),
+                ...(mainMarriage?.inverseAdoptiveParentIds ?? []),
+                ...(secondaryMarriage?.inverseBiologicalParentIds ?? []),
+                ...(secondaryMarriage?.inverseAdoptiveParentIds ?? [])
+            ];
+
+            for (const childId of childIds) {
+                childIdsInParentsGeneration.add(childId);
+            }
+        }
+
+        return childIdsInParentsGeneration;
     },
 
     createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
@@ -44,13 +104,11 @@
         }
 
         if (context.processedPersonIds.containsOnAnyOtherLevel(personId)) {
-            person.isDuplicated = true;
-            const personClone = structuredClone(person);
-            personClone.isDuplicated = true;
+            context.processedPersonIds.add(currentLevel, personId);
             const duplicatedPersonsExtendedMarriage = {
                 mainMarriage: {
-                    male: personClone?.isMale ? personClone : null,
-                    female: personClone?.isMale ? null : personClone
+                    male: person?.isMale ? person : null,
+                    female: person?.isMale ? null : person
                 }
             }
 
@@ -174,14 +232,14 @@
             }
 
             if (!context.generationsMap.has(currentLevel)) {
-                context.generationsMap.set(currentLevel, { extendedMarriages : [] });
+                context.generationsMap.set(currentLevel, { extendedMarriages: [] });
             }
 
             const generation = context.generationsMap.get(currentLevel);
             generation.extendedMarriages.push(extendedMarriage);
         }
 
-        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.getSize()}`);
+        loadingTextManager.setLoadingProgressText(context.loadingTextContainerParent, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         await this.createGenerationsRecursive(context, person.biologicalFatherId, currentLevel - 1);
         await this.createGenerationsRecursive(context, person.adoptiveFatherId, currentLevel - 1);

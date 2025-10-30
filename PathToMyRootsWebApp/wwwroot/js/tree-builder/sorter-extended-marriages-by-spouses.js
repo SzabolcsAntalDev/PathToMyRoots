@@ -1,5 +1,5 @@
 ﻿// generated with chat gpt
-// is sorts the extended marriages, so if there are two extended marriages:
+// it sorts the extended marriages, so if there are two extended marriages:
 // 1. an extended marriage that has a main marriage referencing a female
 // 2. an extended marriage that has secondary marriage referencing the female from the first one
 // the 1. extended marriage will come before the 2., and no other extended marriage will be placed between them
@@ -7,8 +7,8 @@
 function sortExtendedMarriagesBySpouses(generations) {
     generations.forEach(generation => {
         const femaleIdToExtendedMarriage = new Map();
-        const marriageToNext = new Map(); // A → B
-        const marriageToPrev = new Map(); // B → A
+        const marriageToNext = new Map(); // A -> B
+        const marriageToPrev = new Map(); // B -> A
 
         // Step 1: Map female IDs to their main extended marriage
         generation.extendedMarriages.forEach(extendedMarriage => {
@@ -18,7 +18,7 @@ function sortExtendedMarriagesBySpouses(generations) {
             }
         });
 
-        // Step 2: Identify dependencies (A → B)
+        // Step 2: Identify dependencies (A -> B)
         generation.extendedMarriages.forEach(extendedMarriage => {
             const secondary = extendedMarriage.secondaryMarriage;
             const maleId = extendedMarriage.mainMarriage?.male?.id;

@@ -14,10 +14,3 @@ async function getPersonJson(personId) {
 
     return person;
 }
-
-function clearCachedPersonsStates() {
-    for (const person of personsCache.values()) {
-        person.isHighlighted = false;
-        person.isDuplicated = false;
-    }
-}

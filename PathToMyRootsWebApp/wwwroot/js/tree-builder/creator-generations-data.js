@@ -1,6 +1,5 @@
 ﻿async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
 
-    clearCachedPersonsStates();
     let generations;
 
     if (treeType == treeTypes.HOURGLASS_BIOLOGICAL) {
@@ -16,12 +15,15 @@
     }
 
     reduceMarriageInverseParentIds(generations);
+
     setNumberOfAvailableParents(generations);
     setGenerationsSize(generations);
+    setDuplicatedGroupsOnSameLevelCount(generations);
 
     return {
         generations: generations,
-        largestGenerationSize: getLargestGenerationSize(generations)
+        largestGenerationSize: getLargestGenerationSize(generations),
+        largestDuplicatedGroupsOnSameLevelCount: getLargestDuplicatedGroupsOnSameLevelCount(generations)
     }
 }
 
@@ -117,9 +119,47 @@ function setGenerationsSize(generations) {
         generation.generationSize = generation.extendedMarriages
             .reduce((size, extendedMarriage) => size + (extendedMarriage.numberOfAvailableParents ?? 0), 0);
     });
+}
 
+function setDuplicatedGroupsOnSameLevelCount(generations) {
+    generations.forEach(generation => {
+        generation.duplicatedGroupsOnSameLevelCount = getDuplicatedGroupsOnSameLevelCount(generation.extendedMarriages);
+    });
+}
+
+function getDuplicatedGroupsOnSameLevelCount(extendedMarriages) {
+    const personIdsToCount = new Map();
+
+    extendedMarriages.forEach(extendedMarriage => {
+        const marriage = extendedMarriage.mainMarriage;
+        if (marriage) {
+            const maleId = marriage.male?.id;
+            const femaleId = marriage.female?.id;
+
+            if (maleId) {
+                personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
+            }
+
+            if (femaleId) {
+                personIdsToCount.set(femaleId, (personIdsToCount.get(femaleId) || 0) + 1);
+            }
+        }
+    });
+
+    let duplicatedGroupsOnSameLevelCount = 0;
+    for (const count of personIdsToCount.values()) {
+        if (count > 1) {
+            duplicatedGroupsOnSameLevelCount++
+        };
+    }
+
+    return duplicatedGroupsOnSameLevelCount;
 }
 
 function getLargestGenerationSize(generations) {
     return generations.reduce((maxSize, generation) => Math.max(maxSize, generation.generationSize ?? 0), 0);
+}
+
+function getLargestDuplicatedGroupsOnSameLevelCount(generations) {
+    return generations.reduce((maxCount, generation) => Math.max(maxCount, generation.duplicatedGroupsOnSameLevelCount ?? 0), 0);
 }
