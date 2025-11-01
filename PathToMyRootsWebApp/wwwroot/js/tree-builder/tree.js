@@ -62,15 +62,15 @@ async function calculateDataAndDisplayTree(treeContext) {
     loadingTextManager.fadeIn(treeContext.loadingTextContainer);
     await fadeOutElement(treeContext.treeDiagram);
 
-    treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
-
-    // debug: result string for tree tooltip contents
-    const jsonString = JSON.stringify(treeContext.generationsData, null, 2);
-
     const previousNodesContainer = treeContext.treeDiagram.find('.nodes-div');
     const previousPathsContainer = treeContext.treeDiagram.find('.paths-svg');
     previousNodesContainer?.remove();
     previousPathsContainer?.remove();
+
+    treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+
+    // debug: result string for tree tooltip contents
+    const jsonString = JSON.stringify(treeContext.generationsData, null, 2);
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);
     const pathsContainer = treeHtmlCreator.createEmptyPathsSvg();
