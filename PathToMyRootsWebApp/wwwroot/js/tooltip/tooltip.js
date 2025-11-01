@@ -71,20 +71,26 @@ function registerTooltips() {
             const tooltipSourceClientRect = tooltipSourceInner.getBoundingClientRect();
             const windowScrollX = window.scrollX;
             const windowScrollY = window.scrollY;
-
-            const tooltipHeight = tooltipInner.offsetHeight;
-            const spaceBelow = window.innerHeight - tooltipSourceClientRect.bottom;
-
-            tooltipInner.style.left = `${(tooltipSourceClientRect.left + (tooltipSourceClientRect.width / 2)) + windowScrollX}px`;
-
             const tooltipOffset = getTooltipOffset();
 
-            // position tooltip below target below if possibe
-            const top = (spaceBelow >= tooltipHeight + tooltipOffset)
-                ? tooltipInner.style.top = `${tooltipSourceClientRect.bottom + windowScrollY + tooltipOffset}px`
-                : tooltipInner.style.top = `${tooltipSourceClientRect.top + windowScrollY - tooltipHeight - tooltipOffset}px`;
+            const tooltipHeight = tooltipInner.offsetHeight;
+            const tooltipWidth = tooltipInner.offsetWidth;
+
+            const spaceBelow = window.innerHeight - tooltipSourceClientRect.bottom - tooltipOffset;
+            const spaceOnTheRight = window.innerWidth - tooltipSourceClientRect.left - (tooltipSourceClientRect.width / 2);
+
+            // try position the tooltip below target, if not enough space then above
+            const top = (spaceBelow >= tooltipHeight)
+                ? tooltipInner.style.top = `${windowScrollY + tooltipSourceClientRect.bottom + tooltipOffset}px`
+                : tooltipInner.style.top = `${windowScrollY + tooltipSourceClientRect.top - tooltipHeight - tooltipOffset}px`;
+
+            // try position the tooltip to right from the middle of the target, if not enough space then to the left
+            const left = (spaceOnTheRight >= tooltipWidth)
+                ? tooltipInner.style.left = `${windowScrollX + tooltipSourceClientRect.left + (tooltipSourceClientRect.width / 2)}px`
+                : tooltipInner.style.left = `${windowScrollX + tooltipSourceClientRect.left + (tooltipSourceClientRect.width / 2) - tooltipWidth}px`;
 
             tooltipInner.style.top = top;
+            tooltipInner.style.left = left;
 
             $(tooltipInner).addClass('tooltip-open');
         });

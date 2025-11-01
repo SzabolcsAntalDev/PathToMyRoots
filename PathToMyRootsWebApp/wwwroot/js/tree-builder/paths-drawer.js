@@ -82,7 +82,6 @@ function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriage
         marriageNodeHorizontalCenter += childNode.isBiological ? (-nodePathsVerticalOffset / 2) : (nodePathsVerticalOffset / 2);
     }
 
-    // Szabi: what happens if child has only one parent?
     const hasBiologicalParents = $(childNode).data('biologicalFatherId') != null && $(childNode).data('biologicalMotherId') != null;
     const hasAdoptiveParents = $(childNode).data('adoptiveFatherId') != null && $(childNode).data('adoptiveMotherId') != null;
 

@@ -79,15 +79,13 @@ function removeAndTrackClass(element, className) {
     }
 }
 
-function scrollToMiddle(container, element) {
-    const containerRect = container.getBoundingClientRect();
-    const elementRect = element.getBoundingClientRect();
+function setSize(fromElement, toElement) {
+    const fromElementSize = getSize(fromElement);
 
-    const verticalOffset = elementRect.top - containerRect.top - (container.clientHeight / 2) + (element.clientHeight / 2);
-    const horizontalOffset = elementRect.left - containerRect.left - (container.clientWidth / 2) + (element.clientWidth / 2);
-
-    container.scrollTop += verticalOffset;
-    container.scrollLeft += horizontalOffset;
+    toElement.css({
+        width: fromElementSize.width,
+        height: fromElementSize.height
+    });
 }
 
 function getSize(element) {
@@ -98,15 +96,6 @@ function getSize(element) {
     const elementHeight = domElement.offsetHeight || parseFloat(elementStyle.height);
 
     return { width: elementWidth, height: elementHeight };
-}
-
-function setSize(fromElement, toElement) {
-    const fromElementSize = getSize(fromElement);
-
-    toElement.css({
-        width: fromElementSize.width,
-        height: fromElementSize.height
-    });
 }
 
 function arrayRemoveDuplicatesWithSameId(array) {
