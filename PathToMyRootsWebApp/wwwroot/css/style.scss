@@ -816,9 +816,11 @@ fieldset {
     }
 }
 
+// usually there is only one div on a page, but in case of tests there are multiple
 #tree-diagrams-div, .tree-diagrams-div {
     position: relative;
     overflow: auto;
+    width: fit-content;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -1187,7 +1189,6 @@ fieldset {
 }
 
 #summary {
-
     p {
         font-style: italic;
         width: 25%;
@@ -1222,7 +1223,7 @@ fieldset {
     hr {
         width: 50%;
         margin-left: 0px;
-        margin-bottom: $thickness-medium;
+        margin-bottom: $thickness-small;
     }
 }
 
@@ -1295,12 +1296,16 @@ fieldset {
 
         .test-case-div {
             overflow: visible;
-            border-color: yellow;
-            border-width: 2px;
-        }
+            width: fit-content;
+            margin-bottom: $thickness-large;
 
-        .diagram-frame {
-            margin: 0px auto $thickness-large 0px;
+            .tree-diagrams-div {
+                overflow: visible;
+
+                .diagram-frame {
+                    margin: 0px auto 0px 0px;
+                }
+            }
         }
     }
 }

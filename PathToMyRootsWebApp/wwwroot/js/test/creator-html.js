@@ -37,19 +37,13 @@
     },
 
     createTestCaseDiv() {
-        const testCaseDiv = $('<div>')
-            .css('class', 'test-case-div');
-
-        return testCaseDiv;
+        return $('<div>')
+            .attr('class', 'test-case-div');
     },
 
     createTreeDiagramsDiv() {
-        const treeDiagramsDiv = $('<div>')
-            .attr('class', 'tree-diagrams-div')
-            .css('height', 'auto')
-            .css('overflow', 'visible');
-
-        return treeDiagramsDiv;
+        return $('<div>')
+            .attr('class', 'tree-diagrams-div');
     },
 
     createHiddenH3(text) {
