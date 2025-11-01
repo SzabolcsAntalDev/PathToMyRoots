@@ -2,48 +2,48 @@
     const scrollTransitionInterval = getScrollTransitionIntervalInSeconds() * 1000;
     const scrollToTopButton = $('#scroll-to-top-button');
     const scrollToBottomButton = $('#scroll-to-bottom-button');
-    const treeDiagramsDiv = $('#tree-diagrams-div');
+    const scrollableContent = $('#scrollable-content');
 
-    treeDiagramsDiv.on('scroll', function () {
-        updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton);
-        updateBottomButtonVisibility(treeDiagramsDiv, scrollToBottomButton);
+    scrollableContent.on('scroll', function () {
+        updateTopButtonVisibility(scrollableContent, scrollToTopButton);
+        updateBottomButtonVisibility(scrollableContent, scrollToBottomButton);
     });
 
-    treeDiagramsDiv.on('resize', function () {
-        updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton);
-        updateBottomButtonVisibility(treeDiagramsDiv, scrollToBottomButton);
+    scrollableContent.on('resize', function () {
+        updateTopButtonVisibility(scrollableContent, scrollToTopButton);
+        updateBottomButtonVisibility(scrollableContent, scrollToBottomButton);
     });
 
     new MutationObserver(() => {
-        updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton);
-        updateBottomButtonVisibility(treeDiagramsDiv, scrollToBottomButton);
-    }).observe(treeDiagramsDiv[0], {
+        updateTopButtonVisibility(scrollableContent, scrollToTopButton);
+        updateBottomButtonVisibility(scrollableContent, scrollToBottomButton);
+    }).observe(scrollableContent[0], {
         childList: true,
         subtree: true
     });
 
     $(window).on('resize', function () {
-        updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton);
-        updateBottomButtonVisibility(treeDiagramsDiv, scrollToBottomButton);
+        updateTopButtonVisibility(scrollableContent, scrollToTopButton);
+        updateBottomButtonVisibility(scrollableContent, scrollToBottomButton);
     });
 
     $('#scroll-to-top-button').on('click', function () {
-        treeDiagramsDiv.animate(
+        scrollableContent.animate(
             { scrollTop: 0 },
             scrollTransitionInterval);
     });
 
     $('#scroll-to-bottom-button').on('click', function () {
-        treeDiagramsDiv.animate(
-            { scrollTop: treeDiagramsDiv[0].scrollHeight - treeDiagramsDiv[0].clientHeight },
+        scrollableContent.animate(
+            { scrollTop: scrollableContent[0].scrollHeight - scrollableContent[0].clientHeight },
             scrollTransitionInterval);
     });
 }
 
-function updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton) {
-    const treeDiagramsDivElement = treeDiagramsDiv[0];
-    const scrollBarIsVisible = treeDiagramsDivElement.scrollHeight > treeDiagramsDivElement.clientHeight;
-    const isScrolledDown = treeDiagramsDivElement.scrollTop > 0;
+function updateTopButtonVisibility(scrollableContent, scrollToTopButton) {
+    const scrollableContentElement = scrollableContent[0];
+    const scrollBarIsVisible = scrollableContentElement.scrollHeight > scrollableContentElement.clientHeight;
+    const isScrolledDown = scrollableContentElement.scrollTop > 0;
 
     if (scrollBarIsVisible && isScrolledDown) {
         if (!isVisibleElement(scrollToTopButton)) {
@@ -57,15 +57,15 @@ function updateTopButtonVisibility(treeDiagramsDiv, scrollToTopButton) {
     }
 }
 
-function updateBottomButtonVisibility(treeDiagramsDiv, scrollToBottomButton) {
-    const treeDiagramsDivElement = treeDiagramsDiv[0];
-    const scrollBarIsVisible = treeDiagramsDivElement.scrollHeight > treeDiagramsDivElement.clientHeight;
+function updateBottomButtonVisibility(scrollableContent, scrollToBottomButton) {
+    const scrollableContentElement = scrollableContent[0];
+    const scrollBarIsVisible = scrollableContentElement.scrollHeight > scrollableContentElement.clientHeight;
 
     const isScrolledToBottom =
-        treeDiagramsDivElement.scrollTop + treeDiagramsDivElement.clientHeight >=
-        treeDiagramsDivElement.scrollHeight - 1;
+        scrollableContentElement.scrollTop + scrollableContentElement.clientHeight >=
+        scrollableContentElement.scrollHeight - 1;
 
-    const horizontalScrollbarVisible = treeDiagramsDivElement.scrollWidth > treeDiagramsDivElement.clientWidth;
+    const horizontalScrollbarVisible = scrollableContentElement.scrollWidth > scrollableContentElement.clientWidth;
     scrollToBottomButton.css('bottom', horizontalScrollbarVisible ? getScrollBarSize() : '0px');
 
     if (scrollBarIsVisible && !isScrolledToBottom) {

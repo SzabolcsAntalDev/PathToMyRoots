@@ -816,9 +816,8 @@ fieldset {
     }
 }
 
-#tree-diagrams-div {
+#tree-diagrams-div, .tree-diagrams-div {
     position: relative;
-    height: 100%;
     overflow: auto;
     flex-grow: 1;
     display: flex;
@@ -1187,7 +1186,47 @@ fieldset {
     }
 }
 
-.scrollable-area {
+#summary {
+
+    p {
+        font-style: italic;
+        width: 25%;
+    }
+
+    #test-progress-bar-div {
+        display: flex;
+        width: 25%;
+        border: $border;
+
+        #test-progress-bar-div-inner {
+            background-color: var(--foreground-color);
+            height: $thickness-large;
+            transition: width $default-transition;
+        }
+    }
+
+    #test-progress-status-div {
+        display: flex;
+        width: 25%;
+
+        div {
+            display: flex;
+            width: 33%;
+
+            .number {
+                margin-left: $thickness-small;
+            }
+        }
+    }
+
+    hr {
+        width: 50%;
+        margin-left: 0px;
+        margin-bottom: $thickness-medium;
+    }
+}
+
+#scrollable-area {
     position: relative;
     overflow: hidden;
 
@@ -1208,45 +1247,24 @@ fieldset {
         @extend %scroll-to-button;
         bottom: 0px;
     }
-}
-// the tree-diagrams-div also gets the class test-trees-div
-#tree-diagrams-div.test-trees-div {
-    --fade-transition-interval: 0.1s;
-    --fade-transition: 0.1s linear;
-    --tree-size-transition-interval: 0.1s;
-    --tree-size-transition: 0.1s linear;
 
-    #test-progress-bar-div {
+    #scrollable-content {
+        position: relative;
+        height: 100%;
+        overflow: auto;
+        flex-grow: 1;
         display: flex;
-        width: 500px;
-        border: $border;
+        flex-direction: column;
+        --fade-transition-interval: 0.1s;
+        --fade-transition: 0.1s linear;
+        --tree-size-transition-interval: 0.1s;
+        --tree-size-transition: 0.1s linear;
 
-        #test-progress-bar-div-inner {
-            background-color: var(--foreground-color);
-            height: $thickness-large;
-            transition: width $default-transition;
-        }
-    }
-
-    #test-progress-status-div {
-        display: flex;
-
-        div {
-            display: flex;
-            width: 100px;
-
-            .number {
-                margin-left: $thickness-small;
-            }
-        }
-    }
-
-    #test-cases-div {
         h2 {
             transition: opacity var(--fade-transition);
         }
 
-        .test-case-div {
+        .test-case-title-div {
             margin: 0 0 $thickness-small $thickness-large;
             display: flex;
             gap: $thickness-medium;
@@ -1274,10 +1292,16 @@ fieldset {
                 }
             }
         }
-    }
 
-    .diagram-frame {
-        margin: 0px auto $thickness-large 0px;
+        .test-case-div {
+            overflow: visible;
+            border-color: yellow;
+            border-width: 2px;
+        }
+
+        .diagram-frame {
+            margin: 0px auto $thickness-large 0px;
+        }
     }
 }
 

@@ -8,10 +8,10 @@
         return hiddenH2;
     },
 
-    createHiddenTestCaseDiv(id) {
+    createHiddenTestCaseTitleDiv(id) {
         const hiddenDiv = $('<div>')
             .attr('id', id)
-            .attr('class', 'test-case-div');
+            .attr('class', 'test-case-title-div');
 
         hideElement(hiddenDiv);
 
@@ -34,6 +34,22 @@
     createP(text) {
         return $('<p>')
             .text(text);
+    },
+
+    createTestCaseDiv() {
+        const testCaseDiv = $('<div>')
+            .css('class', 'test-case-div');
+
+        return testCaseDiv;
+    },
+
+    createTreeDiagramsDiv() {
+        const treeDiagramsDiv = $('<div>')
+            .attr('class', 'tree-diagrams-div')
+            .css('height', 'auto')
+            .css('overflow', 'visible');
+
+        return treeDiagramsDiv;
     },
 
     createHiddenH3(text) {

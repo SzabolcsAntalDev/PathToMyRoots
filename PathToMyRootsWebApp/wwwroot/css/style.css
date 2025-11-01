@@ -219,36 +219,36 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
   border-radius: 4px;
 }
 
-.flat-button, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .flat-button-with-svg-large, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   border: none;
   border-radius: 0px;
 }
 
-.flat-button-with-svg-large, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   background-color: var(--background-color-nav);
   box-sizing: border-box;
   transition: background-color 0.3s ease 0s, opacity var(--fade-transition);
 }
-.flat-button-with-svg-large svg, .scrollable-area #scroll-to-bottom-button svg, .scrollable-area #scroll-to-top-button svg, .flat-button-with-svg-small svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
+.flat-button-with-svg-large svg, #scrollable-area #scroll-to-bottom-button svg, #scrollable-area #scroll-to-top-button svg, .flat-button-with-svg-small svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
   width: 100%;
   height: 100%;
   fill: var(--foreground-color);
   transition: fill 0.3s ease 0s;
 }
-.flat-button-with-svg-large:hover, .scrollable-area #scroll-to-bottom-button:hover, .scrollable-area #scroll-to-top-button:hover, .flat-button-with-svg-small:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
+.flat-button-with-svg-large:hover, #scrollable-area #scroll-to-bottom-button:hover, #scrollable-area #scroll-to-top-button:hover, .flat-button-with-svg-small:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
   background-color: var(--background-color-highlight);
 }
-.flat-button-with-svg-large:hover svg, .scrollable-area #scroll-to-bottom-button:hover svg, .scrollable-area #scroll-to-top-button:hover svg, .flat-button-with-svg-small:hover svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg {
+.flat-button-with-svg-large:hover svg, #scrollable-area #scroll-to-bottom-button:hover svg, #scrollable-area #scroll-to-top-button:hover svg, .flat-button-with-svg-small:hover svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg {
   fill: var(--foreground-color-highlight);
 }
 
-.flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   padding: 4px;
   width: 18px;
   height: 18px;
 }
 
-.flat-button-with-svg-large, .scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button {
+.flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button {
   padding: 8px;
   width: 32px;
   height: 32px;
@@ -608,21 +608,20 @@ fieldset div.option label input[type=radio]:checked:hover {
   margin: 4px;
 }
 
-#tree-diagrams-div {
+#tree-diagrams-div, .tree-diagrams-div {
   position: relative;
-  height: 100%;
   overflow: auto;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
-#tree-diagrams-div .diagram-frame {
+#tree-diagrams-div .diagram-frame, .tree-diagrams-div .diagram-frame {
   position: relative;
   border: 1px solid var(--foreground-color);
   margin: 0px auto;
   transition: opacity var(--fade-transition), border 0.3s ease 0s;
 }
-#tree-diagrams-div .diagram-frame .settings-div {
+#tree-diagrams-div .diagram-frame .settings-div, .tree-diagrams-div .diagram-frame .settings-div {
   position: absolute;
   z-index: 2;
   display: flex;
@@ -631,16 +630,16 @@ fieldset div.option label input[type=radio]:checked:hover {
   left: 8px;
   transition: opacity 0.3s linear 0s;
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   margin: 0px;
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
   transition: fill 0.3s ease 0s, transform 0.3s ease 0s;
 }
-#tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg {
+#tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button-opened svg {
   transform: rotate(180deg);
 }
-#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -648,25 +647,25 @@ fieldset div.option label input[type=radio]:checked:hover {
   padding: 8px;
   transition: background-color 0.3s ease 0s;
 }
-#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
 }
-#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button {
+#tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button {
   width: 50%;
   margin-left: auto;
   margin-right: 0px;
 }
-#tree-diagrams-div .diagram-frame .diagram-info-div {
+#tree-diagrams-div .diagram-frame .diagram-info-div, .tree-diagrams-div .diagram-frame .diagram-info-div {
   position: relative;
   margin-left: 26px;
   min-width: 550px;
 }
-#tree-diagrams-div .diagram-frame .diagram-info-div .text {
+#tree-diagrams-div .diagram-frame .diagram-info-div .text, .tree-diagrams-div .diagram-frame .diagram-info-div .text {
   display: inline-block;
   margin: 8px;
   margin-right: 4px;
 }
-#tree-diagrams-div .diagram-frame .diagram-info-div .value {
+#tree-diagrams-div .diagram-frame .diagram-info-div .value, .tree-diagrams-div .diagram-frame .diagram-info-div .value {
   display: inline-block;
   margin: 8px;
   margin-left: 0px;
@@ -885,76 +884,97 @@ fieldset div.option label input[type=radio]:checked:hover {
   font-size: 14px;
 }
 
-.scrollable-area {
+#summary p {
+  font-style: italic;
+  width: 25%;
+}
+#summary #test-progress-bar-div {
+  display: flex;
+  width: 25%;
+  border: 1px solid var(--foreground-color);
+}
+#summary #test-progress-bar-div #test-progress-bar-div-inner {
+  background-color: var(--foreground-color);
+  height: 16px;
+  transition: width 0.3s ease 0s;
+}
+#summary #test-progress-status-div {
+  display: flex;
+  width: 25%;
+}
+#summary #test-progress-status-div div {
+  display: flex;
+  width: 33%;
+}
+#summary #test-progress-status-div div .number {
+  margin-left: 4px;
+}
+#summary hr {
+  width: 50%;
+  margin-left: 0px;
+  margin-bottom: 8px;
+}
+
+#scrollable-area {
   position: relative;
   overflow: hidden;
 }
-.scrollable-area #scroll-to-bottom-button, .scrollable-area #scroll-to-top-button {
+#scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button {
   position: absolute;
   right: 0px;
   margin-right: 23px;
   z-index: 2;
 }
-.scrollable-area #scroll-to-top-button {
+#scrollable-area #scroll-to-top-button {
   top: 0px;
 }
-.scrollable-area #scroll-to-bottom-button {
+#scrollable-area #scroll-to-bottom-button {
   bottom: 0px;
 }
-
-#tree-diagrams-div.test-trees-div {
+#scrollable-area #scrollable-content {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   --fade-transition-interval: 0.1s;
   --fade-transition: 0.1s linear;
   --tree-size-transition-interval: 0.1s;
   --tree-size-transition: 0.1s linear;
 }
-#tree-diagrams-div.test-trees-div #test-progress-bar-div {
-  display: flex;
-  width: 500px;
-  border: 1px solid var(--foreground-color);
-}
-#tree-diagrams-div.test-trees-div #test-progress-bar-div #test-progress-bar-div-inner {
-  background-color: var(--foreground-color);
-  height: 16px;
-  transition: width 0.3s ease 0s;
-}
-#tree-diagrams-div.test-trees-div #test-progress-status-div {
-  display: flex;
-}
-#tree-diagrams-div.test-trees-div #test-progress-status-div div {
-  display: flex;
-  width: 100px;
-}
-#tree-diagrams-div.test-trees-div #test-progress-status-div div .number {
-  margin-left: 4px;
-}
-#tree-diagrams-div.test-trees-div #test-cases-div h2 {
+#scrollable-area #scrollable-content h2 {
   transition: opacity var(--fade-transition);
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div {
+#scrollable-area #scrollable-content .test-case-title-div {
   margin: 0 0 4px 16px;
   display: flex;
   gap: 8px;
   align-items: center;
   transition: opacity var(--fade-transition);
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div p {
+#scrollable-area #scrollable-content .test-case-title-div p {
   margin: 0;
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button {
+#scrollable-area #scrollable-content .test-case-title-div button {
   margin: 0;
   transition: background-color 0.3s ease 0s, opacity 0.3s linear 0s;
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button svg {
+#scrollable-area #scrollable-content .test-case-title-div button svg {
   transition: fill 0.3s ease 0s;
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button:hover {
+#scrollable-area #scrollable-content .test-case-title-div button:hover {
   background-color: var(--background-color-highlight);
 }
-#tree-diagrams-div.test-trees-div #test-cases-div .test-case-div button:hover svg {
+#scrollable-area #scrollable-content .test-case-title-div button:hover svg {
   fill: var(--foreground-color-highlight);
 }
-#tree-diagrams-div.test-trees-div .diagram-frame {
+#scrollable-area #scrollable-content .test-case-div {
+  overflow: visible;
+  border-color: yellow;
+  border-width: 2px;
+}
+#scrollable-area #scrollable-content .diagram-frame {
   margin: 0px auto 16px 0px;
 }
 

@@ -543,7 +543,7 @@ VALUES
 
 
 
-SET @id = 5000;
+SET @id = 100000;
 
 -- ==========================================================================================================================
 -- HOURGLASS_BIOLOGICAL - When only male ancestors are present, fake ancestors are added
@@ -1137,7 +1137,7 @@ VALUES
 
 
 
-SET @id = 10000;
+SET @id = 105000;
 
 -- ==========================================================================================================================
 -- HOURGLASS_EXTENDED - When ancestors have multiple spouses, their spouses are displayed
@@ -1570,7 +1570,7 @@ VALUES
 
 
 
-SET @id = 15000;
+SET @id = 110000;
 
 -- ==========================================================================================================================
 -- COMPLETE - When a person has a three generation family, generations are displayed on three levels
@@ -1806,10 +1806,10 @@ VALUES
 		(	@id + 2,	'L0 Female1',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 1, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 3,	'L0 Male2',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 4, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 4,	'L0 Female2',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 3, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 5,	'L01 Male3',		NULL,			NULL,			NULL,			@id + 9, 			@id + 10,			NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 6,	'L01 Female3',		NULL,			NULL,			NULL,			@id + 11, 			@id + 12,			NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 7,	'L01 Male4',		NULL,			NULL,			NULL,			@id + 13, 			@id + 14,			NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 8,	'L01 Female4',		NULL,			NULL,			NULL,			@id + 15, 			@id + 16, 			NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 5,	'L0 Male3',			NULL,			NULL,			NULL,			@id + 9, 			@id + 10,			NULL,				NULL,				@id + 6, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 6,	'L0 Female3',		NULL,			NULL,			NULL,			@id + 11, 			@id + 12,			NULL,				NULL,				@id + 5, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 7,	'L0 Male4',			NULL,			NULL,			NULL,			@id + 13, 			@id + 14,			NULL,				NULL,				@id + 8, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 8,	'L0 Female4',		NULL,			NULL,			NULL,			@id + 15, 			@id + 16, 			NULL,				NULL,				@id + 7, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 9,	'L0 Male5',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 10, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 10,	'L0 Female5',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 9, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 11,	'L0 Male6',			NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 12, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
@@ -1820,12 +1820,12 @@ VALUES
 		(	@id + 16,	'L0 Female8',		NULL,			NULL,			NULL,			NULL, 				NULL,				NULL,				NULL,				@id + 15, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 17,	'L1 Male1',			NULL,			NULL,			NULL,			@id + 1, 			@id + 2,			NULL,				NULL,				@id + 18, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 18,	'L1 Female1',		NULL,			NULL,			NULL,			@id + 3, 			@id + 4,			NULL,				NULL,				@id + 17, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 19,	'L12 Male2',		NULL,			NULL,			NULL,			@id + 5, 			@id + 6,			NULL,				NULL,				@id + 20, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 20,	'L12 Female2',		NULL,			NULL,			NULL,			@id + 7, 			@id + 8,			NULL,				NULL,				@id + 19, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 19,	'L1 Male2',			NULL,			NULL,			NULL,			@id + 5, 			@id + 6,			NULL,				NULL,				@id + 20, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
+		(	@id + 20,	'L1 Female2',		NULL,			NULL,			NULL,			@id + 7, 			@id + 8,			NULL,				NULL,				@id + 19, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 21,	'L2 Male',			NULL,			NULL,			NULL,			@id + 17, 			@id + 18,			NULL,				NULL,				@id + 22, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 22,	'L2 Female',		NULL,			NULL,			NULL,			@id + 19, 			@id + 20,			NULL,				NULL,				@id + 21, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL),
 		(	@id + 23,	'L3 Male',			NULL,			NULL,			NULL,			@id + 21, 			@id + 22,			NULL,				NULL,				@id + 24, 		NULL,			NULL,					NULL, 						1, 		'+yyyymmdd',	NULL,		NULL),
-		(	@id + 24,	'L3 Female',		NULL,			NULL,			NULL,			@id + 19, 			@id + 20,			NULL,				NULL,				@id + 23, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
+		(	@id + 24,	'L23 Female',		NULL,			NULL,			NULL,			@id + 19, 			@id + 20,			NULL,				NULL,				@id + 23, 		NULL,			NULL,					NULL, 						0, 		'+yyyymmdd',	NULL,		NULL)
 
 -- ==========================================================================================================================
 -- COMPLETE - When person has sibling from his father and female sibling, duplicated female siblings are marked and connected to each other

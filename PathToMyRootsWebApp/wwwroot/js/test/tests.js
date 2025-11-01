@@ -20,15 +20,11 @@ $(() => {
             testsResultsMap = new Map(Object.entries(testsResultsJson));
         }
 
-        const treeDiagramsDiv = $('#tree-diagrams-div');
-        treeDiagramsDiv.addClass('test-trees-div');
-
         const testProgressBarDivInner = $('#test-progress-bar-div-inner');
         const numberOfPendingTestsH3 = $('#number-of-pending-tests');
         const numberOfPassedTestsH3 = $('#number-of-passed-tests');
         const numberOfFailedTestsH3 = $('#number-of-failed-tests');
-
-        const testCasesDiv = $('#test-cases-div');
+        const scrollableContent = $('#scrollable-content');
 
         const hourglassBiologicalTestContexts = runBiologicalTests ? getHourglassBiologicalTestContexts() : [];
         const hourglassExtendedTestContexts = runExtendedTests ? getHourglassExtendedTestContexts() : [];
@@ -50,25 +46,44 @@ $(() => {
             numberOfFailedTests: 0,
             numberOfFailedTestsH3
         };
-        updateTestProgressData(testProgressContext, 0);
+        updateTestProgressData(testProgressContext);
 
         const testNumber = { value: 0 };
-        if (runBiologicalTests) { await addTestCases(testNumber, testCasesDiv, hourglassBiologicalTestContexts); }
-        if (runExtendedTests) { await addTestCases(testNumber, testCasesDiv, hourglassExtendedTestContexts); }
-        if (runCompleteTests) { await addTestCases(testNumber, testCasesDiv, completeTestContexts); }
+        if (runBiologicalTests) { await addTestCaseTitlesIntoTestCaseTitlesList(testNumber, scrollableContent, hourglassBiologicalTestContexts); }
+        if (runExtendedTests) { await addTestCaseTitlesIntoTestCaseTitlesList(testNumber, scrollableContent, hourglassExtendedTestContexts); }
+        if (runCompleteTests) { await addTestCaseTitlesIntoTestCaseTitlesList(testNumber, scrollableContent, completeTestContexts); }
 
         const testsContexts =
             (runBiologicalTests ? hourglassBiologicalTestContexts : []).concat
                 (runExtendedTests ? hourglassExtendedTestContexts : []).concat
                 (runCompleteTests ? completeTestContexts : []);
 
-        testNumber.value = 0;
-        for (const testContext of testsContexts) {
-            await runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, testProgressContext);
+        const testCaseDivs = [];
+
+        for (const _ of testsContexts) {
+            const testCaseDiv = testsHtmlCreator.createTestCaseDiv();
+            scrollableContent.append(testCaseDiv);
+            testCaseDivs.push(testCaseDiv);
         }
 
+        await Promise.all(
+            testsContexts.map((testContext, i) =>
+                runTest(i + 1, testCaseDivs[i], scrollableContent, testContext, testProgressContext)));
+
         if (saveTestResults) {
-            const testsResultsObj = Object.fromEntries(testsResultsMap);
+            const sortedResultsMap = [...testsResultsMap.entries()].sort(([a], [b]) => {
+                if (a < b) {
+                    return -1;
+                }
+
+                if (a > b) {
+                    return 1;
+                }
+
+                return 0;
+            });
+
+            const testsResultsObj = Object.fromEntries(sortedResultsMap);
             const testsResultsJson = JSON.stringify(testsResultsObj, null, 2);
 
             // debug: results of tests
@@ -79,28 +94,8 @@ $(() => {
     })();
 });
 
-async function addTestCases(testNumber, testCasesDiv, testContexts) {
-    const testGroupTitleH2 = testsHtmlCreator.createHiddenH2(testContexts[0].testPrefix);
-    testCasesDiv.append(testGroupTitleH2);
-    await fadeInElement(testGroupTitleH2);
-
-    for (const testContext of testContexts) {
-        testNumber.value++;
-
-        const testCaseDiv = testsHtmlCreator.createHiddenTestCaseDiv(testContext.personId);
-        const testIcon = testsHtmlCreator.createIcon('pending');
-        const testTitleP = testsHtmlCreator.createP(`${testNumber.value}. ${testContext.testTitle}`);
-
-        testCaseDiv.append(testIcon);
-        testCaseDiv.append(testTitleP);
-        testCasesDiv.append(testCaseDiv);
-
-        await fadeInElement(testCaseDiv);
-    };
-}
-
 function getHourglassBiologicalTestContexts() {
-    const personIdStart = 5000;
+    const personIdStart = 100000;
     let personId = personIdStart;
     const testPrefix = treeTypes.HOURGLASS_BIOLOGICAL.displayName;
     const treeType = treeTypes.HOURGLASS_BIOLOGICAL;
@@ -162,7 +157,7 @@ function getHourglassBiologicalTestContexts() {
 }
 
 function getHourglassExtendedTestContexts() {
-    const personIdStart = 10000;
+    const personIdStart = 105000;
     let personId = personIdStart;
     const testPrefix = treeTypes.HOURGLASS_EXTENDED.displayName;
     const treeType = treeTypes.HOURGLASS_EXTENDED;
@@ -207,7 +202,7 @@ function getHourglassExtendedTestContexts() {
 }
 
 function getCompleteTestContexts() {
-    const personIdStart = 15000;
+    const personIdStart = 110000;
     let personId = personIdStart;
     const testPrefix = treeTypes.COMPLETE.displayName;
     const treeType = treeTypes.COMPLETE;
@@ -263,29 +258,59 @@ function createTestContext(testTitle, personId, testPrefix, treeType, ancestorsD
     };
 }
 
-async function runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, testProgressContext) {
-    testNumber.value++;
-    const orderedTestTitle = `${testNumber.value}. ${testContext.testPrefix} - ${testContext.testTitle}`;
-    const testTitleH2 = testsHtmlCreator.createHiddenH2(orderedTestTitle);
-    treeDiagramsDiv.append(testTitleH2);
+async function addTestCaseTitlesIntoTestCaseTitlesList(testNumber, scrollableContent, testContexts) {
+    const testsGroupTitleH2 = testsHtmlCreator.createHiddenH2(testContexts[0].testPrefix);
+    scrollableContent.append(testsGroupTitleH2);
+    await fadeInElement(testsGroupTitleH2);
+
+    const testCaseTitleDivs = [];
+
+    for (const testContext of testContexts) {
+        testNumber.value++;
+
+        const testCaseTitleDiv = testsHtmlCreator.createHiddenTestCaseTitleDiv(testContext.personId);
+        const testCaseTitleIcon = testsHtmlCreator.createIcon('pending');
+        const testCaseTitleP = testsHtmlCreator.createP(`${testNumber.value}. ${testContext.testTitle}`);
+
+        testCaseTitleDiv.append(testCaseTitleIcon);
+        testCaseTitleDiv.append(testCaseTitleP);
+        scrollableContent.append(testCaseTitleDiv);
+        testCaseTitleDivs.push(testCaseTitleDiv);
+    };
+
+    await Promise.all(testCaseTitleDivs.map(testCaseTitleDiv => fadeInElement(testCaseTitleDiv)));
+}
+
+async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, testProgressContext) {
+    const testTitle = `${testNumber}. ${testContext.testPrefix} - ${testContext.testTitle}`;
+    const testTitleH2 = testsHtmlCreator.createHiddenH2(testTitle);
+    testCaseDiv.append(testTitleH2);
     await fadeInElement(testTitleH2);
 
     const originalDiagramFrameIdSuffix = testContext.personId + '-original';
     const resultDiagramFrameIdSuffix = testContext.personId + '-result';
 
     if (testContext.treeType != treeTypes.COMPLETE) {
-        const titleOriginalTree = testsHtmlCreator.createHiddenH3('Original tree');
-        treeDiagramsDiv.append(titleOriginalTree);
-        await fadeInElement(titleOriginalTree);
-        await createAndDisplayTreeDiagramFrame(treeDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.SMALL);
+        const originalTreeTitle = testsHtmlCreator.createHiddenH3('Original tree');
+        testCaseDiv.append(originalTreeTitle);
+        await fadeInElement(originalTreeTitle);
+
+        const originalTreeDiagramsDiv = testsHtmlCreator.createTreeDiagramsDiv();
+        testCaseDiv.append(originalTreeDiagramsDiv);
+
+        await createAndDisplayTreeDiagramFrame(originalTreeDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.SMALL);
     }
 
-    const titleResultTree = testsHtmlCreator.createHiddenH3('Result tree');
-    treeDiagramsDiv.append(titleResultTree);
-    await fadeInElement(titleResultTree);
-    await createAndDisplayTreeDiagramFrame(treeDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descedantsDepth, viewModes.SMALL);
+    const resultTreeTitle = testsHtmlCreator.createHiddenH3('Result tree');
+    testCaseDiv.append(resultTreeTitle);
+    await fadeInElement(resultTreeTitle);
 
-    const diagramFrame = treeDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
+    const resultTreeDiagramsDiv = testsHtmlCreator.createTreeDiagramsDiv();
+    testCaseDiv.append(resultTreeDiagramsDiv);
+
+    await createAndDisplayTreeDiagramFrame(resultTreeDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descedantsDepth, viewModes.SMALL);
+
+    const diagramFrame = resultTreeDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
     const diagramHtml = diagramFrame.find('.diagram').html();
 
     if (saveTestResults) {
@@ -306,24 +331,24 @@ async function runTest(testNumber, treeDiagramsDiv, testCasesDiv, testContext, t
         const resultIcon = testsHtmlCreator.createIcon((expectedHtml == diagramHtml) ? 'success' : 'error');
         hideElement(resultIcon);
 
-        const testCaseDiv = testCasesDiv.find('#' + testContext.personId);
+        const testCaseTitleDiv = scrollableContent.find('#' + testContext.personId);
 
-        const pendingIcon = testCaseDiv.find('div.svg-div-pending');
+        const pendingIcon = testCaseTitleDiv.find('div.svg-div-pending');
         await fadeOutElement(pendingIcon);
         pendingIcon.replaceWith(resultIcon)
         await fadeInElement(resultIcon);
 
-        const scrollToTestButton = testsHtmlCreator.createScrollToTestButton(treeDiagramsDiv, testTitleH2);
-        testCaseDiv.append(scrollToTestButton);
+        const scrollToTestButton = testsHtmlCreator.createScrollToTestButton($("#scrollable-content"), testTitleH2);
+        testCaseTitleDiv.append(scrollToTestButton);
 
         fadeInElement(scrollToTestButton);
     }
 
-    updateTestProgressData(testProgressContext, testNumber.value)
+    updateTestProgressData(testProgressContext)
 }
 
-function updateTestProgressData(testProgressContext, currentTestNumber) {
-    testProgressContext.testProgressBarDivInner.css('width', ((100 / testProgressContext.totalNumberOfTests) * currentTestNumber) + '%');
+function updateTestProgressData(testProgressContext) {
+    testProgressContext.testProgressBarDivInner.css('width', ((100 / testProgressContext.totalNumberOfTests) * (testProgressContext.numberOfPassedTests + testProgressContext.numberOfFailedTests)) + '%');
     testProgressContext.numberOfPendingTestsH3.text(testProgressContext.numberOfPendingTests);
     testProgressContext.numberOfPassedTestsH3.text(testProgressContext.numberOfPassedTests);
     testProgressContext.numberOfFailedTestsH3.text(testProgressContext.numberOfFailedTests);

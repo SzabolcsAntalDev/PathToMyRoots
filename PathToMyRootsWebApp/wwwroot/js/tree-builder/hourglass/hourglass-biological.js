@@ -1,6 +1,4 @@
-﻿let fakeId = -10000;
-
-const hourglassBiological = {
+﻿const hourglassBiological = {
     async createKnownAncestorsOf(context) {
         if (context.ancestorsDepth == 0) {
             return;
@@ -323,6 +321,10 @@ const hourglassBiological = {
 
         let childrenLevel = ancestorsGenerations.length - 1;
 
+        // reset fake id value, so even if trees are created in a random order in tests
+        // the fake ids of the unknown ancestors will be the same in the concrete trees
+        const fakeId = { value: -10000 };
+
         while (true) {
             const parents = ancestorsGenerations[childrenLevel - 1];
             const children = ancestorsGenerations[childrenLevel];
@@ -365,16 +367,16 @@ const hourglassBiological = {
 
                 // if male does not have a father, create the fake parents
                 if (!malesFatherId) {
-                    const malesFakeFather = this.createFakeMale(maleId);
-                    const malesFakeMother = this.createFakeFemale(maleId);
+                    const malesFakeFather = this.createFakeMale(fakeId, maleId);
+                    const malesFakeMother = this.createFakeFemale(fakeId, maleId);
                     const malesFakeParentsExtendedMarriage = this.createFakeExtendedMarriage(malesFakeFather, malesFakeMother);
                     parents.extendedMarriages.splice(malesParentsExtendedMarriageIndex, 0, malesFakeParentsExtendedMarriage);
                 }
 
                 // if female does not have a father, create the fake parents
                 if (!femalesFatherId) {
-                    const femalesFakeFather = this.createFakeMale(femaleId);
-                    const femalesFakeMother = this.createFakeFemale(femaleId);
+                    const femalesFakeFather = this.createFakeMale(fakeId, femaleId);
+                    const femalesFakeMother = this.createFakeFemale(fakeId, femaleId);
                     const femalesFakeParentsExtendedMarriage = this.createFakeExtendedMarriage(femalesFakeFather, femalesFakeMother);
                     parents.extendedMarriages.splice(femalesParentsExtendedMarriageIndex, 0, femalesFakeParentsExtendedMarriage);
                 }
@@ -388,11 +390,11 @@ const hourglassBiological = {
         }
     },
 
-    createFakeMale(childId) {
-        fakeId++;
+    createFakeMale(fakeId, childId) {
+        fakeId.value++;
         const male = {
             fakeId: fakeId,
-            id: fakeId,
+            id: fakeId.value,
             isMale: true,
             inverseBiologicalFather: [{ id: childId }],
             inverseAdoptiveFather: []
@@ -400,11 +402,11 @@ const hourglassBiological = {
         return male;
     },
 
-    createFakeFemale(childId) {
-        fakeId++;
+    createFakeFemale(fakeId, childId) {
+        fakeId.value++;
         const female = {
-            fakeId: fakeId,
-            id: fakeId,
+            fakeId: fakeId.value,
+            id: fakeId.value,
             isMale: false,
             inverseBiologicalMother: [{ id: childId }],
             inverseAdoptiveMother: []

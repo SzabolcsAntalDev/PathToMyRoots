@@ -3,35 +3,39 @@
 @await Html.PartialAsync("_DiagramSettingsPartial")
 
 <h1>Tests</h1>
-<div class="scrollable-area">
+<div id="summary">
+    <p>Since the tests compare the HTML output of the result trees — which includes path coordinates connecting the nodes — they must be run in the browser at exactly 100% zoom level.</p>
+    <div id="test-progress-bar-div">
+        <div id="test-progress-bar-div-inner">
+        </div>
+    </div>
+    <div id="test-progress-status-div">
+        <div>
+            <h3>Pending:</h3>
+            <h3 id="number-of-pending-tests" class="number"></h3>
+        </div>
+        <div>
+            <h3>Passed:</h3>
+            <h3 id="number-of-passed-tests" class="number"></h3>
+        </div>
+        <div>
+            <h3>Failed:</h3>
+            <h3 id="number-of-failed-tests" class="number"></h3>
+        </div>
+    </div>
+    <hr />
+</div>
+
+<div id="scrollable-area">
     <button id="scroll-to-top-button">
         <svg>
             <use xlink:href="@Url.Content("~/icons/icons.svg#arrow-up")"></use>
         </svg>
     </button>
-    <div id="tree-diagrams-div">
-        <p style="font-style: italic; width: 500px;">Since the tests compare the HTML output of the result trees — which includes path coordinates connecting the nodes — they must be run in the browser at exactly 100% zoom level.</p>
-        <div id="test-progress-bar-div">
-            <div id="test-progress-bar-div-inner">
-            </div>
-        </div>
-        <div id="test-progress-status-div">
-            <div>
-                <h3>Pending:</h3>
-                <h3 id="number-of-pending-tests" class="number"></h3>
-            </div>
-            <div>
-                <h3>Passed:</h3>
-                <h3 id="number-of-passed-tests" class="number"></h3>
-            </div>
-            <div>
-                <h3>Failed:</h3>
-                <h3 id="number-of-failed-tests" class="number"></h3>
-            </div>
-        </div>
-        <div id="test-cases-div">
-        </div>
+
+    <div id="scrollable-content">
     </div>
+
     <button id="scroll-to-bottom-button">
         <svg>
             <use xlink:href="@Url.Content("~/icons/icons.svg#arrow-down")"></use>

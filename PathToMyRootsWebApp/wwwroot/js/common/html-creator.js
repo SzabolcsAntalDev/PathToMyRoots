@@ -1,13 +1,22 @@
 ﻿function createPersonImageWithFallbackSvg(imageUrl, className) {
-    return $('<img>')
-        .attr('class', className)
-        .attr('src', apiUrl + '/image/get/' + imageUrl)
-        .on('error', function () {
-            onGetImageError(this, className);
-        });
+
+    if (imageUrl) {
+        return $('<img>')
+            .attr('class', className)
+            .attr('src', apiUrl + '/image/get/' + imageUrl)
+            .on('error', function () {
+                onGetImageError(this, className);
+            });
+    }
+
+    return getPhantomImageDiv(className);
 }
 
 function onGetImageError(image, className) {
+    image.replaceWith(getPhantomImageDiv(className));
+}
+
+function getPhantomImageDiv(className) {
     const imageDiv = $('<div>')
         .attr('class', className);
 
@@ -17,5 +26,5 @@ function onGetImageError(image, className) {
 
     svg.appendChild(use);
     imageDiv.append(svg);
-    image.replaceWith(imageDiv[0]);
+    return imageDiv[0];
 }
