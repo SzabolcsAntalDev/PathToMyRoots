@@ -147,6 +147,13 @@ $person-image-width-large: $person-image-height-large * 0.75;
 
 $tooltip-offset: 3;
 
+@keyframes colorFade {
+    to {
+        background-color: var(--background-color-highlight);
+    }
+}
+$highlight-animation: colorFade 0.5s ease-in-out infinite alternate;
+
 %theme-properties {
     --color-transition-interval: #{$color-transition-interval};
     --fade-transition-interval: #{$fade-transition-interval};
@@ -951,13 +958,7 @@ fieldset {
                         }
 
                         .highlighted-node:not(:hover) {
-                            animation: colorFade 0.5s linear infinite alternate;
-
-                            @keyframes colorFade {
-                                to {
-                                    background-color: var(--background-color-highlight);
-                                }
-                            }
+                            animation: $highlight-animation;
                         }
 
                         .marriage-node {
@@ -1198,6 +1199,7 @@ fieldset {
         display: flex;
         width: 25%;
         border: $border;
+        animation: $highlight-animation;
 
         #test-progress-bar-div-inner {
             background-color: var(--foreground-color);

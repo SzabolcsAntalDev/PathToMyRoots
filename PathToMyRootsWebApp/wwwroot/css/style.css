@@ -24,6 +24,11 @@
   --marriage-color: #F7F8F9;
 }
 
+@keyframes colorFade {
+  to {
+    background-color: var(--background-color-highlight);
+  }
+}
 :root.theme-dark, :root.theme-light {
   --color-transition-interval: 0.3s;
   --fade-transition-interval: 0.3s;
@@ -721,12 +726,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   z-index: 1;
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .highlighted-node:not(:hover) {
-  animation: colorFade 0.5s linear infinite alternate;
-}
-@keyframes colorFade {
-  to {
-    background-color: var(--background-color-highlight);
-  }
+  animation: colorFade 0.5s ease-in-out infinite alternate;
 }
 .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .marriage-node, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .floating-and-hidden-marriage-nodes-div .hidden-marriage-node {
   width: var(--marriage-node-width);
@@ -893,6 +893,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   display: flex;
   width: 25%;
   border: 1px solid var(--foreground-color);
+  animation: colorFade 0.5s ease-in-out infinite alternate;
 }
 #summary #test-progress-bar-div #test-progress-bar-div-inner {
   background-color: var(--foreground-color);
