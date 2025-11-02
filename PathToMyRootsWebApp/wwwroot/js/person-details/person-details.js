@@ -92,6 +92,7 @@ function addRelatives(relativesColumnContent, title, relatives) {
             .append(personDetailsHtmlCreator.createDivTitle(title));
 
     let horizontalRelativesDiv;
+    const widthPercentage = 100 / Math.min(relatives.length, MaximumNumberOfPersonsInRow)
 
     relatives.forEach((relative, i) => {
         if (i % MaximumNumberOfPersonsInRow == 0) {
@@ -99,12 +100,11 @@ function addRelatives(relativesColumnContent, title, relatives) {
             divWithTitle.append(horizontalRelativesDiv);
         }
 
-        const nonSpouse = personDetailsHtmlCreator.createNonSpouse(relative);
-        if (i >= MaximumNumberOfPersonsInRow) {
-            $(nonSpouse).css('width', (100 / MaximumNumberOfPersonsInRow) + '%');
-        }
+        const nonSpouseContainer = personDetailsHtmlCreator.createNonSpouseContainer(relative);
+        $(nonSpouseContainer).css('width', widthPercentage + '%');
+        $(nonSpouseContainer).css('max-width', widthPercentage + '%');
 
-        horizontalRelativesDiv.append(nonSpouse);
+        horizontalRelativesDiv.append(nonSpouseContainer);
     });
 
     relativesColumnContent.append(divWithTitle);
@@ -123,7 +123,7 @@ function addSpouse(
 
         const horizontalRelativesDiv = personDetailsHtmlCreator.createHorizontalRelativesDiv();
         horizontalRelativesDiv.append(
-            personDetailsHtmlCreator.createSpouse(
+            personDetailsHtmlCreator.createSpouseContainer(
                 spouse,
                 marriageStartDate,
                 marriageEndDate));
@@ -135,5 +135,5 @@ function addSpouse(
 
 function createTreeColumn(personId) {
     const treeDiagramsDiv = $('#tree-diagrams-div');
-    createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, personId, treeTypes.HOURGLASS_EXTENDED, 2, 2, viewModes.MEDIUM);
+    createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, personId, treeTypes.HOURGLASS_EXTENDED, 4, 1, viewModes.LARGE);
 }

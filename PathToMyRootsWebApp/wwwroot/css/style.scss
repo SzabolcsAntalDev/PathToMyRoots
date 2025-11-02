@@ -1425,49 +1425,55 @@ fieldset {
                     .horizontal-relatives-div {
                         display: flex;
 
-                        .relative {
-                            display: flex;
+                        // this container is needed to divide the available space equally
+                        // while also using a margin on the child
+                        .relative-container {
                             width: 100%;
-                            min-width: 0;
-                            margin: $thickness-extrasmall;
-                            color: var(--foreground-color-disabled);
-                            transition: color $color-transition, background-color $color-transition, border $color-transition;
+                            max-width: 100%;
+                            box-sizing: border-box;
 
-                            %spouse-non-spouse-image {
-                                // cancel hovering effect
-                                fill: var(--foreground-color-disabled);
+                            .relative {
+                                margin: $thickness-extrasmall;
+                                display: flex;
+                                color: var(--foreground-color-disabled);
+                                transition: color $color-transition, background-color $color-transition, border $color-transition;
 
-                                &:hover {
+                                %spouse-non-spouse-image {
+                                    // cancel hovering effect
                                     fill: var(--foreground-color-disabled);
+
+                                    &:hover {
+                                        fill: var(--foreground-color-disabled);
+                                    }
+                                }
+
+                                .non-spouse-img {
+                                    @extend .person-image-small;
+                                    @extend %spouse-non-spouse-image;
+                                }
+
+                                .spouse-img {
+                                    @extend .person-image-medium;
+                                    @extend %spouse-non-spouse-image;
                                 }
                             }
 
-                            .non-spouse-img {
-                                @extend .person-image-small;
-                                @extend %spouse-non-spouse-image;
-                            }
-
-                            .spouse-img {
-                                @extend .person-image-medium;
-                                @extend %spouse-non-spouse-image;
-                            }
-                        }
-
-                        .relative-interactive {
-                            @extend .relative;
-                            cursor: pointer;
-                            color: var(--foreground-color);
-
-                            %spouse-non-spouse-image {
-                                fill: var(--foreground-color);
-                            }
-
-                            &:hover {
-                                color: var(--foreground-color-highlight);
-                                background-color: var(--background-color-highlight);
+                            .relative-interactive {
+                                @extend .relative;
+                                cursor: pointer;
+                                color: var(--foreground-color);
 
                                 %spouse-non-spouse-image {
-                                    fill: var(--foreground-color-highlight);
+                                    fill: var(--foreground-color);
+                                }
+
+                                &:hover {
+                                    color: var(--foreground-color-highlight);
+                                    background-color: var(--background-color-highlight);
+
+                                    %spouse-non-spouse-image {
+                                        fill: var(--foreground-color-highlight);
+                                    }
                                 }
                             }
                         }

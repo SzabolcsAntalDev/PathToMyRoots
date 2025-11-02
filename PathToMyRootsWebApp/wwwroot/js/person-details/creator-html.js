@@ -45,7 +45,7 @@
             .attr('class', 'horizontal-relatives-div');
     },
 
-    createNonSpouse(person) {
+    createNonSpouseContainer(person) {
         const personNameText = formatPersonName(person);
         const personNameSpan =
             $('<span>')
@@ -102,10 +102,12 @@
                 .append(tooltip);
         }
 
-        return nonSpouse;
+        return $('<div>')
+            .attr('class', 'relative-container')
+            .append(nonSpouse);
     },
 
-    createSpouse(person, marriageStartDate, marriageEndDate) {
+    createSpouseContainer(person, marriageStartDate, marriageEndDate) {
         const personNameText = formatPersonName(person);
         const personNameSpan =
             $('<span>')
@@ -181,6 +183,8 @@
                 .append(tooltip);
         }
 
-        return spouse;
+        return $('<div>')
+            .attr('class', 'relative-container')
+            .append(spouse);
     }
 }

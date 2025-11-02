@@ -173,7 +173,7 @@ body {
   display: none;
 }
 
-.relative, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive {
+.relative, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive {
   position: relative;
 }
 
@@ -298,21 +298,21 @@ svg {
   fill: var(--background-color);
 }
 
-.person-details .top-row .info-column .image, .person-tooltip-content .image, .person-image-medium, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-image-small, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
+.person-details .top-row .info-column .image, .person-tooltip-content .image, .person-image-medium, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img, .person-image-small, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   aspect-ratio: 3/4;
   fill: var(--foreground-color);
   transition: fill 0.3s ease 0s;
 }
-.person-details .top-row .info-column .image:hover, .person-tooltip-content .image:hover, .person-image-medium:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-image-small:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover {
+.person-details .top-row .info-column .image:hover, .person-tooltip-content .image:hover, .person-image-medium:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img:hover, .person-image-small:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image:hover, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image:hover {
   fill: var(--foreground-color-highlight);
 }
 
-.person-image-small, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
+.person-image-small, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image {
   width: 30px;
   height: 40px;
 }
 
-.person-image-medium, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img {
+.person-image-medium, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img {
   width: 45px;
   height: 60px;
 }
@@ -1084,32 +1084,35 @@ fieldset div.option label input[type=radio]:checked:hover {
 .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div {
   display: flex;
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive {
-  display: flex;
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container {
   width: 100%;
-  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive {
   margin: 2px;
+  display: flex;
   color: var(--foreground-color-disabled);
   transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border 0.3s ease 0s;
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img {
   fill: var(--foreground-color-disabled);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img:hover {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img:hover, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img:hover {
   fill: var(--foreground-color-disabled);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive {
   cursor: pointer;
   color: var(--foreground-color);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .spouse-img {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .spouse-img {
   fill: var(--foreground-color);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive:hover {
   color: var(--foreground-color-highlight);
   background-color: var(--background-color-highlight);
 }
-.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive:hover .spouse-img {
+.person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive:hover .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive:hover .spouse-img {
   fill: var(--foreground-color-highlight);
 }
 .person-details .tree-row {
@@ -1286,7 +1289,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   display: flex;
   flex-direction: row;
 }
-.dropdown .option-with-image:hover .person-image-small, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-interactive .dropdown .option-with-image:hover .non-spouse-img {
+.dropdown .option-with-image:hover .person-image-small, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .person-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .male-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .image, .diagram .nodes-div .generation .siblings-chain .sibling .extended-marriage .main-marriage .female-node .dropdown .option-with-image:hover .image, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative .dropdown .option-with-image:hover .non-spouse-img, .dropdown .option-with-image:hover .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .non-spouse-img, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive .dropdown .option-with-image:hover .non-spouse-img {
   fill: var(--foreground-color-highlight);
 }
 .dropdown .option-with-image .person-name-span {
