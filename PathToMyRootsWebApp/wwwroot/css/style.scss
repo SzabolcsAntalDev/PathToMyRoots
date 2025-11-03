@@ -869,7 +869,7 @@ fieldset {
                     flex: 1;
                     flex-direction: column;
                     background-color: var(--background-color-nav);
-                    padding: $thickness-medium;
+                    padding: $thickness-small $thickness-large;
                     transition: background-color $color-transition;
 
                     label, h3 {

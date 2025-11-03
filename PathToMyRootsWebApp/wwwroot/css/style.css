@@ -651,7 +651,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   flex: 1;
   flex-direction: column;
   background-color: var(--background-color-nav);
-  padding: 8px;
+  padding: 4px 16px;
   transition: background-color 0.3s ease 0s;
 }
 #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
