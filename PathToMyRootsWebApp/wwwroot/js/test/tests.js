@@ -172,6 +172,8 @@ function getHourglassExtendedTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive siblings, they and their spouses and displayed and sorted by birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive and biological siblings, they are all displayed' },
         { ancestorsDepth: 0, descedantsDepth: 0, testTitle: 'When ancestors depth is 0, siblings of person are not displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive child, adoptive child is displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive grandchild, adoptive grandchild is displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has adoptive descedants, its descedants are not displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When person has biological and adoptive descedants, they are all displayed and sorted by birthDates' },
         { ancestorsDepth: relativesDepth.ALL.index, descedantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling is adopting child of person, adoptive path is displayed' },

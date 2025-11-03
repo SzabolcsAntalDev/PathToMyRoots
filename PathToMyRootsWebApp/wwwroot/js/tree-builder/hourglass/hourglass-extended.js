@@ -383,7 +383,7 @@
             await this.createDescedantsWithSpousesRecursiveOfPersonId(context, biologicalChild.id, currentLevel + 1);
         }
 
-        if (context.descedantsDepth != relativesDepth.ALL.index == currentLevel + 1 > context.descedantsDepth) {
+        if (context.descedantsDepth != relativesDepth.ALL.index && currentLevel + 1 > context.descedantsDepth) {
             return;
         }
 
@@ -414,7 +414,7 @@
             await this.createDescedantsWithSpousesRecursiveOfPersonId(context, biologicalChild.id, currentLevel + 1);
         }
 
-        if (currentLevel + 1 > context.descedantsDepth) {
+        if (context.descedantsDepth != relativesDepth.ALL.index && currentLevel + 1 > context.descedantsDepth) {
             return;
         }
 
