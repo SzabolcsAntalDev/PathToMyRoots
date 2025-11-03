@@ -583,7 +583,7 @@ input[type="text"]::placeholder {
     border-radius: $border-radius;
     position: absolute;
     display: flex;
-    z-index: 3;
+    z-index: -1;
     opacity: 0;
     pointer-events: none;
     transition: opacity $tooltip-transition;
@@ -592,6 +592,7 @@ input[type="text"]::placeholder {
 .tooltip-open {
     opacity: 1;
     pointer-events: auto;
+    z-index: 4;
 }
 
 fieldset {
@@ -1739,7 +1740,7 @@ fieldset {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 3;
 }
 
 #cropper-image-and-button-container {
