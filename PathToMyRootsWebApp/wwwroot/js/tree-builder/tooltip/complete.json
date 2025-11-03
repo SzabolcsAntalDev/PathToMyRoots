@@ -1549,7 +1549,8 @@
           ]
         ]
       ],
-      "generationSize": 0
+      "generationSize": 0,
+      "duplicatedGroupsOnSameLevelCount": 0
     },
     {
       "extendedMarriages": [
@@ -5474,7 +5475,8 @@
           ]
         ]
       ],
-      "generationSize": 3
+      "generationSize": 3,
+      "duplicatedGroupsOnSameLevelCount": 0
     },
     {
       "extendedMarriages": [
@@ -9156,7 +9158,8 @@
           ]
         ]
       ],
-      "generationSize": 6
+      "generationSize": 6,
+      "duplicatedGroupsOnSameLevelCount": 0
     },
     {
       "extendedMarriages": [
@@ -10797,8 +10800,10 @@
           ]
         ]
       ],
-      "generationSize": 3
+      "generationSize": 3,
+      "duplicatedGroupsOnSameLevelCount": 0
     }
   ],
-  "largestGenerationSize": 6
+  "largestGenerationSize": 6,
+  "largestDuplicatedGroupsOnSameLevelCount": 0
 }
