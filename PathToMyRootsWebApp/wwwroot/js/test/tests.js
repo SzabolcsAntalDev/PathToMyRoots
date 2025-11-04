@@ -95,7 +95,7 @@ $(() => {
 });
 
 function getHourglassBiologicalTestContexts() {
-    const personIdStart = 100000;
+    const personIdStart = 5000 - personIdBuffer;
     let personId = personIdStart;
     const testPrefix = treeTypes.HOURGLASS_BIOLOGICAL.displayName;
     const treeType = treeTypes.HOURGLASS_BIOLOGICAL;
@@ -157,7 +157,7 @@ function getHourglassBiologicalTestContexts() {
 }
 
 function getHourglassExtendedTestContexts() {
-    const personIdStart = 105000;
+    const personIdStart = 10000 - personIdBuffer;
     let personId = personIdStart;
     const testPrefix = treeTypes.HOURGLASS_EXTENDED.displayName;
     const treeType = treeTypes.HOURGLASS_EXTENDED;
@@ -204,7 +204,7 @@ function getHourglassExtendedTestContexts() {
 }
 
 function getCompleteTestContexts() {
-    const personIdStart = 110000;
+    const personIdStart = 15000 - personIdBuffer;
     let personId = personIdStart;
     const testPrefix = treeTypes.COMPLETE.displayName;
     const treeType = treeTypes.COMPLETE;

@@ -1,7 +1,7 @@
 ﻿const personsCache = new Map();
 
 async function getPersonJson(personId) {
-    if (!personId || personId == -1) {
+    if (personId == null || personId == -1) {
         return null;
     }
 
