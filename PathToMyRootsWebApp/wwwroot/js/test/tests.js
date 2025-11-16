@@ -1,6 +1,7 @@
-﻿const personIdBuffer = 40;
+﻿const saveTestResultsSetting = false;
+
+const personIdBuffer = 40;
 let testsResultsMap;
-const saveTestResults = false;
 
 const runBiologicalTests = true;
 const runExtendedTests = true;
@@ -11,7 +12,7 @@ $(() => {
 
         addScrollButtonsListeners();
 
-        if (saveTestResults) {
+        if (saveTestResultsSetting) {
             testsResultsMap = new Map();
         }
         else {
@@ -70,7 +71,7 @@ $(() => {
             testsContexts.map((testContext, i) =>
                 runTest(i + 1, testCaseDivs[i], scrollableContent, testContext, testProgressContext)));
 
-        if (saveTestResults) {
+        if (saveTestResultsSetting) {
             const sortedResultsMap = [...testsResultsMap.entries()].sort(([a], [b]) => {
                 if (a < b) {
                     return -1;
@@ -89,7 +90,7 @@ $(() => {
             // debug: results of tests
             // go to Chrome, enter the testsResultsJson into the Watch
             // right click on the value and select Copy string contents
-            const toSave = testsResultsJson;
+            const testsResultsJsonCopy = testsResultsJson;
         }
     })();
 });
@@ -315,7 +316,7 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
     const diagramFrame = resultTreeDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
     const diagramHtml = diagramFrame.find('.diagram').html();
 
-    if (saveTestResults) {
+    if (saveTestResultsSetting) {
         testsResultsMap.set(resultDiagramFrameIdSuffix, diagramHtml);
         testProgressContext.numberOfPendingTests--;
     }
