@@ -40,6 +40,9 @@
         const viewModeTextLabel = $('<label>').attr('class', 'text').text('View mode:');
         const viewModeValueLabel = $('<label>').attr('class', 'value view-mode-value');
 
+        const downloadButton = $('<button>').attr('id', 'download-button');
+        downloadButton.on('click', downloadPerson3);
+
         return $('<div>')
             .attr('class', 'diagram-info-div')
             .append(treeTypeTextLabel)
@@ -49,7 +52,8 @@
             .append(descedantsDepthTextLabel)
             .append(descedantsDepthValueLabel)
             .append(viewModeTextLabel)
-            .append(viewModeValueLabel);
+            .append(viewModeValueLabel)
+            .append(downloadButton);
     },
 
     createHiddenDiagram() {
