@@ -1,3 +1,17 @@
+-- Tooltips range is 0 -> 4.999
+	-- 0 - biological
+	-- 40 - extended
+	-- 80 - complete
+
+-- Tests range is 5.000 -> 19.999
+	-- 5.000 - biological
+	-- 10.000 - extended
+	-- 15.000 - complete
+
+-- Szabolcs Antal's family range is 20.000 -> up, each generations takes up 1.000
+
+
+
 DROP TABLE Persons;
 
 CREATE TABLE Persons
@@ -24,9 +38,6 @@ CREATE TABLE Persons
 	ImageUrl NVARCHAR (110),
 )
 
-select * from persons
-
-
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_BiologicalFatherID
     FOREIGN KEY (BiologicalFatherID) REFERENCES Persons(ID);
@@ -50,5 +61,3 @@ ADD CONSTRAINT FK_Persons_FirstSpouseID
 ALTER TABLE Persons
 ADD CONSTRAINT FK_Persons_SecondSpouseID
     FOREIGN KEY (SecondSpouseID) REFERENCES Persons(ID);
-	
-% Scaffold-DbContext "Server=localhost;Database=PathToMyRootsDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Persons
