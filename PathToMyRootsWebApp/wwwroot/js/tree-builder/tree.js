@@ -1,4 +1,5 @@
-﻿const pathsDrawingRequests = new Map();
+﻿const serializeGenerationsDataForToolTipSetting = false;
+const pathsDrawingRequests = new Map();
 
 async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
     const treeDiagramFrame = treeDiagramsDiv.find('#diagram-frame-' + personId).get(0);
@@ -69,10 +70,24 @@ async function calculateDataAndDisplayTree(treeContext) {
 
     treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
 
-    // debug: result string for tree tooltip contents
-    const jsonString = JSON.stringify(treeContext.generationsData, null, 2);
+    if (serializeGenerationsDataForToolTipSetting) {
+        const generationsJsonStringForToolTip = JSON.stringify(treeContext.generationsData, null, 2);
+
+        // debug: result string for tree tooltip contents
+        const generationsJsonStringForToolTipCopy = generationsJsonStringForToolTip;
+    }
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);
+
+    if (databaseScriptHelper.generatePersonsInsertionScriptSetting) {
+        const personsInsertionScript = databaseScriptHelper.generatePersonsInsertionScript(nodesContainer);
+
+        // debug: persons variable names for database
+        const personsInsertionScriptCopy = personsInsertionScript;
+
+        databaseScriptHelper.replaceNamesInRelationsScript();
+    }
+
     const pathsContainer = treeHtmlCreator.createEmptyPathsSvg();
 
     treeContext.nodesContainer = nodesContainer;

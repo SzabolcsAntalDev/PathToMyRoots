@@ -1,22 +1,28 @@
 ﻿function formatPersonName(person) {
-    let details = [];
+    return databaseScriptHelper.generatePersonsInsertionScriptSetting
+        ? databaseScriptHelper.formatPersonName(person)
+        : formatPersonNameInternal(person);
+}
+
+function formatPersonNameInternal(person) {
+    let nameParts = [];
 
     if (person.nobleTitle)
-        details.push(person.nobleTitle);
+        nameParts.push(person.nobleTitle);
 
     if (person.lastName)
-        details.push(person.lastName);
+        nameParts.push(person.lastName);
 
     if (person.maidenName)
-        details.push(`(${person.maidenName})`);
+        nameParts.push(`(${person.maidenName})`);
 
     if (person.firstName)
-        details.push(person.firstName);
+        nameParts.push(person.firstName);
 
     if (person.otherNames)
-        details.push(person.otherNames);
+        nameParts.push(person.otherNames);
 
-    return details.filter(Boolean).join(' ');
+    return nameParts.filter(Boolean).join(' ');
 }
 
 function formatTimePeriod(startDate, endDate) {

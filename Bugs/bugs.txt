@@ -1,0 +1,8 @@
+sometimes persons are shown as duplicated on the same level in complete tree, sometimes not at all:
+
+	/* 116 */ (	'Erzsébet',			'Albert',				'Mihály',	    NULL,			NULL, 				NULL, 				NULL, 				NULL,			117, 			NULL, 			'+18700223',			'+yyyymmdd',			NULL, 						0, 		'+18521201',  	'+18720711', 	NULL	),
+	/* 117 */ (	'György',			'Albert',				NULL,	    	'Pali',			NULL, 				NULL, 				NULL, 				NULL,			116, 			118, 			'+18700223',			'+yyyymmdd',			'+yyyymmdd', 				1, 		'+18440416',  	'+18921216', 	NULL	),
+	/* 118 */ (	'Kata',				'Albert',				'Hadházi',	    NULL,			NULL, 				NULL, 				NULL, 				NULL,			117, 			119, 			'+yyyymmdd',			'+yyyymmdd',			'+18950417', 				0, 		'+yyyymmdd',  	'+19260916', 	NULL	),
+	/* 119 */ (	'György',			'Antal',				NULL,		    NULL,			NULL, 				NULL, 				NULL, 				NULL,			118, 			NULL, 			'+18950417',			NULL,					NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL	),
+
+when done, add person 119 back
