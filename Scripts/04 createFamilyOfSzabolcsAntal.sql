@@ -427,7 +427,7 @@ DECLARE @X_Kallay_X_Roland_X_I27025_L7_C1 INT = 27025;
 DECLARE @X_Kallay_X_Krisztian_X_I27026_L7_C1 INT = 27026;
 
 INSERT INTO Persons (
-	ID,														FirstName,					LastName,				MaidenName,		OtherNames,			BiologicalFatherID,								BiologicalMotherID,										AdoptiveFatherID,						AdoptiveMotherID,								FirstSpouseID,											SecondSpouseID,										FirstMarriageStartDate,	FirstMarriageEndDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,		ImageUrl)
+	ID,														LastName,				MaidenName,		FirstName,					OtherNames,			BiologicalFatherID,								BiologicalMotherID,										AdoptiveFatherID,						AdoptiveMotherID,								FirstSpouseID,											SecondSpouseID,										FirstMarriageStartDate,	FirstMarriageEndDate,	SecondMarriageStartDate,	IsMale,	BirthDate,		DeathDate,		ImageUrl)
 	VALUES
 	(@X_Kovacs_X_Janos_Baka_I20000_L0_C1,					'Kovács',				NULL,			'János',					'Baka',				NULL,											NULL,													NULL,									NULL,											@X_Kovacs_X_X_X_I20001_L0_C1,							NULL,												'+18390612',			NULL,					NULL,						1,		'+181608dd',	'+18890315',	NULL										),
 	(@X_Kovacs_X_X_X_I20001_L0_C1,							'Kovács',				NULL,			'?',						NULL,				NULL,											NULL,													NULL,									NULL,											@X_Kovacs_X_Janos_Baka_I20000_L0_C1,					NULL,												'+18390612',			NULL,					NULL,						0,		'+yyyymmdd',	'+yyyymmdd',	NULL										),
