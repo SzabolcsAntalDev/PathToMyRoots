@@ -1,5 +1,5 @@
 ﻿function formatPersonName(person) {
-    return databaseScriptHelper.generatePersonsInsertionScriptSetting
+    return databaseScriptHelper.executeSqlScriptHelpersSetting
         ? databaseScriptHelper.formatPersonName(person)
         : formatPersonNameInternal(person);
 }

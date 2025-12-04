@@ -6,3 +6,50 @@ sometimes persons are shown as duplicated on the same level in complete tree, so
 	/* 119 */ (	'György',			'Antal',				NULL,		    NULL,			NULL, 				NULL, 				NULL, 				NULL,			118, 			NULL, 			'+18950417',			NULL,					NULL, 						1, 		'+yyyymmdd',  	'+yyyymmdd', 	NULL	),
 
 when done, add person 119 back
+
+
+horizontal tree lines seems to no be well drawn all the time, sometimes uuper sometimes lower
+
+ű and ț not displayed with this font
+
+
+@X_Mihaly_X_Kata_Borigyuri_I22018_L2_C1
+LastName vs MaidenName?
+
+@X_Mihaly_X_Gyorgy_Borigyuri_I22026_L2_C1
+not just Bori?
+
+@X_Albert_X_Gyorgy_Kuko_I22033_L2_C1
+Kuko, not Gyuri?
+
+@X_Marton_X_Marton_SzucsKupal_I22040_L2_C1
+why not just Szucs as father?
+
+children of Bori Zsido just Bori?
+
+@X_Mihaly_X_Istvan_Postas_I24008_L4_C1
+- parents and children are Postas or not?
+
+@X_Mihaly_Toth_Anna_Nusi_I24009_L4_C1
+what name is Nusi?
+
+@X_Albert_X_Katalin_Depo_I24040_L4_C1
+for sure it's Depo? cause husband is also Depo
+
+@X_Albert_Marton_Erzsebet_Szucs_I25025_L5_C1
+MaidenName and OtherNames not ok
+
+@X_Marton_Tamas_Eva_Deni_I25035_L5_C1
+she and her sister OtherNames is ok?
+
+@X_Marton_Andras_Kinga_X_I25051_L5_C1
+last name is ok? is the same as husband's FirstName
+
+@X_Korpos_X_Krisztina_Ujgazda_I25055_L5_C1, @X_Korpos_X_Piroska_Ujgazda_I25059_L5_C1
+OtherNames is ok? is the same as the husband's one
+
+@X_Ambrus_X_Erno_X_I25070_L5_C1
+does he and people around him use their OtherNames?
+
+@X_Kovacs_X_Aron_X_I26042_L6_C1
+uses OtherNames?

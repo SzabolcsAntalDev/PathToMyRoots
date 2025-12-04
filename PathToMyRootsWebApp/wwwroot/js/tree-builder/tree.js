@@ -79,13 +79,8 @@ async function calculateDataAndDisplayTree(treeContext) {
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);
 
-    if (databaseScriptHelper.generatePersonsInsertionScriptSetting) {
-        const personsInsertionScript = databaseScriptHelper.generatePersonsInsertionScript(nodesContainer);
-
-        // debug: persons variable names for database
-        const personsInsertionScriptCopy = personsInsertionScript;
-
-        databaseScriptHelper.replaceNamesInRelationsScript();
+    if (databaseScriptHelper.executeSqlScriptHelpersSetting) {
+        databaseScriptHelper.executeSqlScriptHelpers(nodesContainer);
     }
 
     const pathsContainer = treeHtmlCreator.createEmptyPathsSvg();
