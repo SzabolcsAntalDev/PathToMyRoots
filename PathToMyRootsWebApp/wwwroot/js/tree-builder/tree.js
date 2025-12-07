@@ -9,7 +9,7 @@ async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
     }
 }
 
-async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeFrameIdSuffix, treeType, ancestorsDepth, descedantsDepth, viewMode) {
+async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeFrameIdSuffix, treeType, ancestorsDepth, descendantsDepth, viewMode) {
     const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
     treeDiagramsDiv.append(treeDiagramFrame);
 
@@ -23,7 +23,7 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
 
     const treeContext = createTreeContext(
         personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
-        treeType, ancestorsDepth, descedantsDepth, viewMode,
+        treeType, ancestorsDepth, descendantsDepth, viewMode,
         calculateDataAndDisplayTree,
         redrawPaths);
 
@@ -41,7 +41,7 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
 
 function createTreeContext(
     personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
-    treeType, ancestorsDepth, descedantsDepth, viewMode) {
+    treeType, ancestorsDepth, descendantsDepth, viewMode) {
     return {
         personId: personId,
         loadingTextContainer: loadingTextContainer,
@@ -49,7 +49,7 @@ function createTreeContext(
         treeDiagram: treeDiagram,
         treeType: treeType,
         ancestorsDepth: (ancestorsDepth < relativesDepth.MIN.index || ancestorsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : ancestorsDepth),
-        descedantsDepth: (descedantsDepth < relativesDepth.MIN.index || descedantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descedantsDepth),
+        descendantsDepth: (descendantsDepth < relativesDepth.MIN.index || descendantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descendantsDepth),
         viewMode: viewMode,
         calculateDataAndDisplayTree: calculateDataAndDisplayTree,
         redrawPaths: redrawPaths

@@ -83,7 +83,7 @@ function getDiagramImageName(treeContext) {
         formatDiagramImageNameSuffix(
             treeContext.treeType,
             treeContext.ancestorsDepth,
-            treeContext.descedantsDepth,
+            treeContext.descendantsDepth,
             treeContext.viewMode);
 
     return `${personName}${imageSuffix}.png`;

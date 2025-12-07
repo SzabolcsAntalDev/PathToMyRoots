@@ -15,7 +15,7 @@
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame);
 
         await hourglassBiological.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -27,8 +27,8 @@
         const siblings = await hourglassBiological.createSiblingsOf(context, person);
         personsGeneration.extendedMarriages.push(...siblings);
 
-        await hourglassBiological.createDescedantsOf(context, person);
-        const descedantsGenerations = sortByLevelAndConvertToArray(context.descedantsGenerationsMap);
+        await hourglassBiological.createDescendantsOf(context, person);
+        const descendantsGenerations = sortByLevelAndConvertToArray(context.descendantsGenerationsMap);
 
         this.removeDuplicatedExtendedMarriages([personsGeneration]);
         sortExtendedMarriagesByBirthDate([personsGeneration]);
@@ -36,13 +36,13 @@
         createSiblings([personsGeneration]);
         createSiblingsChains([personsGeneration]);
 
-        this.removeDuplicatedExtendedMarriages(descedantsGenerations);
-        sortExtendedMarriagesByBirthDate(descedantsGenerations);
-        sortExtendedMarriagesBySpouses(descedantsGenerations);
-        createSiblings(descedantsGenerations);
-        createSiblingsChains(descedantsGenerations);
+        this.removeDuplicatedExtendedMarriages(descendantsGenerations);
+        sortExtendedMarriagesByBirthDate(descendantsGenerations);
+        sortExtendedMarriagesBySpouses(descendantsGenerations);
+        createSiblings(descendantsGenerations);
+        createSiblingsChains(descendantsGenerations);
 
-        return ancestorsGenerations.concat(personsGeneration).concat(descedantsGenerations);
+        return ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
     },
 
     async createExtendedTreeGenerationsExtendedMarriages(treeContext) {
@@ -50,7 +50,7 @@
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame);
 
         await hourglassExtended.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -61,10 +61,10 @@
         const siblings = await hourglassExtended.createSiblingsOf(context);
         personsGeneration.extendedMarriages.push(...siblings);
 
-        await hourglassExtended.createDescedantsOf(context);
-        const descedantsGenerations = sortByLevelAndConvertToArray(context.descedantsGenerationsMap);
+        await hourglassExtended.createDescendantsOf(context);
+        const descendantsGenerations = sortByLevelAndConvertToArray(context.descendantsGenerationsMap);
 
-        const generations = ancestorsGenerations.concat(personsGeneration).concat(descedantsGenerations);
+        const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
         this.removeDuplicatedExtendedMarriages(generations);
         sortExtendedMarriagesByBirthDate(generations);
         sortExtendedMarriagesBySpouses(generations);
@@ -74,14 +74,14 @@
         return generations;
     },
 
-    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descedantsGenerationsMap, ancestorsDepth, descedantsDepth, treeDiagramFrame) {
+    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descendantsGenerationsMap, ancestorsDepth, descendantsDepth, treeDiagramFrame) {
         return {
             person: person,
             processedPersonIds: processedPersonIds,
             ancestorsGenerationsMap: ancestorsGenerationsMap,
-            descedantsGenerationsMap: descedantsGenerationsMap,
+            descendantsGenerationsMap: descendantsGenerationsMap,
             ancestorsDepth: ancestorsDepth,
-            descedantsDepth: descedantsDepth,
+            descendantsDepth: descendantsDepth,
             treeDiagramFrame: treeDiagramFrame
         };
     },

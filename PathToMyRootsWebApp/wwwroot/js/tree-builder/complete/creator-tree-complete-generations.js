@@ -14,7 +14,7 @@
         const processedPersonIds = createProcessedPersonIds();
         const generationsMap = new Map();
 
-        const context = this.createIterationContext(treeContext.personId, processedPersonIds, generationsMap, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame)
+        const context = this.createIterationContext(treeContext.personId, processedPersonIds, generationsMap, treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame)
 
         await this.createGenerationsRecursive(context, treeContext.personId, 0);
         const generations = sortByLevelAndConvertToArray(generationsMap);
@@ -23,13 +23,13 @@
         return this.removeDuplicatedPersonsFromDifferentLevels(generations, duplicatedPersonIds);
     },
 
-    createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descedantsDepth, treeDiagramFrame) {
+    createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descendantsDepth, treeDiagramFrame) {
         return {
             sourcePersonId: sourcePersonId,
             processedPersonIds: processedPersonIds,
             generationsMap: generationsMap,
             ancestorsDepth: ancestorsDepth,
-            descedantsDepth: descedantsDepth,
+            descendantsDepth: descendantsDepth,
             treeDiagramFrame: treeDiagramFrame
         };
     },
@@ -39,7 +39,7 @@
             return;
         }
 
-        if ((context.ancestorsDepth >= 0 && currentLevel < -context.ancestorsDepth) || (context.descedantsDepth >= 0) && currentLevel > context.descedantsDepth) {
+        if ((context.ancestorsDepth >= 0 && currentLevel < -context.ancestorsDepth) || (context.descendantsDepth >= 0) && currentLevel > context.descendantsDepth) {
             return;
         }
 

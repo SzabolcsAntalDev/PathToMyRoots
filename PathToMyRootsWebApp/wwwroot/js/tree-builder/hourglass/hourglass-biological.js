@@ -666,8 +666,8 @@
         return extendedMarriages;
     },
 
-    async createDescedantsOf(context) {
-        if (context.descedantsDepth == 0) {
+    async createDescendantsOf(context) {
+        if (context.descendantsDepth == 0) {
             return;
         }
 
@@ -675,12 +675,12 @@
 
         const children = (context.person.inverseBiologicalFather ?? []).concat(context.person.inverseBiologicalMother ?? []);
         for (const child of children) {
-            await this.createDescedantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, child.id, currentLevel + 1);
+            await this.createDescendantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, child.id, currentLevel + 1);
         }
     },
 
-    async createDescedantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, personId, currentLevel) {
-        if (context.descedantsDepth != relativesDepth.ALL.index && currentLevel > context.descedantsDepth) {
+    async createDescendantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, personId, currentLevel) {
+        if (context.descendantsDepth != relativesDepth.ALL.index && currentLevel > context.descendantsDepth) {
             return;
         }
 
@@ -690,8 +690,8 @@
         loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         // if is last level then add only the person, without his spouses
-        const currentLevelDescedants =
-            (currentLevel == context.descedantsDepth)
+        const currentLevelDescendants =
+            (currentLevel == context.descendantsDepth)
                 ?
                 [{
                     mainMarriage: {
@@ -701,16 +701,16 @@
                 }]
                 : await this.createExtendedMarriagesWithSpousesWithCommonChildrenOfPerson(context, person, currentLevel);
 
-        if (!context.descedantsGenerationsMap.has(currentLevel)) {
-            context.descedantsGenerationsMap.set(currentLevel, { extendedMarriages: [] });
+        if (!context.descendantsGenerationsMap.has(currentLevel)) {
+            context.descendantsGenerationsMap.set(currentLevel, { extendedMarriages: [] });
         }
 
-        const generation = context.descedantsGenerationsMap.get(currentLevel);
-        generation.extendedMarriages.push(...currentLevelDescedants);
+        const generation = context.descendantsGenerationsMap.get(currentLevel);
+        generation.extendedMarriages.push(...currentLevelDescendants);
 
         const children = (person.inverseBiologicalFather ?? []).concat(person.inverseBiologicalMother ?? []);
         for (const child of children) {
-            await this.createDescedantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, child.id, currentLevel + 1);
+            await this.createDescendantsWithSpousesAndCommonChildrenRecursiveOfPersonId(context, child.id, currentLevel + 1);
         }
     },
 }

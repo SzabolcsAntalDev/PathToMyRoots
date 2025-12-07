@@ -34,8 +34,8 @@
         const ancestorsDepthTextLabel = $('<label>').attr('class', 'text').text('Ancestors depth:');
         const ancestorsDepthValueLabel = $('<label>').attr('class', 'value ancestors-depth-value');
 
-        const descedantsDepthTextLabel = $('<label>').attr('class', 'text').text('Descedants depth:');
-        const descedantsDepthValueLabel = $('<label>').attr('class', 'value descedants-depth-value');
+        const descendantsDepthTextLabel = $('<label>').attr('class', 'text').text('Descendants depth:');
+        const descendantsDepthValueLabel = $('<label>').attr('class', 'value descendants-depth-value');
 
         const viewModeTextLabel = $('<label>').attr('class', 'text').text('View mode:');
         const viewModeValueLabel = $('<label>').attr('class', 'value view-mode-value');
@@ -53,8 +53,8 @@
             .append(treeTypeValueLabel)
             .append(ancestorsDepthTextLabel)
             .append(ancestorsDepthValueLabel)
-            .append(descedantsDepthTextLabel)
-            .append(descedantsDepthValueLabel)
+            .append(descendantsDepthTextLabel)
+            .append(descendantsDepthValueLabel)
             .append(viewModeTextLabel)
             .append(viewModeValueLabel)
             .append(downloadButton);
