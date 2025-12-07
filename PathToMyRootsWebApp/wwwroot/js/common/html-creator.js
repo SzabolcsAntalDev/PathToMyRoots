@@ -1,4 +1,9 @@
-﻿function createPersonImageWithFallbackSvg(imageUrl, className) {
+﻿// Szabi: rename this file
+
+let phantomPersonSymbolShape = null;
+let phantomPersonSymbolViewBox = null;
+
+function createPersonImageWithFallbackSvg(imageUrl, className) {
 
     if (imageUrl) {
         return $('<img>')
@@ -7,26 +12,43 @@
             // needed for the downloaded diagram to display the images
             .attr('crossorigin', 'anonymous')
             .on('error', function () {
-                onGetImageError(this, className);
+                this.replaceWith(getPhantomPersonImageDiv(className));
             });
     }
 
-    return getPhantomImageDiv(className);
+    return getPhantomPersonImageDiv(className);
 }
 
-function onGetImageError(image, className) {
-    image.replaceWith(getPhantomImageDiv(className));
+async function preloadPhantomPersonSymbol() {
+    if (phantomPersonSymbolShape) {
+        return;
+    }
+
+    const response = await fetch('/icons/icons.svg');
+    const responseText = await response.text();
+
+    const svgDocObject = new DOMParser().parseFromString(responseText, 'image/svg+xml');
+    const phantomPersonSymbol = svgDocObject.getElementById('phantom-person');
+
+    phantomPersonSymbolShape = phantomPersonSymbol.innerHTML.trim();
+    phantomPersonSymbolViewBox = phantomPersonSymbol.getAttribute('viewBox');
 }
 
-function getPhantomImageDiv(className) {
-    const imageDiv = $('<div>')
-        .attr('class', className);
+function getPhantomPersonImageDiv(className) {
+    const phantomPersonImageDiv = $('<div>').addClass(className);
 
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', phantomPersonSymbolPath);
+    const phantomPersonSvg =
+        $(document.createElementNS('http://www.w3.org/2000/svg', 'svg'))
+            .attr('viewBox', phantomPersonSymbolViewBox)
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .html(phantomPersonSymbolShape);
 
-    svg.appendChild(use);
-    imageDiv.append(svg);
-    return imageDiv[0];
+    phantomPersonImageDiv.append(phantomPersonSvg);
+
+    return phantomPersonImageDiv[0];
 }
+
+(async () => {
+    await preloadPhantomPersonSymbol();
+})();

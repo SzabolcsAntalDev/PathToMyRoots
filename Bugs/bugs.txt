@@ -1,5 +1,4 @@
 remove tree from treeDiagramFrame
-change descedants to descendant
 add download png button
 if married but not divorced do no show 'to' line
 make somehow the nodes and paths container to be exactlyover each other, now the paths container is shifted, see in the html dissecter
