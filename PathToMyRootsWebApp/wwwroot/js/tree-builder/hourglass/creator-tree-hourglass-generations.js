@@ -1,21 +1,21 @@
 ﻿const hourglassTreeCreator = {
 
-    async createHourglassBiologicalTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
-        const generations = await this.createBiologicalTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    async createHourglassBiologicalTreeGenerations(treeContext) {
+        const generations = await this.createBiologicalTreeGenerationsExtendedMarriages(treeContext);
         return this.createSiblingsAndSiblingsChains(generations);
     },
 
-    async createHourglassExtendedTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
-        const generations = await this.createExtendedTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    async createHourglassExtendedTreeGenerations(treeContext) {
+        const generations = await this.createExtendedTreeGenerationsExtendedMarriages(treeContext);
         return this.createSiblingsAndSiblingsChains(generations);
     },
 
-    async createBiologicalTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
-        const person = await getPersonJson(personId);
+    async createBiologicalTreeGenerationsExtendedMarriages(treeContext) {
+        const person = await getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
 
         await hourglassBiological.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -45,12 +45,12 @@
         return ancestorsGenerations.concat(personsGeneration).concat(descedantsGenerations);
     },
 
-    async createExtendedTreeGenerationsExtendedMarriages(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
-        const person = await getPersonJson(personId);
+    async createExtendedTreeGenerationsExtendedMarriages(treeContext) {
+        const person = await getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
 
         await hourglassExtended.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -74,7 +74,7 @@
         return generations;
     },
 
-    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descedantsGenerationsMap, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descedantsGenerationsMap, ancestorsDepth, descedantsDepth, treeDiagramFrame) {
         return {
             person: person,
             processedPersonIds: processedPersonIds,
@@ -82,7 +82,7 @@
             descedantsGenerationsMap: descedantsGenerationsMap,
             ancestorsDepth: ancestorsDepth,
             descedantsDepth: descedantsDepth,
-            loadingTextContainerParent: loadingTextContainerParent
+            treeDiagramFrame: treeDiagramFrame
         };
     },
 

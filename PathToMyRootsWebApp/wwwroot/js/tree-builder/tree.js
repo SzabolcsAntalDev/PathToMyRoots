@@ -68,7 +68,7 @@ async function calculateDataAndDisplayTree(treeContext) {
     previousNodesContainer?.remove();
     previousPathsContainer?.remove();
 
-    treeContext.generationsData = await createGenerationsData(treeContext.personId, treeContext.treeType, treeContext.ancestorsDepth, treeContext.descedantsDepth, treeContext.treeDiagramFrame);
+    treeContext.generationsData = await createGenerationsData(treeContext);
 
     if (serializeGenerationsDataForToolTipSetting) {
         const generationsJsonStringForToolTip = JSON.stringify(treeContext.generationsData, null, 2);

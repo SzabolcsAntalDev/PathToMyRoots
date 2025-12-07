@@ -1,17 +1,21 @@
-﻿async function createGenerationsData(personId, treeType, ancestorsDepth, descedantsDepth, loadingTextContainerParent) {
+﻿async function createGenerationsData(treeContext) {
 
     let generations;
 
-    if (treeType == treeTypes.HOURGLASS_BIOLOGICAL) {
-        generations = await hourglassTreeCreator.createHourglassBiologicalTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    // object used later for downloaded image name
+    const person = await getPersonJson(treeContext.personId);
+    treeContext.person = person;
+
+    if (treeContext.treeType == treeTypes.HOURGLASS_BIOLOGICAL) {
+        generations = await hourglassTreeCreator.createHourglassBiologicalTreeGenerations(treeContext);
     }
 
-    if (treeType == treeTypes.HOURGLASS_EXTENDED) {
-        generations = await hourglassTreeCreator.createHourglassExtendedTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    if (treeContext.treeType == treeTypes.HOURGLASS_EXTENDED) {
+        generations = await hourglassTreeCreator.createHourglassExtendedTreeGenerations(treeContext);
     }
 
-    if (treeType == treeTypes.COMPLETE) {
-        generations = await completeTreeCreator.createCompleteTreeGenerations(personId, ancestorsDepth, descedantsDepth, loadingTextContainerParent);
+    if (treeContext.treeType == treeTypes.COMPLETE) {
+        generations = await completeTreeCreator.createCompleteTreeGenerations(treeContext);
     }
 
     reduceMarriageInverseParentIds(generations);
