@@ -2,12 +2,12 @@
     const settingsContext = createSettingsContext(treeContext);
 
     addTogglingListeners(settingsContext);
-    setupRadioButtons(treeContext, settingsContext);
-    selectDefaultSettings(treeContext, settingsContext);
-    addApplyButtonListener(treeContext, settingsContext);
-    addViewModeRadioButtonsListeners(treeContext, settingsContext);
+    setupRadioButtons(settingsContext, treeContext);
+    selectDefaultSettings(settingsContext, treeContext);
+    addApplyButtonListener(settingsContext, treeContext);
+    addViewModeRadioButtonsListeners(settingsContext, treeContext);
 
-    await apply(treeContext, settingsContext, true);
+    await apply(settingsContext, treeContext, true);
 }
 
 function createSettingsContext(treeContext) {
@@ -60,7 +60,7 @@ function toggleSettingsVisibility(settingsContext) {
     settingsContext.horizontalToggleableContainer.toggleClass('horizontal-toggleable-container-open');
 }
 
-function setupRadioButtons(treeContext, settingsContext) {
+function setupRadioButtons(settingsContext, treeContext) {
     const radioButtonNameUid = Date.now();
 
     // Tree types radio buttons
@@ -111,7 +111,7 @@ function setupRadioButtons(treeContext, settingsContext) {
     });
 }
 
-function selectDefaultSettings(treeContext, settingsContext) {
+function selectDefaultSettings(settingsContext, treeContext) {
     settingsContext.treeTypesFieldSet.find('input[type="radio"]').filter(function () {
         return parseInt($(this).data('treeTypeIndex'), 10) === treeContext.treeType.index;
     }).prop('checked', true);
@@ -129,11 +129,11 @@ function selectDefaultSettings(treeContext, settingsContext) {
     }).prop('checked', true);
 }
 
-function addApplyButtonListener(treeContext, settingsContext) {
-    settingsContext.applyButton.on('click', () => apply(treeContext, settingsContext));
+function addApplyButtonListener(settingsContext, treeContext) {
+    settingsContext.applyButton.on('click', () => apply(settingsContext, treeContext));
 }
 
-async function apply(treeContext, settingsContext, fromInitialization) {
+async function apply(settingsContext,treeContext ,fromInitialization) {
     if (!fromInitialization) {
         toggleSettingsVisibility(settingsContext);
     }
@@ -158,7 +158,7 @@ async function apply(treeContext, settingsContext, fromInitialization) {
     await treeContext.calculateDataAndDisplayTree(treeContext);
 }
 
-function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
+function addViewModeRadioButtonsListeners(settingsContext, treeContext) {
     const viewModeRadioButtons = settingsContext.viewModesFieldSet.find('input[type="radio"]');
     viewModeRadioButtons.each((_, radioButton) => {
         $(radioButton).on('change', function () {
@@ -174,12 +174,12 @@ function addViewModeRadioButtonsListeners(treeContext, settingsContext) {
 }
 
 function setViewModeSizes(treeContext) {
-    treeContext.treeDiagramFrame.css('--person-node-width', getPersonNodeWidth(treeContext.viewMode));
-    treeContext.treeDiagramFrame.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
-    treeContext.treeDiagramFrame.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
+    treeContext.treeDiagram.css('--person-node-width', getPersonNodeWidth(treeContext.viewMode));
+    treeContext.treeDiagram.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
+    treeContext.treeDiagram.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
 
     const nodePathsVerticalOffset = getNodePathsVerticalOffset(treeContext.viewMode);
-    const generations = treeContext.treeDiagramFrame.find('.generation');
+    const generations = treeContext.treeDiagram.find('.generation');
 
     generations.each((index, elem) => {
         const generation = $(elem);
