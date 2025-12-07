@@ -1,10 +1,25 @@
 ﻿const treeTypes = {
     HOURGLASS_BIOLOGICAL:
-        { index: 0, id: 'HOURGLASS-BIOLOGICAL', displayName: 'Hourglass-biological' },
+    {
+        index: 0,
+        id: 'HOURGLASS-BIOLOGICAL',
+        displayName: 'Hourglass-biological',
+        technicalName: 'HBIO',
+    },
     HOURGLASS_EXTENDED:
-        { index: 1, id: 'HOURGLASS-EXTENDED', displayName: 'Hourglass-extended' },
+    {
+        index: 1,
+        id: 'HOURGLASS-EXTENDED',
+        displayName: 'Hourglass-extended',
+        technicalName: 'HEXT',
+    },
     COMPLETE:
-        { index: 2, id: 'COMPLETE', displayName: 'Complete' },
+    {
+        index: 2,
+        id: 'COMPLETE',
+        displayName: 'Complete',
+        technicalName: 'COMP',
+    },
 
     getTreeTypeByIndex(treeTypeIndex) {
         return Object.values(treeTypes).find(treeType => treeType.index == treeTypeIndex)
