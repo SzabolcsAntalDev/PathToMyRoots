@@ -1,4 +1,8 @@
 ﻿function formatPersonName(person) {
+﻿const genericPlaceholder = '_';
+const emptyNamePlaceholder = 'X';
+
+function formatPersonName(person) {
     return databaseScriptHelper.executeSqlScriptHelpersSetting
         ? databaseScriptHelper.formatPersonName(person)
         : formatPersonNameInternal(person);
@@ -61,4 +65,36 @@ function formatDate(date) {
     }
 
     return parts.join(' ');
+}
+
+function formatPersonNameTechnical(person) {
+    let nameParts = [];
+
+    nameParts.push(person.nobleTitle ?? emptyNamePlaceholder);
+    nameParts.push(person.lastName ?? emptyNamePlaceholder);
+    nameParts.push(person.maidenName ?? emptyNamePlaceholder);
+    nameParts.push(person.firstName ?? emptyNamePlaceholder);
+    nameParts.push(person.otherNames ?? emptyNamePlaceholder);
+
+    // X_Antal_X_SzabolcsCsongor_X
+    return nameParts
+        .map(namePart => namePart == emptyNamePlaceholder ? emptyNamePlaceholder : normalizeNamePart(namePart))
+        .join(genericPlaceholder);
+}
+
+function normalizeNamePart(namePart) {
+    // removes
+    //  - accents from special characters (é, ț, ç, etc)
+    //  - commas (,)
+    //  - hypehns (-)
+    //  - spaces
+    // replaces ? with emptyNamePlaceholder
+
+    return namePart
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/,/g, '')
+        .replace(/[-\s]/g, '')
+        .replace(/\?/g, emptyNamePlaceholder);
+}
 }

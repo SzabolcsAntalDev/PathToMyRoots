@@ -1,23 +1,10 @@
 ﻿const databaseScriptHelper = {
 
     executeSqlScriptHelpersSetting: false,
-    genericPlaceholder: '_',
-    emptyNamePlaceholder: 'X',
     firstDigitOfNewPersonsId: '4',
 
     formatPersonName(person) {
-        let nameParts = [];
-
-        nameParts.push(person.nobleTitle ?? this.emptyNamePlaceholder);
-        nameParts.push(person.lastName ?? this.emptyNamePlaceholder);
-        nameParts.push(person.maidenName ?? this.emptyNamePlaceholder);
-        nameParts.push(person.firstName ?? this.emptyNamePlaceholder);
-        nameParts.push(person.otherNames ?? this.emptyNamePlaceholder);
-
-        const name =
-            nameParts
-                .map(namePart => namePart == this.emptyNamePlaceholder ? this.emptyNamePlaceholder : this.normalizeNamePart(namePart))
-                .join(this.genericPlaceholder);
+        const name = formatPersonNameTechnical(person);
 
         // _X_Antal_X_SzabolcsCsongor_X_1_
         return this.formatNameWithId(name, person.id);
@@ -26,23 +13,7 @@
     formatNameWithId(name, id) {
         // _NobleTitle_LastName_MaidenName_FirstName_OtherNames_id_
         // _X_Antal_X_SzabolcsCsongor_X_1_
-        return `${this.genericPlaceholder}${name}${this.genericPlaceholder}${id}${this.genericPlaceholder}`;
-    },
-
-    normalizeNamePart(namePart) {
-        // removes
-        //  - accents from special characters (é, ț, ç, etc)
-        //  - commas (,)
-        //  - hypehns (-)
-        //  - spaces
-        // replaces ? with emptyNamePlaceholder
-
-        return namePart
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/,/g, '')
-            .replace(/[-\s]/g, '')
-            .replace(/\?/g, this.emptyNamePlaceholder);
+        return `${genericPlaceholder}${name}${genericPlaceholder}${id}${genericPlaceholder}`;
     },
 
     executeSqlScriptHelpers(nodesContainer) {
@@ -95,7 +66,7 @@
 
                 // in _X_Antal_X_SzabolcsCsongor_X_1_
                 // finds X_Antal_X_SzabolcsCsongor_X
-                const nameRegex = new RegExp(`^${this.genericPlaceholder}((?:[^${this.genericPlaceholder}]*${this.genericPlaceholder}){4}[^${this.genericPlaceholder}]*?)${this.genericPlaceholder}`);
+                const nameRegex = new RegExp(`^${genericPlaceholder}((?:[^${genericPlaceholder}]*${genericPlaceholder}){4}[^${genericPlaceholder}]*?)${genericPlaceholder}`);
 
                 return {
                     name: nameAndId.match(nameRegex)[1],
