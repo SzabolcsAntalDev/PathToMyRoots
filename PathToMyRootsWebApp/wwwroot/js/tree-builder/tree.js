@@ -17,35 +17,40 @@ async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeF
     registerTooltips();
 
     const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);
-    const treeDiagramInfo = treeHtmlCreator.createDiagramInfo();
+
+    // create diagram object first so it can be passed to the download button
     const treeDiagram = treeHtmlCreator.createHiddenDiagram();
 
-    treeDiagramFrame.append(loadingTextContainer);
-    treeDiagramFrame.append(treeDiagramInfo);
-    treeDiagramFrame.append(treeDiagram);
-
-    await fadeInElement(treeDiagramFrame);
-
     const treeContext = createTreeContext(
-        personId, treeDiagramFrame, loadingTextContainer,
-        treeType, ancestorsDepth, descedantsDepth, viewMode, treeDiagram,
+        personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
+        treeType, ancestorsDepth, descedantsDepth, viewMode,
         calculateDataAndDisplayTree,
         redrawPaths);
+
+    const treeDiagramInfo = treeHtmlCreator.createDiagramInfo(treeContext);
+
+    treeDiagramFrame.append(treeDiagramInfo);
+    treeDiagramFrame.append(treeDiagram);
+    treeDiagramFrame.append(loadingTextContainer);
+
+    await fadeInElement(treeDiagramFrame);
 
     addZoomingEventListener(treeContext);
     await addSettingsEventListeners(treeContext);
 }
 
-function createTreeContext(personId, treeDiagramFrame, loadingTextContainer, treeType, ancestorsDepth, descedantsDepth, viewMode, treeDiagram) {
+function createTreeContext(
+    personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
+    treeType, ancestorsDepth, descedantsDepth, viewMode) {
     return {
         personId: personId,
-        treeDiagramFrame: treeDiagramFrame,
         loadingTextContainer: loadingTextContainer,
+        treeDiagramFrame: treeDiagramFrame,
+        treeDiagram: treeDiagram,
         treeType: treeType,
         ancestorsDepth: (ancestorsDepth < relativesDepth.MIN.index || ancestorsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : ancestorsDepth),
         descedantsDepth: (descedantsDepth < relativesDepth.MIN.index || descedantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descedantsDepth),
         viewMode: viewMode,
-        treeDiagram: treeDiagram,
         calculateDataAndDisplayTree: calculateDataAndDisplayTree,
         redrawPaths: redrawPaths
     };

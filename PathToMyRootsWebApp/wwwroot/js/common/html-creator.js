@@ -4,6 +4,8 @@
         return $('<img>')
             .attr('class', className)
             .attr('src', apiUrl + '/image/get/' + imageUrl)
+            // needed for the downloaded diagram to display the images
+            .attr('crossorigin', 'anonymous')
             .on('error', function () {
                 onGetImageError(this, className);
             });

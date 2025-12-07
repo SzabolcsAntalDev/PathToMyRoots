@@ -1,4 +1,3 @@
-﻿function formatPersonName(person) {
 ﻿const genericPlaceholder = '_';
 const emptyNamePlaceholder = 'X';
 
@@ -97,4 +96,14 @@ function normalizeNamePart(namePart) {
         .replace(/[-\s]/g, '')
         .replace(/\?/g, emptyNamePlaceholder);
 }
+
+function formatDiagramImageNameSuffix(treeType, ancestorsDepth, descendantsDepth, viewMode) {
+    let infoParts = [];
+
+    infoParts.push(treeType.technicalName);
+    infoParts.push(`A${ancestorsDepth}`);
+    infoParts.push(`D${descendantsDepth}`);
+    infoParts.push(viewMode.id);
+
+    return genericPlaceholder + infoParts.join(genericPlaceholder);
 }

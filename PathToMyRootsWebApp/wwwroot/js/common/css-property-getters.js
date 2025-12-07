@@ -68,6 +68,10 @@ function getScrollBarSize() {
     return getPropertyValue('scroll-bar-size');
 }
 
+function getThicknessLargeValue() {
+    return getPropertyValue('thickness-large-value');
+}
+
 function getTooltipOffset() {
     const tooltipOffset = getPropertyValue('tooltip-offset');
     return parseFloat(tooltipOffset);

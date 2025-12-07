@@ -38,6 +38,7 @@
   --transition-buffer-interval: 0.01s;
   --scroll-transition-interval: 0.3s;
   --scroll-bar-size: 15px;
+  --thickness-large-value: 16;
   --popup-loading-bar-transition-interval: 8s;
   --person-node-width-extrasmall: 40px;
   --person-node-width-small: 80px;
@@ -679,13 +680,25 @@ fieldset div.option label input[type=radio]:checked:hover {
   font-weight: bold;
 }
 
+.diagram-wrapper-for-download {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .diagram {
   z-index: 1;
   min-height: 60px;
   position: relative;
   margin: 0px auto;
   padding: 16px;
-  transition: opacity var(--fade-transition);
+  background-color: var(--background-color);
+  transition: background-color 0.3s ease 0s, opacity var(--fade-transition);
 }
 .diagram .nodes-div .generation, .diagram .nodes-div .generation * {
   box-sizing: border-box;
@@ -984,11 +997,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   margin: 0px auto 0px 0px;
 }
 
-.loading-text-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.loading-text-disable-mask {
   position: absolute;
   top: 0;
   left: 0;
@@ -997,6 +1006,17 @@ fieldset div.option label input[type=radio]:checked:hover {
   transition: opacity var(--fade-transition);
   background-color: color-mix(in srgb, var(--background-color) 75%, transparent);
   z-index: 2;
+}
+
+.loading-text-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity var(--fade-transition);
+  pointer-events: none;
+  z-index: 3;
 }
 .loading-text-container .animated-loading-text-div {
   margin: 0px;

@@ -27,7 +27,7 @@
             .append(label);
     },
 
-    createDiagramInfo() {
+    createDiagramInfo(treeContext) {
         const treeTypeTextLabel = $('<label>').attr('class', 'text').text('Tree type:');
         const treeTypeValueLabel = $('<label>').attr('class', 'value tree-type-value');
 
@@ -41,7 +41,11 @@
         const viewModeValueLabel = $('<label>').attr('class', 'value view-mode-value');
 
         const downloadButton = $('<button>').attr('id', 'download-button');
-        downloadButton.on('click', downloadPerson3);
+        downloadButton.on('click', async () => {
+            await loadingTextManager.fadeIn(treeContext.loadingTextContainer, 'Creating the tree diagram image for download');
+            await downloadDiagramAsPng(treeContext);
+            loadingTextManager.fadeOut(treeContext.loadingTextContainer);
+        });
 
         return $('<div>')
             .attr('class', 'diagram-info-div')
@@ -63,6 +67,13 @@
         hideElement(diagram);
 
         return diagram;
+    },
+
+    createDiagramWrapperForDownload() {
+        const diagramWrapper = $('<div>')
+            .attr('class', 'diagram-wrapper-for-download');
+
+        return diagramWrapper;
     },
 
     createNodesDiv(generationsData, viewMode) {

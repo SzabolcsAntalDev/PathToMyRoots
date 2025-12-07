@@ -152,7 +152,29 @@ $tooltip-offset: 3;
         background-color: var(--background-color-highlight);
     }
 }
+
 $highlight-animation: colorFade 0.5s ease-in-out infinite alternate;
+
+$font-size-small: 11px;
+$font-size-medium: 14px;
+$font-size-large: 18px;
+$font-size-extralarge: 28px;
+
+$thickness-extrasmall: 2px;
+$thickness-small: 4px;
+$thickness-medium: 8px;
+$thickness-large-value: 16;
+$thickness-large: #{$thickness-large-value}px;
+$thickness-extralarge: 32px;
+$thickness-super-large: 64px;
+
+$border: 1px solid var(--foreground-color);
+$border-radius: $thickness-small;
+
+$tree-diagram-min-height: 60px;
+
+$svg-size-small: 18px;
+$svg-size-large: 32px;
 
 %theme-properties {
     --color-transition-interval: #{$color-transition-interval};
@@ -163,6 +185,7 @@ $highlight-animation: colorFade 0.5s ease-in-out infinite alternate;
     --transition-buffer-interval: #{$transition-buffer-interval};
     --scroll-transition-interval: #{$scroll-transition-interval};
     --scroll-bar-size: #{$scroll-bar-size};
+    --thickness-large-value: #{$thickness-large-value};
     --popup-loading-bar-transition-interval: #{$popup-loading-bar-transition-interval};
     --person-node-width-extrasmall: #{$person-node-width-extrasmall};
     --person-node-width-small: #{$person-node-width-small};
@@ -207,26 +230,6 @@ $highlight-animation: colorFade 0.5s ease-in-out infinite alternate;
     @extend %theme-dark;
     @extend %theme-properties;
 }
-
-$font-size-small: 11px;
-$font-size-medium: 14px;
-$font-size-large: 18px;
-$font-size-extralarge: 28px;
-
-$thickness-extrasmall: 2px;
-$thickness-small: 4px;
-$thickness-medium: 8px;
-$thickness-large: 16px;
-$thickness-extralarge: 32px;
-$thickness-super-large: 64px;
-
-$border: 1px solid var(--foreground-color);
-$border-radius: $thickness-small;
-
-$tree-diagram-min-height: 60px;
-
-$svg-size-small: 18px;
-$svg-size-large: 32px;
 
 html {
     font-size: $font-size-small;
@@ -907,13 +910,26 @@ fieldset {
     }
 }
 
+.diagram-wrapper-for-download {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
 .diagram {
     z-index: 1;
     min-height: $tree-diagram-min-height;
     position: relative;
     margin: 0px auto;
     padding: $thickness-large;
-    transition: opacity var(--fade-transition);
+    // background-color needed to have it on the downloaded image
+    background-color: var(--background-color);
+    transition: background-color $color-transition, opacity var(--fade-transition);
 
     .nodes-div {
         .generation, .generation * {
@@ -1313,11 +1329,7 @@ fieldset {
     }
 }
 
-.loading-text-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.loading-text-disable-mask {
     position: absolute;
     top: 0;
     left: 0;
@@ -1326,6 +1338,18 @@ fieldset {
     transition: opacity var(--fade-transition);
     background-color: color-mix(in srgb, var(--background-color) 75%, transparent);
     z-index: 2;
+}
+
+.loading-text-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity var(--fade-transition);
+    pointer-events: none;
+    // on top of transparent-div
+    z-index: 3;
 
     .animated-loading-text-div {
         margin: 0px;
@@ -1427,7 +1451,6 @@ fieldset {
 
                     .horizontal-relatives-div {
                         display: flex;
-
                         // this container is needed to divide the available space equally
                         // while also using a margin on the child
                         .relative-container {
