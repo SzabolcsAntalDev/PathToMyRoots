@@ -26,9 +26,9 @@ function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, lar
 }
 
 function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageNode, childNodes) {
-    const inversebiologicalParentIds = $(marriageNode).data('inverseBiologicalParentIds');
+    const inverseBiologicalParentIds = $(marriageNode).data('inverseBiologicalParentIds');
     const inverseAdoptiveParentIds = $(marriageNode).data('inverseAdoptiveParentIds');
-    const inverseParentIds = inversebiologicalParentIds.concat(inverseAdoptiveParentIds);
+    const inverseParentIds = inverseBiologicalParentIds.concat(inverseAdoptiveParentIds);
 
     const targetChildNodes = [];
 
@@ -41,7 +41,7 @@ function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offs
         if (inverseParentIds.includes(childId)) {
             childNode.clientRect = childNode.getBoundingClientRect();
             childNode.clientRectHorizontalCenter = childNode.clientRect.left + (childNode.clientRect.width / 2);
-            childNode.isBiological = inversebiologicalParentIds.includes(childId);
+            childNode.isBiological = inverseBiologicalParentIds.includes(childId);
 
             targetChildNodes.push(childNode);
         }
