@@ -225,30 +225,30 @@ button, select, input[type=text], .dropdown-header, .dropdown-menu {
   border-radius: 4px;
 }
 
-.flat-button, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button, #tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .tree-diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   border: none;
   border-radius: 0px;
 }
 
-.flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button-with-svg-large, #scrollable-area #scroll-to-bottom-button, #scrollable-area #scroll-to-top-button, .flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   background-color: var(--background-color-nav);
   box-sizing: border-box;
   transition: background-color 0.3s ease 0s, opacity var(--fade-transition);
 }
-.flat-button-with-svg-large svg, #scrollable-area #scroll-to-bottom-button svg, #scrollable-area #scroll-to-top-button svg, .flat-button-with-svg-small svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
+.flat-button-with-svg-large svg, #scrollable-area #scroll-to-bottom-button svg, #scrollable-area #scroll-to-top-button svg, .flat-button-with-svg-small svg, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button svg, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button svg {
   width: 100%;
   height: 100%;
   fill: var(--foreground-color);
   transition: fill 0.3s ease 0s;
 }
-.flat-button-with-svg-large:hover, #scrollable-area #scroll-to-bottom-button:hover, #scrollable-area #scroll-to-top-button:hover, .flat-button-with-svg-small:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
+.flat-button-with-svg-large:hover, #scrollable-area #scroll-to-bottom-button:hover, #scrollable-area #scroll-to-top-button:hover, .flat-button-with-svg-small:hover, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button:hover, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button:hover, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover {
   background-color: var(--background-color-highlight);
 }
-.flat-button-with-svg-large:hover svg, #scrollable-area #scroll-to-bottom-button:hover svg, #scrollable-area #scroll-to-top-button:hover svg, .flat-button-with-svg-small:hover svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg {
+.flat-button-with-svg-large:hover svg, #scrollable-area #scroll-to-bottom-button:hover svg, #scrollable-area #scroll-to-top-button:hover svg, .flat-button-with-svg-small:hover svg, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button:hover svg, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button:hover svg, #tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg, .tree-diagrams-div .diagram-frame .settings-div .expand-button:hover svg {
   fill: var(--foreground-color-highlight);
 }
 
-.flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
+.flat-button-with-svg-small, #tree-diagrams-div .diagram-frame .diagram-info-div .download-button, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button, #tree-diagrams-div .diagram-frame .settings-div .expand-button, .tree-diagrams-div .diagram-frame .settings-div .expand-button {
   padding: 4px;
   width: 18px;
   height: 18px;
@@ -666,18 +666,24 @@ fieldset div.option label input[type=radio]:checked:hover {
 #tree-diagrams-div .diagram-frame .diagram-info-div, .tree-diagrams-div .diagram-frame .diagram-info-div {
   position: relative;
   margin-left: 26px;
-  min-width: 550px;
+  min-width: 580px;
+  display: flex;
+  align-items: center;
 }
 #tree-diagrams-div .diagram-frame .diagram-info-div .text, .tree-diagrams-div .diagram-frame .diagram-info-div .text {
-  display: inline-block;
   margin: 8px;
   margin-right: 4px;
 }
 #tree-diagrams-div .diagram-frame .diagram-info-div .value, .tree-diagrams-div .diagram-frame .diagram-info-div .value {
-  display: inline-block;
   margin: 8px;
   margin-left: 0px;
   font-weight: bold;
+}
+#tree-diagrams-div .diagram-frame .diagram-info-div .download-button, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button {
+  margin: 8px;
+}
+#tree-diagrams-div .diagram-frame .diagram-info-div .download-button svg, .tree-diagrams-div .diagram-frame .diagram-info-div .download-button svg {
+  transition: fill 0.3s ease 0s, transform 0.3s ease 0s;
 }
 
 .diagram-wrapper-for-download {

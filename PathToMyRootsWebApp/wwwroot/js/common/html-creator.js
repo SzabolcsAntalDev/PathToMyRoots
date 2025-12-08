@@ -52,3 +52,13 @@ function getPhantomPersonImageDiv(className) {
 (async () => {
     await preloadPhantomPersonSymbol();
 })();
+
+function createSvg(symbolName) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/icons/icons.svg#${symbolName}`);
+    svg.appendChild(use);
+
+    return svg;
+}

@@ -1,3 +1,4 @@
+tooltips texts of tree types are cut and trees are not displayed correctly
 remove tree from treeDiagramFrame
 add download png button
 if married but not divorced do no show 'to' line

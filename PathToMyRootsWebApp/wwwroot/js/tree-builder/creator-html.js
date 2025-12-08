@@ -40,7 +40,12 @@
         const viewModeTextLabel = $('<label>').attr('class', 'text').text('View mode:');
         const viewModeValueLabel = $('<label>').attr('class', 'value view-mode-value');
 
-        const downloadButton = $('<button>').attr('id', 'download-button');
+        const downloadButton =
+            $('<button>')
+                .attr('class', 'download-button')
+                .attr('title', 'Download diagram')
+                .append(createSvg('download'));
+
         downloadButton.on('click', async () => {
             await loadingTextManager.fadeIn(treeContext.loadingTextContainer, 'Creating the tree diagram image for download');
             await downloadDiagramAsPng(treeContext);

@@ -56,17 +56,12 @@
     },
 
     createScrollToTestButton(treeDiagramsDiv, testTitle) {
-        const button = $('<button>')
-            .addClass('flat-button-with-svg-small');
+        const button =
+            $('<button>')
+                .addClass('flat-button-with-svg-small')
+                .append(createSvg('arrow-down'));
 
         hideElement(button);
-
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/icons/icons.svg#arrow-down");
-
-        svg.appendChild(use);
-        button.append(svg);
 
         button.on('click', function () {
             const treeDiagramsDivTop = treeDiagramsDiv.offset().top;

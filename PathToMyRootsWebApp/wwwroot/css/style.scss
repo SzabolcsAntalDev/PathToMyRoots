@@ -892,19 +892,28 @@ fieldset {
         .diagram-info-div {
             position: relative;
             margin-left: calc($thickness-medium * 3 + $thickness-extrasmall);
-            min-width: 550px;
+            min-width: 580px;
+            display: flex;
+            align-items: center;
 
             .text {
-                display: inline-block;
                 margin: $thickness-medium;
                 margin-right: $thickness-small;
             }
 
             .value {
-                display: inline-block;
                 margin: $thickness-medium;
                 margin-left: 0px;
                 font-weight: bold;
+            }
+
+            .download-button {
+                @extend .flat-button-with-svg-small;
+                margin: $thickness-medium;
+
+                svg {
+                    transition: fill $color-transition, transform $toggle-transition;
+                }
             }
         }
     }
