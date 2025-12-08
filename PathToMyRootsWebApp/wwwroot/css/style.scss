@@ -1176,7 +1176,7 @@ fieldset {
 
     .tree-div {
         // bring it closer to the tooltip edge
-        margin: 0 calc(-1 * var(--node-horizontal-margin));
+        margin: 0 calc(-1 * var(--node-horizontal-margin)) 0 0;
     }
 
     .text-span {

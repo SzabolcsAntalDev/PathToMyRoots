@@ -876,7 +876,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   margin-left: 8px;
 }
 .tree-type-tooltip-content .tree-div {
-  margin: 0 calc(-1 * var(--node-horizontal-margin));
+  margin: 0 calc(-1 * var(--node-horizontal-margin)) 0 0;
 }
 .tree-type-tooltip-content .text-span {
   margin-top: 8px;
