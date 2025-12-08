@@ -171,7 +171,7 @@ $thickness-super-large: 64px;
 $border: 1px solid var(--foreground-color);
 $border-radius: $thickness-small;
 
-$tree-diagram-min-height: 60px;
+$diagram-min-height: 60px;
 
 $svg-size-small: 18px;
 $svg-size-large: 32px;
@@ -828,7 +828,7 @@ fieldset {
 }
 
 // usually there is only one div on a page, but in case of tests there are multiple
-#tree-diagrams-div, .tree-diagrams-div {
+#diagrams-div, .diagrams-div {
     position: relative;
     overflow: auto;
     width: fit-content;
@@ -932,7 +932,7 @@ fieldset {
 
 .diagram {
     z-index: 1;
-    min-height: $tree-diagram-min-height;
+    min-height: $diagram-min-height;
     position: relative;
     margin: 0px auto;
     padding: $thickness-large;
@@ -1327,7 +1327,7 @@ fieldset {
             width: fit-content;
             margin-bottom: $thickness-large;
 
-            .tree-diagrams-div {
+            .diagrams-div {
                 overflow: visible;
 
                 .diagram-frame {
@@ -1524,7 +1524,7 @@ fieldset {
         padding: $thickness-super-large 0px;
         box-sizing: border-box;
 
-        #tree-diagrams-div {
+        #diagrams-div {
             padding: $thickness-large;
         }
     }

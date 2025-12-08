@@ -41,9 +41,9 @@
             .attr('class', 'test-case-div');
     },
 
-    createTreeDiagramsDiv() {
+    createDiagramsDiv() {
         return $('<div>')
-            .attr('class', 'tree-diagrams-div');
+            .attr('class', 'diagrams-div');
     },
 
     createHiddenH3(text) {
@@ -55,7 +55,7 @@
         return hiddenH3;
     },
 
-    createScrollToTestButton(treeDiagramsDiv, testTitle) {
+    createScrollToTestButton(diagramsDiv, testTitle) {
         const button =
             $('<button>')
                 .addClass('flat-button-with-svg-small')
@@ -64,13 +64,13 @@
         hideElement(button);
 
         button.on('click', function () {
-            const treeDiagramsDivTop = treeDiagramsDiv.offset().top;
+            const diagramsDivTop = diagramsDiv.offset().top;
             const testTitleTop = testTitle.offset().top;
-            const scrollTop = treeDiagramsDiv.scrollTop();
+            const scrollTop = diagramsDiv.scrollTop();
 
-            const offset = testTitleTop - treeDiagramsDivTop + scrollTop;
+            const offset = testTitleTop - diagramsDivTop + scrollTop;
 
-            treeDiagramsDiv.animate({
+            diagramsDiv.animate({
                 scrollTop: offset
             }, getScrollTransitionIntervalInSeconds() * 1000);
         });

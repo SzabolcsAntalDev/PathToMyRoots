@@ -16,7 +16,7 @@
         context.processedPersonIds.add(directParentsLevel, father.id);
         context.processedPersonIds.add(directParentsLevel, mother.id);
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         const extendedMarriagesOfParents = await this.createExtendedMarriagesWithSpousesWithCommonChildrenOfPersons(context, father, mother, directParentsLevel);
 
@@ -264,7 +264,7 @@
         context.processedPersonIds.add(currentLevel, female.firstSpouseId);
         context.processedPersonIds.add(currentLevel, female.secondSpouseId);
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         return extendedMarriages;
     },
@@ -292,7 +292,7 @@
         context.processedPersonIds.add(currentLevel, father.id);
         context.processedPersonIds.add(currentLevel, mother.id);
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         const extendedMarriage = {
             mainMarriage: {
@@ -620,7 +620,7 @@
         }
 
         context.processedPersonIds.add(currentLevel, person.id);
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         return extendedMarriages;
     },
@@ -661,7 +661,7 @@
             });
         }
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         return extendedMarriages;
     },
@@ -687,7 +687,7 @@
         const person = await getPersonJson(personId);
 
         context.processedPersonIds.add(currentLevel, person.id);
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         // if is last level then add only the person, without his spouses
         const currentLevelDescendants =

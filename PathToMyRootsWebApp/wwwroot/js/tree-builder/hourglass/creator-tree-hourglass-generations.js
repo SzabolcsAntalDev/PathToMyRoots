@@ -15,7 +15,7 @@
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.diagramFrame);
 
         await hourglassBiological.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -50,7 +50,7 @@
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
-        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame);
+        const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.diagramFrame);
 
         await hourglassExtended.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
@@ -74,7 +74,7 @@
         return generations;
     },
 
-    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descendantsGenerationsMap, ancestorsDepth, descendantsDepth, treeDiagramFrame) {
+    createIterationContext(person, processedPersonIds, ancestorsGenerationsMap, descendantsGenerationsMap, ancestorsDepth, descendantsDepth, diagramFrame) {
         return {
             person: person,
             processedPersonIds: processedPersonIds,
@@ -82,7 +82,7 @@
             descendantsGenerationsMap: descendantsGenerationsMap,
             ancestorsDepth: ancestorsDepth,
             descendantsDepth: descendantsDepth,
-            treeDiagramFrame: treeDiagramFrame
+            diagramFrame: diagramFrame
         };
     },
 

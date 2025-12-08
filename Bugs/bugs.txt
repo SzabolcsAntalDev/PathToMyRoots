@@ -1,8 +1,6 @@
 tooltips texts of tree types are cut and trees are not displayed correctly
-remove tree from treeDiagramFrame
-add download png button
 if married but not divorced do no show 'to' line
-make somehow the nodes and paths container to be exactlyover each other, now the paths container is shifted, see in the html dissecter
+make somehow the nodes and paths container to be exactly over each other, now the paths container is shifted, see in the html dissecter
 
 sometimes persons are shown as duplicated on the same level in complete tree, sometimes not at all:
 

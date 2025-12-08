@@ -11,8 +11,8 @@
 }
 
 function createSettingsContext(treeContext) {
-    const settingsDiv = treeContext.treeDiagramFrame.find('.settings-div');
-    const diagramInfoDiv = treeContext.treeDiagramFrame.find('.diagram-info-div');
+    const settingsDiv = treeContext.diagramFrame.find('.settings-div');
+    const diagramInfoDiv = treeContext.diagramFrame.find('.diagram-info-div');
 
     return {
         settingsDiv: settingsDiv,
@@ -174,12 +174,12 @@ function addViewModeRadioButtonsListeners(settingsContext, treeContext) {
 }
 
 function setViewModeSizes(treeContext) {
-    treeContext.treeDiagram.css('--person-node-width', getPersonNodeWidth(treeContext.viewMode));
-    treeContext.treeDiagram.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
-    treeContext.treeDiagram.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
+    treeContext.diagram.css('--person-node-width', getPersonNodeWidth(treeContext.viewMode));
+    treeContext.diagram.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
+    treeContext.diagram.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
 
     const nodePathsVerticalOffset = getNodePathsVerticalOffset(treeContext.viewMode);
-    const generations = treeContext.treeDiagram.find('.generation');
+    const generations = treeContext.diagram.find('.generation');
 
     generations.each((index, elem) => {
         const generation = $(elem);

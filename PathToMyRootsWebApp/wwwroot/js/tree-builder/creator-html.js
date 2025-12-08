@@ -2,14 +2,14 @@
 
     createHiddenDiagramFrame(idSuffix) {
         const diagramSettings = $($('#diagram-settings-template').html());
-        const treeDiagramFrame = $('<div>')
+        const diagramFrame = $('<div>')
             .attr('id', 'diagram-frame-' + idSuffix)
             .attr('class', 'diagram-frame')
             .append(diagramSettings);
 
-        hideElement(treeDiagramFrame);
+        hideElement(diagramFrame);
 
-        return treeDiagramFrame;
+        return diagramFrame;
     },
 
     createOption(name, dataId, dataValue, displayText) {

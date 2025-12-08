@@ -19,7 +19,7 @@
             context.processedPersonIds.add(currentLevel, biologicalFather.id);
             context.processedPersonIds.add(currentLevel, biologicalMother.id);
 
-            loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+            loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
             const extendedMarriagesWithSpousesOfBiologicalParents = await this.createExtendedMarriagesWithSpousesOfPersons(context, biologicalFather, biologicalMother, currentLevel);
 
@@ -41,7 +41,7 @@
             context.processedPersonIds.add(currentLevel, adoptiveFather.id);
             context.processedPersonIds.add(currentLevel, adoptiveMother.id);
 
-            loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+            loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
             const extendedMarriagesWithSpousesOfAdoptiveParents = await this.createExtendedMarriagesWithSpousesOfPersons(context, adoptiveFather, adoptiveMother, currentLevel);
 
@@ -213,7 +213,7 @@
         context.processedPersonIds.add(currentLevel, female.firstSpouseId);
         context.processedPersonIds.add(currentLevel, female.secondSpouseId);
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         return extendedMarriages;
     },
@@ -321,7 +321,7 @@
         }
 
         context.processedPersonIds.add(currentLevel, person.id);
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         return extendedMarriages;
     },
@@ -362,7 +362,7 @@
             const sibling = await getPersonJson(siblingId);
 
             context.processedPersonIds.add(0, sibling.id);
-            loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+            loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
             const extendedMarriagesWithSpousesOfSibling = await this.createExtendedMarriagesWithSpousesOfPerson(context, sibling, 0)
             extendedMarriages.push(...extendedMarriagesWithSpousesOfSibling);
@@ -398,7 +398,7 @@
         const person = await getPersonJson(personId);
 
         context.processedPersonIds.add(currentLevel, person.id);
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         const extendedMarriagesWithSpousesOfPerson = await this.createExtendedMarriagesWithSpousesOfPerson(context, person, currentLevel);
 
@@ -428,7 +428,7 @@
             const adoptiveChild = await getPersonJson(adoptiveChildId);
 
             context.processedPersonIds.add(currentLevel, adoptiveChild.id);
-            loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+            loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
             const extendedMarriagesWithSpousesOfPerson = await this.createExtendedMarriagesWithSpousesOfPerson(context, adoptiveChild, currentLevel);
 

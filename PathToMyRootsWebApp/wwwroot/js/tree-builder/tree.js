@@ -1,52 +1,52 @@
 ﻿const serializeGenerationsDataForToolTipSetting = false;
 const pathsDrawingRequests = new Map();
 
-async function removeTreeDiagramFrame(treeDiagramsDiv, personId) {
-    const treeDiagramFrame = treeDiagramsDiv.find('#diagram-frame-' + personId).get(0);
-    if (treeDiagramFrame) {
-        await fadeOutElement(treeDiagramFrame)
-        treeDiagramFrame.remove();
+async function removeDiagramFrame(diagramsDiv, personId) {
+    const diagramFrame = diagramsDiv.find('#diagram-frame-' + personId).get(0);
+    if (diagramFrame) {
+        await fadeOutElement(diagramFrame)
+        diagramFrame.remove();
     }
 }
 
-async function createAndDisplayTreeDiagramFrame(treeDiagramsDiv, personId, treeFrameIdSuffix, treeType, ancestorsDepth, descendantsDepth, viewMode) {
-    const treeDiagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
-    treeDiagramsDiv.append(treeDiagramFrame);
+async function createAndDisplayDiagramFrame(diagramsDiv, personId, treeFrameIdSuffix, treeType, ancestorsDepth, descendantsDepth, viewMode) {
+    const diagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
+    diagramsDiv.append(diagramFrame);
 
     await fillTreeTypeTooltipsWithTrees();
     registerTooltips();
 
-    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(treeDiagramFrame);
+    const loadingTextContainer = loadingTextManager.getOrCreateHiddenLoadingTextContainer(diagramFrame);
 
     // create diagram object first so it can be passed to the download button
-    const treeDiagram = treeHtmlCreator.createHiddenDiagram();
+    const diagram = treeHtmlCreator.createHiddenDiagram();
 
     const treeContext = createTreeContext(
-        personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
+        personId, diagramFrame, diagram, loadingTextContainer,
         treeType, ancestorsDepth, descendantsDepth, viewMode,
         calculateDataAndDisplayTree,
         redrawPaths);
 
-    const treeDiagramInfo = treeHtmlCreator.createDiagramInfo(treeContext);
+    const diagramInfo = treeHtmlCreator.createDiagramInfo(treeContext);
 
-    treeDiagramFrame.append(treeDiagramInfo);
-    treeDiagramFrame.append(treeDiagram);
-    treeDiagramFrame.append(loadingTextContainer);
+    diagramFrame.append(diagramInfo);
+    diagramFrame.append(diagram);
+    diagramFrame.append(loadingTextContainer);
 
-    await fadeInElement(treeDiagramFrame);
+    await fadeInElement(diagramFrame);
 
     addZoomingEventListener(treeContext);
     await addSettingsEventListeners(treeContext);
 }
 
 function createTreeContext(
-    personId, treeDiagramFrame, treeDiagram, loadingTextContainer,
+    personId, diagramFrame, diagram, loadingTextContainer,
     treeType, ancestorsDepth, descendantsDepth, viewMode) {
     return {
         personId: personId,
         loadingTextContainer: loadingTextContainer,
-        treeDiagramFrame: treeDiagramFrame,
-        treeDiagram: treeDiagram,
+        diagramFrame: diagramFrame,
+        diagram: diagram,
         treeType: treeType,
         ancestorsDepth: (ancestorsDepth < relativesDepth.MIN.index || ancestorsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : ancestorsDepth),
         descendantsDepth: (descendantsDepth < relativesDepth.MIN.index || descendantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descendantsDepth),
@@ -66,10 +66,10 @@ function addZoomingEventListener(treeContext) {
 
 async function calculateDataAndDisplayTree(treeContext) {
     loadingTextManager.fadeIn(treeContext.loadingTextContainer);
-    await fadeOutElement(treeContext.treeDiagram);
+    await fadeOutElement(treeContext.diagram);
 
-    const previousNodesContainer = treeContext.treeDiagram.find('.nodes-div');
-    const previousPathsContainer = treeContext.treeDiagram.find('.paths-svg');
+    const previousNodesContainer = treeContext.diagram.find('.nodes-div');
+    const previousPathsContainer = treeContext.diagram.find('.paths-svg');
     previousNodesContainer?.remove();
     previousPathsContainer?.remove();
 
@@ -93,14 +93,14 @@ async function calculateDataAndDisplayTree(treeContext) {
     treeContext.nodesContainer = nodesContainer;
     treeContext.pathsContainer = pathsContainer;
 
-    treeContext.treeDiagram.append(nodesContainer);
-    treeContext.treeDiagram.append(pathsContainer);
+    treeContext.diagram.append(nodesContainer);
+    treeContext.diagram.append(pathsContainer);
     registerTooltips();
 
     redrawPaths(treeContext);
 
     loadingTextManager.fadeOut(treeContext.loadingTextContainer);
-    await fadeInElement(treeContext.treeDiagram);
+    await fadeInElement(treeContext.diagram);
 }
 
 function redrawPaths(treeContext, redrawAfterTreeSizeTransition) {

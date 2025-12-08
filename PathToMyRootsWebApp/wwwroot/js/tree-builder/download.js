@@ -1,5 +1,5 @@
 ﻿async function downloadDiagramAsPng(treeContext) {
-    const diagramClone = treeContext.treeDiagram.clone(true, true);
+    const diagramClone = treeContext.diagram.clone(true, true);
 
     // a clone of the diagram is needed to be created because
     // html2canvas does not support text-overflow: ellipsis
@@ -10,7 +10,7 @@
     diagramWrapper.appendTo('body');
     diagramWrapper.append(diagramClone);
 
-    const diagramRect = treeContext.treeDiagram[0].getBoundingClientRect();
+    const diagramRect = treeContext.diagram[0].getBoundingClientRect();
     diagramClone.css({
         // use Math.floor to remove horizontal line on the very bottom
         // that appears sometimes because of sub-pixel rounding

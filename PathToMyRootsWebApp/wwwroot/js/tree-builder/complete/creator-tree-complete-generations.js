@@ -14,7 +14,7 @@
         const processedPersonIds = createProcessedPersonIds();
         const generationsMap = new Map();
 
-        const context = this.createIterationContext(treeContext.personId, processedPersonIds, generationsMap, treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.treeDiagramFrame)
+        const context = this.createIterationContext(treeContext.personId, processedPersonIds, generationsMap, treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.diagramFrame)
 
         await this.createGenerationsRecursive(context, treeContext.personId, 0);
         const generations = sortByLevelAndConvertToArray(generationsMap);
@@ -23,14 +23,14 @@
         return this.removeDuplicatedPersonsFromDifferentLevels(generations, duplicatedPersonIds);
     },
 
-    createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descendantsDepth, treeDiagramFrame) {
+    createIterationContext(sourcePersonId, processedPersonIds, generationsMap, ancestorsDepth, descendantsDepth, diagramFrame) {
         return {
             sourcePersonId: sourcePersonId,
             processedPersonIds: processedPersonIds,
             generationsMap: generationsMap,
             ancestorsDepth: ancestorsDepth,
             descendantsDepth: descendantsDepth,
-            treeDiagramFrame: treeDiagramFrame
+            diagramFrame: diagramFrame
         };
     },
 
@@ -184,7 +184,7 @@
             generation.extendedMarriages.push(extendedMarriage);
         }
 
-        loadingTextManager.setLoadingProgressText(context.treeDiagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
+        loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
 
         await this.createGenerationsRecursive(context, person.biologicalFatherId, currentLevel - 1);
         await this.createGenerationsRecursive(context, person.adoptiveFatherId, currentLevel - 1);

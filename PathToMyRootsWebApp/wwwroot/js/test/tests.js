@@ -298,22 +298,22 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
         testCaseDiv.append(originalTreeTitle);
         await fadeInElement(originalTreeTitle);
 
-        const originalTreeDiagramsDiv = testsHtmlCreator.createTreeDiagramsDiv();
-        testCaseDiv.append(originalTreeDiagramsDiv);
+        const originalDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
+        testCaseDiv.append(originalDiagramsDiv);
 
-        await createAndDisplayTreeDiagramFrame(originalTreeDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.SMALL);
+        await createAndDisplayDiagramFrame(originalDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.SMALL);
     }
 
     const resultTreeTitle = testsHtmlCreator.createHiddenH3('Result tree');
     testCaseDiv.append(resultTreeTitle);
     await fadeInElement(resultTreeTitle);
 
-    const resultTreeDiagramsDiv = testsHtmlCreator.createTreeDiagramsDiv();
-    testCaseDiv.append(resultTreeDiagramsDiv);
+    const resultDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
+    testCaseDiv.append(resultDiagramsDiv);
 
-    await createAndDisplayTreeDiagramFrame(resultTreeDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.SMALL);
+    await createAndDisplayDiagramFrame(resultDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.SMALL);
 
-    const diagramFrame = resultTreeDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
+    const diagramFrame = resultDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
     const diagramHtml = diagramFrame.find('.diagram').html();
 
     if (saveTestResultsSetting) {
