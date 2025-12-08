@@ -1,7 +1,7 @@
--- Tooltips range is 0 -> 4.999
-	-- 0 - biological
-	-- 40 - extended
-	-- 80 - complete
+-- Tooltips range is 1 -> 4.999
+	-- 1 - biological - should not use index 0 cause that is considered as a false value in javascript
+	-- 41 - extended
+	-- 81 - complete
 
 -- Tests range is 5.000 -> 19.999
 	-- 5.000 - biological
