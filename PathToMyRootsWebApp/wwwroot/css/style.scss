@@ -1097,8 +1097,10 @@ fieldset {
 
     .paths-svg {
         position: absolute;
-        top: 0;
-        left: 0;
+        // need in order the nodes-div and paths-svg to be placed exactly over each other
+        // the paths would be drawn correctly even without this but it's still better this way
+        top: $thickness-large;
+        left: $thickness-large;
         pointer-events: none;
 
         .path-interactive {

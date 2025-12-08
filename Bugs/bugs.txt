@@ -1,7 +1,3 @@
-tooltips texts of tree types are cut and trees are not displayed correctly
-if married but not divorced do no show 'to' line
-make somehow the nodes and paths container to be exactly over each other, now the paths container is shifted, see in the html dissecter
-
 sometimes persons are shown as duplicated on the same level in complete tree, sometimes not at all:
 
 	/* 116 */ (	'Erzsébet',			'Albert',				'Mihály',	    NULL,			NULL, 				NULL, 				NULL, 				NULL,			117, 			NULL, 			'+18700223',			'+yyyymmdd',			NULL, 						0, 		'+18521201',  	'+18720711', 	NULL	),
