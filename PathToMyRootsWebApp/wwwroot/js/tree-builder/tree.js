@@ -78,8 +78,7 @@ async function calculateDataAndDisplayTree(treeContext) {
     if (serializeGenerationsDataForToolTipSetting) {
         const generationsJsonStringForToolTip = JSON.stringify(treeContext.generationsData, null, 2);
 
-        // debug: result string for tree tooltip contents
-        const generationsJsonStringForToolTipCopy = generationsJsonStringForToolTip;
+        console.info(generationsJsonStringForToolTip);
     }
 
     const nodesContainer = treeHtmlCreator.createNodesDiv(treeContext.generationsData, treeContext.viewMode);

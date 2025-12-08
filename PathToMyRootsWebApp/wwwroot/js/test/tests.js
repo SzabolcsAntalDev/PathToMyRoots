@@ -87,10 +87,7 @@ $(() => {
             const testsResultsObj = Object.fromEntries(sortedResultsMap);
             const testsResultsJson = JSON.stringify(testsResultsObj, null, 2);
 
-            // debug: results of tests
-            // go to Chrome, enter the testsResultsJson into the Watch
-            // right click on the value and select Copy string contents
-            const testsResultsJsonCopy = testsResultsJson;
+            console.info(testsResultsJson);
         }
     })();
 });

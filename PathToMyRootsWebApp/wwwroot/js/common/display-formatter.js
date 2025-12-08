@@ -32,10 +32,11 @@ function formatTimePeriod(startDate, endDate) {
     var startDateString = formatDate(startDate) ?? HumanReadableDateUnknownDate;
     var endDateString = formatDate(endDate);
 
-    if (endDateString)
+    if (endDateString) {
         return `${startDateString} - ${endDateString}`;
+    }
 
-    return `${startDateString} -`;
+    return `${startDateString}`;
 }
 
 function formatDate(date) {
