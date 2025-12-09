@@ -1,13 +1,11 @@
 ﻿const hourglassTreeCreator = {
 
     async createHourglassBiologicalTreeGenerations(treeContext) {
-        const generations = await this.createBiologicalTreeGenerationsExtendedMarriages(treeContext);
-        return this.createSiblingsAndSiblingsChains(generations);
+        return await this.createBiologicalTreeGenerationsExtendedMarriages(treeContext);
     },
 
     async createHourglassExtendedTreeGenerations(treeContext) {
-        const generations = await this.createExtendedTreeGenerationsExtendedMarriages(treeContext);
-        return this.createSiblingsAndSiblingsChains(generations);
+        return await this.createExtendedTreeGenerationsExtendedMarriages(treeContext);
     },
 
     async createBiologicalTreeGenerationsExtendedMarriages(treeContext) {
@@ -33,16 +31,16 @@
         this.removeDuplicatedExtendedMarriages([personsGeneration]);
         sortExtendedMarriagesByBirthDate([personsGeneration]);
         sortExtendedMarriagesBySpouses([personsGeneration]);
-        createSiblings([personsGeneration]);
-        createSiblingsChains([personsGeneration]);
 
         this.removeDuplicatedExtendedMarriages(descendantsGenerations);
         sortExtendedMarriagesByBirthDate(descendantsGenerations);
         sortExtendedMarriagesBySpouses(descendantsGenerations);
-        createSiblings(descendantsGenerations);
-        createSiblingsChains(descendantsGenerations);
 
-        return ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
+        const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations)
+        createSiblings(generations);
+        createSiblingsChains(generations);
+
+        return generations;
     },
 
     async createExtendedTreeGenerationsExtendedMarriages(treeContext) {
@@ -84,12 +82,6 @@
             descendantsDepth: descendantsDepth,
             diagramFrame: diagramFrame
         };
-    },
-
-    createSiblingsAndSiblingsChains(generations) {
-        createSiblings(generations);
-        createSiblingsChains(generations);
-        return generations;
     },
 
     removeDuplicatedExtendedMarriages(generations) {
