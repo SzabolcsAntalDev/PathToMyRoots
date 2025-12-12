@@ -1,4 +1,6 @@
 ﻿// creates the individual siblings
+// one sibling can be as complex as
+// female - male female - male female - male
 function createSiblings(generations) {
     generations.forEach(generation => {
         let siblings = [];
@@ -15,7 +17,7 @@ function createSiblings(generations) {
             const femaleIdFromPreviousMarriage = previousExtendedMarriage.mainMarriage?.female?.id;
             const femaleIdFromCurrentMarriage = extendedMarriage.secondaryMarriage?.femaleId;
 
-            if (femaleIdFromPreviousMarriage && femaleIdFromCurrentMarriage && femaleIdFromPreviousMarriage === femaleIdFromCurrentMarriage) {
+            if (femaleIdFromPreviousMarriage && femaleIdFromCurrentMarriage && femaleIdFromPreviousMarriage == femaleIdFromCurrentMarriage) {
                 currentSibling.push(extendedMarriage);
             } else {
                 currentSibling = [extendedMarriage];

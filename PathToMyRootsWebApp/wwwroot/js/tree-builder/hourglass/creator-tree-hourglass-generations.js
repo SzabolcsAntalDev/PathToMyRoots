@@ -68,6 +68,7 @@
         sortExtendedMarriagesBySpouses(generations);
         createSiblings(generations);
         createSiblingsChains(generations);
+        sortSiblingsChainsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
 
         return generations;
     },

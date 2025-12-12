@@ -1,11 +1,13 @@
 ﻿const completeTreeCreator = {
     async createCompleteTreeGenerations(treeContext) {
         const generations = await this.createGenerationsWithExtendedMarriages(treeContext);
+        const personsGeneration = this.getPersonsGeneration(treeContext.personId, generations);
 
         sortExtendedMarriagesByBirthDate(generations);
         sortExtendedMarriagesBySpouses(generations);
         createSiblings(generations);
         createSiblingsChains(generations);
+        sortSiblingsChainsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
 
         return generations;
     },
@@ -273,4 +275,15 @@
 
         return childIdsInParentsGeneration;
     },
+
+    getPersonsGeneration(personId, generations) {
+        return generations.find(generation =>
+            generation.extendedMarriages?.some(extendedMarriage => {
+                const maleId = extendedMarriage?.mainMarriage?.male?.id;
+                const femaleId = extendedMarriage?.mainMarriage?.female?.id;
+
+                return (maleId == personId) || (femaleId == personId);
+            })
+        );
+    }
 }
