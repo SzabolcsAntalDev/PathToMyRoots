@@ -37,8 +37,8 @@
         sortExtendedMarriagesBySpouses(descendantsGenerations);
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations)
-        createSiblings(generations);
-        createSiblingsChains(generations);
+        createSpousesGroups(generations);
+        createSiblingsGroups(generations);
 
         return generations;
     },
@@ -66,9 +66,9 @@
         this.removeDuplicatedExtendedMarriages(generations);
         sortExtendedMarriagesByBirthDate(generations);
         sortExtendedMarriagesBySpouses(generations);
-        createSiblings(generations);
-        createSiblingsChains(generations);
-        sortSiblingsChainsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
+        createSpousesGroups(generations);
+        createSiblingsGroups(generations);
+        sortParentsSiblingsGroupsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
 
         return generations;
     },

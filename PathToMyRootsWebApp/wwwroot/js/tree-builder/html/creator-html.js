@@ -112,22 +112,22 @@
             .attr('data-bottom-padding-multiplier', bottomPaddingMultiplier)
             .css('padding', isLast ? '0px' : '0px 0px ' + (bottomPaddingMultiplier * nodePathsVerticalOffset) + 'px 0px');
 
-        generation.siblingsChains.forEach(siblingsChain => {
-            generationDiv.append(this.createSiblingsChain(siblingsChain));
+        generation.siblingsGroups.forEach(siblingsGroup => {
+            generationDiv.append(this.createSiblingsGroup(siblingsGroup));
         })
 
         return generationDiv;
     },
 
-    createSiblingsChain(siblingsChain) {
-        const siblingsChainDiv = $('<div>')
-            .attr('class', 'siblings-chain');
+    createSiblingsGroup(siblingsGroup) {
+        const siblingsGroupDiv = $('<div>')
+            .attr('class', 'siblings-group');
 
-        siblingsChain.forEach(sibling => {
-            siblingsChainDiv.append(this.createSibling(sibling));
+        siblingsGroup.forEach(sibling => {
+            siblingsGroupDiv.append(this.createSibling(sibling));
         });
 
-        return siblingsChainDiv;
+        return siblingsGroupDiv;
     },
 
     createSibling(sibling) {

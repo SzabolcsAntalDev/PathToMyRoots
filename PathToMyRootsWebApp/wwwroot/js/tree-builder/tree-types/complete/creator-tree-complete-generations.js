@@ -5,9 +5,9 @@
 
         sortExtendedMarriagesByBirthDate(generations);
         sortExtendedMarriagesBySpouses(generations);
-        createSiblings(generations);
-        createSiblingsChains(generations);
-        sortSiblingsChainsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
+        createSpousesGroups(generations);
+        createSiblingsGroups(generations);
+        sortParentsSiblingsGroupsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
 
         return generations;
     },

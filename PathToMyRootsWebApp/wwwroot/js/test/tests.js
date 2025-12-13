@@ -143,7 +143,8 @@ function getHourglassBiologicalTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When three children and one duplicated pair are in the same generation, horizontal children and duplicated paths are displayed correctly' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When four children and two duplicated pairs are in the same generation, horizontal children and duplicated paths are displayed correctly' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When different duplicated persons are in different generations, duplicated persons in same generations are connected to each other' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When duplicated persons are in same and different generations, duplicated persons in same and different generations are connected to each other' }
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When duplicated persons are in same and different generations, duplicated persons in same and different generations are connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When grandchild of person is adopted by child of person, adoptive line is not displayed and siblings are not grouped together' }
     ];
 
     testsData.forEach(testData => {
@@ -190,7 +191,8 @@ function getHourglassExtendedTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descendants depth All' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated male sibling and persons child are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated female sibling and persons child are marked and connected to each other' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated children of person are marked and connected to each other' }
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated children of person are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of male were born later, they are still displayed first because of parents sorting based on children' }
     ];
 
     testsData.forEach(testData => {
@@ -236,7 +238,8 @@ function getCompleteTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descendants depth All' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated child of person are marked and connected to each other' }
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated child of person are marked and connected to each other' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of male were born later, they are still displayed first because of parents sorting based on children' }
     ];
 
     testsData.forEach(testData => {

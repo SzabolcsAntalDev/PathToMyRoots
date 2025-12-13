@@ -1,5 +1,5 @@
 ﻿// sorts parents by children upwards starting from the actual person's parents
-function sortSiblingsChainsByChildren(generations) {
+function sortParentsSiblingsGroupsByChildren(generations) {
 
     generations.reverse();
 
@@ -7,22 +7,22 @@ function sortSiblingsChainsByChildren(generations) {
         const parentsGeneration = generations[i + 1];
         const childrenGeneration = generations[i];
 
-        const newParentsSiblingsChains = new Set();
-        childrenGeneration.siblingsChains.forEach(childSiblingsChain => {
-            childSiblingsChain.forEach(childSibling => {
+        const newParentsSiblingsGroups = new Set();
+        childrenGeneration.siblingsGroups.forEach(childSiblingsGroup => {
+            childSiblingsGroup.forEach(childSibling => {
                 childSibling.forEach(childExtendedMarriage => {
                     const childMaleId = childExtendedMarriage.mainMarriage?.male?.id;
                     const childFemaleId = childExtendedMarriage.mainMarriage?.female?.id;
 
-                    parentsGeneration.siblingsChains.forEach(parentSiblingsChain => {
-                        if (isParentOfChild(parentSiblingsChain, childMaleId)) {
-                            newParentsSiblingsChains.add(parentSiblingsChain);
+                    parentsGeneration.siblingsGroups.forEach(parentSiblingsGroup => {
+                        if (isParentOfChild(parentSiblingsGroup, childMaleId)) {
+                            newParentsSiblingsGroups.add(parentSiblingsGroup);
                         }
                     });
 
-                    parentsGeneration.siblingsChains.forEach(parentSiblingsChain => {
-                        if (isParentOfChild(parentSiblingsChain, childFemaleId)) {
-                            newParentsSiblingsChains.add(parentSiblingsChain);
+                    parentsGeneration.siblingsGroups.forEach(parentSiblingsGroup => {
+                        if (isParentOfChild(parentSiblingsGroup, childFemaleId)) {
+                            newParentsSiblingsGroups.add(parentSiblingsGroup);
                         }
                     });
                 })
@@ -30,20 +30,20 @@ function sortSiblingsChainsByChildren(generations) {
         });
 
         // add parents that have no children
-        parentsGeneration.siblingsChains.forEach(parentSiblingsChain => {
-            if (!newParentsSiblingsChains.has(parentSiblingsChain)) {
-                newParentsSiblingsChains.add(parentSiblingsChain);
+        parentsGeneration.siblingsGroups.forEach(parentSiblingsGroup => {
+            if (!newParentsSiblingsGroups.has(parentSiblingsGroup)) {
+                newParentsSiblingsGroups.add(parentSiblingsGroup);
             }
         });
 
-        parentsGeneration.siblingsChains = newParentsSiblingsChains;
+        parentsGeneration.siblingsGroups = newParentsSiblingsGroups;
     };
 }
 
-function isParentOfChild(parentSiblingsChain, personId) {
+function isParentOfChild(parentSiblingsGroup, personId) {
     const childrenIds = [];
 
-    parentSiblingsChain.forEach(sibling => {
+    parentSiblingsGroup.forEach(sibling => {
         sibling.forEach(extendedMarriage => {
             childrenIds.push(...getMarriagesChildrenIds(extendedMarriage));
         })
