@@ -1,5 +1,5 @@
 ﻿function drawPathsOntoPathsContainer(generationsData, viewMode, nodesContainer, pathsContainer) {
-    setSize(nodesContainer, pathsContainer);
+    setSize(nodesContainer, pathsContainer, 2 * getThicknessLargeValue());
 
     const nodePathsVerticalOffset = getNodePathsVerticalOffset(viewMode);
     const generationsHtmls = $(nodesContainer).find('.generation');

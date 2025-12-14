@@ -79,12 +79,12 @@ function removeAndTrackClass(element, className) {
     }
 }
 
-function setSize(fromElement, toElement) {
+function setSize(fromElement, toElement, offset) {
     const fromElementSize = getSize(fromElement);
 
     toElement.css({
-        width: fromElementSize.width,
-        height: fromElementSize.height
+        width: fromElementSize.width + offset,
+        height: fromElementSize.height + offset
     });
 }
 
