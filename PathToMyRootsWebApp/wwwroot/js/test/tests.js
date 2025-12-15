@@ -131,7 +131,7 @@ function getHourglassBiologicalTestContexts() {
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling from his father and female sibling, duplicated female siblings are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with his own sibling, sibling and child are displayed only once' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descendants are married and do not have children, they are displayed only once and married' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descendants are married and have children, they are displayed only once and married' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descendants are married and have children, they are displayed only once and not married' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descendants depth 1' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descendants depth All' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: 1, testTitle: 'When children are married and do have children, they are displayed only once and married, with descendants depth 1' },
@@ -212,34 +212,29 @@ function getCompleteTestContexts() {
 
     const testsData = [
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When a person has a three generation family, generations are displayed on three levels' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When ancestors and descedants depth are both 2, generations until those levels are displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female is double married, marriage entities with both husbands are displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When second wife of male has first spouse, that first spouse marriage entity is also displayed' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child has biological and adoptive parents, biological and adoptive paths are displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When sibling groups and siblings are not sorted when loaded, they are sorted after loading' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female is double married, both husbands are displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When male is double married, both wives are displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When extended marriages have secondary marriage, they are chained based on the second marriage' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When second wife of male has first spouse, that first spouse is also displayed' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When secondary marriage has biological and adoptive children, biological and adoptive paths are displayed from secondary marriage' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When siblings are not sorted when loaded, they are sorted after loading' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When older parents have younger children, children are sorted by parents first instead of birthDates' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female is loaded first, her first husband is still loaded' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children have common parents, they are displayed in separate sibling groups' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When parents are orphans on the second level, they are sorted by birthDates' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When extended marriage male has default birthDate, use female birthDate for sorting' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When marriage with male having unknown birthDate and null female, use unknown birthDate of male instead of null from female for sorting' },
-        { ancestorsDepth: 2, descendantsDepth: 2, testTitle: 'When ancestors and descendants depth are both 2, generations until those levels are displayed' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When male in marriage entity has default birthDate, female birthDate is used for sorting' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When marriage entity with male has unknown and female null birthDate, unknown of male instead of null birthDate from female is used for sorting' },
         // ancestors depth 4 is enough, because in this case there will be already duplicated ancestors on 3 levels, this covers testing duplicates on a tree with 6 levels
         { ancestorsDepth: 4, descendantsDepth: 0, testTitle: 'When ancestors are duplicated, they are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When person has sibling from his father and female sibling, duplicated female siblings are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When person has child with his own sibling, sibling and child are displayed only once' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descendants are married and do not have children, they are displayed only once and married' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children of descendants are married and have children, they are displayed only once and married' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descendants depth 1' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and married, with descendants depth All' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: 1, testTitle: 'When children are married but do not have children, they are displayed only once and not married, with descendants depth 1' },
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married but do not have children, they are displayed only once and not married, with descendants depth All' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: 1, testTitle: 'When children are married and do have children, they are displayed only once and married, with descendants depth 1' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When children are married and do have children, they are displayed only once and married, with descendants depth All' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When male sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When female sibling of person has child with persons child, duplicated persons child are marked and connected to each other' },
         { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When child of person has child from persons grandchild, duplicated child of person are marked and connected to each other' },
-        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of male were born later, they are still displayed first because of parents sorting based on children' }
+        { ancestorsDepth: relativesDepth.ALL.index, descendantsDepth: relativesDepth.ALL.index, testTitle: 'When parents of male were born later, they are sorted based on children and still appear first' }
     ];
 
     testsData.forEach(testData => {
@@ -301,7 +296,7 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
         const originalDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
         testCaseDiv.append(originalDiagramsDiv);
 
-        await createAndDisplayDiagramFrame(originalDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.SMALL);
+        await createAndDisplayDiagramFrame(originalDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.MEDIUM);
     }
 
     const resultTreeTitle = testsHtmlCreator.createHiddenH3('Result tree');
@@ -311,7 +306,7 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
     const resultDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
     testCaseDiv.append(resultDiagramsDiv);
 
-    await createAndDisplayDiagramFrame(resultDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.SMALL);
+    await createAndDisplayDiagramFrame(resultDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.MEDIUM);
 
     const diagramFrame = resultDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
     const diagramHtml = diagramFrame.find('.diagram').html();

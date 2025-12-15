@@ -8,13 +8,11 @@ $path-width: 1;
 $path-interactive-width: 10;
 $path-hovered-width: 4;
 
-$marriage-path-color-default: forestgreen;
 $adoptive-path-color-default: orange;
 $duplicated-path-color-default: royalblue;
 
 $biological-path-stroke-dasharray: 4, 4;
 $adoptive-path-stroke-dasharray: 6, 6;
-$marriage-path-stroke-dasharray: 0;
 $duplicated-path-stroke-dasharray: 10 4;
 
 $foreground-color-dark: #C7D1DB;
@@ -962,16 +960,13 @@ fieldset {
                     margin: 0px;
                     padding: 0px;
 
-                    .extended-marriage {
+                    .marriage-entity-node {
                         display: flex;
+                        flex-direction: column;
+                        align-items: center;
                         margin: 0px var(--node-horizontal-margin);
                         padding: 0px;
                         transition: margin var(--tree-size-transition);
-
-                        &:has(.floating-and-hidden-marriage-nodes-div) {
-                            margin-left: calc(var(--node-horizontal-margin) * -1);
-                            transition: margin var(--tree-size-transition);
-                        }
 
                         .node {
                             display: flex;
@@ -1004,90 +999,63 @@ fieldset {
                             border-color: var(--foreground-color);
                         }
 
-                        .floating-and-hidden-marriage-nodes-div {
-                            position: relative;
+                        .couple {
                             display: flex;
-                            flex-direction: column;
+                        }
 
-                            .floating-marriage-node {
-                                margin-top: auto;
-                                margin-bottom: auto;
-                            }
+                        .person-node {
+                            @extend .node;
+                            width: var(--person-node-width);
+                            color: var(--foreground-color-disabled);
+                            border-color: var(--foreground-color-disabled);
+                            transition: color $color-transition, background-color $color-transition, border $color-transition, width var(--tree-size-transition);
+                            // disabled by default, .interactive colors it
+                            .image {
+                                @extend .person-image-small;
+                                // override this from .person-image-small so it can be changed from js
+                                width: var(--tree-person-image-width);
+                                height: var(--tree-person-image-height);
+                                fill: var(--foreground-color-disabled);
+                                margin-right: $thickness-small;
 
-                            .hidden-marriage-node {
-                                @extend .marriage-node;
-                                margin-bottom: 0;
-                                visibility: hidden;
+                                &:hover {
+                                    fill: var(--foreground-color-disabled);
+                                }
                             }
                         }
 
-                        .main-marriage {
-                            display: flex;
-                            flex-direction: column;
-                            padding: 0px;
-                            align-items: center;
+                        .person-node.interactive {
+                            color: var(--foreground-color);
+                            border-color: var(--foreground-color);
 
-                            .couple {
-                                display: flex;
+                            .image {
+                                fill: var(--foreground-color);
                             }
 
-                            .person-node {
-                                @extend .node;
-                                width: var(--person-node-width);
-                                color: var(--foreground-color-disabled);
-                                border-color: var(--foreground-color-disabled);
-                                transition: color $color-transition, background-color $color-transition, border $color-transition, width var(--tree-size-transition);
-                                // disabled by default, .interactive colors it
-                                .image {
-                                    @extend .person-image-small;
-                                    // override this from .person-image-small so it can be changed from js
-                                    width: var(--tree-person-image-width);
-                                    height: var(--tree-person-image-height);
-                                    fill: var(--foreground-color-disabled);
-                                    margin-right: $thickness-small;
-
-                                    &:hover {
-                                        fill: var(--foreground-color-disabled);
-                                    }
-                                }
-                            }
-
-                            .person-node.interactive {
-                                color: var(--foreground-color);
-                                border-color: var(--foreground-color);
+                            &:hover {
+                                color: var(--foreground-color-highlight);
+                                background-color: var(--background-color-highlight);
+                                border-color: var(--foreground-color-highlight);
+                                cursor: pointer;
 
                                 .image {
-                                    fill: var(--foreground-color);
-                                }
-
-                                &:hover {
-                                    color: var(--foreground-color-highlight);
-                                    background-color: var(--background-color-highlight);
-                                    border-color: var(--foreground-color-highlight);
-                                    cursor: pointer;
-
-                                    .image {
-                                        fill: var(--foreground-color-highlight);
-                                    }
+                                    fill: var(--foreground-color-highlight);
                                 }
                             }
+                        }
 
-                            .male-node {
-                                @extend .person-node;
-                                @extend .male-background-color;
-                            }
+                        .male-node {
+                            @extend .person-node;
+                            @extend .male-background-color;
+                        }
 
-                            .female-node {
-                                @extend .person-node;
-                                @extend .female-background-color;
-                            }
+                        .female-node {
+                            @extend .person-node;
+                            @extend .female-background-color;
+                        }
 
-                            .duplicated-node {
-                                border-color: $duplicated-path-color-default !important;
-                            }
-
-                            .static-marriage-node {
-                            }
+                        .duplicated-node {
+                            border-color: $duplicated-path-color-default !important;
                         }
                     }
                 }
@@ -1126,12 +1094,6 @@ fieldset {
             @extend %path;
             stroke: $adoptive-path-color-default;
             stroke-dasharray: $adoptive-path-stroke-dasharray;
-        }
-
-        .marriage-path {
-            @extend %path;
-            stroke: $marriage-path-color-default;
-            stroke-dasharray: $marriage-path-stroke-dasharray;
         }
 
         .duplicated-path {

@@ -1,14 +1,14 @@
 ﻿const hourglassTreeCreator = {
 
     async createHourglassBiologicalTreeGenerations(treeContext) {
-        return await this.createBiologicalTreeGenerationsExtendedMarriages(treeContext);
+        return await this.createBiologicalTreeGenerationsWithMarriageEntities(treeContext);
     },
 
     async createHourglassExtendedTreeGenerations(treeContext) {
-        return await this.createExtendedTreeGenerationsExtendedMarriages(treeContext);
+        return await this.createExtendedTreeGenerationsWithMarriageEntities(treeContext);
     },
 
-    async createBiologicalTreeGenerationsExtendedMarriages(treeContext) {
+    async createBiologicalTreeGenerationsWithMarriageEntities(treeContext) {
         const person = await getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
@@ -19,31 +19,29 @@
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
         await hourglassBiological.addUnknownAncestorsOf(ancestorsGenerations, person);
 
-        const personsExtendedMarriages = await hourglassBiological.createExtendedMarriagesWithSpousesWithCommonChildrenOfPerson(context, context.person, 0);
-        const personsGeneration = { extendedMarriages: personsExtendedMarriages };
+        const personsMarriageEntities = await hourglassBiological.createMarriageEntitiesWithSpousesWithCommonChildrenOfPerson(context, context.person, 0);
+        const personsGeneration = { marriageEntities: personsMarriageEntities };
 
         const siblings = await hourglassBiological.createSiblingsOf(context, person);
-        personsGeneration.extendedMarriages.push(...siblings);
+        personsGeneration.marriageEntities.push(...siblings);
 
         await hourglassBiological.createDescendantsOf(context, person);
         const descendantsGenerations = sortByLevelAndConvertToArray(context.descendantsGenerationsMap);
 
-        this.removeDuplicatedExtendedMarriages([personsGeneration]);
-        sortExtendedMarriagesByBirthDate([personsGeneration]);
-        sortExtendedMarriagesBySpouses([personsGeneration]);
+        this.removeDuplicatedMarriageEntities([personsGeneration]);
+        sortMarriageEntitiesByBirthDate([personsGeneration]);
 
-        this.removeDuplicatedExtendedMarriages(descendantsGenerations);
-        sortExtendedMarriagesByBirthDate(descendantsGenerations);
-        sortExtendedMarriagesBySpouses(descendantsGenerations);
+        this.removeDuplicatedMarriageEntities(descendantsGenerations);
+        sortMarriageEntitiesByBirthDate(descendantsGenerations);
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations)
-        createSpousesGroups(generations);
+        createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
 
         return generations;
     },
 
-    async createExtendedTreeGenerationsExtendedMarriages(treeContext) {
+    async createExtendedTreeGenerationsWithMarriageEntities(treeContext) {
         const person = await getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
@@ -53,20 +51,19 @@
         await hourglassExtended.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
 
-        const personsExtendedMarriages = await hourglassExtended.createExtendedMarriagesWithSpousesOfPerson(context, person, 0);
-        const personsGeneration = { extendedMarriages: personsExtendedMarriages };
+        const personsMarriageEntities = await hourglassExtended.createMarriageEntitiesWithSpousesOfPerson(context, person, 0);
+        const personsGeneration = { marriageEntities: personsMarriageEntities };
 
         const siblings = await hourglassExtended.createSiblingsOf(context);
-        personsGeneration.extendedMarriages.push(...siblings);
+        personsGeneration.marriageEntities.push(...siblings);
 
         await hourglassExtended.createDescendantsOf(context);
         const descendantsGenerations = sortByLevelAndConvertToArray(context.descendantsGenerationsMap);
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
-        this.removeDuplicatedExtendedMarriages(generations);
-        sortExtendedMarriagesByBirthDate(generations);
-        sortExtendedMarriagesBySpouses(generations);
-        createSpousesGroups(generations);
+        this.removeDuplicatedMarriageEntities(generations);
+        sortMarriageEntitiesByBirthDate(generations);
+        createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
         sortParentsSiblingsGroupsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
 
@@ -85,18 +82,18 @@
         };
     },
 
-    removeDuplicatedExtendedMarriages(generations) {
+    removeDuplicatedMarriageEntities(generations) {
         generations.forEach(generation => {
-            const existingExtendedMarriageJsons = new Set();
+            const existingMarriageEntitiesJsons = new Set();
 
-            generation.extendedMarriages = generation.extendedMarriages.filter(extendedMarriage => {
-                const extendedMarriageJson = JSON.stringify(extendedMarriage);
+            generation.marriageEntities = generation.marriageEntities.filter(marriageEntity => {
+                const marriageEntityJson = JSON.stringify(marriageEntity);
 
-                if (existingExtendedMarriageJsons.has(extendedMarriageJson)) {
+                if (existingMarriageEntitiesJsons.has(marriageEntityJson)) {
                     return false;
                 }
 
-                existingExtendedMarriageJsons.add(extendedMarriageJson);
+                existingMarriageEntitiesJsons.add(marriageEntityJson);
                 return true;
             });
         });

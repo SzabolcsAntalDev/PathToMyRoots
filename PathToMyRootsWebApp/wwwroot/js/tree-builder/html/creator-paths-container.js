@@ -5,7 +5,6 @@
     const generationsHtmls = $(nodesContainer).find('.generation');
 
     drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePathsVerticalOffset, generationsHtmls);
-    drawMarriagesPathsInner(pathsContainer, generationsHtmls);
     drawDuplicatedPersonPathsInner(pathsContainer, nodePathsVerticalOffset, generationsHtmls);
 }
 
@@ -18,18 +17,11 @@ function drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePa
             pathsContainer,
             nodePathsVerticalOffset,
             generationsData.largestGenerationSize,
-            generationsData.largestDuplicatedGroupsOnSameLevelCount,
+            generationsData.largestDuplicatedPersonsOnSameLevelCount,
             generationsData.generations[i],
             marriageNodes,
             childNodes);
     }
-}
-
-function drawMarriagesPathsInner(pathsContainer, generationsHtmls) {
-    generationsHtmls.each((_, generationHtml) => {
-        const marriageNodes = $(generationHtml).find('.marriage-node');
-        drawMarriagesPaths(pathsContainer, marriageNodes);
-    });
 }
 
 function drawDuplicatedPersonPathsInner(pathsContainer, nodePathsVerticalOffset, generationsHtmls) {

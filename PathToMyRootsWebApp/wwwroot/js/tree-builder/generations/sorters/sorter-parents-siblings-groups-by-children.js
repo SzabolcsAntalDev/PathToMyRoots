@@ -10,9 +10,9 @@ function sortParentsSiblingsGroupsByChildren(generations) {
         const newParentsSiblingsGroups = new Set();
         childrenGeneration.siblingsGroups.forEach(childSiblingsGroup => {
             childSiblingsGroup.forEach(childSibling => {
-                childSibling.forEach(childExtendedMarriage => {
-                    const childMaleId = childExtendedMarriage.mainMarriage?.male?.id;
-                    const childFemaleId = childExtendedMarriage.mainMarriage?.female?.id;
+                childSibling.forEach(marriageEntity => {
+                    const childMaleId = marriageEntity.male?.id;
+                    const childFemaleId = marriageEntity.female?.id;
 
                     parentsGeneration.siblingsGroups.forEach(parentSiblingsGroup => {
                         if (isParentOfChild(parentSiblingsGroup, childMaleId)) {
@@ -44,17 +44,10 @@ function isParentOfChild(parentSiblingsGroup, personId) {
     const childrenIds = [];
 
     parentSiblingsGroup.forEach(sibling => {
-        sibling.forEach(extendedMarriage => {
-            childrenIds.push(...getMarriagesChildrenIds(extendedMarriage));
+        sibling.forEach(marriageEntity => {
+            childrenIds.push(...marriageEntity.marriage?.inverseParentIds ?? []);
         })
     });
 
     return childrenIds.includes(personId);
-}
-
-function getMarriagesChildrenIds(extendedMarriage) {
-    return (extendedMarriage.secondaryMarriage?.inverseBiologicalParentIds ?? [])
-        .concat(extendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? [])
-        .concat(extendedMarriage.mainMarriage?.marriage?.inverseBiologicalParentIds ?? [])
-        .concat(extendedMarriage.mainMarriage?.marriage?.inverseAdoptiveParentIds ?? []);
 }

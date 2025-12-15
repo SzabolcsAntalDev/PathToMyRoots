@@ -1,18 +1,18 @@
-﻿// sorts the extended marriages by the male's then by the female's birthday
-function sortExtendedMarriagesByBirthDate(generations) {
+﻿// sorts the marriage entities by the male's then by the female's birthday
+function sortMarriageEntitiesByBirthDate(generations) {
     generations.forEach(generation => {
-        generation.extendedMarriages.sort((extendedMarriage1, extendedMarriage2) => {
-            const birthDate1 = getValidOrNullBirthDate(extendedMarriage1);
-            const birthDate2 = getValidOrNullBirthDate(extendedMarriage2);
+        generation.marriageEntities.sort((marriageEntity1, marriageEntity2) => {
+            const birthDate1 = getValidOrNullBirthDate(marriageEntity1);
+            const birthDate2 = getValidOrNullBirthDate(marriageEntity2);
 
             return sortDates(birthDate1, birthDate2);
         });
     });
 }
 
-function getValidOrNullBirthDate(extendedMarriage) {
-    const maleBirthDate = extendedMarriage.mainMarriage?.male?.birthDate;
-    const femaleBirthDate = extendedMarriage.mainMarriage?.female?.birthDate;
+function getValidOrNullBirthDate(marriageEntity) {
+    const maleBirthDate = marriageEntity.male?.birthDate;
+    const femaleBirthDate = marriageEntity.female?.birthDate;
 
     // will be null only of male is null
     if (maleBirthDate == null) {

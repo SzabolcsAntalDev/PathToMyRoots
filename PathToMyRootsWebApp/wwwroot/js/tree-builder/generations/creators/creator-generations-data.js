@@ -18,31 +18,32 @@
         generations = await completeTreeCreator.createCompleteTreeGenerations(treeContext);
     }
 
-    reduceMarriageInverseParentIds(generations);
+    reduceMarriageEntitiesInverseParentIds(generations);
 
     setNumberOfAvailableParents(generations);
     setGenerationsSize(generations);
-    setDuplicatedGroupsOnSameLevelCount(generations);
+    setDuplicatedPersonsOnSameLevelCount(generations);
 
     return {
         generations: generations,
+        duplicatedPersonsOnFirstLevelCount: getDuplicatedPersonsOnFirstLevelCount(generations),
         largestGenerationSize: getLargestGenerationSize(generations),
-        largestDuplicatedGroupsOnSameLevelCount: getLargestDuplicatedGroupsOnSameLevelCount(generations)
+        largestDuplicatedPersonsOnSameLevelCount: getLargestDuplicatedPersonsOnSameLevelCount(generations)
     }
 }
 
 // reduces the inverseBiologicalParentIds and inverseAdoptiveParentIds
 // to the ids of the available children, so biological and adoptive paths can be displayed correctly horizontally
-function reduceMarriageInverseParentIds(generations) {
+function reduceMarriageEntitiesInverseParentIds(generations) {
     for (let i = 0; i < generations.length - 1; i++) {
         const parentsGeneration = generations[i];
         const childrenGeneration = generations[i + 1];
 
         const childrenIds = new Set();
 
-        for (const extendedMarriage of childrenGeneration.extendedMarriages) {
-            const maleId = extendedMarriage.mainMarriage?.male?.id;
-            const femaleId = extendedMarriage.mainMarriage?.female?.id;
+        for (const marriageEntity of childrenGeneration.marriageEntities) {
+            const maleId = marriageEntity.male?.id;
+            const femaleId = marriageEntity.female?.id;
 
             if (maleId) {
                 childrenIds.add(maleId);
@@ -53,22 +54,18 @@ function reduceMarriageInverseParentIds(generations) {
             }
         };
 
-        for (const extendedMarriage of parentsGeneration.extendedMarriages) {
-            const secondaryMarriage = extendedMarriage.secondaryMarriage;
-            const mainMarriage = extendedMarriage.mainMarriage?.marriage;
+        for (const marriageEntity of parentsGeneration.marriageEntities) {
+            if (marriageEntity.marriage) {
 
-            if (secondaryMarriage) {
-                secondaryMarriage.inverseBiologicalParentIds =
-                    secondaryMarriage.inverseBiologicalParentIds.filter(id => childrenIds.has(id));
-                secondaryMarriage.inverseAdoptiveParentIds =
-                    secondaryMarriage.inverseAdoptiveParentIds.filter(id => childrenIds.has(id));
-            }
+                marriageEntity.marriage.inverseBiologicalParentIds =
+                    marriageEntity.marriage.inverseBiologicalParentIds
+                        .filter(id => childrenIds.has(id));
 
-            if (mainMarriage) {
-                mainMarriage.inverseBiologicalParentIds =
-                    mainMarriage.inverseBiologicalParentIds.filter(id => childrenIds.has(id));
-                mainMarriage.inverseAdoptiveParentIds =
-                    mainMarriage.inverseAdoptiveParentIds.filter(id => childrenIds.has(id));
+                marriageEntity.marriage.inverseAdoptiveParentIds =
+                    marriageEntity.marriage.inverseAdoptiveParentIds
+                        .filter(id => childrenIds.has(id));
+
+                marriageEntity.marriage.inverseParentIds = marriageEntity.marriage.inverseBiologicalParentIds.concat(marriageEntity.marriage.inverseAdoptiveParentIds);
             }
         }
     }
@@ -80,11 +77,11 @@ function setNumberOfAvailableParents(generations) {
         const parentsGeneration = generations[i];
         const childrenGeneration = generations[i + 1];
 
-        for (const extendedMarriage of childrenGeneration.extendedMarriages) {
-            extendedMarriage.numberOfAvailableParents =
+        for (const marriageEntity of childrenGeneration.marriageEntities) {
+            marriageEntity.numberOfAvailableParents =
                 getNumberOfAvailableParents(
-                    extendedMarriage.mainMarriage?.male?.id,
-                    extendedMarriage.mainMarriage?.female?.id,
+                    marriageEntity.male?.id,
+                    marriageEntity.female?.id,
                     parentsGeneration);
         }
     }
@@ -93,22 +90,12 @@ function setNumberOfAvailableParents(generations) {
 function getNumberOfAvailableParents(maleId, femaleId, parentsGeneration) {
     let numberOfAvailableParents = 0;
     const personIdsToCheck = [maleId, femaleId];
-    const invserseParentIdsPropertyIds = ['inverseBiologicalParentIds', 'inverseAdoptiveParentIds'];
 
-    for (const extendedMarriage of parentsGeneration.extendedMarriages) {
-        const marriages = [
-            extendedMarriage.secondaryMarriage,
-            extendedMarriage.mainMarriage?.marriage
-        ].filter(Boolean);
-
-        for (const marriage of marriages) {
-            for (const invserseParentIdsPropertyId of invserseParentIdsPropertyIds) {
-                const invserseParentIds = marriage[invserseParentIdsPropertyId] ?? [];
-
-                for (const personId of personIdsToCheck) {
-                    if (invserseParentIds.includes(personId)) {
-                        numberOfAvailableParents++;
-                    }
+    for (const marriageEntity of parentsGeneration.marriageEntities) {
+        if (marriageEntity.marriage) {
+            for (const personId of personIdsToCheck) {
+                if (marriageEntity.marriage.inverseParentIds.includes(personId)) {
+                    numberOfAvailableParents++;
                 }
             }
         }
@@ -120,25 +107,24 @@ function getNumberOfAvailableParents(maleId, femaleId, parentsGeneration) {
 // sets the number of paths (generationSize) that should be drawn towards the generation
 function setGenerationsSize(generations) {
     generations.forEach(generation => {
-        generation.generationSize = generation.extendedMarriages
-            .reduce((size, extendedMarriage) => size + (extendedMarriage.numberOfAvailableParents ?? 0), 0);
+        generation.generationSize = generation.marriageEntities
+            .reduce((size, marriageEntity) => size + (marriageEntity.numberOfAvailableParents ?? 0), 0);
     });
 }
 
-function setDuplicatedGroupsOnSameLevelCount(generations) {
+function setDuplicatedPersonsOnSameLevelCount(generations) {
     generations.forEach(generation => {
-        generation.duplicatedGroupsOnSameLevelCount = getDuplicatedGroupsOnSameLevelCount(generation.extendedMarriages);
+        generation.duplicatedPersonsOnSameLevelCount = getDuplicatedPersonsOnSameLevelCount(generation.marriageEntities);
     });
 }
 
-function getDuplicatedGroupsOnSameLevelCount(extendedMarriages) {
+function getDuplicatedPersonsOnSameLevelCount(marriageEntities) {
     const personIdsToCount = new Map();
 
-    extendedMarriages.forEach(extendedMarriage => {
-        const marriage = extendedMarriage.mainMarriage;
-        if (marriage) {
-            const maleId = marriage.male?.id;
-            const femaleId = marriage.female?.id;
+    marriageEntities.forEach(marriageEntity => {
+        if (marriageEntity) {
+            const maleId = marriageEntity.male?.id;
+            const femaleId = marriageEntity.female?.id;
 
             if (maleId) {
                 personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
@@ -150,20 +136,24 @@ function getDuplicatedGroupsOnSameLevelCount(extendedMarriages) {
         }
     });
 
-    let duplicatedGroupsOnSameLevelCount = 0;
+    let duplicatedPersonsOnSameLevelCount = 0;
     for (const count of personIdsToCount.values()) {
         if (count > 1) {
-            duplicatedGroupsOnSameLevelCount++
+            duplicatedPersonsOnSameLevelCount++
         };
     }
 
-    return duplicatedGroupsOnSameLevelCount;
+    return duplicatedPersonsOnSameLevelCount;
+}
+
+function getDuplicatedPersonsOnFirstLevelCount(generations) {
+    return generations[0].duplicatedPersonsOnSameLevelCount;
 }
 
 function getLargestGenerationSize(generations) {
     return generations.reduce((maxSize, generation) => Math.max(maxSize, generation.generationSize ?? 0), 0);
 }
 
-function getLargestDuplicatedGroupsOnSameLevelCount(generations) {
-    return generations.reduce((maxCount, generation) => Math.max(maxCount, generation.duplicatedGroupsOnSameLevelCount ?? 0), 0);
+function getLargestDuplicatedPersonsOnSameLevelCount(generations) {
+    return generations.reduce((maxCount, generation) => Math.max(maxCount, generation.duplicatedPersonsOnSameLevelCount ?? 0), 0);
 }

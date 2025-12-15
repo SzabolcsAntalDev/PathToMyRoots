@@ -4,7 +4,7 @@ async function createPersonDetails(personId) {
     const person = await getPersonJson(personId);
 
     createInfoColumn(person);
-    await createRelativesColumn(person);
+    //await createRelativesColumn(person);
     createTreeColumn(personId);
 }
 
@@ -135,5 +135,5 @@ function addSpouse(
 
 function createTreeColumn(personId) {
     const diagramsDiv = $('#diagrams-div');
-    createAndDisplayDiagramFrame(diagramsDiv, personId, personId, treeTypes.HOURGLASS_BIOLOGICAL, 2, 2, viewModes.SMALL);
+    createAndDisplayDiagramFrame(diagramsDiv, personId, personId, treeTypes.HOURGLASS_BIOLOGICAL, 2, 2, viewModes.MEDIUM);
 }

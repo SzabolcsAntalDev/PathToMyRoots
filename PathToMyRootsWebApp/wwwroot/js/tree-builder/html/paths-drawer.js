@@ -1,8 +1,7 @@
 ﻿const duplicatedPathToNodeWidthMultiplier = 1 / 3;
 const roundToOneDecimal = v => v.toFixed(1);
 
-// Szabi: theory: what if women is second wife of two males, and vice versa
-function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, largestDuplicatedGroupsOnSameLevelCount, childrenGeneration, marriageNodes, childNodes) {
+function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, largestDuplicatedPersonsOnSameLevelCount, childrenGeneration, marriageNodes, childNodes) {
     pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
 
     const offsetOnTop =
@@ -11,8 +10,8 @@ function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, lar
             (1 +
                 (
                     (
-                        (largestGenerationSize + largestDuplicatedGroupsOnSameLevelCount) -
-                        (childrenGeneration.generationSize + childrenGeneration.duplicatedGroupsOnSameLevelCount)
+                        (largestGenerationSize + largestDuplicatedPersonsOnSameLevelCount) -
+                        (childrenGeneration.generationSize + childrenGeneration.duplicatedPersonsOnSameLevelCount)
                     )
                     * 0.5
                 )
@@ -65,15 +64,7 @@ function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriage
     let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - pathsContainer.clientRect.top;
     let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - pathsContainer.clientRect.left;
     let childNodeTop = childNode.clientRect.top - pathsContainer.clientRect.top;
-
-    let verticalCenter;
-    if ($(marriageNode).hasClass('floating-marriage-node')) {
-        const hiddenMarriageNodeClientRect = $(marriageNode).siblings('.hidden-marriage-node').get(0).getBoundingClientRect();
-        const hiddenMarriageNodeBottom = hiddenMarriageNodeClientRect.top + hiddenMarriageNodeClientRect.height - pathsContainer.clientRect.top
-        verticalCenter = hiddenMarriageNodeBottom + verticalOffset;
-    } else {
-        verticalCenter = marriageNodeBottom + verticalOffset;
-    }
+    let horizontalLineY = marriageNodeBottom + verticalOffset;
 
     const hasBiologicalChildren = $(marriageNode).data('inverseBiologicalParentIds').length > 0;
     const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
@@ -91,43 +82,12 @@ function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriage
 
     const pathData = `
         M ${roundToOneDecimal(marriageNodeHorizontalCenter)},${roundToOneDecimal(marriageNodeBottom)}
-        L ${roundToOneDecimal(marriageNodeHorizontalCenter)},${roundToOneDecimal(verticalCenter)}
-        L ${roundToOneDecimal(childNodeHorizontalCenter)},${roundToOneDecimal(verticalCenter)}
+        L ${roundToOneDecimal(marriageNodeHorizontalCenter)},${roundToOneDecimal(horizontalLineY)}
+        L ${roundToOneDecimal(childNodeHorizontalCenter)},${roundToOneDecimal(horizontalLineY)}
         L ${roundToOneDecimal(childNodeHorizontalCenter)},${roundToOneDecimal(childNodeTop)}
     `;
 
     addPathWithInteractiveLayer(pathsContainer, treeHtmlCreator.createMarriageChildPath(pathData, childNode.isBiological));
-}
-
-function drawMarriagesPaths(pathsContainer, marriageNodes) {
-    pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
-
-    marriageNodes.filter('.floating-marriage-node').each((_, marriageNode) => {
-        drawMarriagePaths(pathsContainer, marriageNode);
-    });
-}
-
-function drawMarriagePaths(pathsContainer, marriageNode) {
-    const marriageClientRect = marriageNode.getBoundingClientRect();
-
-    const marriageNodeStyle = window.getComputedStyle(marriageNode);
-    const marginLeft = parseFloat(marriageNodeStyle.marginLeft) || 0;
-    const marginRight = parseFloat(marriageNodeStyle.marginRight) || 0;
-
-    const y = marriageClientRect.top + marriageClientRect.height / 2 - pathsContainer.clientRect.top;
-
-    const x1 = marriageClientRect.left - marginLeft - pathsContainer.clientRect.left;
-    const x2 = x1 + marginLeft;
-
-    const x3 = marriageClientRect.left + marriageClientRect.width - pathsContainer.clientRect.left;
-    const x4 = x3 + marginRight;
-
-    const pathData = `
-        M ${roundToOneDecimal(x1)},${roundToOneDecimal(y)} L ${roundToOneDecimal(x2)},${roundToOneDecimal(y)}
-        M ${roundToOneDecimal(x3)},${roundToOneDecimal(y)} L ${roundToOneDecimal(x4)},${roundToOneDecimal(y)}
-    `;
-
-    pathsContainer.append(treeHtmlCreator.createMarriagePath(pathData));
 }
 
 function drawDuplicatedPersonPaths(pathsContainer, nodePathsVerticalOffset, generationsHtmls) {

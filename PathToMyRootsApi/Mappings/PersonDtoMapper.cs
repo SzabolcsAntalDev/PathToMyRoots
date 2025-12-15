@@ -89,6 +89,8 @@ namespace PathToMyRootsApi.Mappings
                 BiologicalMotherId = person.BiologicalMotherId,
                 AdoptiveFatherId = person.AdoptiveFatherId,
                 AdoptiveMotherId = person.AdoptiveMotherId,
+                FirstSpouseId = person.FirstSpouseId,
+                SecondSpouseId = person.SecondSpouseId,
                 ImageUrl = person.ImageUrl
             };
         }

@@ -1,7 +1,6 @@
-﻿function createMarriage(male, female, isStaticMarriage, includeAdoptive, isFake) {
+﻿function createMarriage(male, female, includeAdoptive, isFake) {
     const marriage = {};
 
-    marriage.isStaticMarriage = isStaticMarriage;
     marriage.isFake = isFake;
     marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
@@ -9,6 +8,7 @@
     marriage.femaleId = female?.id;
     marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);
     marriage.inverseAdoptiveParentIds = includeAdoptive ? getCommonAdoptiveChildren(male, female) : [];
+    marriage.inverseParentIds = marriage.inverseBiologicalParentIds.concat(marriage.inverseAdoptiveParentIds);
 
     return marriage;
 }

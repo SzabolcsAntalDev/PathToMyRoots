@@ -90,8 +90,10 @@
                 this.createGeneration(
                     generation,
                     viewMode,
+                    generationsData.duplicatedPersonsOnFirstLevelCount,
                     generationsData.largestGenerationSize,
-                    generationsData.largestDuplicatedGroupsOnSameLevelCount,
+                    generationsData.largestDuplicatedPersonsOnSameLevelCount,
+                    index == 0,
                     index == generationsData.generations.length - 1));
         });
 
@@ -101,16 +103,25 @@
     createGeneration(
         generation,
         viewMode,
+        duplicatedPersonsOnFirstLevelCount,
         largestGenerationSize,
-        largestDuplicatedGroupsOnSameLevelCount,
+        largestDuplicatedPersonsOnSameLevelCount,
+        isFirst,
         isLast) {
+
         const nodePathsVerticalOffset = getNodePathsVerticalOffset(viewMode);
-        const bottomPaddingMultiplier = largestGenerationSize + largestDuplicatedGroupsOnSameLevelCount + 3;
+
+        const topPaddingMultiplier = duplicatedPersonsOnFirstLevelCount ? (duplicatedPersonsOnFirstLevelCount + 1) : 0;
+        const topPadding = isFirst ? topPaddingMultiplier * nodePathsVerticalOffset : 0;
+
+        const bottomPaddingMultiplier = largestGenerationSize + largestDuplicatedPersonsOnSameLevelCount + 3;
+        const bottomPadding = isLast ? 0 : bottomPaddingMultiplier * nodePathsVerticalOffset;
 
         const generationDiv = $('<div>')
             .attr('class', 'generation')
+            .attr('data-top-padding-multiplier', topPaddingMultiplier)
             .attr('data-bottom-padding-multiplier', bottomPaddingMultiplier)
-            .css('padding', isLast ? '0px' : '0px 0px ' + (bottomPaddingMultiplier * nodePathsVerticalOffset) + 'px 0px');
+            .css('padding', `${topPadding}px 0px ${bottomPadding}px 0px`);
 
         generation.siblingsGroups.forEach(siblingsGroup => {
             generationDiv.append(this.createSiblingsGroup(siblingsGroup));
@@ -134,106 +145,37 @@
         const siblingDiv = $('<div>')
             .attr('class', 'sibling');
 
-        sibling.forEach(extendedMarriage => {
-            siblingDiv.append(this.createExtendedMarriage(extendedMarriage));
+        sibling.forEach(marriageEntity => {
+            siblingDiv.append(this.createMarriageEntityNode(marriageEntity));
         })
 
         return siblingDiv;
     },
 
-    createExtendedMarriage(extendedMarriage) {
-        const extendedMarriageDiv = $('<div>')
-            .attr('class', 'extended-marriage');
+    createMarriageEntityNode(marriageEntity) {
+        const marriageEntityDiv = $('<div>')
+            .attr('class', 'marriage-entity-node');
 
-        if (extendedMarriage.secondaryMarriage != null) {
-            extendedMarriageDiv.append(this.createMarriageNode(extendedMarriage.secondaryMarriage));
-        }
-
-        if (extendedMarriage.mainMarriage != null) {
-            extendedMarriageDiv.append(this.createMainMarriage(extendedMarriage.mainMarriage));
-        }
-
-        return extendedMarriageDiv;
-    },
-
-    createMarriageNode(marriage) {
-        const marriageText = `m. ${formatTimePeriod(marriage.startDate, marriage.endDate)}`;
-        const marriageSpan =
-            $('<span>')
-                .attr('class', 'marriage-text')
-                .html(marriageText);
-
-        const textsDiv =
-            $('<div>')
-                .attr('class', 'texts-div')
-                .append(marriageSpan);
-
-        const marriageNodeClass = `marriage-node ${marriage.isStaticMarriage ? 'static-marriage-node' : 'floating-marriage-node'} ${marriage.isFake ? '' : 'interactive'}`;
-
-        const marriageNode = $('<div>')
-            .attr('class', marriageNodeClass)
-            .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
-            .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
-            .append(textsDiv);
-
-        // add tooltip is necessary
-        if (!marriage.isFake) {
-
-            const tooltipContent =
-                $('<div>')
-                    .attr('class', 'marriage-tooltip-content')
-                    .append(textsDiv.clone());
-
-            const tooltipDataId = 'marriage-tooltip-id-' + marriage.maleId + marriage.femaleId
-            const tooltip =
-                $('<div>')
-                    .attr('class', 'tooltip')
-                    .data('tooltip-id', tooltipDataId)
-                    .append(tooltipContent);
-
-            marriageNode.addClass('tooltip-source');
-            marriageNode
-                .data('tooltip-id', tooltipDataId)
-                .append(tooltip);
-        }
-
-        if (marriage.isStaticMarriage) {
-            return marriageNode;
-        }
-
-        const hiddenMarriageNode = marriageNode.clone()
-            .attr('class', 'hidden-marriage-node');
-
-        return $('<div>')
-            .attr('class', 'floating-and-hidden-marriage-nodes-div')
-            .append(marriageNode)
-            .append(hiddenMarriageNode);
-    },
-
-    createMainMarriage(mainMarriage) {
-        const mainMarriageDiv = $('<div>')
-            .attr('class', 'main-marriage');
-
-        if (mainMarriage.male == null || mainMarriage.female == null) {
-            if (mainMarriage.male != null) {
-                mainMarriageDiv.append(this.createPersonNode(mainMarriage.male));
+        if (marriageEntity.male == null || marriageEntity.female == null) {
+            if (marriageEntity.male != null) {
+                marriageEntityDiv.append(this.createPersonNode(marriageEntity.male));
             }
 
-            if (mainMarriage.female != null) {
-                mainMarriageDiv.append(this.createPersonNode(mainMarriage.female));
+            if (marriageEntity.female != null) {
+                marriageEntityDiv.append(this.createPersonNode(marriageEntity.female));
             }
         }
         else {
             const couple = $('<div>')
                 .attr('class', 'couple')
-                .append(this.createPersonNode(mainMarriage.male))
-                .append(this.createPersonNode(mainMarriage.female));
+                .append(this.createPersonNode(marriageEntity.male))
+                .append(this.createPersonNode(marriageEntity.female));
 
-            mainMarriageDiv.append(couple);
-            mainMarriageDiv.append(this.createMarriageNode(mainMarriage.marriage));
+            marriageEntityDiv.append(couple);
+            marriageEntityDiv.append(this.createMarriageNode(marriageEntity.marriage));
         }
 
-        return mainMarriageDiv;
+        return marriageEntityDiv;
     },
 
     createPersonNode(person) {
@@ -306,6 +248,50 @@
         return personNode;
     },
 
+    createMarriageNode(marriage) {
+        const marriageText = `m. ${formatTimePeriod(marriage.startDate, marriage.endDate)}`;
+        const marriageSpan =
+            $('<span>')
+                .attr('class', 'marriage-text')
+                .html(marriageText);
+
+        const textsDiv =
+            $('<div>')
+                .attr('class', 'texts-div')
+                .append(marriageSpan);
+
+        const marriageNodeClass = `marriage-node ${marriage.isFake ? '' : 'interactive'}`;
+
+        const marriageNode = $('<div>')
+            .attr('class', marriageNodeClass)
+            .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
+            .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
+            .append(textsDiv);
+
+        // add tooltip is necessary
+        if (!marriage.isFake) {
+
+            const tooltipContent =
+                $('<div>')
+                    .attr('class', 'marriage-tooltip-content')
+                    .append(textsDiv.clone());
+
+            const tooltipDataId = 'marriage-tooltip-id-' + marriage.maleId + marriage.femaleId
+            const tooltip =
+                $('<div>')
+                    .attr('class', 'tooltip')
+                    .data('tooltip-id', tooltipDataId)
+                    .append(tooltipContent);
+
+            marriageNode.addClass('tooltip-source');
+            marriageNode
+                .data('tooltip-id', tooltipDataId)
+                .append(tooltip);
+        }
+
+        return marriageNode;
+    },
+
     createEmptyPathsSvg() {
         // no jquery creational method for this
         const pathsSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -319,14 +305,6 @@
         return $(path)
             .attr('d', pathData)
             .attr('class', isBiological ? 'biological-path' : 'adoptive-path');
-    },
-
-    createMarriagePath(pathData) {
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
-        return $(path)
-            .attr('d', pathData)
-            .attr('class', 'marriage-path');
     },
 
     createDuplicatedPersonPath(pathData) {

@@ -1,54 +1,37 @@
-﻿// groups the individual spouseGroups by parents
-// - this also includes sorting siblings groups by parents
-// one siblingGroup can be as complex as
-// g1: (female - male female - male female - male)
-// g2: (female - male female - male female - male)
-// g3: (female - male female)
-// g4: (female - male female)
-// resulting in [[g1, g2], [g3], [g4]]
+﻿// groups the individual marriage entities groups by parents, so they become siblings
+
 function createSiblingsGroups(generations) {
     generations.forEach((generation, level) => {
         let siblingsGroups = [];
 
-        // spouse groups on first level are non siblings
+        // marriage entities groups on first level are not siblings
         if (level == 0) {
-            generation.spousesGroups.forEach(spousesGroup => {
-                siblingsGroups.push([spousesGroup]);
+            generation.marriageEntitiesGroups.forEach(marriageEntitiesGroup => {
+                siblingsGroups.push([marriageEntitiesGroup]);
             });
         }
 
         else {
-            const consumedSpousesGroups = [];
+            const consumedMarriageEntitiesGroups = [];
             const siblingsGroupsAndParentsIds = [];
 
-            // use spouse groups set in the previous iteration, needed for the order of the children
+            // use marriage entities groups set in the previous iteration, needed for the order of the children
             const parentsGeneration = generations[level - 1];
 
             parentsGeneration.siblingsGroups.forEach(parentSiblingsGroup => {
-                parentSiblingsGroup.forEach(spousesGroup => {
-                    spousesGroup.forEach(parentExtendedMarriage => {
+                parentSiblingsGroup.forEach(marriageEntitiesGroup => {
+                    marriageEntitiesGroup.forEach(marriageEntity => {
 
-                        const secondaryMarriageChildrenIds = getSecondaryMarriageChildrenIds(parentExtendedMarriage);
-                        const secondaryMarriageSiblingsGroup = getSiblingsGroupFromChildGeneration(generations[level], secondaryMarriageChildrenIds, consumedSpousesGroups);
+                        const siblingsGroup = getSiblingsGroupFromChildGeneration(
+                            generations[level],
+                            marriageEntity.marriage?.inverseParentIds ?? [],
+                            consumedMarriageEntitiesGroups);
 
-                        if (secondaryMarriageSiblingsGroup.length > 0) {
-
-                            const siblingsGroupAndParentIds = {
-                                siblingsGroup: secondaryMarriageSiblingsGroup,
-                                parentsIds: getParentIdsOfSiblingsGroupFromParentGeneration(secondaryMarriageSiblingsGroup, parentsGeneration),
-                            }
-
-                            siblingsGroupsAndParentsIds.push(siblingsGroupAndParentIds);
-                        }
-
-                        const mainMarriageChildrenIds = getMainMarriageChildrenIds(parentExtendedMarriage);
-                        const mainMarriageSiblingsGroup = getSiblingsGroupFromChildGeneration(generations[level], mainMarriageChildrenIds, consumedSpousesGroups);
-
-                        if (mainMarriageSiblingsGroup.length > 0) {
+                        if (siblingsGroup.length > 0) {
 
                             const siblingsGroupAndParentIds = {
-                                siblingsGroup: mainMarriageSiblingsGroup,
-                                parentsIds: getParentIdsOfSiblingsGroupFromParentGeneration(mainMarriageSiblingsGroup, parentsGeneration),
+                                siblingsGroup: siblingsGroup,
+                                parentsIds: getParentIdsOfSiblingsGroupFromParentGeneration(siblingsGroup, parentsGeneration),
                             }
 
                             siblingsGroupsAndParentsIds.push(siblingsGroupAndParentIds);
@@ -57,12 +40,12 @@ function createSiblingsGroups(generations) {
                 });
             });
 
-            siblingsGroups = mergesiblingsGroupsAndParentsIds(siblingsGroupsAndParentsIds);
+            siblingsGroups = mergeSiblingsGroupsAndParentsIds(siblingsGroupsAndParentsIds);
 
             // add orphans
-            generation.spousesGroups.forEach(spousesGroup => {
-                if (!consumedSpousesGroups.includes(spousesGroup)) {
-                    siblingsGroups.push([spousesGroup]);
+            generation.marriageEntitiesGroups.forEach(marriageEntitiesGroup => {
+                if (!consumedMarriageEntitiesGroups.includes(marriageEntitiesGroup)) {
+                    siblingsGroups.push([marriageEntitiesGroup]);
                 }
             });
         }
@@ -71,26 +54,16 @@ function createSiblingsGroups(generations) {
     });
 }
 
-function getSecondaryMarriageChildrenIds(parentExtendedMarriage) {
-    return (parentExtendedMarriage.secondaryMarriage?.inverseBiologicalParentIds ?? [])
-        .concat(parentExtendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? []);
-}
-
-function getMainMarriageChildrenIds(parentExtendedMarriage) {
-    return (parentExtendedMarriage.mainMarriage?.marriage?.inverseBiologicalParentIds ?? [])
-        .concat(parentExtendedMarriage.mainMarriage?.marriage?.inverseAdoptiveParentIds ?? []);
-}
-
-function getSiblingsGroupFromChildGeneration(childrenGeneration, childrenIds, consumedSpousesGroups) {
+function getSiblingsGroupFromChildGeneration(childrenGeneration, childrenIds, consumedMarriageEntitiesGroups) {
     const siblingsGroup = [];
-    childrenGeneration.spousesGroups.forEach(spousesGroup => {
-        if (consumedSpousesGroups.includes(spousesGroup)) {
+    childrenGeneration.marriageEntitiesGroups.forEach(marriageEntitiesGroup => {
+        if (consumedMarriageEntitiesGroups.includes(marriageEntitiesGroup)) {
             return;
         }
 
-        if (siblingIsChildOf(spousesGroup, childrenIds)) {
-            siblingsGroup.push(spousesGroup);
-            consumedSpousesGroups.push(spousesGroup);
+        if (siblingIsChildOf(marriageEntitiesGroup, childrenIds)) {
+            siblingsGroup.push(marriageEntitiesGroup);
+            consumedMarriageEntitiesGroups.push(marriageEntitiesGroup);
         }
     });
 
@@ -98,9 +71,9 @@ function getSiblingsGroupFromChildGeneration(childrenGeneration, childrenIds, co
 }
 
 function siblingIsChildOf(sibling, childrenIds) {
-    return sibling.some(extendedMarriage => {
-        const maleId = extendedMarriage.mainMarriage?.male?.id;
-        const femaleId = extendedMarriage.mainMarriage?.female?.id;
+    return sibling.some(marriageEntity => {
+        const maleId = marriageEntity.male?.id;
+        const femaleId = marriageEntity.female?.id;
 
         return childrenIds.includes(maleId) || childrenIds.includes(femaleId);
     });
@@ -110,11 +83,9 @@ function getParentIdsOfSiblingsGroupFromParentGeneration(childSiblingsGroup, par
     const childrenSpousesIdsSet = new Set();
 
     childSiblingsGroup.forEach(sibling => {
-        sibling.forEach(extendedMarriage => {
-            childrenSpousesIdsSet.add(extendedMarriage.secondaryMarriage?.maleId);
-            childrenSpousesIdsSet.add(extendedMarriage.secondaryMarriage?.femaleId);
-            childrenSpousesIdsSet.add(extendedMarriage.mainMarriage?.male?.id);
-            childrenSpousesIdsSet.add(extendedMarriage.mainMarriage?.female?.id);
+        sibling.forEach(marriageEntity => {
+            childrenSpousesIdsSet.add(marriageEntity.male?.id);
+            childrenSpousesIdsSet.add(marriageEntity.female?.id);
         })
     })
 
@@ -126,35 +97,15 @@ function getParentIdsOfSiblingsGroupFromParentGeneration(childSiblingsGroup, par
     }
 
     parentsGeneration.siblingsGroups.forEach(siblingsGroup => {
-        siblingsGroup.forEach(spousesGroup => {
-            spousesGroup.forEach(extendedMarriage => {
+        siblingsGroup.forEach(marriageEntitiesGroup => {
+            marriageEntitiesGroup.forEach(marriageEntity => {
 
-                // in case of hourglass biological tree, the inverseAdoptiveParentIds are not set
-                const secondaryMarriageInverseBiologicalParentIds = extendedMarriage.secondaryMarriage?.inverseBiologicalParentIds ?? [];
-                const secondaryMarriageInverseAdoptiveParentIds = extendedMarriage.secondaryMarriage?.inverseAdoptiveParentIds ?? [];
-                const mainMarriageInverseBiologicalParentIds = extendedMarriage.mainMarriage?.marriage?.inverseBiologicalParentIds ?? [];
-                const mainMarriageInverseAdoptiveParentIds = extendedMarriage.mainMarriage?.marriage?.inverseAdoptiveParentIds ?? [];
+                const inverseParentIds = marriageEntity.marriage?.inverseParentIds ?? [];
 
-                if (includesAny(secondaryMarriageInverseBiologicalParentIds, childrenSpousesIdsSet)) {
-                    parentsIds.fatherIds.add(extendedMarriage.secondaryMarriage.maleId);
-                    parentsIds.motherIds.add(extendedMarriage.secondaryMarriage.femaleId);
+                if (includesAny(inverseParentIds, childrenSpousesIdsSet)) {
+                    parentsIds.fatherIds.add(marriageEntity.male.id);
+                    parentsIds.fatherIds.add(marriageEntity.female.id);
                 }
-
-                if (includesAny(secondaryMarriageInverseAdoptiveParentIds, childrenSpousesIdsSet)) {
-                    parentsIds.fatherIds.add(extendedMarriage.secondaryMarriage.maleId);
-                    parentsIds.motherIds.add(extendedMarriage.secondaryMarriage.femaleId);
-                }
-
-                if (includesAny(mainMarriageInverseBiologicalParentIds, childrenSpousesIdsSet)) {
-                    parentsIds.fatherIds.add(extendedMarriage.mainMarriage.male.id);
-                    parentsIds.motherIds.add(extendedMarriage.mainMarriage.female.id);
-                }
-
-                if (includesAny(mainMarriageInverseAdoptiveParentIds, childrenSpousesIdsSet)) {
-                    parentsIds.fatherIds.add(extendedMarriage.mainMarriage.male.id);
-                    parentsIds.motherIds.add(extendedMarriage.mainMarriage.female.id);
-                }
-
             })
         });
     });
@@ -171,7 +122,7 @@ function includesAny(childrenIdsSetOfParents, childrenSpousesIdsSet) {
     return false;
 }
 
-function mergesiblingsGroupsAndParentsIds(siblingsGroupsAndParentsIds) {
+function mergeSiblingsGroupsAndParentsIds(siblingsGroupsAndParentsIds) {
     const siblingsGroups = [];
     const usedSiblingsGroupsAndParentsIds = new Array(siblingsGroupsAndParentsIds.length).fill(false);
 

@@ -133,7 +133,7 @@ function addApplyButtonListener(settingsContext, treeContext) {
     settingsContext.applyButton.on('click', () => apply(settingsContext, treeContext));
 }
 
-async function apply(settingsContext,treeContext ,fromInitialization) {
+async function apply(settingsContext, treeContext, fromInitialization) {
     if (!fromInitialization) {
         toggleSettingsVisibility(settingsContext);
     }
@@ -183,13 +183,16 @@ function setViewModeSizes(treeContext) {
 
     generations.each((index, elem) => {
         const generation = $(elem);
-        const isLast = index === generations.length - 1;
+
+        const isFirst = index == 0;
+        const isLast = index == generations.length - 1;
+
+        const topPaddingMultiplier = parseInt(generation.attr('data-top-padding-multiplier'), 10);
         const bottomPaddingMultiplier = parseInt(generation.attr('data-bottom-padding-multiplier'), 10);
 
-        const paddingValue = isLast
-            ? '0px'
-            : `0px 0px ${bottomPaddingMultiplier * nodePathsVerticalOffset}px 0px`;
+        const topPadding = isFirst ? topPaddingMultiplier * nodePathsVerticalOffset : 0;
+        const bottomPadding = isLast ? 0 : bottomPaddingMultiplier * nodePathsVerticalOffset;
 
-        generation.css('padding', paddingValue);
+        generation.css('padding', `${topPadding}px 0px ${bottomPadding}px 0px`);
     });
 }
