@@ -105,16 +105,16 @@ $person-node-width-small: 80px;
 $person-node-width-medium: 115px;
 $person-node-width-large: 175px;
 
-$marriage-node-width-extrasmall: 24px;
+$marriage-date-node-width-extrasmall: 24px;
 $marriage-node-height-extrasmall: 10px;
 
-$marriage-node-width-small: 60px;
+$marriage-date-node-width-small: 60px;
 $marriage-node-height-small: 20px;
 
-$marriage-node-width-medium: 90px;
+$marriage-date-node-width-medium: 90px;
 $marriage-node-height-medium: 20px;
 
-$marriage-node-width-large: 150px;
+$marriage-date-node-width-large: 150px;
 $marriage-node-height-large: 20px;
 
 $node-horizontal-margin-extrasmall: 3px;
@@ -190,15 +190,15 @@ $svg-size-large: 32px;
     --person-node-width-medium: #{$person-node-width-medium};
     --person-node-width-large: #{$person-node-width-large};
     --person-node-width: #{$person-node-width-medium};
-    --marriage-node-width-extrasmall: #{$marriage-node-width-extrasmall};
+    --marriage-date-node-width-extrasmall: #{$marriage-date-node-width-extrasmall};
     --marriage-node-height-extrasmall: #{$marriage-node-height-extrasmall};
-    --marriage-node-width-small: #{$marriage-node-width-small};
+    --marriage-date-node-width-small: #{$marriage-date-node-width-small};
     --marriage-node-height-small: #{$marriage-node-height-small};
-    --marriage-node-width-medium: #{$marriage-node-width-medium};
+    --marriage-date-node-width-medium: #{$marriage-date-node-width-medium};
     --marriage-node-height-medium: #{$marriage-node-height-medium};
-    --marriage-node-width-large: #{$marriage-node-width-large};
+    --marriage-date-node-width-large: #{$marriage-date-node-width-large};
     --marriage-node-height-large: #{$marriage-node-height-large};
-    --marriage-node-width: #{$marriage-node-width-medium};
+    --marriage-date-node-width: #{$marriage-date-node-width-medium};
     --marriage-node-height: #{$marriage-node-height-medium};
     --node-horizontal-margin-extrasmall: #{$node-horizontal-margin-extrasmall};
     --node-horizontal-margin-small: #{$node-horizontal-margin-small};
@@ -704,6 +704,10 @@ fieldset {
     .marriage-text {
         @extend %text;
     }
+
+    .spouse-number-text {
+        @extend %text;
+    }
 }
 
 .nav-logo-container-hyperlink {
@@ -983,20 +987,33 @@ fieldset {
                         }
 
                         .marriage-node {
-                            @extend .node;
-                            width: var(--marriage-node-width);
+                            display: flex;
+                            flex-direction: row;
                             height: var(--marriage-node-height);
-                            margin: 0px var(--node-horizontal-margin);
-                            font-size: $font-size-small;
-                            color: var(--foreground-color-disabled);
-                            background-color: var(--marriage-color);
-                            border-color: var(--foreground-color-disabled);
-                            transition: color $color-transition, background-color $color-transition, border-color $color-transition, width var(--tree-size-transition), margin var(--tree-size-transition);
-                        }
 
-                        .marriage-node.interactive {
-                            color: var(--foreground-color);
-                            border-color: var(--foreground-color);
+                            .spouse-number-node {
+                                @extend .node;
+                                border: none;
+                            }
+
+                            .spouse-number-node.hidden {
+                                visibility: hidden;
+                                pointer-events: none;
+                            }
+
+                            .marriage-date-node {
+                                @extend .node;
+                                width: var(--marriage-date-node-width);
+                                color: var(--foreground-color-disabled);
+                                background-color: var(--marriage-color);
+                                border-color: var(--foreground-color-disabled);
+                                transition: color $color-transition, background-color $color-transition, border-color $color-transition, width var(--tree-size-transition), margin var(--tree-size-transition);
+                            }
+
+                            .marriage-date-node.interactive {
+                                color: var(--foreground-color);
+                                border-color: var(--foreground-color);
+                            }
                         }
 
                         .couple {

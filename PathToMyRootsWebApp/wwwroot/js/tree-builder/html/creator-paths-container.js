@@ -10,7 +10,7 @@
 
 function drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePathsVerticalOffset, generationsHtmls) {
     for (let i = 1; i < generationsHtmls.length; i++) {
-        const marriageNodes = $(generationsHtmls[i - 1]).find('.marriage-node');
+        const marriageDateNodes = $(generationsHtmls[i - 1]).find('.marriage-date-node');
         const childNodes = $(generationsHtmls[i]).find('.person-node');
 
         drawMarriagesChildrenPaths(
@@ -19,7 +19,7 @@ function drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePa
             generationsData.largestGenerationSize,
             generationsData.largestDuplicatedPersonsOnSameLevelCount,
             generationsData.generations[i],
-            marriageNodes,
+            marriageDateNodes,
             childNodes);
     }
 }

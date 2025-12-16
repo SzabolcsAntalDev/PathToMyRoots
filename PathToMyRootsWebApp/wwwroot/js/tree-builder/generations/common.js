@@ -4,6 +4,21 @@
     marriage.isFake = isFake;
     marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;
     marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
+
+    marriage.leftSpouseNumber =
+        !male.secondSpouseId
+            ? null
+            : male.firstSpouseId == female.id
+                ? 1
+                : 2;
+
+    marriage.rightSpouseNumber =
+        !female.secondSpouseId
+            ? null
+            : female.firstSpouseId == male.id
+                ? 1
+                : 2;
+
     marriage.maleId = male?.id;
     marriage.femaleId = female?.id;
     marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);

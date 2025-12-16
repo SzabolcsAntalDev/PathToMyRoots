@@ -175,7 +175,7 @@ function addViewModeRadioButtonsListeners(settingsContext, treeContext) {
 
 function setViewModeSizes(treeContext) {
     treeContext.diagram.css('--person-node-width', getPersonNodeWidth(treeContext.viewMode));
-    treeContext.diagram.css('--marriage-node-width', getMarriageNodeWidth(treeContext.viewMode));
+    treeContext.diagram.css('--marriage-date-node-width', getMarriageDateNodeWidth(treeContext.viewMode));
     treeContext.diagram.css('--node-horizontal-margin', getNodeHorizontalMargin(treeContext.viewMode));
 
     const nodePathsVerticalOffset = getNodePathsVerticalOffset(treeContext.viewMode);

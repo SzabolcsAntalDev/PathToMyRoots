@@ -6,8 +6,8 @@ function getPersonNodeWidth(viewMode) {
     return getPropertyValue(`person-node-width-${viewMode.id.toLowerCase()}`);
 }
 
-function getMarriageNodeWidth(viewMode) {
-    return getPropertyValue(`marriage-node-width-${viewMode.id.toLowerCase()}`);
+function getMarriageDateNodeWidth(viewMode) {
+    return getPropertyValue(`marriage-date-node-width-${viewMode.id.toLowerCase()}`);
 }
 
 function getMarriageNodeHeight(viewMode) {

@@ -249,21 +249,20 @@
     },
 
     createMarriageNode(marriage) {
-        const marriageText = `m. ${formatTimePeriod(marriage.startDate, marriage.endDate)}`;
-        const marriageSpan =
+        const marriageDateText = `m. ${formatTimePeriod(marriage.startDate, marriage.endDate)}`;
+
+        const marriageDateSpan =
             $('<span>')
                 .attr('class', 'marriage-text')
-                .html(marriageText);
+                .html(marriageDateText);
 
         const textsDiv =
             $('<div>')
                 .attr('class', 'texts-div')
-                .append(marriageSpan);
+                .append(marriageDateSpan);
 
-        const marriageNodeClass = `marriage-node ${marriage.isFake ? '' : 'interactive'}`;
-
-        const marriageNode = $('<div>')
-            .attr('class', marriageNodeClass)
+        const marriageDateNode = $('<div>')
+            .attr('class', `marriage-date-node ${marriage.isFake ? '' : 'interactive'}`)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
             .append(textsDiv);
@@ -283,13 +282,37 @@
                     .data('tooltip-id', tooltipDataId)
                     .append(tooltipContent);
 
-            marriageNode.addClass('tooltip-source');
-            marriageNode
+            marriageDateNode.addClass('tooltip-source');
+            marriageDateNode
                 .data('tooltip-id', tooltipDataId)
                 .append(tooltip);
         }
 
+        const marriageNode = $('<div>')
+            .attr('class', 'marriage-node')
+            .append(this.createSpouseNumberNode(marriage.leftSpouseNumber))
+            .append(marriageDateNode)
+            .append(this.createSpouseNumberNode(marriage.rightSpouseNumber));
+
         return marriageNode;
+    },
+
+    createSpouseNumberNode(spouseNumber) {
+        const spouseNumberSpan =
+            $('<span>')
+                .attr('class', 'spouse-number-text')
+                .html(`${spouseNumber ?? '1'}.`);
+
+        const spouseNumberTextsDiv =
+            $('<div>')
+                .attr('class', 'texts-div')
+                .append(spouseNumberSpan);
+
+        const spouseNumberNode = $('<div>')
+            .attr('class', `spouse-number-node ${!spouseNumber ? 'hidden' : ''}`)
+            .append(spouseNumberTextsDiv);
+
+        return spouseNumberNode;
     },
 
     createEmptyPathsSvg() {

@@ -45,15 +45,15 @@
   --person-node-width-medium: 115px;
   --person-node-width-large: 175px;
   --person-node-width: 115px;
-  --marriage-node-width-extrasmall: 24px;
+  --marriage-date-node-width-extrasmall: 24px;
   --marriage-node-height-extrasmall: 10px;
-  --marriage-node-width-small: 60px;
+  --marriage-date-node-width-small: 60px;
   --marriage-node-height-small: 20px;
-  --marriage-node-width-medium: 90px;
+  --marriage-date-node-width-medium: 90px;
   --marriage-node-height-medium: 20px;
-  --marriage-node-width-large: 150px;
+  --marriage-date-node-width-large: 150px;
   --marriage-node-height-large: 20px;
-  --marriage-node-width: 90px;
+  --marriage-date-node-width: 90px;
   --marriage-node-height: 20px;
   --node-horizontal-margin-extrasmall: 3px;
   --node-horizontal-margin-small: 5px;
@@ -496,7 +496,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   min-width: 0;
   padding: 4px;
 }
-.texts-div .marriage-text, .texts-div .lived-text, .texts-div .name-text {
+.texts-div .spouse-number-text, .texts-div .marriage-text, .texts-div .lived-text, .texts-div .name-text {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -734,7 +734,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   padding: 0px;
   transition: margin var(--tree-size-transition);
 }
-.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .person-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .female-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .male-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node {
+.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .person-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .female-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .male-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .marriage-date-node, .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .spouse-number-node {
   display: flex;
   align-items: center;
   border: 1px solid var(--foreground-color);
@@ -747,16 +747,25 @@ fieldset div.option label input[type=radio]:checked:hover {
   animation: colorFade 0.5s ease-in-out infinite alternate;
 }
 .diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node {
-  width: var(--marriage-node-width);
+  display: flex;
+  flex-direction: row;
   height: var(--marriage-node-height);
-  margin: 0px var(--node-horizontal-margin);
-  font-size: 11px;
+}
+.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .spouse-number-node {
+  border: none;
+}
+.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .spouse-number-node.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .marriage-date-node {
+  width: var(--marriage-date-node-width);
   color: var(--foreground-color-disabled);
   background-color: var(--marriage-color);
   border-color: var(--foreground-color-disabled);
   transition: color 0.3s ease 0s, background-color 0.3s ease 0s, border-color 0.3s ease 0s, width var(--tree-size-transition), margin var(--tree-size-transition);
 }
-.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node.interactive {
+.diagram .nodes-div .generation .siblings-group .sibling .marriage-entity-node .marriage-node .marriage-date-node.interactive {
   color: var(--foreground-color);
   border-color: var(--foreground-color);
 }
@@ -863,7 +872,7 @@ fieldset div.option label input[type=radio]:checked:hover {
   padding: 0px;
   margin-top: 4px;
 }
-.person-tooltip-content .texts-div .name-text, .person-tooltip-content .texts-div .lived-text, .person-tooltip-content .texts-div .marriage-text {
+.person-tooltip-content .texts-div .name-text, .person-tooltip-content .texts-div .lived-text, .person-tooltip-content .texts-div .marriage-text, .person-tooltip-content .texts-div .spouse-number-text {
   font-size: 14px;
   margin-top: 4px;
 }
@@ -876,7 +885,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 .marriage-tooltip-content .texts-div {
   padding: 0px;
 }
-.marriage-tooltip-content .texts-div .name-text, .marriage-tooltip-content .texts-div .lived-text, .marriage-tooltip-content .texts-div .marriage-text {
+.marriage-tooltip-content .texts-div .name-text, .marriage-tooltip-content .texts-div .lived-text, .marriage-tooltip-content .texts-div .marriage-text, .marriage-tooltip-content .texts-div .spouse-number-text {
   font-size: 14px;
 }
 

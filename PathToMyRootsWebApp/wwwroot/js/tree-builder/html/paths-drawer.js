@@ -1,7 +1,7 @@
 ﻿const duplicatedPathToNodeWidthMultiplier = 1 / 3;
 const roundToOneDecimal = v => v.toFixed(1);
 
-function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, largestDuplicatedPersonsOnSameLevelCount, childrenGeneration, marriageNodes, childNodes) {
+function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, largestDuplicatedPersonsOnSameLevelCount, childrenGeneration, marriageDateNodes, childNodes) {
     pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
 
     const offsetOnTop =
@@ -19,20 +19,20 @@ function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, lar
             * nodePathsVerticalOffset
     };
 
-    marriageNodes.filter('.marriage-node').each((_, marriageNode) => {
-        drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageNode, childNodes);
+    marriageDateNodes.each((_, marriageDateNode) => {
+        drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes);
     });
 }
 
-function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageNode, childNodes) {
-    const inverseBiologicalParentIds = $(marriageNode).data('inverseBiologicalParentIds');
-    const inverseAdoptiveParentIds = $(marriageNode).data('inverseAdoptiveParentIds') ?? [];
+function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes) {
+    const inverseBiologicalParentIds = $(marriageDateNode).data('inverseBiologicalParentIds');
+    const inverseAdoptiveParentIds = $(marriageDateNode).data('inverseAdoptiveParentIds') ?? [];
     const inverseParentIds = inverseBiologicalParentIds.concat(inverseAdoptiveParentIds);
 
     const targetChildNodes = [];
 
-    marriageNode.clientRect = marriageNode.getBoundingClientRect();
-    marriageNode.clientRectHorizontalCenter = marriageNode.clientRect.left + (marriageNode.clientRect.width / 2);
+    marriageDateNode.clientRect = marriageDateNode.getBoundingClientRect();
+    marriageDateNode.clientRectHorizontalCenter = marriageDateNode.clientRect.left + (marriageDateNode.clientRect.width / 2);
 
     childNodes.each((_, childNode) => {
         const childId = parseInt($(childNode).attr('id'));
@@ -46,31 +46,31 @@ function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offs
         }
     });
 
-    const leftChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter <= marriageNode.clientRectHorizontalCenter);
-    const rightChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter > marriageNode.clientRectHorizontalCenter);
+    const leftChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter <= marriageDateNode.clientRectHorizontalCenter);
+    const rightChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter > marriageDateNode.clientRectHorizontalCenter);
 
     leftChildNodes.forEach(childNode => {
-        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
+        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
     });
 
     rightChildNodes.reverse().forEach(childNode => {
-        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
+        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
     });
 }
 
-function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageNode, childNode, verticalOffset) {
+function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, verticalOffset) {
 
-    let marriageNodeHorizontalCenter = marriageNode.clientRect.left + marriageNode.clientRect.width / 2 - pathsContainer.clientRect.left;
-    let marriageNodeBottom = marriageNode.clientRect.top + marriageNode.clientRect.height - pathsContainer.clientRect.top;
+    let marriageDateNodeHorizontalCenter = marriageDateNode.clientRect.left + marriageDateNode.clientRect.width / 2 - pathsContainer.clientRect.left;
+    let marriageDateNodeBottom = marriageDateNode.clientRect.top + marriageDateNode.clientRect.height - pathsContainer.clientRect.top;
     let childNodeHorizontalCenter = childNode.clientRect.left + childNode.clientRect.width / 2 - pathsContainer.clientRect.left;
     let childNodeTop = childNode.clientRect.top - pathsContainer.clientRect.top;
-    let horizontalLineY = marriageNodeBottom + verticalOffset;
+    let horizontalLineY = marriageDateNodeBottom + verticalOffset;
 
-    const hasBiologicalChildren = $(marriageNode).data('inverseBiologicalParentIds').length > 0;
-    const hasAdoptiveChildren = $(marriageNode).data('inverseAdoptiveParentIds').length > 0;
+    const hasBiologicalChildren = $(marriageDateNode).data('inverseBiologicalParentIds').length > 0;
+    const hasAdoptiveChildren = $(marriageDateNode).data('inverseAdoptiveParentIds').length > 0;
 
     if (hasBiologicalChildren && hasAdoptiveChildren) {
-        marriageNodeHorizontalCenter += childNode.isBiological ? (-nodePathsVerticalOffset / 2) : (nodePathsVerticalOffset / 2);
+        marriageDateNodeHorizontalCenter += childNode.isBiological ? (-nodePathsVerticalOffset / 2) : (nodePathsVerticalOffset / 2);
     }
 
     const hasBiologicalParents = $(childNode).data('biologicalFatherId') != null && $(childNode).data('biologicalMotherId') != null;
@@ -81,8 +81,8 @@ function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriage
     }
 
     const pathData = `
-        M ${roundToOneDecimal(marriageNodeHorizontalCenter)},${roundToOneDecimal(marriageNodeBottom)}
-        L ${roundToOneDecimal(marriageNodeHorizontalCenter)},${roundToOneDecimal(horizontalLineY)}
+        M ${roundToOneDecimal(marriageDateNodeHorizontalCenter)},${roundToOneDecimal(marriageDateNodeBottom)}
+        L ${roundToOneDecimal(marriageDateNodeHorizontalCenter)},${roundToOneDecimal(horizontalLineY)}
         L ${roundToOneDecimal(childNodeHorizontalCenter)},${roundToOneDecimal(horizontalLineY)}
         L ${roundToOneDecimal(childNodeHorizontalCenter)},${roundToOneDecimal(childNodeTop)}
     `;

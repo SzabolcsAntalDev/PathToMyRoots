@@ -21,7 +21,7 @@ async function fillTreeTypeTooltipsWithTree(treeType) {
 
     diagram.css('padding', '0px');
     diagram.css('--person-node-width', getPersonNodeWidth(viewMode));
-    diagram.css('--marriage-node-width', getMarriageNodeWidth(viewMode));
+    diagram.css('--marriage-date-node-width', getMarriageDateNodeWidth(viewMode));
     diagram.css('--marriage-node-height', getMarriageNodeHeight(viewMode));
     diagram.css('--node-horizontal-margin', getNodeHorizontalMargin(viewMode));
     diagram.css('--tree-person-image-width', getTreePersonImageWidth(viewMode));
