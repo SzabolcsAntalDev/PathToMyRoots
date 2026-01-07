@@ -10,8 +10,8 @@
 
         const directParentsLevel = -1;
 
-        const father = await getPersonJson(context.person.biologicalFatherId);
-        const mother = await getPersonJson(context.person.biologicalMotherId);
+        const father = await personsCache.getPersonJson(context.person.biologicalFatherId);
+        const mother = await personsCache.getPersonJson(context.person.biologicalMotherId);
 
         context.processedPersonIds.add(directParentsLevel, father.id);
         context.processedPersonIds.add(directParentsLevel, mother.id);
@@ -29,10 +29,10 @@
     async createMarriageEntitiesWithSpousesWithCommonChildrenOfPersons(context, male, female, currentLevel) {
         const marriageEntities = [];
 
-        const firstWife = await getPersonJson(male.firstSpouseId);
-        const secondWife = await getPersonJson(male.secondSpouseId);
-        const firstHusband = await getPersonJson(female.firstSpouseId);
-        const secondHusband = await getPersonJson(female.secondSpouseId);
+        const firstWife = await personsCache.getPersonJson(male.firstSpouseId);
+        const secondWife = await personsCache.getPersonJson(male.secondSpouseId);
+        const firstHusband = await personsCache.getPersonJson(female.firstSpouseId);
+        const secondHusband = await personsCache.getPersonJson(female.secondSpouseId);
 
         if (this.haveCommonChildren(male, firstWife)) {
             marriageEntities.push({
@@ -106,8 +106,8 @@
             return;
         }
 
-        const father = await getPersonJson(person.biologicalFatherId);
-        const mother = await getPersonJson(person.biologicalMotherId);
+        const father = await personsCache.getPersonJson(person.biologicalFatherId);
+        const mother = await personsCache.getPersonJson(person.biologicalMotherId);
 
         context.processedPersonIds.add(currentLevel, father.id);
         context.processedPersonIds.add(currentLevel, mother.id);
@@ -136,8 +136,8 @@
 
         if (person.isMale) {
             const male = person;
-            const firstWife = await getPersonJson(male.firstSpouseId);
-            const secondWife = await getPersonJson(male.secondSpouseId);
+            const firstWife = await personsCache.getPersonJson(male.firstSpouseId);
+            const secondWife = await personsCache.getPersonJson(male.secondSpouseId);
 
             if (!firstWife && !secondWife) {
                 marriageEntities.push({
@@ -168,8 +168,8 @@
         }
         else {
             const female = person;
-            const firstHusband = await getPersonJson(female.firstSpouseId);
-            const secondHusband = await getPersonJson(female.secondSpouseId);
+            const firstHusband = await personsCache.getPersonJson(female.firstSpouseId);
+            const secondHusband = await personsCache.getPersonJson(female.secondSpouseId);
 
             if (!firstHusband && !secondHusband) {
                 marriageEntities.push({
@@ -222,8 +222,8 @@
             return [];
         }
 
-        const father = await getPersonJson(context.person.biologicalFatherId);
-        const mother = await getPersonJson(context.person.biologicalMotherId);
+        const father = await personsCache.getPersonJson(context.person.biologicalFatherId);
+        const mother = await personsCache.getPersonJson(context.person.biologicalMotherId);
         // no need to change loading text here, parents were already loaded previously
 
         const siblings = father.inverseBiologicalFather.concat(mother.inverseBiologicalMother);
@@ -238,7 +238,7 @@
 
             // the sibling here is taken directly from the parents, not from the cache
             // retrieve the sibling from the server and put into the cache so it can be properly duplicated
-            const cachedSibling = await getPersonJson(sibling.id);
+            const cachedSibling = await personsCache.getPersonJson(sibling.id);
             context.processedPersonIds.add(0, cachedSibling.id);
 
             marriageEntities.push({
@@ -270,7 +270,7 @@
             return;
         }
 
-        const person = await getPersonJson(personId);
+        const person = await personsCache.getPersonJson(personId);
 
         context.processedPersonIds.add(currentLevel, person.id);
         loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);

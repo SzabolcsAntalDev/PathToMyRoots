@@ -5,7 +5,7 @@
 
         sortMarriageEntitiesByBirthDate(generations);
 
-        const person = await getPersonJson(treeContext.personId);
+        const person = await personsCache.getPersonJson(treeContext.personId);
         addUnknownAncestors(person, generations, true);
 
         createMarriageEntitiesGroups(generations);
@@ -48,7 +48,7 @@
             return;
         }
 
-        const person = await getPersonJson(personId);
+        const person = await personsCache.getPersonJson(personId);
         if (person.id == context.sourcePersonId) {
             person.isHighlighted = true;
         }
@@ -85,7 +85,7 @@
 
             if (male.firstSpouseId != null) { // MALE firstWife
                 const firstWifeId = male.firstSpouseId;
-                const firstWife = await getPersonJson(firstWifeId);
+                const firstWife = await personsCache.getPersonJson(firstWifeId);
 
                 generation.marriageEntities.push({
                     male: male,
@@ -99,7 +99,7 @@
 
             if (male.secondSpouseId != null) { // MALE secondWife
                 const secondWifeId = male.secondSpouseId;
-                const secondWife = await getPersonJson(secondWifeId);
+                const secondWife = await personsCache.getPersonJson(secondWifeId);
 
                 generation.marriageEntities.push({
                     male: male,

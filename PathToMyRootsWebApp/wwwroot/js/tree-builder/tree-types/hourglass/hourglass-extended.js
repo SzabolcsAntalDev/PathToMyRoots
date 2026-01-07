@@ -13,8 +13,8 @@
         }
 
         if (biologicalFatherId) {
-            const biologicalFather = await getPersonJson(biologicalFatherId);
-            const biologicalMother = await getPersonJson(biologicalMotherId);
+            const biologicalFather = await personsCache.getPersonJson(biologicalFatherId);
+            const biologicalMother = await personsCache.getPersonJson(biologicalMotherId);
 
             context.processedPersonIds.add(currentLevel, biologicalFather.id);
             context.processedPersonIds.add(currentLevel, biologicalMother.id);
@@ -35,8 +35,8 @@
         }
 
         if (adoptiveFatherId) {
-            const adoptiveFather = await getPersonJson(adoptiveFatherId);
-            const adoptiveMother = await getPersonJson(adoptiveMotherId);
+            const adoptiveFather = await personsCache.getPersonJson(adoptiveFatherId);
+            const adoptiveMother = await personsCache.getPersonJson(adoptiveMotherId);
 
             context.processedPersonIds.add(currentLevel, adoptiveFather.id);
             context.processedPersonIds.add(currentLevel, adoptiveMother.id);
@@ -57,10 +57,10 @@
     async createMarriageEntitiesWithSpousesOfPersons(context, male, female, currentLevel) {
         const marriageEntities = [];
 
-        const firstWife = await getPersonJson(male.firstSpouseId);
-        const secondWife = await getPersonJson(male.secondSpouseId);
-        const firstHusband = await getPersonJson(female.firstSpouseId);
-        const secondHusband = await getPersonJson(female.secondSpouseId);
+        const firstWife = await personsCache.getPersonJson(male.firstSpouseId);
+        const secondWife = await personsCache.getPersonJson(male.secondSpouseId);
+        const firstHusband = await personsCache.getPersonJson(female.firstSpouseId);
+        const secondHusband = await personsCache.getPersonJson(female.secondSpouseId);
 
         if (male && firstWife) {
             marriageEntities.push({
@@ -118,8 +118,8 @@
 
         if (person.isMale) {
             const male = person;
-            const firstWife = await getPersonJson(male.firstSpouseId);
-            const secondWife = await getPersonJson(male.secondSpouseId);
+            const firstWife = await personsCache.getPersonJson(male.firstSpouseId);
+            const secondWife = await personsCache.getPersonJson(male.secondSpouseId);
 
             if (!firstWife && !secondWife) {
                 marriageEntities.push({
@@ -146,8 +146,8 @@
         }
         else {
             const female = person;
-            const firstHusband = await getPersonJson(female.firstSpouseId);
-            const secondHusband = await getPersonJson(female.secondSpouseId);
+            const firstHusband = await personsCache.getPersonJson(female.firstSpouseId);
+            const secondHusband = await personsCache.getPersonJson(female.secondSpouseId);
 
             if (!firstHusband && !secondHusband) {
                 marriageEntities.push({
@@ -190,10 +190,10 @@
             return [];
         }
 
-        const biologicalFather = await getPersonJson(context.person.biologicalFatherId);
-        const biologicalMother = await getPersonJson(context.person.biologicalMotherId);
-        const adoptiveFather = await getPersonJson(context.person.adoptiveFatherId);
-        const adoptiveMother = await getPersonJson(context.person.adoptiveMotherId);
+        const biologicalFather = await personsCache.getPersonJson(context.person.biologicalFatherId);
+        const biologicalMother = await personsCache.getPersonJson(context.person.biologicalMotherId);
+        const adoptiveFather = await personsCache.getPersonJson(context.person.adoptiveFatherId);
+        const adoptiveMother = await personsCache.getPersonJson(context.person.adoptiveMotherId);
         // no need to change loading text here, parents were already loaded previously
 
         const siblings =
@@ -214,7 +214,7 @@
         const marriageEntities = [];
 
         for (const siblingId of uniqueSiblingIds) {
-            const sibling = await getPersonJson(siblingId);
+            const sibling = await personsCache.getPersonJson(siblingId);
 
             context.processedPersonIds.add(0, sibling.id);
             loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
@@ -250,7 +250,7 @@
             return;
         }
 
-        const person = await getPersonJson(personId);
+        const person = await personsCache.getPersonJson(personId);
 
         context.processedPersonIds.add(currentLevel, person.id);
         loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);
@@ -280,7 +280,7 @@
         const adoptiveChildrenIds = (person.inverseAdoptiveFather ?? []).concat(person.inverseAdoptiveMother ?? []).map(child => child.id);
 
         for (const adoptiveChildId of adoptiveChildrenIds) {
-            const adoptiveChild = await getPersonJson(adoptiveChildId);
+            const adoptiveChild = await personsCache.getPersonJson(adoptiveChildId);
 
             context.processedPersonIds.add(currentLevel, adoptiveChild.id);
             loadingTextManager.setLoadingProgressText(context.diagramFrame, `Number of persons found:<br>${context.processedPersonIds.getDistinctPersonsSize()}`);

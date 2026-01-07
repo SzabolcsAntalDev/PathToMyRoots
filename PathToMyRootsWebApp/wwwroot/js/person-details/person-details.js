@@ -1,7 +1,7 @@
 ﻿const MaximumNumberOfPersonsInRow = 4;
 
 async function createPersonDetails(personId) {
-    const person = await getPersonJson(personId);
+    const person = await personsCache.getPersonJson(personId);
 
     createInfoColumn(person);
     // await createRelativesColumn(person);
@@ -135,5 +135,5 @@ function addSpouse(
 
 function createTreeColumn(personId) {
     const diagramsDiv = $('#diagrams-div');
-    createAndDisplayDiagramFrame(diagramsDiv, personId, personId, treeTypes.COMPLETE, 2, 1, viewModes.MEDIUM);
+    createAndDisplayDiagramFrame(diagramsDiv, personId, personId, treeTypes.HOURGLASS_EXTENDED, 2, 1, viewModes.MEDIUM);
 }

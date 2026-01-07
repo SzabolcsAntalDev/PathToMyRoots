@@ -40,7 +40,7 @@ async function createRelativesData(person, relativesColumn) {
     if (person.firstSpouseId) {
         loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading' + (person.secondSpouseId ? ' first ' : ' ') + 'marriage');
         relativesData.firstSpouseId = person.firstSpouseId;
-        relativesData.firstSpouse = await getPersonJson(person.firstSpouseId);
+        relativesData.firstSpouse = await personsCache.getPersonJson(person.firstSpouseId);
         relativesData.firstMarriageBiologicalChildren = getCommonChildren(biologicalChildren, getBiologicalChildrenIds(relativesData.firstSpouse));
         relativesData.firstMarriageAdoptiveChildren = getCommonChildren(adoptiveChildren, getAdoptiveChildrenIds(relativesData.firstSpouse));
     }
@@ -48,7 +48,7 @@ async function createRelativesData(person, relativesColumn) {
     if (person.secondSpouseId) {
         loadingTextManager.setLoadingProgressText(relativesColumn, 'Loading second marriage');
         relativesData.secondSpouseId = person.secondSpouseId;
-        relativesData.secondSpouse = await getPersonJson(person.secondSpouseId);
+        relativesData.secondSpouse = await personsCache.getPersonJson(person.secondSpouseId);
         relativesData.secondMarriageBiologicalChildren = getCommonChildren(biologicalChildren, getBiologicalChildrenIds(relativesData.secondSpouse));
         relativesData.secondMarriageAdoptiveChildren = getCommonChildren(adoptiveChildren, getAdoptiveChildrenIds(relativesData.secondSpouse));
     }
@@ -60,10 +60,10 @@ async function createRelativesData(person, relativesColumn) {
 }
 
 async function getBiologicalGrandParents(person) {
-    const biologicalGrandParent1 = await getPersonJson(person.biologicalFather?.biologicalFatherId) ?? unknownMale;
-    const biologicalGrandParent2 = await getPersonJson(person.biologicalFather?.biologicalMotherId) ?? unknownFemale;
-    const biologicalGrandParent3 = await getPersonJson(person.biologicalMother?.biologicalFatherId) ?? unknownMale;
-    const biologicalGrandParent4 = await getPersonJson(person.biologicalMother?.biologicalMotherId) ?? unknownFemale;
+    const biologicalGrandParent1 = await personsCache.getPersonJson(person.biologicalFather?.biologicalFatherId) ?? unknownMale;
+    const biologicalGrandParent2 = await personsCache.getPersonJson(person.biologicalFather?.biologicalMotherId) ?? unknownFemale;
+    const biologicalGrandParent3 = await personsCache.getPersonJson(person.biologicalMother?.biologicalFatherId) ?? unknownMale;
+    const biologicalGrandParent4 = await personsCache.getPersonJson(person.biologicalMother?.biologicalMotherId) ?? unknownFemale;
 
     return [biologicalGrandParent1, biologicalGrandParent2, biologicalGrandParent3, biologicalGrandParent4];
 }
@@ -87,8 +87,8 @@ function getAdoptiveParents(person) {
 }
 
 async function getSiblingsByBiologicalParents(person) {
-    const biologicalFather = await getPersonJson(person.biologicalFather?.id);
-    const biologicalMother = await getPersonJson(person.biologicalMother?.id);
+    const biologicalFather = await personsCache.getPersonJson(person.biologicalFather?.id);
+    const biologicalMother = await personsCache.getPersonJson(person.biologicalMother?.id);
 
     const siblings = (biologicalFather?.inverseBiologicalFather ?? [])
         .concat(biologicalFather?.inverseAdoptiveFather ?? [])
@@ -99,8 +99,8 @@ async function getSiblingsByBiologicalParents(person) {
 }
 
 async function getSiblingsByAdoptiveParents(person) {
-    const adoptiveFather = await getPersonJson(person.adoptiveFather?.id);
-    const adoptiveMother = await getPersonJson(person.adoptiveMother?.id);
+    const adoptiveFather = await personsCache.getPersonJson(person.adoptiveFather?.id);
+    const adoptiveMother = await personsCache.getPersonJson(person.adoptiveMother?.id);
 
     const siblings = (adoptiveFather?.inverseBiologicalFather ?? [])
         .concat(adoptiveFather?.inverseAdoptiveFather ?? [])
@@ -143,7 +143,7 @@ async function getSecondCousins(relativesData, personId) {
     // get children of great grand parents
     const extendedGrandParentsShallowNested = [];
     for (const greatGrandParent of greatGrandParents) {
-        const greatGrandParentJson = await getPersonJson(greatGrandParent.id);
+        const greatGrandParentJson = await personsCache.getPersonJson(greatGrandParent.id);
         extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalFather);
         extendedGrandParentsShallowNested.push(greatGrandParentJson.inverseBiologicalMother);
     }
@@ -157,7 +157,7 @@ async function getSecondCousins(relativesData, personId) {
     // retrieve all grand parents
     const extendedGrandParents = [];
     for (const grandParentShallow of extendedGrandParentsShallowFlat) {
-        const grandParent = await getPersonJson(grandParentShallow.id);
+        const grandParent = await personsCache.getPersonJson(grandParentShallow.id);
         extendedGrandParents.push(grandParent);
     }
 
@@ -183,7 +183,7 @@ async function getGrandChildrenOfGrandParents(grandParents) {
 
     const grandChildrenNested = [];
     for (const child of children) {
-        const childJson = await getPersonJson(child.id);
+        const childJson = await personsCache.getPersonJson(child.id);
         grandChildrenNested.push(childJson.inverseBiologicalFather);
         grandChildrenNested.push(childJson.inverseBiologicalMother);
     }
@@ -217,7 +217,7 @@ async function getGrandChildren(biologicalChildren) {
     const grandChildrenNested = [];
 
     for (const child of biologicalChildren) {
-        const childJson = await getPersonJson(child.id);
+        const childJson = await personsCache.getPersonJson(child.id);
 
         const childrenOfChild = getBiologicalChildren(childJson);
         for (const grandChild of childrenOfChild) {

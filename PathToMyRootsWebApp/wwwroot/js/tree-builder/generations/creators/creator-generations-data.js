@@ -1,13 +1,12 @@
 ﻿async function createGenerationsData(treeContext) {
 
-    clearAdditionalPersons();
+    personsCache.clearPersonsWithClientSideData();
+
+    // object used later for downloaded image name
+    const person = await personsCache.getPersonJson(treeContext.personId);
+    treeContext.person = person;
 
     let generations;
-
-    // Szabi now: clear additional persons here?
-    // object used later for downloaded image name
-    const person = await getPersonJson(treeContext.personId);
-    treeContext.person = person;
 
     if (treeContext.treeType == treeTypes.HOURGLASS_BIOLOGICAL) {
         generations = await hourglassTreeCreator.createHourglassBiologicalTreeGenerations(treeContext);

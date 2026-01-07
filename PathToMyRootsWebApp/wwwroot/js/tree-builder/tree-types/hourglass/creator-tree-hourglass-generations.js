@@ -9,7 +9,7 @@
     },
 
     async createBiologicalTreeGenerationsWithMarriageEntities(treeContext) {
-        const person = await getPersonJson(treeContext.personId);
+        const person = await personsCache.getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
@@ -48,7 +48,7 @@
     },
 
     async createExtendedTreeGenerationsWithMarriageEntities(treeContext) {
-        const person = await getPersonJson(treeContext.personId);
+        const person = await personsCache.getPersonJson(treeContext.personId);
         person.isHighlighted = true;
 
         const processedPersonIds = createProcessedPersonIds();
@@ -70,7 +70,7 @@
         this.removeDuplicatedMarriageEntities(generations);
         sortMarriageEntitiesByBirthDate(generations);
 
-        addUnknownAncestors(person, generations, true, true);
+        addUnknownAncestors(person, generations, false, true);
         //addPlaceholderDescendants(descendantsGenerations);
 
         createMarriageEntitiesGroups(generations);
