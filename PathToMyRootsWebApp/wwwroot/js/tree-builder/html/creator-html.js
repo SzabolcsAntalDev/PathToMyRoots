@@ -202,7 +202,8 @@
         const personNodeClass = [
             'person-node',
             person.isMale ? 'male-node' : 'female-node',
-            person.fakeId ? '' : 'interactive',
+            person.isUnknown ? '' : 'interactive',
+            person.isHidden ? 'hidden' : '',
             person.isHighlighted ? 'highlighted-node' : ''
         ].filter(Boolean).join(' ');
 
@@ -217,7 +218,7 @@
                 .append(image)
                 .append(textsDiv)
                 .on('click', function () {
-                    if (person.fakeId) {
+                    if (person.isUnknown) {
                         return;
                     }
                     const url = `/Person/PersonDetails?id=${person.id}`;
@@ -225,7 +226,7 @@
                 });
 
         // add tooltip if necessary
-        if (!person.fakeId) {
+        if (!person.isUnknown) {
             const tooltipDataId = 'person-tooltip-id-' + person.id;
             const tooltipContent =
                 $('<div>')
@@ -242,7 +243,7 @@
             personNode.addClass('tooltip-source');
             personNode
                 .data('tooltip-id', tooltipDataId)
-                .append(person.fakeId ? null : tooltip);
+                .append(tooltip);
         }
 
         return personNode;
@@ -262,14 +263,14 @@
                 .append(marriageDateSpan);
 
         const marriageDateNode = $('<div>')
-            .attr('class', `marriage-date-node ${marriage.isFake ? '' : 'interactive'}`)
+            .attr('class', `marriage-date-node ${marriage.isUnknown ? '' : 'interactive'}`)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
+            .data('isHidden', marriage.isHidden)
             .append(textsDiv);
 
         // add tooltip is necessary
-        if (!marriage.isFake) {
-
+        if (!marriage.isUnknown) {
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'marriage-tooltip-content')
@@ -288,8 +289,13 @@
                 .append(tooltip);
         }
 
+        const marriageNodeClass = [
+            'marriage-node',
+            marriage.isHidden ? 'hidden' : '',
+        ].filter(Boolean).join(' ');
+
         const marriageNode = $('<div>')
-            .attr('class', 'marriage-node')
+            .attr('class', marriageNodeClass)
             .append(this.createSpouseNumberNode(marriage.leftSpouseNumber))
             .append(marriageDateNode)
             .append(this.createSpouseNumberNode(marriage.rightSpouseNumber));

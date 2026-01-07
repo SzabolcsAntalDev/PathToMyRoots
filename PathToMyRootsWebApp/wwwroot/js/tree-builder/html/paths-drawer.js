@@ -19,9 +19,9 @@ function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, lar
             * nodePathsVerticalOffset
     };
 
-    marriageDateNodes.each((_, marriageDateNode) => {
-        drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes);
-    });
+    marriageDateNodes
+        .filter((_, marriageDateNode) => !$(marriageDateNode).data('isHidden'))
+        .each((_, marriageDateNode) => drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes));
 }
 
 function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes) {

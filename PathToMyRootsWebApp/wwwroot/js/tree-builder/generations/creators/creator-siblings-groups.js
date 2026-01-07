@@ -80,42 +80,38 @@ function siblingIsChildOf(sibling, childrenIds) {
 }
 
 function getParentIdsOfSiblingsGroupFromParentGeneration(childSiblingsGroup, parentsGeneration) {
-    const childrenSpousesIdsSet = new Set();
+    const siblingIds = new Set();
 
     childSiblingsGroup.forEach(sibling => {
         sibling.forEach(marriageEntity => {
-            childrenSpousesIdsSet.add(marriageEntity.male?.id);
-            childrenSpousesIdsSet.add(marriageEntity.female?.id);
+            siblingIds.add(marriageEntity.male?.id);
+            siblingIds.add(marriageEntity.female?.id);
         })
     })
 
-    childrenSpousesIdsSet.delete(null);
+    siblingIds.delete(null);
 
     const parentsIds = {
         fatherIds: new Set(),
         motherIds: new Set()
     }
 
-    parentsGeneration.siblingsGroups.forEach(siblingsGroup => {
-        siblingsGroup.forEach(marriageEntitiesGroup => {
-            marriageEntitiesGroup.forEach(marriageEntity => {
+    parentsGeneration.marriageEntities.forEach(parentsMarriageEntity => {
 
-                const inverseParentIds = marriageEntity.marriage?.inverseParentIds ?? [];
+        const inverseParentIds = parentsMarriageEntity.marriage?.inverseParentIds ?? [];
 
-                if (includesAny(inverseParentIds, childrenSpousesIdsSet)) {
-                    parentsIds.fatherIds.add(marriageEntity.male.id);
-                    parentsIds.fatherIds.add(marriageEntity.female.id);
-                }
-            })
-        });
+        if (includesAny(inverseParentIds, siblingIds)) {
+            parentsIds.fatherIds.add(parentsMarriageEntity.male.id);
+            parentsIds.motherIds.add(parentsMarriageEntity.female.id);
+        }
     });
 
     return parentsIds;
 }
 
-function includesAny(childrenIdsSetOfParents, childrenSpousesIdsSet) {
-    for (const childIdOfParents of childrenIdsSetOfParents) {
-        if (childrenSpousesIdsSet.has(childIdOfParents)) {
+function includesAny(inverseParentIds, siblingIds) {
+    for (const childId of inverseParentIds) {
+        if (siblingIds.has(childId)) {
             return true;
         }
     }

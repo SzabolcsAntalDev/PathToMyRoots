@@ -1,7 +1,10 @@
 ﻿async function createGenerationsData(treeContext) {
 
+    clearAdditionalPersons();
+
     let generations;
 
+    // Szabi now: clear additional persons here?
     // object used later for downloaded image name
     const person = await getPersonJson(treeContext.personId);
     treeContext.person = person;
@@ -34,6 +37,8 @@
 
 // reduces the inverseBiologicalParentIds and inverseAdoptiveParentIds
 // to the ids of the available children, so biological and adoptive paths can be displayed correctly horizontally
+// without calling this method the inverse parent ids of the marriages would contain
+// child ids that are not actually displayed, like children of siblings of the actual person in hourglass trees
 function reduceMarriageEntitiesInverseParentIds(generations) {
     for (let i = 0; i < generations.length - 1; i++) {
         const parentsGeneration = generations[i];
@@ -80,19 +85,23 @@ function setNumberOfAvailableParents(generations) {
         for (const marriageEntity of childrenGeneration.marriageEntities) {
             marriageEntity.numberOfAvailableParents =
                 getNumberOfAvailableParents(
-                    marriageEntity.male?.id,
-                    marriageEntity.female?.id,
-                    parentsGeneration);
+                    parentsGeneration,
+                    marriageEntity.male,
+                    marriageEntity.female);
         }
     }
 }
 
-function getNumberOfAvailableParents(maleId, femaleId, parentsGeneration) {
+function getNumberOfAvailableParents(parentsGeneration, male, female) {
     let numberOfAvailableParents = 0;
-    const personIdsToCheck = [maleId, femaleId];
+
+    const personIdsToCheck =
+        [male, female]
+            .filter(person => person && !person.isHidden)
+            .map(person => person.id);
 
     for (const marriageEntity of parentsGeneration.marriageEntities) {
-        if (marriageEntity.marriage) {
+        if (marriageEntity.marriage && !marriageEntity.marriage.isHidden) {
             for (const personId of personIdsToCheck) {
                 if (marriageEntity.marriage.inverseParentIds.includes(personId)) {
                     numberOfAvailableParents++;
@@ -123,18 +132,17 @@ function getDuplicatedPersonsOnSameLevelCount(marriageEntities) {
 
     marriageEntities.forEach(marriageEntity => {
         if (marriageEntity) {
+
             const maleId = marriageEntity.male?.id;
             const femaleId = marriageEntity.female?.id;
-
-            if (maleId) {
-                personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
-            }
-
-            if (femaleId) {
-                personIdsToCount.set(femaleId, (personIdsToCount.get(femaleId) || 0) + 1);
-            }
+            // hidden and fake persons will never have duplicated ids
+            // add nulls now but filter them later in the for loop
+            personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
+            personIdsToCount.set(femaleId, (personIdsToCount.get(femaleId) || 0) + 1);
         }
     });
+
+    personIdsToCount.delete(null);
 
     let duplicatedPersonsOnSameLevelCount = 0;
     for (const count of personIdsToCount.values()) {

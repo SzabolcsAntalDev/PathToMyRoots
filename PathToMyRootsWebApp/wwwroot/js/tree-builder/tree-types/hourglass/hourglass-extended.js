@@ -163,7 +163,7 @@
                     });
                 }
 
-                if (secondHusband&& female) {
+                if (secondHusband && female) {
                     marriageEntities.push({
                         male: secondHusband,
                         female: female,

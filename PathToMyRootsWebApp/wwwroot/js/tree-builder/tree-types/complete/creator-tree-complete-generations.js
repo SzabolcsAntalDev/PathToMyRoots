@@ -4,6 +4,10 @@
         const personsGeneration = this.getPersonsGeneration(treeContext.personId, generations);
 
         sortMarriageEntitiesByBirthDate(generations);
+
+        const person = await getPersonJson(treeContext.personId);
+        addUnknownAncestors(person, generations, true);
+
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
         sortParentsSiblingsGroupsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));

@@ -17,7 +17,6 @@
 
         await hourglassBiological.createKnownAncestorsOf(context);
         const ancestorsGenerations = sortByLevelAndConvertToArray(context.ancestorsGenerationsMap);
-        await hourglassBiological.addUnknownAncestorsOf(ancestorsGenerations, person);
 
         const personsMarriageEntities = await hourglassBiological.createMarriageEntitiesWithSpousesWithCommonChildrenOfPerson(context, context.person, 0);
         const personsGeneration = { marriageEntities: personsMarriageEntities };
@@ -34,9 +33,16 @@
         this.removeDuplicatedMarriageEntities(descendantsGenerations);
         sortMarriageEntitiesByBirthDate(descendantsGenerations);
 
-        const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations)
+        const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
+
+        addUnknownAncestors(person, generations, false, true);
+        //addPlaceholderDescendants(descendantsGenerations);
+
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
+
+        // sort unknown ancestors
+        sortParentsSiblingsGroupsByChildren(ancestorsGenerations);
 
         return generations;
     },
@@ -63,6 +69,10 @@
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
         this.removeDuplicatedMarriageEntities(generations);
         sortMarriageEntitiesByBirthDate(generations);
+
+        addUnknownAncestors(person, generations, true, true);
+        //addPlaceholderDescendants(descendantsGenerations);
+
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
         sortParentsSiblingsGroupsByChildren(generations.slice(0, generations.indexOf(personsGeneration) + 1));
