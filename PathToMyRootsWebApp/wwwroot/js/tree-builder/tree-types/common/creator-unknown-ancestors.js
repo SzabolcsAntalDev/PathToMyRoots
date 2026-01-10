@@ -1,5 +1,5 @@
 ﻿// adds marriage entities upwards starting from the persons grandparents
-function addUnknownAncestors(person, generations, hideAncestors, addFromGreatGrandparents) {
+function addUnknownAncestors(person, generations, hideAncestors, addOnlyFromGrandparents) {
     const personsAndAncestorGenerations = getPersonsAndAncestorGenerations(person, generations);
 
     let unknownPersonIdObject = { value: -1 };
@@ -10,11 +10,9 @@ function addUnknownAncestors(person, generations, hideAncestors, addFromGreatGra
 
         let childrenMarriageEntities = personsAndAncestorGenerations[i].marriageEntities;
 
-        // if it's biological tree and the parents generation is the person's parents one
-        // then restrict the parents only to the biological parents
-        // in this case the parents of the person from whom he has siblings will still be displayed, but
-        // they won't affect the visual balance of the tree cause their parents will not be displayed
-        if (addFromGreatGrandparents) {
+        if (addOnlyFromGrandparents) {
+            // set the person's generation equal to only the person itself
+            // to not add the unkown parents of the person's spouse
             if (i == personsAndAncestorGenerations.length - 1) {
                 const singlePersonMarriage =
                 {
@@ -24,6 +22,8 @@ function addUnknownAncestors(person, generations, hideAncestors, addFromGreatGra
                 childrenMarriageEntities = [singlePersonMarriage];
             }
 
+            // set the person's parent generation equal to only to the person's biological parents
+            // to not add the unknown parents of the parents' other spouses
             if (i == personsAndAncestorGenerations.length - 2) {
                 childrenMarriageEntities =
                     childrenMarriageEntities

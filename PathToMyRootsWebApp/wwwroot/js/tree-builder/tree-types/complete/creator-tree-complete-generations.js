@@ -5,7 +5,7 @@
 
         sortMarriageEntitiesByBirthDate(generations);
 
-        if (treeContext.balance) {
+        if (treeContext.isBalanced) {
             const person = await personsCache.getPersonJson(treeContext.personId);
             addUnknownAncestors(person, generations, false);
         }

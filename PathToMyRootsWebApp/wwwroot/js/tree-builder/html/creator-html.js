@@ -31,6 +31,9 @@
         const treeTypeTextLabel = $('<label>').attr('class', 'text').text('Tree type:');
         const treeTypeValueLabel = $('<label>').attr('class', 'value tree-type-value');
 
+        const isBalancedTextLabel = $('<label>').attr('class', 'text').text('Is balanced:');
+        const isBalancedValueLabel = $('<label>').attr('class', 'value is-balanced-value');
+
         const ancestorsDepthTextLabel = $('<label>').attr('class', 'text').text('Ancestors depth:');
         const ancestorsDepthValueLabel = $('<label>').attr('class', 'value ancestors-depth-value');
 
@@ -56,6 +59,8 @@
             .attr('class', 'diagram-info-div')
             .append(treeTypeTextLabel)
             .append(treeTypeValueLabel)
+            .append(isBalancedTextLabel)
+            .append(isBalancedValueLabel)
             .append(ancestorsDepthTextLabel)
             .append(ancestorsDepthValueLabel)
             .append(descendantsDepthTextLabel)

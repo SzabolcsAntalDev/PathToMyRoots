@@ -20,6 +20,7 @@ function createSettingsContext(treeContext) {
         horizontalToggleableContainer: settingsDiv.find('.horizontal-toggleable-container'),
 
         treeTypeInfo: diagramInfoDiv.find('.tree-type-value'),
+        isBalancedInfo: diagramInfoDiv.find('.is-balanced-value'),
         ancestorsDepthInfo: diagramInfoDiv.find('.ancestors-depth-value'),
         descendantsDepthInfo: diagramInfoDiv.find('.descendants-depth-value'),
         viewModeInfo: diagramInfoDiv.find('.view-mode-value'),
@@ -61,7 +62,7 @@ function toggleSettingsVisibility(settingsContext) {
 }
 
 function setupRadioButtons(settingsContext, treeContext) {
-    const radioButtonNameUid = Date.now();
+    const uniqueControlsUid = Date.now();
 
     // Tree types radio buttons
 
@@ -70,12 +71,16 @@ function setupRadioButtons(settingsContext, treeContext) {
     treeTypesRadioButtons.each((_, radioButton) => {
         // input-radio-tree-type-1-1722960923456
 
-        radioButton.name += `-${treeContext.personId}-${radioButtonNameUid}`;
+        radioButton.name += `-${treeContext.personId}-${uniqueControlsUid}`;
     });
+
+    // Is balanced checkbox
+    const isBalancedCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"]')[0];
+    isBalancedCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
 
     // Ancestors radio buttons
     settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createOption(
-        `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
+        `input-radio-ancestors-depth-${treeContext.personId}-${uniqueControlsUid}`,
         'data-ancestors-depth', relativesDepth.ALL.index,
         relativesDepth.getDisplayText(relativesDepth.ALL.index)));
 
@@ -83,7 +88,7 @@ function setupRadioButtons(settingsContext, treeContext) {
         // <label><input type="radio" name="input-radio-ancestors-depth-0-1722960923456" data-ancestors-depth="5" />5</label>
 
         settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createOption(
-            `input-radio-ancestors-depth-${treeContext.personId}-${radioButtonNameUid}`,
+            `input-radio-ancestors-depth-${treeContext.personId}-${uniqueControlsUid}`,
             'data-ancestors-depth', i,
             relativesDepth.getDisplayText(i)));
     }
@@ -93,21 +98,22 @@ function setupRadioButtons(settingsContext, treeContext) {
         // <label><input type="radio" name="input-radio-descendants-depth-0-1722960923456" data-descendants-depth="5" />5</label>
 
         settingsContext.descendantsDepthFieldSet.append(treeHtmlCreator.createOption(
-            `input-radio-descendants-depth-${treeContext.personId}-${radioButtonNameUid}`,
+            `input-radio-descendants-depth-${treeContext.personId}-${uniqueControlsUid}`,
             'data-descendants-depth', i,
             relativesDepth.getDisplayText(i)));
     }
 
     settingsContext.descendantsDepthFieldSet.append(treeHtmlCreator.createOption(
-        `input-radio-descendants-depth-${treeContext.personId}-${radioButtonNameUid}`,
+        `input-radio-descendants-depth-${treeContext.personId}-${uniqueControlsUid}`,
         'data-descendants-depth', relativesDepth.ALL.index,
         relativesDepth.getDisplayText(relativesDepth.ALL.index)));
 
+    // View modes radio buttons
     const viewModesRadioButtons = settingsContext.viewModesFieldSet.find('input[type="radio"]');
     viewModesRadioButtons.each((_, radioButton) => {
         // input-radio-view-mode-1-1722960923456
 
-        radioButton.name += `-${treeContext.personId}-${radioButtonNameUid}`;
+        radioButton.name += `-${treeContext.personId}-${uniqueControlsUid}`;
     });
 }
 
@@ -115,6 +121,8 @@ function selectDefaultSettings(settingsContext, treeContext) {
     settingsContext.treeTypesFieldSet.find('input[type="radio"]').filter(function () {
         return parseInt($(this).data('treeTypeIndex'), 10) === treeContext.treeType.index;
     }).prop('checked', true);
+
+    settingsContext.treeTypesFieldSet.find('input[type="checkbox"]').prop('checked', treeContext.isBalanced);
 
     settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]').filter(function () {
         return parseInt(this.dataset.ancestorsDepth, 10) === treeContext.ancestorsDepth;
@@ -144,16 +152,17 @@ async function apply(settingsContext, treeContext, fromInitialization) {
     }
 
     const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
-    const balance = settingsContext.treeTypesFieldSet.find('input[type="checkBox"]').prop('checked');
+    const isBalanced = settingsContext.treeTypesFieldSet.find('input[type="checkBox"]').prop('checked');
     const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
     const descendantsDepthRadioButton = settingsContext.descendantsDepthFieldSet.find('input[type="radio"]:checked');
 
     treeContext.treeType = treeTypes.getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
-    treeContext.balance = balance;
+    treeContext.isBalanced = isBalanced;
     treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
     treeContext.descendantsDepth = parseInt(descendantsDepthRadioButton[0].dataset.descendantsDepth, 10);
 
     settingsContext.treeTypeInfo.text(treeContext.treeType.displayName);
+    settingsContext.isBalancedInfo.text(treeContext.isBalanced ? 'Yes' : 'No');
     settingsContext.ancestorsDepthInfo.text(relativesDepth.getDisplayText(treeContext.ancestorsDepth));
     settingsContext.descendantsDepthInfo.text(relativesDepth.getDisplayText(treeContext.descendantsDepth));
 

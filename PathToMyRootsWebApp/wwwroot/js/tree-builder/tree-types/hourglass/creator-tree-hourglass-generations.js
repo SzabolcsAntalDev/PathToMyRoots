@@ -35,7 +35,7 @@
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
 
-        if (treeContext.balance) {
+        if (treeContext.isBalanced) {
             addUnknownAncestors(person, generations, false, true);
             //addPlaceholderDescendants(descendantsGenerations);
         }
@@ -72,7 +72,7 @@
         this.removeDuplicatedMarriageEntities(generations);
         sortMarriageEntitiesByBirthDate(generations);
 
-        if (treeContext.balance) {
+        if (treeContext.isBalanced) {
             addUnknownAncestors(person, generations, false, true);
             //addPlaceholderDescendants(descendantsGenerations);
         }
