@@ -31,5 +31,5 @@ async function showTree(direction) {
     }
 
     const nextPersonId = personIds[currentPersonIndex];
-    createAndDisplayDiagramFrame(diagramsDiv, nextPersonId, nextPersonId, treeTypes.HOURGLASS_EXTENDED, 2, 2);
+    createAndDisplayDiagramFrame(diagramsDiv, nextPersonId, nextPersonId, treeTypes.HOURGLASS_EXTENDED, true, 2, 2, viewModes.MEDIUM);
 }

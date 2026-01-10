@@ -8,7 +8,7 @@
         <div class="horizontal-toggleable-container">
             <div class="content-div">
                 <div class="content-inner-div">
-                    <h3>Tree layout</h3>
+                    <h3>Tree type</h3>
                     <fieldset class="tree-types-fieldset">
                         <div class="option">
                             <label>
@@ -110,6 +110,38 @@
                                             <div class="tree-div"></div>
                                             <span class="text-span">
                                                 Typical Complete tree
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="input-checkbox-balanced" />
+                                Balance tree
+                            </label>
+                            <div data-tooltip-id="balance" class="svg-div-info tooltip-source">
+                                <svg>
+                                    <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                </svg>
+                            </div>
+                            <div data-tooltip-id="balance" class="tooltip">
+                                <div class="balance-tooltip-content balance-tooltip-content">
+                                    <div class="flex-row">
+                                        <div class="description-div">
+                                            <div class="title-div">Balanced tree</div>
+                                            <div class="text-div">
+                                                <p>Displays:</p>
+                                                <ul>
+                                                    <li>- balances the tree</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="flex-column">
+                                            <div class="tree-div"></div>
+                                            <span class="text-span">
+                                                Typical balanced tree
                                             </span>
                                         </div>
                                     </div>

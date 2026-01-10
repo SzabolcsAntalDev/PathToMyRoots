@@ -296,7 +296,7 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
         const originalDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
         testCaseDiv.append(originalDiagramsDiv);
 
-        await createAndDisplayDiagramFrame(originalDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.MEDIUM);
+        await createAndDisplayDiagramFrame(originalDiagramsDiv, testContext.personId, originalDiagramFrameIdSuffix, treeTypes.COMPLETE, true, relativesDepth.ALL.index, relativesDepth.ALL.index, viewModes.MEDIUM);
     }
 
     const resultTreeTitle = testsHtmlCreator.createHiddenH3('Result tree');
@@ -306,7 +306,7 @@ async function runTest(testNumber, testCaseDiv, scrollableContent, testContext, 
     const resultDiagramsDiv = testsHtmlCreator.createDiagramsDiv();
     testCaseDiv.append(resultDiagramsDiv);
 
-    await createAndDisplayDiagramFrame(resultDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.MEDIUM);
+    await createAndDisplayDiagramFrame(resultDiagramsDiv, testContext.personId, resultDiagramFrameIdSuffix, testContext.treeType, true, testContext.ancestorsDepth, testContext.descendantsDepth, viewModes.MEDIUM);
 
     const diagramFrame = resultDiagramsDiv.find('#diagram-frame-' + resultDiagramFrameIdSuffix);
     const diagramHtml = diagramFrame.find('.diagram').html();

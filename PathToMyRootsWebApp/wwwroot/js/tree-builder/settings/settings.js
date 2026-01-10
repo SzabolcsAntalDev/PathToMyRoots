@@ -144,10 +144,12 @@ async function apply(settingsContext, treeContext, fromInitialization) {
     }
 
     const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
+    const balance = settingsContext.treeTypesFieldSet.find('input[type="checkBox"]').prop('checked');
     const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
     const descendantsDepthRadioButton = settingsContext.descendantsDepthFieldSet.find('input[type="radio"]:checked');
 
     treeContext.treeType = treeTypes.getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
+    treeContext.balance = balance;
     treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
     treeContext.descendantsDepth = parseInt(descendantsDepthRadioButton[0].dataset.descendantsDepth, 10);
 

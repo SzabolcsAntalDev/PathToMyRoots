@@ -5,8 +5,10 @@
 
         sortMarriageEntitiesByBirthDate(generations);
 
-        const person = await personsCache.getPersonJson(treeContext.personId);
-        addUnknownAncestors(person, generations, true);
+        if (treeContext.balance) {
+            const person = await personsCache.getPersonJson(treeContext.personId);
+            addUnknownAncestors(person, generations, false);
+        }
 
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);

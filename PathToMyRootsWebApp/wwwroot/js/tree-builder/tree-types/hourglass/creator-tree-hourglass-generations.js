@@ -35,8 +35,10 @@
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
 
-        addUnknownAncestors(person, generations, false, true);
-        //addPlaceholderDescendants(descendantsGenerations);
+        if (treeContext.balance) {
+            addUnknownAncestors(person, generations, false, true);
+            //addPlaceholderDescendants(descendantsGenerations);
+        }
 
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
@@ -70,8 +72,10 @@
         this.removeDuplicatedMarriageEntities(generations);
         sortMarriageEntitiesByBirthDate(generations);
 
-        addUnknownAncestors(person, generations, false, true);
-        //addPlaceholderDescendants(descendantsGenerations);
+        if (treeContext.balance) {
+            addUnknownAncestors(person, generations, false, true);
+            //addPlaceholderDescendants(descendantsGenerations);
+        }
 
         createMarriageEntitiesGroups(generations);
         createSiblingsGroups(generations);
