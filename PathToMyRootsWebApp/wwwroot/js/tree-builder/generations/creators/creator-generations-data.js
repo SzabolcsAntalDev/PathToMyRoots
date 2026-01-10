@@ -107,8 +107,13 @@ function getNumberOfAvailableParents(parentsGeneration, male, female, consumedCh
     for (const marriageEntity of parentsGeneration.marriageEntities) {
         if (marriageEntity.marriage && !marriageEntity.marriage.isHidden) {
             for (const personId of personIdsToCheck) {
-                if (marriageEntity.marriage.inverseParentIds.includes(personId)) {
-                    if (!consumedChildrenIds.has(personId)) {
+                if (!consumedChildrenIds.has(personId)) {
+                    if (marriageEntity.marriage.inverseBiologicalParentIds.includes(personId)) {
+                        consumedChildrenIds.add(personId);
+                        numberOfAvailableParents++;
+                    }
+
+                    if (marriageEntity.marriage.inverseAdoptiveParentIds.includes(personId)) {
                         consumedChildrenIds.add(personId);
                         numberOfAvailableParents++;
                     }
