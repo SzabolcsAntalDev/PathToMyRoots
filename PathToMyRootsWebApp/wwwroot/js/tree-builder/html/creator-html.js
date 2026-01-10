@@ -90,9 +90,8 @@
                 this.createGeneration(
                     generation,
                     viewMode,
-                    generationsData.duplicatedPersonsOnFirstLevelCount,
+                    generationsData.numberOfDuplicatedPersonsOnFirstLevel,
                     generationsData.largestGenerationSize,
-                    generationsData.largestDuplicatedPersonsOnSameLevelCount,
                     index == 0,
                     index == generationsData.generations.length - 1));
         });
@@ -103,18 +102,19 @@
     createGeneration(
         generation,
         viewMode,
-        duplicatedPersonsOnFirstLevelCount,
+        numberOfDuplicatedPersonsOnFirstLevel,
         largestGenerationSize,
-        largestDuplicatedPersonsOnSameLevelCount,
         isFirst,
         isLast) {
 
         const nodePathsVerticalOffset = getNodePathsVerticalOffset(viewMode);
 
-        const topPaddingMultiplier = duplicatedPersonsOnFirstLevelCount ? (duplicatedPersonsOnFirstLevelCount + 1) : 0;
+        // duplicated persons on first level number + bottom margin
+        const topPaddingMultiplier = numberOfDuplicatedPersonsOnFirstLevel ? (numberOfDuplicatedPersonsOnFirstLevel + horizontalLinesTopBottomMarginMultiplier) : 0;
         const topPadding = isFirst ? topPaddingMultiplier * nodePathsVerticalOffset : 0;
 
-        const bottomPaddingMultiplier = largestGenerationSize + largestDuplicatedPersonsOnSameLevelCount + 3;
+        // largest generation size + top & bottom margin
+        const bottomPaddingMultiplier = (largestGenerationSize + 1) + (2 * horizontalLinesTopBottomMarginMultiplier);
         const bottomPadding = isLast ? 0 : bottomPaddingMultiplier * nodePathsVerticalOffset;
 
         const generationDiv = $('<div>')

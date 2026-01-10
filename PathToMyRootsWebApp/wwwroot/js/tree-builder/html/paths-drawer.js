@@ -1,30 +1,26 @@
 ﻿const duplicatedPathToNodeWidthMultiplier = 1 / 3;
+const horizontalLinesTopBottomMarginMultiplier = 2;
 const roundToOneDecimal = v => v.toFixed(1);
 
-function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, largestDuplicatedPersonsOnSameLevelCount, childrenGeneration, marriageDateNodes, childNodes) {
+function drawMarriagesChildrenPaths(pathsContainer, nodePathsVerticalOffset, largestGenerationSize, childrenGeneration, marriageDateNodes, childNodes) {
     pathsContainer.clientRect = pathsContainer.get(0).getBoundingClientRect();
 
     const offsetOnTop =
     {
         value:
-            (1 +
-                (
-                    (
-                        (largestGenerationSize + largestDuplicatedPersonsOnSameLevelCount) -
-                        (childrenGeneration.generationSize + childrenGeneration.duplicatedPersonsOnSameLevelCount)
-                    )
-                    * 0.5
-                )
+            (horizontalLinesTopBottomMarginMultiplier * nodePathsVerticalOffset) +
+            (
+                ((largestGenerationSize - (childrenGeneration.numberOfAvailableParents + childrenGeneration.numberOfDuplicatedPersons)) / 2)
+                * nodePathsVerticalOffset
             )
-            * nodePathsVerticalOffset
     };
 
     marriageDateNodes
         .filter((_, marriageDateNode) => !$(marriageDateNode).data('isHidden'))
-        .each((_, marriageDateNode) => drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes));
+        .each((_, marriageDateNode) => drawMarriageChildrenPaths(pathsContainer, marriageDateNode, childNodes, nodePathsVerticalOffset, offsetOnTop));
 }
 
-function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offsetOnTop, marriageDateNode, childNodes) {
+function drawMarriageChildrenPaths(pathsContainer, marriageDateNode, childNodes, nodePathsVerticalOffset, offsetOnTop) {
     const inverseBiologicalParentIds = $(marriageDateNode).data('inverseBiologicalParentIds');
     const inverseAdoptiveParentIds = $(marriageDateNode).data('inverseAdoptiveParentIds') ?? [];
     const inverseParentIds = inverseBiologicalParentIds.concat(inverseAdoptiveParentIds);
@@ -60,15 +56,15 @@ function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offs
     const rightChildNodes = targetChildNodes.filter(chilNode => chilNode.clientRectHorizontalCenter > marriageDateNode.clientRectHorizontalCenter);
 
     leftChildNodes.forEach(childNode => {
-        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
+        drawMarriageChildPath(pathsContainer, marriageDateNode, childNode, nodePathsVerticalOffset, offsetOnTop.value += nodePathsVerticalOffset);
     });
 
     rightChildNodes.reverse().forEach(childNode => {
-        drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, offsetOnTop.value += nodePathsVerticalOffset);
+        drawMarriageChildPath(pathsContainer, marriageDateNode, childNode, nodePathsVerticalOffset, offsetOnTop.value += nodePathsVerticalOffset);
     });
 }
 
-function drawMarriageChildPath(pathsContainer, nodePathsVerticalOffset, marriageDateNode, childNode, verticalOffset) {
+function drawMarriageChildPath(pathsContainer, marriageDateNode, childNode, nodePathsVerticalOffset, verticalOffset) {
 
     let marriageDateNodeHorizontalCenter = marriageDateNode.clientRect.left + marriageDateNode.clientRect.width / 2 - pathsContainer.clientRect.left;
     let marriageDateNodeBottom = marriageDateNode.clientRect.top + marriageDateNode.clientRect.height - pathsContainer.clientRect.top;
@@ -202,11 +198,11 @@ function getPathOfSameNodesOnSameLevel(containerRect, sameNodesOnSameLevel, numb
         node.classList.add('duplicated-node');
         const nodeRect = node.getBoundingClientRect();
 
-        const x1 = (nodeRect.left - containerRect.left) + (nodeRect.width / 3);
-        const y1 = nodeRect.top - containerRect.top;
+        const x1 = (nodeRect.left - containerRect.left) + (nodeRect.width * duplicatedPathToNodeWidthMultiplier);
+        const y1 = nodeRect.top - containerRect.top; // bottom
 
         const x2 = x1;
-        const y2 = nodeRect.top - containerRect.top - ((numberOfHorizontalDuplicatesDrawn + 2) * nodePathsVerticalOffset);
+        const y2 = nodeRect.top - containerRect.top - ((horizontalLinesTopBottomMarginMultiplier * nodePathsVerticalOffset) + ((numberOfHorizontalDuplicatesDrawn + 1) * nodePathsVerticalOffset));
 
         path += `M ${roundToOneDecimal(x1)},${roundToOneDecimal(y1)} L ${roundToOneDecimal(x2)},${roundToOneDecimal(y2)} `;
     })
@@ -219,7 +215,7 @@ function getPathOfSameNodesOnSameLevel(containerRect, sameNodesOnSameLevel, numb
     const rightNodeRect = rightNode.getBoundingClientRect();
 
     const x1 = (leftNodeRect.left - containerRect.left) + (leftNodeRect.width * duplicatedPathToNodeWidthMultiplier);
-    const y1 = leftNodeRect.top - containerRect.top - ((numberOfHorizontalDuplicatesDrawn + 2) * nodePathsVerticalOffset);
+    const y1 = leftNodeRect.top - containerRect.top - ((horizontalLinesTopBottomMarginMultiplier * nodePathsVerticalOffset) + ((numberOfHorizontalDuplicatesDrawn + 1) * nodePathsVerticalOffset));
 
     const x2 = (rightNodeRect.left - containerRect.left) + (rightNodeRect.width * duplicatedPathToNodeWidthMultiplier);
     const y2 = y1;

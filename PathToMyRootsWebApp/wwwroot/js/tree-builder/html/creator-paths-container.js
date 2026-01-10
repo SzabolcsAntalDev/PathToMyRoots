@@ -17,7 +17,6 @@ function drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePa
             pathsContainer,
             nodePathsVerticalOffset,
             generationsData.largestGenerationSize,
-            generationsData.largestDuplicatedPersonsOnSameLevelCount,
             generationsData.generations[i],
             marriageDateNodes,
             childNodes);

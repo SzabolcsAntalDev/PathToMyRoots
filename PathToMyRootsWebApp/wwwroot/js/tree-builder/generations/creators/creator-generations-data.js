@@ -22,15 +22,14 @@
 
     reduceMarriageEntitiesInverseParentIds(generations);
 
-    setNumberOfAvailableParents(generations);
-    setGenerationsSize(generations);
-    setDuplicatedPersonsOnSameLevelCount(generations);
+    setNumberOfAvailableParentsOfMarriageEntites(generations);
+    setNumberOfAvailableParentsOfGenerations(generations);
+    setNumberOfDuplicatedPersonsOfGenerations(generations);
 
     return {
         generations: generations,
-        duplicatedPersonsOnFirstLevelCount: getDuplicatedPersonsOnFirstLevelCount(generations),
+        numberOfDuplicatedPersonsOnFirstLevel: getNumberOfDuplicatedPersonsOnFirstLevel(generations),
         largestGenerationSize: getLargestGenerationSize(generations),
-        largestDuplicatedPersonsOnSameLevelCount: getLargestDuplicatedPersonsOnSameLevelCount(generations)
     }
 }
 
@@ -75,15 +74,15 @@ function reduceMarriageEntitiesInverseParentIds(generations) {
     }
 }
 
-// sets the number of paths (numberOfAvailableParents) to each extended marriage that should be drawn towards it
-function setNumberOfAvailableParents(generations) {
+function setNumberOfAvailableParentsOfMarriageEntites(generations) {
     for (let i = 0; i < generations.length - 1; i++) {
         const parentsGeneration = generations[i];
         const childrenGeneration = generations[i + 1];
 
         // keep track of consumed children to skip the duplicated ones
         // so parent child lines will be drawn only towards the first child of the duplicates
-        const consumedChildrenIds = new Set();
+        const consumedBiologicalChildrenIds = new Set();
+        const consumedAdoptiveChildrenIds = new Set();
 
         for (const marriageEntity of childrenGeneration.marriageEntities) {
             marriageEntity.numberOfAvailableParents =
@@ -91,12 +90,13 @@ function setNumberOfAvailableParents(generations) {
                     parentsGeneration,
                     marriageEntity.male,
                     marriageEntity.female,
-                    consumedChildrenIds);
+                    consumedBiologicalChildrenIds,
+                    consumedAdoptiveChildrenIds);
         }
     }
 }
 
-function getNumberOfAvailableParents(parentsGeneration, male, female, consumedChildrenIds) {
+function getNumberOfAvailableParents(parentsGeneration, male, female, consumedBiologicalChildrenIds, consumedAdoptiveChildrenIds) {
     let numberOfAvailableParents = 0;
 
     const personIdsToCheck =
@@ -107,14 +107,15 @@ function getNumberOfAvailableParents(parentsGeneration, male, female, consumedCh
     for (const marriageEntity of parentsGeneration.marriageEntities) {
         if (marriageEntity.marriage && !marriageEntity.marriage.isHidden) {
             for (const personId of personIdsToCheck) {
-                if (!consumedChildrenIds.has(personId)) {
+                if (!consumedBiologicalChildrenIds.has(personId)) {
                     if (marriageEntity.marriage.inverseBiologicalParentIds.includes(personId)) {
-                        consumedChildrenIds.add(personId);
+                        consumedBiologicalChildrenIds.add(personId);
                         numberOfAvailableParents++;
                     }
-
+                }
+                if (!consumedAdoptiveChildrenIds.has(personId)) {
                     if (marriageEntity.marriage.inverseAdoptiveParentIds.includes(personId)) {
-                        consumedChildrenIds.add(personId);
+                        consumedAdoptiveChildrenIds.add(personId);
                         numberOfAvailableParents++;
                     }
                 }
@@ -125,21 +126,20 @@ function getNumberOfAvailableParents(parentsGeneration, male, female, consumedCh
     return numberOfAvailableParents;
 }
 
-// sets the number of paths (generationSize) that should be drawn towards the generation
-function setGenerationsSize(generations) {
+function setNumberOfAvailableParentsOfGenerations(generations) {
     generations.forEach(generation => {
-        generation.generationSize = generation.marriageEntities
+        generation.numberOfAvailableParents = generation.marriageEntities
             .reduce((size, marriageEntity) => size + (marriageEntity.numberOfAvailableParents ?? 0), 0);
     });
 }
 
-function setDuplicatedPersonsOnSameLevelCount(generations) {
+function setNumberOfDuplicatedPersonsOfGenerations(generations) {
     generations.forEach(generation => {
-        generation.duplicatedPersonsOnSameLevelCount = getDuplicatedPersonsOnSameLevelCount(generation.marriageEntities);
+        generation.numberOfDuplicatedPersons = getNumberOfDuplicatedPersons(generation.marriageEntities);
     });
 }
 
-function getDuplicatedPersonsOnSameLevelCount(marriageEntities) {
+function getNumberOfDuplicatedPersons(marriageEntities) {
     const personIdsToCount = new Map();
 
     marriageEntities.forEach(marriageEntity => {
@@ -147,6 +147,7 @@ function getDuplicatedPersonsOnSameLevelCount(marriageEntities) {
 
             const maleId = marriageEntity.male?.id;
             const femaleId = marriageEntity.female?.id;
+
             // hidden and fake persons will never have duplicated ids
             // add nulls now but filter them later in the for loop
             personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
@@ -155,25 +156,22 @@ function getDuplicatedPersonsOnSameLevelCount(marriageEntities) {
     });
 
     personIdsToCount.delete(null);
+    personIdsToCount.delete(undefined);
 
-    let duplicatedPersonsOnSameLevelCount = 0;
+    let numberOfDuplicatedPersons = 0;
     for (const count of personIdsToCount.values()) {
         if (count > 1) {
-            duplicatedPersonsOnSameLevelCount++
+            numberOfDuplicatedPersons++
         };
     }
 
-    return duplicatedPersonsOnSameLevelCount;
+    return numberOfDuplicatedPersons;
 }
 
-function getDuplicatedPersonsOnFirstLevelCount(generations) {
-    return generations[0].duplicatedPersonsOnSameLevelCount;
+function getNumberOfDuplicatedPersonsOnFirstLevel(generations) {
+    return generations[0].numberOfDuplicatedPersons;
 }
 
 function getLargestGenerationSize(generations) {
-    return generations.reduce((maxSize, generation) => Math.max(maxSize, generation.generationSize ?? 0), 0);
-}
-
-function getLargestDuplicatedPersonsOnSameLevelCount(generations) {
-    return generations.reduce((maxCount, generation) => Math.max(maxCount, generation.duplicatedPersonsOnSameLevelCount ?? 0), 0);
+    return generations.reduce((maxSize, generation) => Math.max(maxSize, generation.numberOfAvailableParents + generation.numberOfDuplicatedPersons), 0);
 }
