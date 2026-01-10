@@ -34,8 +34,18 @@ function drawMarriageChildrenPaths(pathsContainer, nodePathsVerticalOffset, offs
     marriageDateNode.clientRect = marriageDateNode.getBoundingClientRect();
     marriageDateNode.clientRectHorizontalCenter = marriageDateNode.clientRect.left + (marriageDateNode.clientRect.width / 2);
 
+    // keep track of consumed children to skip the duplicated ones
+    // so parent child lines will be drawn only towards the first child of the duplicates
+    const consumedChildrenIds = new Set();
+
     childNodes.each((_, childNode) => {
         const childId = parseInt($(childNode).attr('id'));
+
+        if (consumedChildrenIds.has(childId)) {
+            return;
+        }
+
+        consumedChildrenIds.add(childId);
 
         if (inverseParentIds.includes(childId)) {
             childNode.clientRect = childNode.getBoundingClientRect();

@@ -81,17 +81,22 @@ function setNumberOfAvailableParents(generations) {
         const parentsGeneration = generations[i];
         const childrenGeneration = generations[i + 1];
 
+        // keep track of consumed children to skip the duplicated ones
+        // so parent child lines will be drawn only towards the first child of the duplicates
+        const consumedChildrenIds = new Set();
+
         for (const marriageEntity of childrenGeneration.marriageEntities) {
             marriageEntity.numberOfAvailableParents =
                 getNumberOfAvailableParents(
                     parentsGeneration,
                     marriageEntity.male,
-                    marriageEntity.female);
+                    marriageEntity.female,
+                    consumedChildrenIds);
         }
     }
 }
 
-function getNumberOfAvailableParents(parentsGeneration, male, female) {
+function getNumberOfAvailableParents(parentsGeneration, male, female, consumedChildrenIds) {
     let numberOfAvailableParents = 0;
 
     const personIdsToCheck =
@@ -103,7 +108,10 @@ function getNumberOfAvailableParents(parentsGeneration, male, female) {
         if (marriageEntity.marriage && !marriageEntity.marriage.isHidden) {
             for (const personId of personIdsToCheck) {
                 if (marriageEntity.marriage.inverseParentIds.includes(personId)) {
-                    numberOfAvailableParents++;
+                    if (!consumedChildrenIds.has(personId)) {
+                        consumedChildrenIds.add(personId);
+                        numberOfAvailableParents++;
+                    }
                 }
             }
         }
