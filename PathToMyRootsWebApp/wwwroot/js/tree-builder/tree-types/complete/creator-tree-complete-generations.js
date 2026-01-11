@@ -5,11 +5,17 @@
 
         sortMarriageEntitiesByBirthDate(generations);
 
-        if (treeContext.isBalanced) {
+        if (treeContext.balanceAncestors || treeContext.balanceDescendants) {
             const person = await personsCache.getPersonJson(treeContext.personId);
             const additionPersonIdObject = { value: -1 };
-            addUnknownAncestors(person, generations, additionPersonIdObject, false, false);
-            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+
+            if (treeContext.balanceAncestors) {
+                addUnknownAncestors(person, generations, additionPersonIdObject, false, false);
+            }
+
+            if (treeContext.balanceDescendants) {
+                addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+            }
         }
 
         createMarriageEntitiesGroups(generations);

@@ -666,7 +666,7 @@ fieldset div.option label input[type=radio]:checked:hover {
 #diagrams-div .diagram-frame .diagram-info-div, .diagrams-div .diagram-frame .diagram-info-div {
   position: relative;
   margin-left: 26px;
-  min-width: 580px;
+  min-width: 860px;
   display: flex;
   align-items: center;
 }

@@ -118,30 +118,62 @@
                         </div>
                         <div class="option">
                             <label>
-                                <input type="checkbox" name="input-checkbox-is-balanced" />
-                                Balance tree
+                                <input type="checkbox" name="input-checkbox-balance-ancestors" />
+                                Balance ancestors
                             </label>
-                            <div data-tooltip-id="is-balanced" class="svg-div-info tooltip-source">
+                            <div data-tooltip-id="balance-ancestors" class="svg-div-info tooltip-source">
                                 <svg>
                                     <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
                                 </svg>
                             </div>
-                            <div data-tooltip-id="is-balanced" class="tooltip">
-                                <div class="is-balanced-tooltip-content is-balanced-tooltip-content">
+                            <div data-tooltip-id="balance-ancestors" class="tooltip">
+                                <div class="balance-ancestors-tooltip-content balance-ancestors-tooltip-content">
                                     <div class="flex-row">
                                         <div class="description-div">
-                                            <div class="title-div">Balance tree</div>
+                                            <div class="title-div">Balance ancestors</div>
                                             <div class="text-div">
                                                 <p>Displays:</p>
                                                 <ul>
-                                                    <li>- balances the tree</li>
+                                                    <li>- balances the ancestors</li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="flex-column">
                                             <div class="tree-div"></div>
                                             <span class="text-span">
-                                                Typical balanced tree
+                                                Typical balanced ancestors tree
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="input-checkbox-balance-descendants" />
+                                Balance descendants
+                            </label>
+                            <div data-tooltip-id="balance-descendants" class="svg-div-info tooltip-source">
+                                <svg>
+                                    <use xlink:href="@Url.Content("~/icons/icons.svg#info")"></use>
+                                </svg>
+                            </div>
+                            <div data-tooltip-id="balance-descendants" class="tooltip">
+                                <div class="balance-descendants-tooltip-content balance-descendants-tooltip-content">
+                                    <div class="flex-row">
+                                        <div class="description-div">
+                                            <div class="title-div">Balance descendants</div>
+                                            <div class="text-div">
+                                                <p>Displays:</p>
+                                                <ul>
+                                                    <li>- balances the descendants</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="flex-column">
+                                            <div class="tree-div"></div>
+                                            <span class="text-span">
+                                                Typical balanced descendants tree
                                             </span>
                                         </div>
                                     </div>

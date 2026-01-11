@@ -9,7 +9,7 @@ async function removeDiagramFrame(diagramsDiv, personId) {
     }
 }
 
-async function createAndDisplayDiagramFrame(diagramsDiv, personId, treeFrameIdSuffix, treeType, isBalanced, ancestorsDepth, descendantsDepth, viewMode) {
+async function createAndDisplayDiagramFrame(diagramsDiv, personId, treeFrameIdSuffix, treeType, balanceAncestors, balanceDescendants, ancestorsDepth, descendantsDepth, viewMode) {
     const diagramFrame = treeHtmlCreator.createHiddenDiagramFrame(treeFrameIdSuffix);
     diagramsDiv.append(diagramFrame);
 
@@ -23,7 +23,7 @@ async function createAndDisplayDiagramFrame(diagramsDiv, personId, treeFrameIdSu
 
     const treeContext = createTreeContext(
         personId, diagramFrame, diagram, loadingTextContainer,
-        treeType, isBalanced, ancestorsDepth, descendantsDepth, viewMode,
+        treeType, balanceAncestors, balanceDescendants, ancestorsDepth, descendantsDepth, viewMode,
         calculateDataAndDisplayTree,
         redrawPaths);
 
@@ -41,14 +41,15 @@ async function createAndDisplayDiagramFrame(diagramsDiv, personId, treeFrameIdSu
 
 function createTreeContext(
     personId, diagramFrame, diagram, loadingTextContainer,
-    treeType, isBalanced, ancestorsDepth, descendantsDepth, viewMode) {
+    treeType, balanceAncestors, balanceDescendants, ancestorsDepth, descendantsDepth, viewMode) {
     return {
         personId: personId,
         loadingTextContainer: loadingTextContainer,
         diagramFrame: diagramFrame,
         diagram: diagram,
         treeType: treeType,
-        isBalanced: isBalanced,
+        balanceAncestors: balanceAncestors,
+        balanceDescendants: balanceDescendants,
         ancestorsDepth: (ancestorsDepth < relativesDepth.MIN.index || ancestorsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : ancestorsDepth),
         descendantsDepth: (descendantsDepth < relativesDepth.MIN.index || descendantsDepth > relativesDepth.MAX.index ? relativesDepth.ALL.index : descendantsDepth),
         viewMode: viewMode,

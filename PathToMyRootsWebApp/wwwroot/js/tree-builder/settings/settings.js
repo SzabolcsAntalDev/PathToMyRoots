@@ -20,7 +20,8 @@ function createSettingsContext(treeContext) {
         horizontalToggleableContainer: settingsDiv.find('.horizontal-toggleable-container'),
 
         treeTypeInfo: diagramInfoDiv.find('.tree-type-value'),
-        isBalancedInfo: diagramInfoDiv.find('.is-balanced-value'),
+        balanceAncestorsInfo: diagramInfoDiv.find('.balance-ancestors-value'),
+        balanceDescendantsInfo: diagramInfoDiv.find('.balance-descendants-value'),
         ancestorsDepthInfo: diagramInfoDiv.find('.ancestors-depth-value'),
         descendantsDepthInfo: diagramInfoDiv.find('.descendants-depth-value'),
         viewModeInfo: diagramInfoDiv.find('.view-mode-value'),
@@ -74,9 +75,13 @@ function setupRadioButtons(settingsContext, treeContext) {
         radioButton.name += `-${treeContext.personId}-${uniqueControlsUid}`;
     });
 
-    // Is balanced checkbox
-    const isBalancedCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"]')[0];
-    isBalancedCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
+    // Balance ancestors checkbox
+    const balanceAncestorsCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]')[0];
+    balanceAncestorsCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
+
+    // Balance descendants checkbox
+    const balanceDescendantsCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]')[0];
+    balanceDescendantsCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
 
     // Ancestors radio buttons
     settingsContext.ancestorsDepthFieldSet.append(treeHtmlCreator.createOption(
@@ -122,7 +127,8 @@ function selectDefaultSettings(settingsContext, treeContext) {
         return parseInt($(this).data('treeTypeIndex'), 10) === treeContext.treeType.index;
     }).prop('checked', true);
 
-    settingsContext.treeTypesFieldSet.find('input[type="checkbox"]').prop('checked', treeContext.isBalanced);
+    settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked', treeContext.balanceAncestors);
+    settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked', treeContext.balanceDescendants);
 
     settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]').filter(function () {
         return parseInt(this.dataset.ancestorsDepth, 10) === treeContext.ancestorsDepth;
@@ -152,17 +158,20 @@ async function apply(settingsContext, treeContext, fromInitialization) {
     }
 
     const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
-    const isBalanced = settingsContext.treeTypesFieldSet.find('input[type="checkBox"]').prop('checked');
+    const balanceAncestors = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked');
+    const balanceDescendants = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked');
     const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
     const descendantsDepthRadioButton = settingsContext.descendantsDepthFieldSet.find('input[type="radio"]:checked');
 
     treeContext.treeType = treeTypes.getTreeTypeByIndex(parseInt(treeTypeRadioButton[0].dataset.treeTypeIndex, 10));
-    treeContext.isBalanced = isBalanced;
+    treeContext.balanceAncestors = balanceAncestors;
+    treeContext.balanceDescendants = balanceDescendants;
     treeContext.ancestorsDepth = parseInt(ancestorsDepthRadioButton[0].dataset.ancestorsDepth, 10);
     treeContext.descendantsDepth = parseInt(descendantsDepthRadioButton[0].dataset.descendantsDepth, 10);
 
     settingsContext.treeTypeInfo.text(treeContext.treeType.displayName);
-    settingsContext.isBalancedInfo.text(treeContext.isBalanced ? 'Yes' : 'No');
+    settingsContext.balanceAncestorsInfo.text(treeContext.balanceAncestors ? 'Yes' : 'No');
+    settingsContext.balanceDescendantsInfo.text(treeContext.balanceDescendants ? 'Yes' : 'No');
     settingsContext.ancestorsDepthInfo.text(relativesDepth.getDisplayText(treeContext.ancestorsDepth));
     settingsContext.descendantsDepthInfo.text(relativesDepth.getDisplayText(treeContext.descendantsDepth));
 

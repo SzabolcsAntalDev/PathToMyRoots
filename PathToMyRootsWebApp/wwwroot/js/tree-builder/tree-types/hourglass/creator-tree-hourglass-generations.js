@@ -35,10 +35,16 @@
 
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
 
-        if (treeContext.isBalanced) {
+        if (treeContext.balanceAncestors || treeContext.balanceDescendants) {
             const additionPersonIdObject = { value: -1 };
-            addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
-            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+
+            if (treeContext.balanceAncestors) {
+                addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
+            }
+
+            if (treeContext.balanceDescendants) {
+                addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+            }
         }
 
         createMarriageEntitiesGroups(generations);
@@ -73,10 +79,16 @@
         this.removeDuplicatedMarriageEntities(generations);
         sortMarriageEntitiesByBirthDate(generations);
 
-        if (treeContext.isBalanced) {
+        if (treeContext.balanceAncestors || treeContext.balanceDescendants) {
             const additionPersonIdObject = { value: -1 };
-            addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
-            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+
+            if (treeContext.balanceAncestors) {
+                addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
+            }
+
+            if (treeContext.balanceDescendants) {
+                addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+            }
         }
 
         createMarriageEntitiesGroups(generations);
