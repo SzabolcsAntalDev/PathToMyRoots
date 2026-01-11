@@ -207,9 +207,9 @@
         const personNodeClass = [
             'person-node',
             person.isMale ? 'male-node' : 'female-node',
-            person.isUnknown ? '' : 'interactive',
-            person.isHidden ? 'hidden' : '',
-            person.isHighlighted ? 'highlighted-node' : ''
+            person.isHighlighted ? 'highlighted-node' : '',
+            person.isUnknown || person.isFake ? '' : 'interactive',
+            person.isHidden ? 'hidden' : ''
         ].filter(Boolean).join(' ');
 
         const personNode =
@@ -220,10 +220,11 @@
                 .data('biologicalMotherId', person.biologicalMotherId)
                 .data('adoptiveFatherId', person.adoptiveFatherId)
                 .data('adoptiveMotherId', person.adoptiveMotherId)
+                .data('isHidden', person.isHidden) // used for skipping drawing marriage child path
                 .append(image)
                 .append(textsDiv)
                 .on('click', function () {
-                    if (person.isUnknown) {
+                    if (person.isUnknown || person.isFake) {
                         return;
                     }
                     const url = `/Person/PersonDetails?id=${person.id}`;
@@ -231,7 +232,7 @@
                 });
 
         // add tooltip if necessary
-        if (!person.isUnknown) {
+        if (!person.isUnknown && !person.isFake) {
             const tooltipDataId = 'person-tooltip-id-' + person.id;
             const tooltipContent =
                 $('<div>')
@@ -267,15 +268,20 @@
                 .attr('class', 'texts-div')
                 .append(marriageDateSpan);
 
+        const marriageDateNodeClass = [
+            'marriage-date-node',
+            marriage.isUnknown || marriage.isFake ? '' : 'interactive',
+        ].filter(Boolean).join(' ');
+
         const marriageDateNode = $('<div>')
-            .attr('class', `marriage-date-node ${marriage.isUnknown ? '' : 'interactive'}`)
+            .attr('class', marriageDateNodeClass)
             .data('inverseBiologicalParentIds', marriage.inverseBiologicalParentIds)
             .data('inverseAdoptiveParentIds', marriage.inverseAdoptiveParentIds)
-            .data('isHidden', marriage.isHidden)
+            .data('isHidden', marriage.isHidden) // used for skipping drawing marriage child path
             .append(textsDiv);
 
         // add tooltip is necessary
-        if (!marriage.isUnknown) {
+        if (!marriage.isUnknown && !marriage.isFake) {
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'marriage-tooltip-content')

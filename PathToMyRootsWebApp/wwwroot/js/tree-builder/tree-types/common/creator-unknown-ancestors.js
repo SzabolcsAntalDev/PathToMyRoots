@@ -1,8 +1,7 @@
-﻿// adds marriage entities upwards starting from the persons grandparents
-function addUnknownAncestors(person, generations, hideAncestors, addOnlyFromGrandparents) {
-    const personsAndAncestorGenerations = getPersonsAndAncestorGenerations(person, generations);
+﻿// adds marriage entities upwards starting from the person's parent generation
 
-    let unknownPersonIdObject = { value: -1 };
+function addUnknownAncestors(person, generations, unknownPersonIdObject, hideAncestors, addOnlyFromGrandparents) {
+    const personsAndAncestorGenerations = getPersonsAndAncestorGenerations(person, generations);
 
     for (let i = personsAndAncestorGenerations.length - 1; i > 0; i--) {
         let parentsMarriageEntities = personsAndAncestorGenerations[i - 1].marriageEntities;

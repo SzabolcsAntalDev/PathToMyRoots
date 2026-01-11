@@ -10,8 +10,13 @@
 
 function drawMarriagesChildrenPathsInner(generationsData, pathsContainer, nodePathsVerticalOffset, generationsHtmls) {
     for (let i = 1; i < generationsHtmls.length; i++) {
-        const marriageDateNodes = $(generationsHtmls[i - 1]).find('.marriage-date-node');
-        const childNodes = $(generationsHtmls[i]).find('.person-node');
+        const marriageDateNodes =
+            $(generationsHtmls[i - 1]).find('.marriage-date-node')
+                .filter((_, marriageDateNode) => !$(marriageDateNode).data('isHidden'));
+
+        const childNodes =
+            $(generationsHtmls[i]).find('.person-node')
+                .filter((_, personNode) => !$(personNode).data('isHidden'));
 
         drawMarriagesChildrenPaths(
             pathsContainer,

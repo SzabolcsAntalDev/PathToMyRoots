@@ -36,8 +36,9 @@
         const generations = ancestorsGenerations.concat(personsGeneration).concat(descendantsGenerations);
 
         if (treeContext.isBalanced) {
-            addUnknownAncestors(person, generations, false, true);
-            //addPlaceholderDescendants(descendantsGenerations);
+            const additionPersonIdObject = { value: -1 };
+            addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
+            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
         }
 
         createMarriageEntitiesGroups(generations);
@@ -73,8 +74,9 @@
         sortMarriageEntitiesByBirthDate(generations);
 
         if (treeContext.isBalanced) {
-            addUnknownAncestors(person, generations, false, true);
-            //addPlaceholderDescendants(descendantsGenerations);
+            const additionPersonIdObject = { value: -1 };
+            addUnknownAncestors(person, generations, additionPersonIdObject, false, true);
+            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
         }
 
         createMarriageEntitiesGroups(generations);

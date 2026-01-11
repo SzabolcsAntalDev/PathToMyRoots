@@ -7,7 +7,9 @@
 
         if (treeContext.isBalanced) {
             const person = await personsCache.getPersonJson(treeContext.personId);
-            addUnknownAncestors(person, generations, false);
+            const additionPersonIdObject = { value: -1 };
+            addUnknownAncestors(person, generations, additionPersonIdObject, false, false);
+            addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
         }
 
         createMarriageEntitiesGroups(generations);

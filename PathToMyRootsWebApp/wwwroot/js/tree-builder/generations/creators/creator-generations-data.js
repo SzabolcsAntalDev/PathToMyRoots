@@ -1,6 +1,6 @@
 ﻿async function createGenerationsData(treeContext) {
 
-    personsCache.clearPersonsWithClientSideData();
+    personsCache.removePersonsWithClientSideData();
 
     // object used later for downloaded image name
     const person = await personsCache.getPersonJson(treeContext.personId);

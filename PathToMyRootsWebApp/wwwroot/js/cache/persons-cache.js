@@ -2,7 +2,7 @@
     personsCache: new Map(),
 
     async getPersonJson(personId) {
-        if (personId == null || personId == -1) {
+        if (personId == null) {
             return null;
         }
 
@@ -16,15 +16,15 @@
         return person;
     },
 
-    clearPersonsWithClientSideData() {
+    removePersonsWithClientSideData() {
         const personsToClear = [];
 
         for (const [personId, person] of this.personsCache.entries()) {
 
             // Szabi now: will have to check this soon
             const hasClientSideData =
-                person.inverseBiologicalFather?.some(childId => childId < 0) ||
-                person.inverseBiologicalMother?.some(childId => childId < 0) ||
+                person.inverseBiologicalFather?.some(child => child.id < 0) ||
+                person.inverseBiologicalMother?.some(child => child.id < 0) ||
                 person.firstSpouseId < 0;
 
             if (hasClientSideData) {

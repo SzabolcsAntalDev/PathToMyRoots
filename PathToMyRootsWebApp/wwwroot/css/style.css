@@ -176,7 +176,7 @@ body {
 }
 
 .collapsed {
-  display: none;
+  display: none !important;
 }
 
 .relative, .person-details .top-row .relatives-column .relatives-column-content .div-with-title .horizontal-relatives-div .relative-container .relative-interactive {
