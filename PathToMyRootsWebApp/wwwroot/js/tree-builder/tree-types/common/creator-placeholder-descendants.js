@@ -7,7 +7,7 @@ function addPlaceholderDescendants(person, generations, placeholderPersonIdObjec
         const parentsGeneration = personsAndDescendantGenerations[i];
         const childrenGeneration = personsAndDescendantGenerations[i + 1];
 
-        const averageNumberOfChildren = getAverageNumberOfChildrenThatHaveParentsPerParents(parentsGeneration.marriageEntities, childrenGeneration.marriageEntities);
+        const averageNumberOfChildren = getAverageNumberOfChildrenThatHaveParentsPerParents(parentsGeneration.marriageEntities);
 
         for (const parentMarriageEntity of parentsGeneration.marriageEntities) {
             if (parentMarriageEntity.marriage == null || parentMarriageEntity.marriage.inverseParentIds.length == 0) {
@@ -34,7 +34,7 @@ function getPersonsAndDescendantGenerations(person, generations) {
     return generations.slice(personsGenerationIndex, generations.length);
 }
 
-function getAverageNumberOfChildrenThatHaveParentsPerParents(parentsMarriageEntities, childrenMarriageEntities) {
+function getAverageNumberOfChildrenThatHaveParentsPerParents(parentsMarriageEntities) {
     const childIdsThatHaveParents = new Set();
 
     for (let parentMarriagEntity of parentsMarriageEntities) {
@@ -55,8 +55,8 @@ function fillMarriageEntityWithPlaceholderSpouseAndMarriage(parentMarriageEntity
         childrenIds.push(placeholderPersonIdObject.value--);
     }
 
-    const father = parentMarriageEntity.male ?? this.createFakeFather(placeholderPersonIdObject.value--);
-    const mother = parentMarriageEntity.female ?? this.createFakeMother(placeholderPersonIdObject.value--);
+    const father = parentMarriageEntity.male ?? this.createPlaceholderFather(placeholderPersonIdObject.value--);
+    const mother = parentMarriageEntity.female ?? this.createPlaceholderMother(placeholderPersonIdObject.value--);
 
     father.firstSpouseId = mother.id;
     mother.firstSpouseId = father.id;
@@ -65,34 +65,34 @@ function fillMarriageEntityWithPlaceholderSpouseAndMarriage(parentMarriageEntity
     mother.inverseBiologicalMother = childrenIds.map(id => ({ id: id }));
 
     const marriage = createMarriage(father, mother);
-    marriage.isFake = father.isFake || mother.isFake;
+    marriage.isPlaceholder = father.isPlaceholder || mother.isPlaceholder;
 
     parentMarriageEntity.male = father;
     parentMarriageEntity.female = mother;
     parentMarriageEntity.marriage = marriage;
 
     if (hideDescendants) {
-        parentMarriageEntity.male.isHidden = parentMarriageEntity.male.isFake;
-        parentMarriageEntity.female.isHidden = parentMarriageEntity.female.isFake;
-        parentMarriageEntity.marriage.isHidden = parentMarriageEntity.marriage.isFake;
+        parentMarriageEntity.male.isHidden = parentMarriageEntity.male.isPlaceholder;
+        parentMarriageEntity.female.isHidden = parentMarriageEntity.female.isPlaceholder;
+        parentMarriageEntity.marriage.isHidden = parentMarriageEntity.marriage.isPlaceholder;
     }
 }
 
-function createFakeFather(fatherId) {
+function createPlaceholderFather(fatherId) {
     return {
         id: fatherId,
         isMale: true,
         inverseAdoptiveFather: [],
-        isFake: true
+        isPlaceholder: true
     };
 }
 
-function createFakeMother(motherId) {
+function createPlaceholderMother(motherId) {
     return {
         id: motherId,
         isMale: false,
         inverseAdoptiveMother: [],
-        isFake: true
+        isPlaceholder: true
     };
 }
 
@@ -103,7 +103,7 @@ function createHiddenChildMarriageEntity(childId, hideDescendants) {
             isMale: true,
             inverseBiologicalFather: [],
             inverseAdoptiveFather: [],
-            isFake: true,
+            isPlaceholder: true,
             isHidden: hideDescendants
         }
     }

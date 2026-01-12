@@ -213,7 +213,7 @@
             'person-node',
             person.isMale ? 'male-node' : 'female-node',
             person.isHighlighted ? 'highlighted-node' : '',
-            person.isUnknown || person.isFake ? '' : 'interactive',
+            person.isUnknown || person.isPlaceholder ? '' : 'interactive',
             person.isHidden ? 'hidden' : ''
         ].filter(Boolean).join(' ');
 
@@ -229,7 +229,7 @@
                 .append(image)
                 .append(textsDiv)
                 .on('click', function () {
-                    if (person.isUnknown || person.isFake) {
+                    if (person.isUnknown || person.isPlaceholder) {
                         return;
                     }
                     const url = `/Person/PersonDetails?id=${person.id}`;
@@ -237,7 +237,7 @@
                 });
 
         // add tooltip if necessary
-        if (!person.isUnknown && !person.isFake) {
+        if (!person.isUnknown && !person.isPlaceholder) {
             const tooltipDataId = 'person-tooltip-id-' + person.id;
             const tooltipContent =
                 $('<div>')
@@ -275,7 +275,7 @@
 
         const marriageDateNodeClass = [
             'marriage-date-node',
-            marriage.isUnknown || marriage.isFake ? '' : 'interactive',
+            marriage.isUnknown || marriage.isPlaceholder ? '' : 'interactive',
         ].filter(Boolean).join(' ');
 
         const marriageDateNode = $('<div>')
@@ -286,7 +286,7 @@
             .append(textsDiv);
 
         // add tooltip is necessary
-        if (!marriage.isUnknown && !marriage.isFake) {
+        if (!marriage.isUnknown && !marriage.isPlaceholder) {
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'marriage-tooltip-content')

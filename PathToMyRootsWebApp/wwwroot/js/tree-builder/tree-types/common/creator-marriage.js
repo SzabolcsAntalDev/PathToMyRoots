@@ -1,7 +1,7 @@
 ﻿function createMarriage(male, female, includeAdoptive) {
     const marriage = {};
 
-    // if it's a real marriage and not a fake one, Szabi: get back here after added fake children
+    // if it's a real marriage and not a placeholder one
     if (male && female) {
         marriage.startDate = male.firstSpouseId == female.id ? male.firstMarriageStartDate : male.secondMarriageStartDate;
         marriage.endDate = male.firstSpouseId == female.id ? male.firstMarriageEndDate : male.secondMarriageEndDate;
@@ -25,7 +25,6 @@
     marriage.maleId = male?.id;
     marriage.femaleId = female?.id;
 
-    // Szabi: these can all be Sets, not arrays
     marriage.inverseBiologicalParentIds = getCommonBiologicalChildren(male, female);
     marriage.inverseAdoptiveParentIds = includeAdoptive ? getCommonAdoptiveChildren(male, female) : [];
     marriage.inverseParentIds = marriage.inverseBiologicalParentIds.concat(marriage.inverseAdoptiveParentIds);

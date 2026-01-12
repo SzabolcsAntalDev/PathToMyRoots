@@ -148,7 +148,7 @@ function getNumberOfDuplicatedPersons(marriageEntities) {
             const maleId = marriageEntity.male?.id;
             const femaleId = marriageEntity.female?.id;
 
-            // hidden and fake persons will never have duplicated ids
+            // hidden and placeholder persons will never have duplicated ids
             // add nulls now but filter them later in the for loop
             personIdsToCount.set(maleId, (personIdsToCount.get(maleId) || 0) + 1);
             personIdsToCount.set(femaleId, (personIdsToCount.get(femaleId) || 0) + 1);
