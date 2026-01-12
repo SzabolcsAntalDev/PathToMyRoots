@@ -930,6 +930,10 @@ fieldset {
                         white-space: nowrap;
                     }
 
+                    .subtitle {
+                        font-weight: bold;
+                    }
+
                     .apply-button {
                         @extend .flat-button;
                         width: 50%;

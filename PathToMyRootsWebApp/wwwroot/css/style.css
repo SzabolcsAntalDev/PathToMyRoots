@@ -700,6 +700,9 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
 #diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
 }
+#diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .subtitle, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .subtitle {
+  font-weight: bold;
+}
 #diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .apply-button {
   width: 50%;
   margin-left: auto;

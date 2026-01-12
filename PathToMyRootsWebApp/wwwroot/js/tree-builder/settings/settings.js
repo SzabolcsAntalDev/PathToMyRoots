@@ -27,6 +27,7 @@ function createSettingsContext(treeContext) {
         viewModeInfo: diagramInfoDiv.find('.view-mode-value'),
 
         treeTypesFieldSet: settingsDiv.find('.tree-types-fieldset'),
+        balancingFieldSet: settingsDiv.find('.balancing-fieldset'),
         ancestorsDepthFieldSet: settingsDiv.find('.ancestors-depth-fieldset'),
         descendantsDepthFieldSet: settingsDiv.find('.descendants-depth-fieldset'),
 
@@ -66,7 +67,6 @@ function setupRadioButtons(settingsContext, treeContext) {
     const uniqueControlsUid = Date.now();
 
     // Tree types radio buttons
-
     // add unique names per settings to the tree types radio buttons
     const treeTypesRadioButtons = settingsContext.treeTypesFieldSet.find('input[type="radio"]');
     treeTypesRadioButtons.each((_, radioButton) => {
@@ -76,11 +76,11 @@ function setupRadioButtons(settingsContext, treeContext) {
     });
 
     // Balance ancestors checkbox
-    const balanceAncestorsCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]')[0];
+    const balanceAncestorsCheckbox = settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]')[0];
     balanceAncestorsCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
 
     // Balance descendants checkbox
-    const balanceDescendantsCheckbox = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]')[0];
+    const balanceDescendantsCheckbox = settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]')[0];
     balanceDescendantsCheckbox.name += `-${treeContext.personId}-${uniqueControlsUid}`;
 
     // Ancestors radio buttons
@@ -127,8 +127,8 @@ function selectDefaultSettings(settingsContext, treeContext) {
         return parseInt($(this).data('treeTypeIndex'), 10) === treeContext.treeType.index;
     }).prop('checked', true);
 
-    settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked', treeContext.balanceAncestors);
-    settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked', treeContext.balanceDescendants);
+    settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked', treeContext.balanceAncestors);
+    settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked', treeContext.balanceDescendants);
 
     settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]').filter(function () {
         return parseInt(this.dataset.ancestorsDepth, 10) === treeContext.ancestorsDepth;
@@ -158,8 +158,8 @@ async function apply(settingsContext, treeContext, fromInitialization) {
     }
 
     const treeTypeRadioButton = settingsContext.treeTypesFieldSet.find('input[type="radio"]:checked');
-    const balanceAncestors = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked');
-    const balanceDescendants = settingsContext.treeTypesFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked');
+    const balanceAncestors = settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-ancestors"]').prop('checked');
+    const balanceDescendants = settingsContext.balancingFieldSet.find('input[type="checkbox"][name^="input-checkbox-balance-descendants"]').prop('checked');
     const ancestorsDepthRadioButton = settingsContext.ancestorsDepthFieldSet.find('input[type="radio"]:checked');
     const descendantsDepthRadioButton = settingsContext.descendantsDepthFieldSet.find('input[type="radio"]:checked');
 
