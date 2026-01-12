@@ -20,8 +20,6 @@
         generations = await completeTreeCreator.createCompleteTreeGenerations(treeContext);
     }
 
-    reduceMarriageEntitiesInverseParentIds(generations);
-
     setNumberOfAvailableParentsOfMarriageEntites(generations);
     setNumberOfAvailableParentsOfGenerations(generations);
     setNumberOfDuplicatedPersonsOfGenerations(generations);
@@ -30,47 +28,6 @@
         generations: generations,
         numberOfDuplicatedPersonsOnFirstLevel: getNumberOfDuplicatedPersonsOnFirstLevel(generations),
         largestGenerationSize: getLargestGenerationSize(generations),
-    }
-}
-
-// reduces the inverseBiologicalParentIds and inverseAdoptiveParentIds
-// to the ids of the available children, so biological and adoptive paths can be displayed correctly horizontally
-// without calling this method the inverse parent ids of the marriages would contain
-// child ids that are not actually displayed, like children of siblings of the actual person in hourglass trees
-function reduceMarriageEntitiesInverseParentIds(generations) {
-    for (let i = 0; i < generations.length - 1; i++) {
-        const parentsGeneration = generations[i];
-        const childrenGeneration = generations[i + 1];
-
-        const childrenIds = new Set();
-
-        for (const marriageEntity of childrenGeneration.marriageEntities) {
-            const maleId = marriageEntity.male?.id;
-            const femaleId = marriageEntity.female?.id;
-
-            if (maleId) {
-                childrenIds.add(maleId);
-            }
-
-            if (femaleId) {
-                childrenIds.add(femaleId);
-            }
-        };
-
-        for (const marriageEntity of parentsGeneration.marriageEntities) {
-            if (marriageEntity.marriage) {
-
-                marriageEntity.marriage.inverseBiologicalParentIds =
-                    marriageEntity.marriage.inverseBiologicalParentIds
-                        .filter(id => childrenIds.has(id));
-
-                marriageEntity.marriage.inverseAdoptiveParentIds =
-                    marriageEntity.marriage.inverseAdoptiveParentIds
-                        .filter(id => childrenIds.has(id));
-
-                marriageEntity.marriage.inverseParentIds = marriageEntity.marriage.inverseBiologicalParentIds.concat(marriageEntity.marriage.inverseAdoptiveParentIds);
-            }
-        }
     }
 }
 
