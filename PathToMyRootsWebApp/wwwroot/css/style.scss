@@ -623,27 +623,76 @@ fieldset {
 
             input[type="radio"] {
                 appearance: none;
-                margin: 0px;
+                cursor: pointer;
                 width: $font-size-small;
                 height: $font-size-small;
+                margin: 0px;
                 border-radius: 50%;
                 background-color: var(--background-color);
                 transition: background-color $color-transition, box-shadow $color-transition;
-                cursor: pointer;
 
                 &:hover {
                     color: var(--foreground-color-highlight);
                     background-color: var(--background-color-highlight);
                     border-color: var(--foreground-color-highlight);
                 }
+
+                &:checked {
+                    background-color: var(--foreground-color);
+                    box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
+
+                    &:hover {
+                        background-color: var(--foreground-color-highlight);
+                        box-shadow: inset 0 0 0 2px var(--background-color-highlight), 0 0 0 0.5px var(--foreground-color);
+                    }
+                }
             }
 
-            input[type="radio"]:checked {
-                background-color: var(--foreground-color);
-                box-shadow: inset 0 0 0 2px var(--background-color), 0 0 0 0.5px var(--foreground-color);
+            input[type="checkbox"] {
+                appearance: none;
+                position: relative;
+                cursor: pointer;
+                width: 12px;
+                height: 12px;
+                margin: 0px;
+                margin-right: -1px;
+                border: 1px solid transparent;
+                border-radius: 3px;
+                background-color: var(--background-color);
+                transition: background-color $color-transition, border-color $color-transition;
 
                 &:hover {
-                    background-color: var(--foreground-color-highlight);
+                    background-color: var(--background-color-highlight);
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 3px;
+                    top: 0px;
+                    width: 3px;
+                    height: 6px;
+                    border: 1px solid var(--foreground-color);
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(35deg);
+                    opacity: 0;
+                    transition: border-color $color-transition, opacity $color-transition;
+                }
+
+                &:checked {
+                    border-color: var(--foreground-color);
+
+                    &::after {
+                        opacity: 1;
+                    }
+
+                    &:hover {
+                        border-color: var(--foreground-color-highlight);
+
+                        &::after {
+                            border-color: var(--foreground-color-highlight);
+                        }
+                    }
                 }
             }
         }
