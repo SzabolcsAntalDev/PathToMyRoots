@@ -664,6 +664,7 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  user-select: none;
 }
 #diagrams-div .diagram-frame, .diagrams-div .diagram-frame {
   position: relative;
