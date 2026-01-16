@@ -45,7 +45,7 @@
             }
 
             if (treeContext.balanceDescendants) {
-                addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+                addPlaceholderDescendants(person, generations, additionPersonIdObject, false, true);
             }
         }
 
@@ -91,7 +91,7 @@
             }
 
             if (treeContext.balanceDescendants) {
-                addPlaceholderDescendants(person, generations, additionPersonIdObject, false);
+                addPlaceholderDescendants(person, generations, additionPersonIdObject, false, true);
             }
         }
 

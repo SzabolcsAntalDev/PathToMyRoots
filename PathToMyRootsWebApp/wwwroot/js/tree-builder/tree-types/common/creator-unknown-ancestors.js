@@ -11,7 +11,7 @@ function addUnknownAncestors(person, generations, unknownPersonIdObject, hideAnc
 
         if (addOnlyFromGrandparents) {
             // set the person's generation equal to only the person itself
-            // to not add the unkown parents of the person's spouse
+            // to not add the unkown parents of the person's spouse and siblings' spouses
             if (i == personsAndAncestorGenerations.length - 1) {
                 const singlePersonMarriage =
                 {

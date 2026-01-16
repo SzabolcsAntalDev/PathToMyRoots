@@ -1,21 +1,32 @@
 ﻿// adds marriage entities downwards starting from the person's generation
 
-function addPlaceholderDescendants(person, generations, placeholderPersonIdObject, hideDescendants) {
+function addPlaceholderDescendants(person, generations, placeholderPersonIdObject, hideDescendants, addOnlyFromGrandchildren) {
     const personsAndDescendantGenerations = getPersonsAndDescendantGenerations(person, generations);
 
     for (let i = 0; i < personsAndDescendantGenerations.length - 1; i++) {
-        const parentsGeneration = personsAndDescendantGenerations[i];
-        const childrenGeneration = personsAndDescendantGenerations[i + 1];
+        let parentsGenerationMarriages = personsAndDescendantGenerations[i].marriageEntities;
+        let childrenGenerationMarriages = personsAndDescendantGenerations[i + 1].marriageEntities;
 
-        const averageNumberOfChildren = getAverageNumberOfChildrenThatHaveParentsPerParents(parentsGeneration.marriageEntities);
+        if (addOnlyFromGrandchildren) {
+            // set the person's generation equal to only the person's marriages
+            // to not add the placeholder persons of the person's siblings
+            if (i == 0) {
+                parentsGenerationMarriages =
+                    parentsGenerationMarriages.filter(marriageEntity =>
+                        marriageEntity.marriage?.maleId == person.id ||
+                        marriageEntity.marriage?.femaleId == person.id);
+            }
+        }
 
-        for (const parentMarriageEntity of parentsGeneration.marriageEntities) {
+        const averageNumberOfChildren = getAverageNumberOfChildrenThatHaveParentsPerParents(parentsGenerationMarriages);
+
+        for (const parentMarriageEntity of parentsGenerationMarriages) {
             if (parentMarriageEntity.marriage == null || parentMarriageEntity.marriage.inverseParentIds.length == 0) {
 
                 fillMarriageEntityWithPlaceholderSpouseAndMarriage(parentMarriageEntity, placeholderPersonIdObject, hideDescendants, averageNumberOfChildren);
 
                 for (let i = 0; i < averageNumberOfChildren; i++) {
-                    childrenGeneration.marriageEntities.push(createHiddenChildMarriageEntity(parentMarriageEntity.marriage.inverseParentIds[i], hideDescendants));
+                    childrenGenerationMarriages.push(createHiddenChildMarriageEntity(parentMarriageEntity.marriage.inverseParentIds[i], hideDescendants));
                 }
             }
         }
