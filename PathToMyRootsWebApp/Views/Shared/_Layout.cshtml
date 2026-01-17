@@ -13,7 +13,7 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <div class="success-popup-container fade-hidden">
+    <div id="success-popup-container" class="fade-hidden">
         <div class="popup-message-and-close-button-container">
             <span class="popup-message"></span>
             <button class="popup-close-button">×</button>
@@ -22,12 +22,14 @@
             <div class="popup-loading-bar-inner-div"></div>
         </div>
     </div>
-    <div class="error-popup-container fade-hidden">
+    <div id="error-popup-container" class="fade-hidden">
         <div class="popup-message-and-close-button-container">
             <span class="popup-message"></span>
             <button class="popup-close-button">×</button>
         </div>
-        <div class="popup-loading-bar"></div>
+        <div class="popup-loading-bar">
+            <div class="popup-loading-bar-inner-div"></div>
+        </div>
     </div>
     <div class="nav-and-right-container">
         <nav class="nav-container">
@@ -89,6 +91,7 @@
     <script src="~/js/common/loading-text.js"></script>
     <script src="~/js/common/message-codes.js"></script>
     <script src="~/js/common/utils.js"></script>
+    <script src="~/js/common/popup.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

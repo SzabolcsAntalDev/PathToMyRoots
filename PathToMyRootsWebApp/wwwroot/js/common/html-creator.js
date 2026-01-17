@@ -1,6 +1,4 @@
-﻿// Szabi: rename this file
-
-let phantomPersonSymbolShape = null;
+﻿let phantomPersonSymbolShape = null;
 let phantomPersonSymbolViewBox = null;
 
 function createPersonImageWithFallbackSvg(imageUrl, className) {

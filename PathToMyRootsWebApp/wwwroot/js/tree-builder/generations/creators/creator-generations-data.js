@@ -2,7 +2,7 @@
 
     personsCache.removePersonsWithClientSideData();
 
-    // object used later for downloaded image name
+    // object used later for the downloaded image name
     const person = await personsCache.getPersonJson(treeContext.personId);
     treeContext.person = person;
 

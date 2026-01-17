@@ -1,8 +1,4 @@
-﻿// Szabi: change all document loaded functions to this type
-//$(function () {
-//});
-
-// tooltips work the following way:
+﻿// tooltips work the following way:
 //
 // to the tooltip source element assign:
 // - the id for the data-tooltip-id attribute (data-tooltip-id="hourglass-biological")

@@ -1386,7 +1386,7 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 3;
+  z-index: 6;
 }
 
 #cropper-image-and-button-container {
@@ -1401,7 +1401,7 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
   max-height: 400px;
 }
 
-.success-popup-container, .error-popup-container {
+#success-popup-container, #error-popup-container {
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -1410,65 +1410,66 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 4px 4px 0 0;
+  z-index: 5;
 }
-.success-popup-container .popup-message-and-close-button-container, .error-popup-container .popup-message-and-close-button-container {
+#success-popup-container .popup-message-and-close-button-container, #error-popup-container .popup-message-and-close-button-container {
   padding: 8px 16px;
   display: flex;
 }
-.success-popup-container .popup-message-and-close-button-container .popup-message, .error-popup-container .popup-message-and-close-button-container .popup-message {
+#success-popup-container .popup-message-and-close-button-container .popup-message, #error-popup-container .popup-message-and-close-button-container .popup-message {
   align-content: center;
   font-size: 18px;
   margin-right: 8px;
   transition: color 0.3s ease 0s;
 }
-.success-popup-container .popup-message-and-close-button-container .popup-close-button, .error-popup-container .popup-message-and-close-button-container .popup-close-button {
+#success-popup-container .popup-message-and-close-button-container .popup-close-button, #error-popup-container .popup-message-and-close-button-container .popup-close-button {
   padding: 0px;
   margin: 0px;
   font-size: 28px;
   border: none;
 }
-.success-popup-container .popup-loading-bar, .error-popup-container .popup-loading-bar {
+#success-popup-container .popup-loading-bar, #error-popup-container .popup-loading-bar {
   width: 100%;
   height: 2px;
   transition: width 8s linear 0s;
 }
-.success-popup-container .popup-loading-bar .popup-loading-bar-inner-div, .error-popup-container .popup-loading-bar .popup-loading-bar-inner-div {
+#success-popup-container .popup-loading-bar .popup-loading-bar-inner-div, #error-popup-container .popup-loading-bar .popup-loading-bar-inner-div {
   width: 100%;
   height: 100%;
   background-color: var(--foreground-color-highlight);
   transition: background-color 0.3s ease 0s;
 }
 
-.success-popup-container {
+#success-popup-container {
   color: #C7D1DB;
   background-color: forestgreen;
 }
-.success-popup-container:hover {
+#success-popup-container:hover {
   color: white;
   background-color: forestgreen;
 }
-.success-popup-container .popup-close-button {
+#success-popup-container .popup-close-button {
   color: #C7D1DB;
   background-color: forestgreen;
 }
-.success-popup-container .popup-close-button:hover {
+#success-popup-container .popup-close-button:hover {
   color: white;
   background-color: forestgreen;
 }
 
-.error-popup-container {
+#error-popup-container {
   color: #C7D1DB;
   background-color: red;
 }
-.error-popup-container:hover {
+#error-popup-container:hover {
   color: white;
   background-color: red;
 }
-.error-popup-container .popup-close-button {
+#error-popup-container .popup-close-button {
   color: #C7D1DB;
   background-color: red;
 }
-.error-popup-container .popup-close-button:hover {
+#error-popup-container .popup-close-button:hover {
   color: white;
   background-color: red;
 }
