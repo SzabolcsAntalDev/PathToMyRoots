@@ -312,14 +312,14 @@
 
         const marriageNode = $('<div>')
             .attr('class', marriageNodeClass)
-            .append(this.createSpouseNumberNode(marriage.leftSpouseNumber))
+            .append(this.createSpouseNumberNode(marriage.leftSpouseNumber, marriage.isUnknown || marriage.isPlaceholder))
             .append(marriageDateNode)
-            .append(this.createSpouseNumberNode(marriage.rightSpouseNumber));
+            .append(this.createSpouseNumberNode(marriage.rightSpouseNumber, marriage.isUnknown || marriage.isPlaceholder));
 
         return marriageNode;
     },
 
-    createSpouseNumberNode(spouseNumber) {
+    createSpouseNumberNode(spouseNumber, isUnknownOrPlaceholder) {
         const spouseNumberSpan =
             $('<span>')
                 .attr('class', 'spouse-number-text')
@@ -331,7 +331,7 @@
                 .append(spouseNumberSpan);
 
         const spouseNumberNode = $('<div>')
-            .attr('class', `spouse-number-node ${!spouseNumber ? 'hidden' : ''}`)
+            .attr('class', `spouse-number-node ${!spouseNumber || isUnknownOrPlaceholder ? 'hidden' : ''}`)
             .append(spouseNumberTextsDiv);
 
         return spouseNumberNode;
