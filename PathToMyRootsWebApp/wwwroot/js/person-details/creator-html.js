@@ -1,6 +1,6 @@
 ﻿const personDetailsHtmlCreator = {
     createInfoImage(person) {
-        return createPersonImageWithFallbackSvg(person.imageUrl, 'image');
+        return creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image');
     },
 
     createInfoNameText(person) {
@@ -64,7 +64,7 @@
                 .append(personNameSpan)
                 .append(personLivedSpan);
 
-        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'non-spouse-img');
+        const image = creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'non-spouse-img');
 
         const nonSpouseClass = `${person.id !== -1 ? 'relative-interactive' : 'relative'} ${person.isMale ? 'male-background-color' : 'female-background-color'}`;
 
@@ -86,7 +86,7 @@
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'person-tooltip-content flex-column')
-                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
                     .append(textsDiv.clone());
 
             const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;
@@ -133,12 +133,12 @@
                 .append(personLivedSpan)
                 .append(personMarriageSpan);
 
-        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'spouse-img');
+        const image = creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'spouse-img');
 
         const tooltipContent =
             $('<div>')
                 .attr('class', 'person-tooltip-content flex-column')
-                .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                .append(creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
                 .append(textsDiv.clone());
 
         const tooltipDataId = 'spouse-tooltip-id-' + person.id;
@@ -167,7 +167,7 @@
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'person-tooltip-content flex-column')
-                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
                     .append(textsDiv.clone());
 
             const tooltipDataId = 'non-spouse-tooltip-id-' + person.id;

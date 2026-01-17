@@ -50,7 +50,7 @@
             $('<button>')
                 .attr('class', 'download-button')
                 .attr('title', 'Download diagram')
-                .append(createSvg('download'));
+                .append(creatorImages.createSvg('download'));
 
         downloadButton.on('click', async () => {
             await loadingTextManager.fadeIn(treeContext.loadingTextContainer, 'Creating the tree diagram image for download');
@@ -189,7 +189,7 @@
     },
 
     createPersonNode(person) {
-        const image = createPersonImageWithFallbackSvg(person.imageUrl, 'image');
+        const image = creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image');
 
         const personNameText = formatPersonName(person);
         const personNameSpan =
@@ -242,7 +242,7 @@
             const tooltipContent =
                 $('<div>')
                     .attr('class', 'person-tooltip-content flex-column')
-                    .append(createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
+                    .append(creatorImages.createPersonImageWithFallbackSvg(person.imageUrl, 'image'))
                     .append(textsDiv.clone());
 
             const tooltip =

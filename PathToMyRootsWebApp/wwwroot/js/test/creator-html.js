@@ -59,7 +59,7 @@
         const button =
             $('<button>')
                 .addClass('flat-button-with-svg-small')
-                .append(createSvg('arrow-down'));
+                .append(creatorImages.createSvg('arrow-down'));
 
         hideElement(button);
 
