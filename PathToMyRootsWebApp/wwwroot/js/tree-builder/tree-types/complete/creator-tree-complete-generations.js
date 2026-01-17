@@ -60,7 +60,8 @@
 
         const person = await personsCache.getPersonJson(personId);
         if (person.id == context.sourcePersonId) {
-            person.isHighlighted = true;
+            // person not found is placeholder
+            person.isHighlighted = !person.isPlaceholder;
         }
 
         if (!context.generationsMap.has(currentLevel)) {

@@ -10,7 +10,9 @@
 
     async createBiologicalTreeGenerationsWithMarriageEntities(treeContext) {
         const person = await personsCache.getPersonJson(treeContext.personId);
-        person.isHighlighted = true;
+
+        // person not found is placeholder
+        person.isHighlighted = !person.isPlaceholder;
 
         const processedPersonIds = createProcessedPersonIds();
         const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.diagramFrame);
@@ -60,7 +62,9 @@
 
     async createExtendedTreeGenerationsWithMarriageEntities(treeContext) {
         const person = await personsCache.getPersonJson(treeContext.personId);
-        person.isHighlighted = true;
+
+        // person not found is placeholder
+        person.isHighlighted = !person.isPlaceholder;
 
         const processedPersonIds = createProcessedPersonIds();
         const context = this.createIterationContext(person, processedPersonIds, new Map(), new Map(), treeContext.ancestorsDepth, treeContext.descendantsDepth, treeContext.diagramFrame);

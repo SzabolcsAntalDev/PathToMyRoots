@@ -10,7 +10,14 @@
             return this.personsCache.get(personId);
         }
 
-        const person = await (await fetch(`${apiUrl}/person/${personId}`)).json();
+        const response = await fetch(`${apiUrl}/person/${personId}`);
+
+        if (!response.ok) {
+            return { isPlaceholder: true };
+        }
+
+        const person = await response.json();
+
         this.personsCache.set(person.id, person);
 
         return person;
@@ -21,7 +28,6 @@
 
         for (const [personId, person] of this.personsCache.entries()) {
 
-            // Szabi now: will have to check this soon
             const hasClientSideData =
                 person.inverseBiologicalFather?.some(child => child.id < 0) ||
                 person.inverseBiologicalMother?.some(child => child.id < 0) ||
