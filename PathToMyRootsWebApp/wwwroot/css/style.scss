@@ -927,6 +927,10 @@ fieldset {
                     padding: $thickness-small $thickness-large;
                     transition: background-color $color-transition;
 
+                    .indented {
+                        margin-left: $thickness-large;
+                    }
+
                     label, h3 {
                         white-space: nowrap;
                     }

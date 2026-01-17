@@ -698,6 +698,9 @@ fieldset div.option label input[type=checkbox]:checked:hover::after {
   padding: 4px 16px;
   transition: background-color 0.3s ease 0s;
 }
+#diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .indented, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div .indented {
+  margin-left: 16px;
+}
 #diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, #diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div label, .diagrams-div .diagram-frame .settings-div .content-div .content-inner-div h3 {
   white-space: nowrap;
 }
